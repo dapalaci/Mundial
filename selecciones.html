@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundial 26 — Selecciones</title>
+<link rel="stylesheet" href="assets/shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ───── Page hero ───── */
+  .sel-hero {
+    position: relative;
+    padding: 80px 0 40px;
+    overflow: hidden;
+  }
+  .sel-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 800px 400px at 20% 30%, color-mix(in oklch, var(--accent) 16%, transparent), transparent 70%),
+      radial-gradient(ellipse 600px 300px at 85% 70%, color-mix(in oklch, var(--accent) 10%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .sel-hero .wrap { position: relative; }
+  .sel-hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 80px;
+    align-items: end;
+  }
+  .sel-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 148px);
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    margin: 24px 0 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+  }
+  .sel-hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144;
+  }
+  .sel-hero .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px 40px;
+    padding-bottom: 16px;
+  }
+  .sel-hero .stat .n {
+    font-family: var(--f-display);
+    font-size: 52px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-variation-settings: "opsz" 144;
+  }
+  .sel-hero .stat .n em { color: var(--accent); font-style: italic; }
+  .sel-hero .stat .l {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 10px;
+  }
+
+  /* ───── Toolbar / filters ───── */
+  .toolbar {
+    position: sticky;
+    top: 68px;
+    z-index: 20;
+    background: color-mix(in oklch, var(--bg) 80%, transparent);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+  }
+  .toolbar-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .search {
+    flex: 0 0 260px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-family: var(--f-mono);
+    font-size: 12px;
+    color: var(--text);
+  }
+  .search svg { width: 14px; height: 14px; color: var(--text-dim); }
+  .search input {
+    flex: 1;
+    background: transparent;
+    border: 0;
+    color: var(--text);
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+  }
+  .search input::placeholder { color: var(--text-faint); letter-spacing: 0.1em; }
+  .filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .filter-group {
+    display: flex;
+    gap: 2px;
+    padding: 4px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+  .filter-group .lbl {
+    padding: 6px 12px;
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .filter-group button {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 0;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: all .15s;
+  }
+  .filter-group button:hover { color: var(--text); }
+  .filter-group button.active {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .sort-toggle {
+    margin-left: auto;
+    display: flex;
+    gap: 2px;
+    padding: 4px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+  .sort-toggle button {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 0;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: all .15s;
+  }
+  .sort-toggle button.active { background: var(--accent); color: var(--accent-ink); }
+
+  /* ───── Group bar ───── */
+  .group-bar {
+    display: flex;
+    gap: 6px;
+    margin: 28px 0 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 8px;
+  }
+  .group-bar::-webkit-scrollbar { display: none; }
+  .group-bar button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text-dim);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: all .15s;
+  }
+  .group-bar button:hover { color: var(--text); border-color: var(--line-strong); }
+  .group-bar button.active {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: transparent;
+  }
+  .group-bar button .n {
+    display: inline-block;
+    margin-left: 6px;
+    opacity: 0.6;
+    font-size: 10px;
+  }
+
+  /* ───── Results meta ───── */
+  .results-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 32px 0 20px;
+  }
+  .results-meta .count {
+    font-family: var(--f-display);
+    font-size: 28px;
+    letter-spacing: -0.02em;
+  }
+  .results-meta .count em { color: var(--accent); font-style: italic; }
+  .results-meta .tag {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ───── Grid ───── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 1100px) {
+    .team-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 800px) {
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .sel-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .team-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: pointer;
+    transition: all .2s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 240px;
+  }
+  .team-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--team-c1, transparent), transparent 60%);
+    opacity: 0.15;
+    pointer-events: none;
+    transition: opacity .2s;
+  }
+  .team-card:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+  }
+  .team-card:hover::before { opacity: 0.25; }
+  .team-card.qualified-no {
+    opacity: 0.55;
+  }
+  .team-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .team-flag {
+    width: 56px;
+    height: 40px;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .team-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .team-status.q {
+    background: color-mix(in oklch, var(--accent) 20%, transparent);
+    color: var(--accent);
+  }
+  .team-status.q::before {
+    content: ""; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+  }
+  .team-status.h {
+    background: rgba(255,255,255,0.08);
+    color: var(--text-dim);
+  }
+  .team-status.p {
+    background: rgba(255,255,255,0.04);
+    color: var(--text-faint);
+  }
+  .team-name {
+    font-family: var(--f-display);
+    font-size: 26px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+    margin: 0;
+  }
+  .team-conf {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-top: 4px;
+  }
+  .team-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    gap: 8px;
+  }
+  .team-stats .s {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .team-stats .s .v {
+    font-family: var(--f-display);
+    font-size: 20px;
+    letter-spacing: -0.02em;
+  }
+  .team-stats .s .v em { color: var(--accent); font-style: italic; }
+  .team-stats .s .k {
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .team-rank {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-faint);
+  }
+
+  /* ───── Lightbox ───── */
+  .lb-scrim {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+    padding: 40px 20px;
+  }
+  .lb-scrim.open { display: flex; }
+  .lb {
+    position: relative;
+    width: 100%;
+    max-width: 980px;
+    max-height: 90vh;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 22px;
+    overflow: hidden auto;
+  }
+  .lb-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    z-index: 2;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    color: var(--text);
+    border: 1px solid var(--line-strong);
+    font-size: 20px;
+    display: grid; place-items: center;
+    backdrop-filter: blur(8px);
+  }
+  .lb-close:hover { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .lb-header {
+    position: relative;
+    padding: 48px 44px 36px;
+    background: linear-gradient(135deg, var(--lb-c1, var(--surface-2)), var(--surface) 65%);
+    border-bottom: 1px solid var(--line);
+  }
+  .lb-header::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 500px 200px at 80% 0%, color-mix(in oklch, var(--accent) 20%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .lb-header > * { position: relative; }
+  .lb-head-row {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .lb-flag {
+    width: 130px; height: 90px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px var(--line-strong);
+  }
+  .lb-head-meta { flex: 1; }
+  .lb-head-meta .chip-row { display: flex; gap: 8px; margin-bottom: 14px; }
+  .lb-head-meta h2 {
+    font-family: var(--f-display);
+    font-size: 56px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin: 0;
+    font-variation-settings: "opsz" 144;
+  }
+  .lb-head-meta .sub {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+  .lb-content {
+    padding: 36px 44px 44px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+  .lb-section h4 {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  .lb-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 24px;
+  }
+  .lb-stat .n {
+    font-family: var(--f-display);
+    font-size: 36px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .lb-stat .n em { color: var(--accent); font-style: italic; }
+  .lb-stat .l {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+  .lb-keyplayers { display: flex; flex-direction: column; gap: 10px; }
+  .lb-player {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  .lb-player .avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), color-mix(in oklch, var(--accent) 50%, black));
+    display: grid; place-items: center;
+    font-family: var(--f-display);
+    font-size: 15px;
+    color: var(--accent-ink);
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+  }
+  .lb-player .info { flex: 1; }
+  .lb-player .info .nm {
+    font-family: var(--f-sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .lb-player .info .rl {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .lb-historia {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .lb-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 13px;
+  }
+  .lb-row:last-child { border-bottom: 0; }
+  .lb-row .k { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); }
+  .lb-row .v { font-family: var(--f-display); color: var(--text); letter-spacing: -0.015em; }
+  .lb-quote {
+    grid-column: 1 / -1;
+    padding: 28px;
+    background: color-mix(in oklch, var(--accent) 8%, var(--surface-2));
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    font-family: var(--f-display);
+    font-size: 22px;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    font-style: italic;
+  }
+  .lb-quote .cite {
+    display: block;
+    margin-top: 14px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-style: normal;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 800px) {
+    .lb-content { grid-template-columns: 1fr; }
+    .lb-head-row { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div id="m26-nav-slot"></div>
+
+<!-- Hero -->
+<section class="sel-hero">
+  <div class="wrap">
+    <span class="eyebrow"
+      data-i18n-es="● 48 selecciones · 6 confederaciones · 12 grupos"
+      data-i18n-en="● 48 nations · 6 confederations · 12 groups">
+      ● 48 selecciones · 6 confederaciones · 12 grupos
+    </span>
+    <div class="sel-hero-grid">
+      <h1 data-i18n-es="Las <em>48</em> que<br>pelearán la copa."
+          data-i18n-en="The <em>48</em> who<br>will fight for the cup.">
+        Las <em>48</em> que<br>pelearán la copa.
+      </h1>
+      <div class="stats">
+        <div class="stat"><div class="n"><em>32</em></div><div class="l" data-i18n-es="Clasificadas" data-i18n-en="Qualified">Clasificadas</div></div>
+        <div class="stat"><div class="n">13</div><div class="l" data-i18n-es="En repechaje" data-i18n-en="In playoffs">En repechaje</div></div>
+        <div class="stat"><div class="n">3</div><div class="l" data-i18n-es="Anfitrionas" data-i18n-en="Hosts">Anfitrionas</div></div>
+        <div class="stat"><div class="n">104</div><div class="l" data-i18n-es="Partidos totales" data-i18n-en="Total matches">Partidos totales</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <div class="wrap toolbar-inner">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="search" placeholder="Buscar selección…" data-i18n-es-attr="placeholder" data-ph-es="Buscar selección…" data-ph-en="Search team…"/>
+    </div>
+    <div class="filters">
+      <div class="filter-group" data-filter="conf">
+        <span class="lbl" data-i18n-es="Confederación" data-i18n-en="Confed">Confederación</span>
+        <button data-val="all" class="active" data-i18n-es="Todas" data-i18n-en="All">Todas</button>
+        <button data-val="UEFA">UEFA</button>
+        <button data-val="CONMEBOL">CONMEBOL</button>
+        <button data-val="CONCACAF">CONCACAF</button>
+        <button data-val="AFC">AFC</button>
+        <button data-val="CAF">CAF</button>
+        <button data-val="OFC">OFC</button>
+      </div>
+      <div class="filter-group" data-filter="status">
+        <span class="lbl" data-i18n-es="Estado" data-i18n-en="Status">Estado</span>
+        <button data-val="all" class="active" data-i18n-es="Todos" data-i18n-en="All">Todos</button>
+        <button data-val="q" data-i18n-es="Clasificada" data-i18n-en="Qualified">Clasificada</button>
+        <button data-val="host" data-i18n-es="Anfitriona" data-i18n-en="Host">Anfitriona</button>
+        <button data-val="p" data-i18n-es="Repechaje" data-i18n-en="Playoff">Repechaje</button>
+      </div>
+    </div>
+    <div class="sort-toggle" data-filter="sort">
+      <button data-val="rank" class="active" data-i18n-es="Ranking" data-i18n-en="Rank">Ranking</button>
+      <button data-val="az" data-i18n-es="A–Z" data-i18n-en="A–Z">A–Z</button>
+      <button data-val="cups" data-i18n-es="Títulos" data-i18n-en="Titles">Títulos</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap section">
+  <!-- Group chips -->
+  <div class="group-bar" id="group-bar"></div>
+
+  <div class="results-meta">
+    <div class="count"><span id="result-n">48</span> <em data-i18n-es="selecciones" data-i18n-en="teams">selecciones</em></div>
+    <div class="tag" id="result-tag" data-i18n-es="Ordenadas por ranking FIFA" data-i18n-en="Sorted by FIFA ranking">Ordenadas por ranking FIFA</div>
+  </div>
+
+  <!-- Grid -->
+  <div class="team-grid" id="team-grid"></div>
+</main>
+
+<!-- Lightbox -->
+<div class="lb-scrim" id="lightbox">
+  <div class="lb" id="lb-content"></div>
+</div>
+
+<div id="m26-footer-slot"></div>
+
+<script src="assets/shared.js"></script>
+<script>M26.init({ active: "selecciones" });</script>
+<script>
+/* ── Data: 48 selecciones ─────────────────────────────────── */
+const T = (flag, name, en, conf, rank, cups, finals, wc, group, st, c1, keyP, manager, stadium, quote) => ({
+  flag, name, en, conf, rank, cups, finals, wc, group, st, c1, keyP, manager, stadium, quote
+});
+
+const TEAMS = [
+  // UEFA
+  T("fr","Francia","France","UEFA", 2, 2, 4, 17, "A", "q", "oklch(0.55 0.22 270)", ["K. Mbappé · Fwd","A. Tchouaméni · Mid","W. Saliba · Def"], "Didier Deschamps", "Stade de France", "Jugamos para ganar; ganar nunca es rutina."),
+  T("es","España","Spain","UEFA", 1, 1, 1, 17, "B", "q", "oklch(0.63 0.22 20)", ["Lamine Yamal · Fwd","Rodri · Mid","Pedri · Mid"], "Luis de la Fuente", "Santiago Bernabéu", "La Roja es memoria, fútbol y paciencia."),
+  T("en","Inglaterra","England","UEFA", 5, 1, 1, 17, "C", "q", "oklch(0.65 0.18 25)", ["J. Bellingham · Mid","H. Kane · Fwd","B. Saka · Fwd"], "Thomas Tuchel", "Wembley", "No volvemos a casa. Esta vez venimos por todo."),
+  T("de","Alemania","Germany","UEFA", 9, 4, 8, 21, "D", "q", "oklch(0.3 0.05 60)", ["F. Wirtz · Mid","J. Musiala · Mid","K. Havertz · Fwd"], "Julian Nagelsmann", "Allianz Arena", "La Mannschaft se reinventa cada generación."),
+  T("it","Italia","Italy","UEFA", 11, 4, 6, 18, "E", "p", "oklch(0.58 0.15 140)", ["N. Barella · Mid","F. Chiesa · Fwd","G. Donnarumma · GK"], "Luciano Spalletti", "Stadio Olimpico", "Il Mondiale è nostalgia; il gioco è destino."),
+  T("pt","Portugal","Portugal","UEFA", 7, 0, 0, 9, "F", "q", "oklch(0.55 0.2 30)", ["B. Fernandes · Mid","R. Leão · Fwd","B. Silva · Mid"], "Roberto Martínez", "Estádio da Luz", "Entre talento y hambre, cabe un título."),
+  T("nl","Países Bajos","Netherlands","UEFA", 6, 0, 3, 12, "G", "q", "oklch(0.62 0.2 35)", ["V. van Dijk · Def","F. de Jong · Mid","C. Gakpo · Fwd"], "Ronald Koeman", "Johan Cruijff ArenA", "Totaalvoetbal: el espacio es nuestro idioma."),
+  T("be","Bélgica","Belgium","UEFA", 10, 0, 0, 14, "H", "q", "oklch(0.7 0.17 85)", ["K. De Bruyne · Mid","R. Lukaku · Fwd","J. Doku · Fwd"], "Domenico Tedesco", "Roi Baudouin", "La generación dorada quiere el relato final."),
+  T("hr","Croacia","Croatia","UEFA", 8, 0, 1, 6, "A", "q", "oklch(0.6 0.22 20)", ["L. Modrić · Mid","J. Gvardiol · Def","M. Pašalić · Mid"], "Zlatko Dalić", "Stadion Maksimir", "Pequeños en mapa, gigantes en corazón."),
+  T("ch","Suiza","Switzerland","UEFA", 18, 0, 0, 12, "B", "q", "oklch(0.6 0.22 20)", ["G. Xhaka · Mid","M. Akanji · Def","B. Embolo · Fwd"], "Murat Yakin", "St. Jakob-Park", "Precisión suiza, espíritu alpino."),
+  T("dk","Dinamarca","Denmark","UEFA", 16, 0, 0, 6, "C", "q", "oklch(0.62 0.22 20)", ["C. Eriksen · Mid","R. Højlund · Fwd","P. Hjulmand · Mid"], "Brian Riemer", "Parken", "Dinamita roja — fútbol directo, sin miedo."),
+  T("pl","Polonia","Poland","UEFA", 28, 0, 0, 9, "D", "p", "oklch(0.65 0.22 20)", ["R. Lewandowski · Fwd","P. Zieliński · Mid","J. Kiwior · Def"], "Michał Probierz", "Stadion Narodowy", "Lewa marca goles; Polonia busca el rugido."),
+
+  // CONMEBOL
+  T("ar","Argentina","Argentina","CONMEBOL", 3, 3, 6, 18, "A", "q", "oklch(0.62 0.18 240)", ["L. Messi · Fwd","J. Álvarez · Fwd","E. Martínez · GK"], "Lionel Scaloni", "Monumental", "Queremos que el niño que sueña con Messi siga soñando."),
+  T("br","Brasil","Brazil","CONMEBOL", 4, 5, 7, 22, "B", "q", "oklch(0.72 0.17 155)", ["Vinícius Jr. · Fwd","Rodrygo · Fwd","Bruno G. · Mid"], "Dorival Júnior", "Maracanã", "O hexa se busca com samba no pé y disciplina."),
+  T("ur","Uruguay","Uruguay","CONMEBOL", 12, 2, 2, 14, "C", "q", "oklch(0.55 0.2 240)", ["F. Valverde · Mid","D. Núñez · Fwd","R. Araújo · Def"], "Marcelo Bielsa", "Centenario", "Celeste — 1930 vive en cada grito."),
+  T("co","Colombia","Colombia","CONMEBOL", 14, 0, 0, 7, "D", "q", "oklch(0.85 0.17 95)", ["J. Rodríguez · Mid","L. Díaz · Fwd","D. Lerma · Mid"], "Néstor Lorenzo", "Metropolitano", "Colombia juega al ritmo de un país entero."),
+  T("ec","Ecuador","Ecuador","CONMEBOL", 26, 0, 0, 5, "E", "q", "oklch(0.8 0.17 95)", ["M. Caicedo · Mid","P. Hincapié · Def","E. Valencia · Fwd"], "Sebastián Beccacece", "Atahualpa", "La Tri: altura, agua y puños apretados."),
+  T("py","Paraguay","Paraguay","CONMEBOL", 45, 0, 0, 9, "F", "q", "oklch(0.62 0.2 20)", ["J. Enciso · Mid","M. Almirón · Fwd","G. Gómez · Def"], "Gustavo Alfaro", "Defensores del Chaco", "Guaraní orgullo — volvimos al mapa."),
+
+  // CONCACAF (hosts)
+  T("us","Estados Unidos","United States","CONCACAF", 15, 0, 0, 11, "G", "host", "oklch(0.55 0.22 260)", ["C. Pulisic · Fwd","W. McKennie · Mid","T. Weah · Fwd"], "Mauricio Pochettino", "MetLife Stadium", "Home turf. This time, we write the ending."),
+  T("mx","México","Mexico","CONCACAF", 19, 0, 0, 17, "H", "host", "oklch(0.6 0.22 140)", ["E. Álvarez · Mid","S. Giménez · Fwd","H. Lozano · Fwd"], "Javier Aguirre", "Estadio Azteca", "El Tri vuelve a casa — el Azteca nunca duerme."),
+  T("ca","Canadá","Canada","CONCACAF", 32, 0, 0, 2, "I", "host", "oklch(0.6 0.22 20)", ["A. Davies · Def","J. David · Fwd","T. Buchanan · Mid"], "Jesse Marsch", "BMO Field", "Les Rouges — jóvenes, rápidos, hambrientos."),
+  T("cr","Costa Rica","Costa Rica","CONCACAF", 42, 0, 0, 6, "J", "q", "oklch(0.4 0.1 270)", ["K. Navas · GK","J. Campbell · Fwd","C. Borges · Mid"], "Gustavo Alfaro", "Estadio Nacional", "Pura Vida — tico tiene corazón de león."),
+
+  // AFC
+  T("jp","Japón","Japan","AFC", 17, 0, 0, 7, "K", "q", "oklch(0.62 0.22 20)", ["T. Minamino · Fwd","T. Kubo · Fwd","W. Endo · Mid"], "Hajime Moriyasu", "Saitama Stadium", "Disciplina samurái, velocidad moderna."),
+  T("kr","Corea del Sur","South Korea","AFC", 22, 0, 0, 11, "L", "q", "oklch(0.6 0.22 240)", ["Son Heung-min · Fwd","Lee Kang-in · Mid","Kim Min-jae · Def"], "Hong Myung-bo", "Seoul World Cup Stadium", "태극전사 — guerreros del taegeuk."),
+  T("au","Australia","Australia","AFC", 27, 0, 0, 6, "A", "q", "oklch(0.55 0.22 260)", ["M. Ryan · GK","A. Irvine · Mid","M. Duke · Fwd"], "Tony Popovic", "Stadium Australia", "Socceroos — down under, up for the fight."),
+  T("sa","Arabia Saudita","Saudi Arabia","AFC", 57, 0, 0, 7, "B", "q", "oklch(0.5 0.17 155)", ["S. Al-Shehri · Fwd","S. Al-Dawsari · Mid","M. Kanno · Mid"], "Hervé Renard", "King Abdullah Sports City", "La arena y el gol — fútbol del desierto."),
+
+  // CAF
+  T("ma","Marruecos","Morocco","CAF", 13, 0, 0, 7, "C", "q", "oklch(0.6 0.22 20)", ["H. Ziyech · Mid","A. Hakimi · Def","Y. En-Nesyri · Fwd"], "Walid Regragui", "Grand Stade", "Atlas — rugimos por África y el mundo árabe."),
+  T("sn","Senegal","Senegal","CAF", 20, 0, 0, 4, "D", "q", "oklch(0.58 0.2 155)", ["S. Mané · Fwd","E. Mendy · GK","K. Koulibaly · Def"], "Pape Thiaw", "Abdoulaye Wade", "Teranga — hospitalidad y poder en el mismo equipo."),
+
+  // Placeholders para completar 48 (repechaje y por clasificar)
+  T("no","Noruega","Norway","UEFA", 29, 0, 0, 3, "E", "p", "oklch(0.6 0.22 20)", ["E. Haaland · Fwd","M. Ødegaard · Mid","A. Sørloth · Fwd"], "Ståle Solbakken", "Ullevaal", "Haaland busca su primer Mundial: los vikingos llegaron."),
+  T("se","Suecia","Sweden","UEFA", 33, 0, 0, 12, "F", "p", "oklch(0.6 0.2 240)", ["A. Isak · Fwd","V. Gyökeres · Fwd","D. Olsen · GK"], "Jon Dahl Tomasson", "Friends Arena", "Azul y amarillo — regreso al gran escenario."),
+  T("tr","Turquía","Türkiye","UEFA", 31, 0, 0, 2, "G", "p", "oklch(0.6 0.22 20)", ["A. Güler · Mid","H. Çalhanoğlu · Mid","M. Demiral · Def"], "Vincenzo Montella", "Atatürk", "La media luna eleva el orgullo: Türkiye está lista."),
+  T("gr","Grecia","Greece","UEFA", 38, 0, 0, 3, "H", "p", "oklch(0.55 0.2 240)", ["G. Masouras · Fwd","K. Tsimikas · Def","O. Vlachodimos · GK"], "Ivan Jovanović", "OAKA", "Desde los dioses hasta el gol: Ελλάδα vuelve."),
+  T("sc","Escocia","Scotland","UEFA", 40, 0, 0, 8, "I", "p", "oklch(0.55 0.2 240)", ["S. McTominay · Mid","K. Tierney · Def","J. McGinn · Mid"], "Steve Clarke", "Hampden Park", "Tartán y gaita — Escocia respira fútbol."),
+  T("ws","Gales","Wales","UEFA", 44, 0, 0, 2, "J", "p", "oklch(0.62 0.22 20)", ["H. Wilson · Fwd","B. Johnson · Mid","J. Rodon · Def"], "Craig Bellamy", "Cardiff City", "Cymru am byth — el dragón despierta."),
+  T("mx2","Egipto","Egypt","CAF", 35, 0, 0, 3, "K", "q", "oklch(0.6 0.22 20)", ["M. Salah · Fwd","M. Elneny · Mid","O. Marmoush · Fwd"], "Hossam Hassan", "Cairo Stadium", "El Nilo late: los Faraones avanzan."),
+  T("ng","Nigeria","Nigeria","CAF", 34, 0, 0, 6, "L", "q", "oklch(0.58 0.2 155)", ["V. Osimhen · Fwd","A. Iwobi · Mid","W. Ndidi · Mid"], "Bruno Labbadia", "Moshood Abiola", "Super Eagles — garras africanas."),
+  T("ci","Costa de Marfil","Ivory Coast","CAF", 41, 0, 0, 3, "A", "q", "oklch(0.62 0.22 20)", ["S. Haller · Fwd","F. Kessié · Mid","S. Fofana · Mid"], "Emerse Faé", "Stade Alassane", "Elefantes — imparables desde Abiyán."),
+  T("gh","Ghana","Ghana","CAF", 73, 0, 0, 4, "B", "p", "oklch(0.62 0.22 20)", ["M. Kudus · Mid","A. Semenyo · Fwd","T. Partey · Mid"], "Otto Addo", "Accra Sports Stadium", "Black Stars — la estrella negra vuelve a brillar."),
+  T("cm","Camerún","Cameroon","CAF", 43, 0, 0, 8, "C", "p", "oklch(0.58 0.2 155)", ["A. Onana · GK","C. Anguissa · Mid","V. Aboubakar · Fwd"], "Marc Brys", "Olembé", "Indomables leones — raíces profundas."),
+  T("iq","Irán","Iran","AFC", 21, 0, 0, 6, "D", "q", "oklch(0.58 0.2 155)", ["M. Taremi · Fwd","S. Azmoun · Fwd","E. Hajsafi · Def"], "Amir Ghalenoei", "Azadi", "Team Melli — orgullo persa sobre el césped."),
+  T("qa","Catar","Qatar","AFC", 56, 0, 0, 1, "E", "q", "oklch(0.55 0.2 20)", ["A. Ali · Fwd","A. Afif · Mid","B. Khoukhi · Def"], "Bartolomé Márquez", "Lusail", "Campeones de Asia — defendemos la bandera."),
+  T("uz","Uzbekistán","Uzbekistan","AFC", 55, 0, 0, 0, "F", "q", "oklch(0.62 0.22 20)", ["E. Shomurodov · Fwd","A. Iskanderov · Mid","J. Quincoces · Def"], "Srečko Katanec", "Bunyodkor", "Primer Mundial: la historia empieza hoy."),
+  T("jo","Jordania","Jordan","AFC", 64, 0, 0, 0, "G", "q", "oklch(0.55 0.2 240)", ["M. Al-Taamari · Fwd","Y. Ibrahim · Mid","A. Al Rawabdeh · Def"], "Jamal Sellami", "Amman International", "Nashama — caballeros del desierto."),
+  T("zl","Nueva Zelanda","New Zealand","OFC", 94, 0, 0, 2, "H", "q", "oklch(0.3 0.05 240)", ["C. Wood · Fwd","M. Garbett · Mid","L. Stamenić · Def"], "Darren Bazeley", "Eden Park", "All Whites — haka antes del silbato."),
+  T("cl","Chile","Chile","CONMEBOL", 46, 0, 0, 9, "I", "p", "oklch(0.62 0.22 20)", ["A. Vidal · Mid","B. Brereton · Fwd","G. Medel · Def"], "Gabriel Milito", "Monumental", "La Roja — volvemos con memoria y hambre."),
+  T("ve","Venezuela","Venezuela","CONMEBOL", 54, 0, 0, 0, "J", "p", "oklch(0.62 0.2 20)", ["Y. Rondón · Fwd","Y. Soteldo · Fwd","T. Rincón · Mid"], "Fernando Batista", "Misael Delgado", "La Vinotinto debuta — historia en vivo."),
+  T("pn","Panamá","Panama","CONCACAF", 39, 0, 0, 1, "K", "p", "oklch(0.62 0.22 20)", ["R. Fajardo · Mid","J. Rodríguez · Fwd","F. Davis · Def"], "Thomas Christiansen", "Rommel Fernández", "Marea canalera — Panamá defiende colores."),
+  T("ja","Jamaica","Jamaica","CONCACAF", 53, 0, 0, 1, "L", "p", "oklch(0.62 0.2 155)", ["L. Bailey · Fwd","M. Antonio · Fwd","D. Williams · Def"], "Steve McClaren", "Independence Park", "Reggae Boyz — regreso con ritmo."),
+];
+
+/* ── Normalize fallbacks ── */
+TEAMS.forEach(t => { if (!t.flag) t.flag = "xx"; });
+
+/* ── State ── */
+let filter = { conf: "all", status: "all", group: "all", sort: "rank", q: "" };
+
+/* ── Render ── */
+const $ = (s, p=document) => p.querySelector(s);
+const $$ = (s, p=document) => [...p.querySelectorAll(s)];
+
+function statusLabel(s, lang) {
+  if (s === "q") return lang === "en" ? "Qualified" : "Clasificada";
+  if (s === "host") return lang === "en" ? "Host" : "Anfitriona";
+  return lang === "en" ? "Playoff" : "Repechaje";
+}
+
+function applyFilters() {
+  const lang = M26.getLang();
+  let list = TEAMS.filter(t => {
+    if (filter.conf !== "all" && t.conf !== filter.conf) return false;
+    if (filter.status !== "all") {
+      if (filter.status === "q"    && t.st !== "q")    return false;
+      if (filter.status === "host" && t.st !== "host") return false;
+      if (filter.status === "p"    && t.st !== "p")    return false;
+    }
+    if (filter.group !== "all" && t.group !== filter.group) return false;
+    if (filter.q) {
+      const q = filter.q.toLowerCase();
+      if (!t.name.toLowerCase().includes(q) && !t.en.toLowerCase().includes(q) && !t.conf.toLowerCase().includes(q)) return false;
+    }
+    return true;
+  });
+
+  if (filter.sort === "rank")  list.sort((a,b) => a.rank - b.rank);
+  if (filter.sort === "az")    list.sort((a,b) => (lang==="en"?a.en:a.name).localeCompare(lang==="en"?b.en:b.name));
+  if (filter.sort === "cups")  list.sort((a,b) => b.cups - a.cups || a.rank - b.rank);
+
+  const grid = $("#team-grid");
+  grid.innerHTML = list.map((t, i) => `
+    <article class="team-card qualified-${t.st==="p"?"no":"yes"}" data-idx="${TEAMS.indexOf(t)}" style="--team-c1:${t.c1}">
+      <div class="team-rank">#${t.rank}</div>
+      <div class="team-top">
+        <div class="team-flag ph flag flag-${t.flag}"></div>
+        <span class="team-status ${t.st}">${statusLabel(t.st, lang)}</span>
+      </div>
+      <div>
+        <h3 class="team-name">${lang==="en"?t.en:t.name}</h3>
+        <div class="team-conf">${t.conf} · <span>${lang==="en"?"Group":"Grupo"} ${t.group}</span></div>
+      </div>
+      <div class="team-stats">
+        <div class="s"><span class="v">${t.cups>0?`<em>${t.cups}</em>`:"0"}</span><span class="k">${lang==="en"?"Titles":"Títulos"}</span></div>
+        <div class="s"><span class="v">${t.finals}</span><span class="k">${lang==="en"?"Finals":"Finales"}</span></div>
+        <div class="s"><span class="v">${t.wc}</span><span class="k">${lang==="en"?"WC played":"Mundiales"}</span></div>
+      </div>
+    </article>
+  `).join("");
+
+  $("#result-n").textContent = list.length;
+  const tag = $("#result-tag");
+  const sortTxt = filter.sort === "rank" ? (lang==="en"?"Sorted by FIFA ranking":"Ordenadas por ranking FIFA")
+               : filter.sort === "az"   ? (lang==="en"?"Alphabetical order":"Orden alfabético")
+               : (lang==="en"?"By number of titles":"Por cantidad de títulos");
+  tag.textContent = sortTxt;
+}
+
+/* ── Groups bar (A–L) ── */
+function renderGroups() {
+  const lang = M26.getLang();
+  const gb = $("#group-bar");
+  const groups = [..."ABCDEFGHIJKL"];
+  const all = `<button data-g="all" class="${filter.group==="all"?"active":""}">${lang==="en"?"All groups":"Todos los grupos"} <span class="n">${TEAMS.length}</span></button>`;
+  const items = groups.map(g => {
+    const n = TEAMS.filter(t => t.group === g).length;
+    return `<button data-g="${g}" class="${filter.group===g?"active":""}">${lang==="en"?"Group":"Grupo"} ${g}<span class="n">${n}</span></button>`;
+  }).join("");
+  gb.innerHTML = all + items;
+}
+
+/* ── Lightbox ── */
+function openLightbox(idx) {
+  const lang = M26.getLang();
+  const t = TEAMS[idx];
+  const el = $("#lb-content");
+  const teamName = lang==="en"?t.en:t.name;
+  el.style.setProperty("--lb-c1", t.c1);
+  el.innerHTML = `
+    <button class="lb-close" id="lb-close">×</button>
+    <div class="lb-header">
+      <div class="lb-head-row">
+        <div class="lb-flag ph flag flag-${t.flag}"></div>
+        <div class="lb-head-meta">
+          <div class="chip-row">
+            <span class="chip soft">${t.conf}</span>
+            <span class="chip">${lang==="en"?"Group":"Grupo"} ${t.group}</span>
+            <span class="chip accent">#${t.rank} FIFA</span>
+          </div>
+          <h2>${teamName}</h2>
+          <div class="sub">${t.stadium} · ${lang==="en"?"Coach":"Técnico"}: ${t.manager}</div>
+        </div>
+      </div>
+    </div>
+    <div class="lb-content">
+      <div class="lb-section">
+        <h4>${lang==="en"?"Tournament history":"Historia en mundiales"}</h4>
+        <div class="lb-stats">
+          <div class="lb-stat"><div class="n">${t.cups>0?`<em>${t.cups}</em>`:"0"}</div><div class="l">${lang==="en"?"World Cups won":"Copas ganadas"}</div></div>
+          <div class="lb-stat"><div class="n">${t.finals}</div><div class="l">${lang==="en"?"Finals reached":"Finales jugadas"}</div></div>
+          <div class="lb-stat"><div class="n">${t.wc}</div><div class="l">${lang==="en"?"Editions played":"Ediciones jugadas"}</div></div>
+          <div class="lb-stat"><div class="n">${t.rank<=20?"<em>Alto</em>":t.rank<=40?"Medio":"Emergente"}</div><div class="l">${lang==="en"?"Pre-tournament form":"Forma pre-mundial"}</div></div>
+        </div>
+        <div class="lb-historia" style="margin-top:24px;">
+          <div class="lb-row"><span class="k">${lang==="en"?"First appearance":"Primer Mundial"}</span><span class="v">${t.wc>=15?"1930":t.wc>=10?"1950":t.wc>=5?"1970":"2000s"}</span></div>
+          <div class="lb-row"><span class="k">${lang==="en"?"Best finish":"Mejor posición"}</span><span class="v">${t.cups>0?(lang==="en"?"Champion":"Campeón"):t.finals>0?(lang==="en"?"Runner-up":"Subcampeón"):t.wc>=5?(lang==="en"?"Quarter-finals":"Cuartos"):(lang==="en"?"Group stage":"Fase de grupos")}</span></div>
+          <div class="lb-row"><span class="k">${lang==="en"?"Historic kit":"Uniforme histórico"}</span><span class="v" style="display:flex;align-items:center;gap:8px;">${teamName} <span style="display:inline-block;width:18px;height:18px;border-radius:4px;background:${t.c1};"></span></span></div>
+        </div>
+      </div>
+      <div class="lb-section">
+        <h4>${lang==="en"?"Key players":"Jugadores clave"}</h4>
+        <div class="lb-keyplayers">
+          ${t.keyP.map(p => {
+            const [name, role] = p.split(" · ");
+            const initials = name.split(" ").map(w => w[0]).join("").slice(0,2).toUpperCase();
+            return `<div class="lb-player">
+              <div class="avatar">${initials}</div>
+              <div class="info"><div class="nm">${name}</div><div class="rl">${role}</div></div>
+            </div>`;
+          }).join("")}
+        </div>
+      </div>
+      <div class="lb-quote">
+        "${t.quote}"
+        <span class="cite">— ${t.manager}, ${lang==="en"?"Head coach":"Director técnico"}</span>
+      </div>
+    </div>
+  `;
+  $("#lightbox").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeLightbox() {
+  $("#lightbox").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+/* ── Events ── */
+document.addEventListener("click", (e) => {
+  // filter groups
+  const fg = e.target.closest(".filter-group button, .sort-toggle button");
+  if (fg) {
+    const group = fg.closest("[data-filter]").dataset.filter;
+    const val = fg.dataset.val;
+    filter[group] = val;
+    fg.parentElement.querySelectorAll("button").forEach(b => b.classList.toggle("active", b === fg));
+    applyFilters();
+    return;
+  }
+  // group chips
+  const gc = e.target.closest("#group-bar button");
+  if (gc) {
+    filter.group = gc.dataset.g;
+    $$("#group-bar button").forEach(b => b.classList.toggle("active", b === gc));
+    applyFilters();
+    return;
+  }
+  // team card
+  const tc = e.target.closest(".team-card");
+  if (tc) {
+    openLightbox(+tc.dataset.idx);
+    return;
+  }
+  if (e.target.id === "lb-close" || e.target.id === "lightbox") {
+    closeLightbox();
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeLightbox();
+});
+$("#search").addEventListener("input", (e) => {
+  filter.q = e.target.value;
+  applyFilters();
+});
+$("#search").setAttribute("placeholder", M26.getLang()==="en" ? "Search team…" : "Buscar selección…");
+
+/* Re-render on lang change */
+const origApply = M26.applyI18n;
+M26.applyI18n = function() {
+  origApply();
+  $("#search").setAttribute("placeholder", M26.getLang()==="en" ? "Search team…" : "Buscar selección…");
+  renderGroups();
+  applyFilters();
+};
+
+renderGroups();
+applyFilters();
+</script>
+</body>
+</html>

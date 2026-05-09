@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es" data-accent="tricolor">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mundial 26 — Inicio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Anton&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shared.css" />
+<style>
+  /* Acento tricolor solo para Inicio (paleta de los anfitriones) */
+  [data-accent="tricolor"] {
+    --accent: oklch(0.65 0.18 145);  /* verde MX */
+    --accent-2: oklch(0.62 0.22 25); /* rojo CA */
+    --accent-3: oklch(0.55 0.18 250); /* azul US */
+    --accent-ink: #ffffff;
+    --accent-soft: oklch(0.65 0.18 145 / 0.35);
+    --accent-dim: oklch(0.65 0.18 145 / 0.15);
+  }
+  body { background:
+    radial-gradient(ellipse 900px 600px at 25% -100px, oklch(0.65 0.18 145 / 0.16), transparent 60%),
+    radial-gradient(ellipse 900px 600px at 75% -100px, oklch(0.62 0.22 25 / 0.14), transparent 60%),
+    radial-gradient(ellipse 700px 400px at 50% 0px,  oklch(0.55 0.18 250 / 0.10), transparent 60%),
+    var(--bg);
+  }
+
+  /* ——— Hero ——— */
+  .hero {
+    position: relative;
+    padding: 60px 0 40px;
+    overflow: hidden;
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-meta {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px;
+    align-items: center;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 60px;
+  }
+  .hero-meta .eyebrow { color: var(--text-dim); }
+  .hero-meta .center { text-align: center; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); }
+  .hero-meta .right { text-align: right; }
+  .hero-meta strong { color: var(--accent); font-family: var(--f-display); font-size: 16px; font-weight: 500; font-style: italic; }
+
+  .hero-title-wrap { position: relative; }
+  .hero-stamp {
+    position: absolute;
+    top: -20px; right: 40px;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    transform: rotate(5deg);
+    border: 1px solid var(--accent);
+    padding: 10px 16px;
+    border-radius: 4px;
+  }
+  .hero-ratings {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-top: 40px;
+  }
+  .countdown {
+    display: flex; gap: 16px;
+  }
+  .countdown .cell {
+    text-align: center;
+    min-width: 72px;
+  }
+  .countdown .num {
+    font-family: var(--f-display);
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+  }
+  .countdown .lbl {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-top: 6px;
+  }
+  .hero-cta { display: flex; gap: 12px; margin-top: 32px; }
+
+  .hero-art {
+    grid-column: 1 / -1;
+    margin-top: 60px;
+    height: 460px;
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+    background: #0a0a0d;
+    border: 1px solid var(--line);
+  }
+  .hero-art .bg-photo {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    filter: saturate(0.85) contrast(1.05) brightness(0.92);
+  }
+  .hero-art .photo-overlay {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(10,10,13,0.85) 0%, rgba(10,10,13,0.4) 35%, rgba(10,10,13,0) 55%, rgba(10,10,13,0.3) 100%),
+      linear-gradient(180deg, rgba(10,10,13,0.25) 0%, rgba(10,10,13,0) 40%, rgba(10,10,13,0.6) 100%),
+      radial-gradient(circle at 70% 50%, color-mix(in oklch, var(--accent) 18%, transparent), transparent 60%);
+  }
+  .hero-art .hero-caption {
+    position: absolute; left: 32px; bottom: 28px;
+    display: flex; flex-direction: column; gap: 10px;
+    max-width: 46%;
+  }
+  .hero-art .hero-caption h3 {
+    font-family: var(--f-display);
+    font-size: 36px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin: 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+  }
+  .hero-art .hero-caption h3 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-art .hero-caption p {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 0;
+  }
+  .hero-art .corner-tag {
+    position: absolute; top: 20px; right: 24px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: rgba(10,10,13,0.55);
+    backdrop-filter: blur(8px);
+    padding: 8px 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 999px;
+  }
+  .hero-art .corner-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  /* ——— Bento ——— */
+  .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+  .b { border-radius: var(--radius-lg); padding: 28px; border: 1px solid var(--line); background: var(--surface); position: relative; overflow: hidden; }
+  .b-hero { grid-column: span 8; min-height: 380px; background: linear-gradient(135deg, color-mix(in oklch, var(--accent) 15%, var(--surface)), var(--surface) 60%); }
+  .b-side { grid-column: span 4; min-height: 380px; }
+  .b-half { grid-column: span 6; }
+  .b-third { grid-column: span 4; }
+  .b-quarter { grid-column: span 3; }
+  .b-full { grid-column: span 12; }
+
+  .b h3 { margin-bottom: 18px; }
+  .b .eyebrow { margin-bottom: 12px; display: block; }
+  .b-label { position: absolute; top: 24px; right: 24px; }
+
+  /* Probability bars */
+  .prob-row { display: grid; grid-template-columns: 48px 1fr 60px; align-items: center; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .prob-row:last-child { border-bottom: none; }
+  .prob-flag { height: 32px; border-radius: 4px; border: 1px solid var(--line); }
+  .prob-bar { height: 6px; border-radius: 3px; background: var(--surface-3); overflow: hidden; position: relative; }
+  .prob-bar span { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+  /* Tricolor prob bars */
+  .prob-row[data-team="ar"] .prob-bar span { background: linear-gradient(90deg, oklch(0.72 0.13 230), #fff); }
+  .prob-row[data-team="fr"] .prob-bar span { background: linear-gradient(90deg, oklch(0.55 0.18 250), #fff, oklch(0.62 0.22 25)); }
+  .prob-row[data-team="br"] .prob-bar span { background: linear-gradient(90deg, oklch(0.65 0.18 145), oklch(0.82 0.16 95)); }
+  .prob-row[data-team="es"] .prob-bar span { background: linear-gradient(90deg, oklch(0.63 0.22 20), oklch(0.82 0.16 85)); }
+  .prob-row[data-team="en"] .prob-bar span { background: linear-gradient(90deg, #fff, oklch(0.63 0.22 20)); }
+  .prob-name { font-family: var(--f-display); font-size: 18px; display: block; }
+  .prob-pct { font-family: var(--f-mono); font-size: 16px; text-align: right; color: var(--accent); font-weight: 500; }
+
+  /* Match card */
+  .match {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .match:last-child { border-bottom: none; }
+  .match .flag-side { display: flex; align-items: center; gap: 12px; }
+  .match .flag-side.away { flex-direction: row-reverse; text-align: right; }
+  .match .mini-flag { width: 36px; height: 24px; border-radius: 3px; border: 1px solid var(--line); }
+  .match .team { font-family: var(--f-display); font-size: 17px; }
+  .match .score { font-family: var(--f-display); font-size: 28px; letter-spacing: -0.03em; min-width: 80px; text-align: center; }
+  .match .score.live { color: var(--accent); }
+  .match .date { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); text-align: center; }
+
+  /* Host banner */
+  .hosts {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    margin-top: 16px;
+  }
+  .hosts .host {
+    padding: 20px;
+    background: var(--surface-2);
+    position: relative;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hosts .host .name { font-family: var(--f-display); font-size: 32px; letter-spacing: -0.03em; }
+  .hosts .host .stat { font-family: var(--f-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.14em; text-transform: uppercase; }
+  .hosts .host .flag-bar { height: 4px; margin-bottom: 14px; border-radius: 2px; }
+
+  /* Stats strip */
+  .stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+  .stats-strip .stat-cell { border-left: 1px solid var(--line); padding-left: 20px; }
+  .stats-strip .stat-cell:first-child { border-left: none; padding-left: 0; }
+  .stats-strip .num {
+    font-family: var(--f-display);
+    font-size: 64px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+  }
+  .stats-strip .num em { color: var(--text); font-style: italic; }
+  .stats-strip .lbl {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* Editorial rail */
+  .editorial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .ed-card { cursor: pointer; }
+  .ed-card .ph { aspect-ratio: 4/3; border-radius: var(--radius); margin-bottom: 18px; overflow: hidden; position: relative; background: var(--surface-2); }
+  .ed-card .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .ed-card:hover .ph img { transform: scale(1.04); }
+  .ed-card .ph::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(10,10,13,0.55) 100%);
+    pointer-events: none;
+  }
+  .ed-card h4 { font-family: var(--f-display); font-size: 24px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 10px; }
+  .ed-card .body { font-size: 14px; }
+  /* Color accents per card chip — tricolor anfitriones rotando */
+  .ed-card[data-host="mx"] .chip { color: oklch(0.78 0.18 145); border-color: oklch(0.65 0.18 145 / 0.4); }
+  .ed-card[data-host="ca"] .chip { color: oklch(0.78 0.20 25);  border-color: oklch(0.62 0.22 25 / 0.4); }
+  .ed-card[data-host="us"] .chip { color: oklch(0.78 0.16 250); border-color: oklch(0.55 0.18 250 / 0.5); }
+  .ed-card .chip { margin-bottom: 14px; }
+
+  /* Bentos coloreados por host */
+  .b[data-host="mx"] { background: linear-gradient(135deg, oklch(0.65 0.18 145 / 0.18), var(--surface) 55%); border-color: oklch(0.65 0.18 145 / 0.25); }
+  .b[data-host="ca"] { background: linear-gradient(135deg, oklch(0.62 0.22 25 / 0.16), var(--surface) 55%);  border-color: oklch(0.62 0.22 25 / 0.25); }
+  .b[data-host="us"] { background: linear-gradient(135deg, oklch(0.55 0.18 250 / 0.16), var(--surface) 55%); border-color: oklch(0.55 0.18 250 / 0.28); }
+  .b[data-host="white"] { background: linear-gradient(135deg, rgba(255,255,255,0.07), var(--surface) 55%); border-color: rgba(255,255,255,0.14); }
+
+  .b[data-host="us"] .h3 em,
+  .b[data-host="us"] h3 em,
+  .b[data-host="us"] a.mono { color: oklch(0.78 0.16 250) !important; }
+  .b[data-host="ca"] .h3 em,
+  .b[data-host="ca"] h3 em,
+  .b[data-host="ca"] a.mono { color: oklch(0.78 0.20 25) !important; }
+  .b[data-host="mx"] .h3 em,
+  .b[data-host="mx"] h3 em,
+  .b[data-host="mx"] a.mono { color: oklch(0.78 0.18 145) !important; }
+  .host[data-host="ca"] .host-num { color: oklch(0.78 0.20 25); }
+  .host[data-host="us"] .host-num { color: oklch(0.78 0.16 250); }
+  .host[data-host="mx"] .host-num { color: oklch(0.78 0.18 145); }
+  .host[data-host="ca"] { border-left: 3px solid oklch(0.62 0.22 25 / 0.55); padding-left: 18px; }
+  .host[data-host="us"] { border-left: 3px solid oklch(0.55 0.18 250 / 0.55); padding-left: 18px; }
+  .host[data-host="mx"] { border-left: 3px solid oklch(0.65 0.18 145 / 0.55); padding-left: 18px; }
+
+  /* Tricolor stripe on stats strip */
+  .stats-strip { position: relative; }
+  .stats-strip::before {
+    content: "";
+    position: absolute; left: 0; right: 0; top: -40px;
+    height: 3px;
+    background: linear-gradient(90deg,
+      oklch(0.62 0.22 25) 0%, oklch(0.62 0.22 25) 33.33%,
+      #ffffff 33.33%,  #ffffff 66.66%,
+      oklch(0.65 0.18 145) 66.66%, oklch(0.65 0.18 145) 100%);
+    border-radius: 2px;
+    opacity: 0.7;
+  }
+
+  /* Ticker */
+  .ticker {
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+    margin: 80px 0;
+  }
+  .ticker-track {
+    display: flex;
+    gap: 60px;
+    animation: slide 45s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker-item {
+    font-family: var(--f-display);
+    font-size: 40px;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    font-variation-settings: "WONK" 1;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 60px;
+  }
+  .ticker-item::after {
+    content: "✦";
+    font-style: normal;
+    color: var(--accent);
+    font-size: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .hero-meta { grid-template-columns: 1fr; text-align: left !important; }
+    .hero-meta .right { text-align: left; }
+    .b-hero, .b-side, .b-half, .b-third, .b-quarter { grid-column: span 12; }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); }
+    .stats-strip .stat-cell { border-left: none; padding-left: 0; }
+    .hosts { grid-template-columns: 1fr; }
+    .editorial-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="m26-nav-slot"></div>
+
+<main>
+  <section class="hero wrap">
+    <div class="hero-meta">
+      <div>
+        <span class="eyebrow">EDICIÓN XXIII</span><br>
+        <span class="body" style="font-size:13px;"><span style="color:oklch(0.78 0.16 250)">Estados Unidos</span> · <span style="color:oklch(0.78 0.18 145)">México</span> · <span style="color:oklch(0.78 0.20 25)">Canadá</span></span>
+      </div>
+      <div class="center">11 JUN · 19 JUL · 2026</div>
+      <div class="right">
+        <span class="eyebrow">Volumen 01</span><br>
+        <strong>48 selecciones</strong>
+      </div>
+    </div>
+
+    <div class="hero-title-wrap">
+      <span class="hero-stamp"
+        data-i18n-es="EL PARTIDO MÁS<br>LARGO DEL MUNDO"
+        data-i18n-en="THE LONGEST<br>MATCH ON EARTH">EL PARTIDO MÁS<br>LARGO DEL MUNDO</span>
+      <h1 class="hero-title"
+        data-i18n-es="Un balón<br>rueda <em>ochenta<br>mil kilómetros.</em>"
+        data-i18n-en="A single ball<br>rolls <em>eighty<br>thousand miles.</em>">
+        Un balón<br>rueda <em>ochenta<br>mil kilómetros.</em>
+      </h1>
+    </div>
+
+    <div class="hero-ratings">
+      <div class="countdown" id="countdown" aria-label="Countdown">
+        <div class="cell"><div class="num" data-d>—</div><div class="lbl" data-i18n-es="Días" data-i18n-en="Days">Días</div></div>
+        <div class="cell"><div class="num" data-h>—</div><div class="lbl" data-i18n-es="Horas" data-i18n-en="Hours">Horas</div></div>
+        <div class="cell"><div class="num" data-m>—</div><div class="lbl" data-i18n-es="Min" data-i18n-en="Min">Min</div></div>
+        <div class="cell"><div class="num" data-s>—</div><div class="lbl" data-i18n-es="Seg" data-i18n-en="Sec">Seg</div></div>
+      </div>
+
+      <div class="hero-cta">
+        <a href="selecciones.html" class="btn primary"
+          data-i18n-es="Ver selecciones ↗"
+          data-i18n-en="View teams ↗">Ver selecciones ↗</a>
+        <a href="oraculo.html" class="btn"
+          data-i18n-es="Predicción IA"
+          data-i18n-en="AI Oracle">Predicción IA</a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <img src="assets/hero-trophy-ball.png" alt="Trofeo y balón oficial en el estadio" class="bg-photo"/>
+      <div class="photo-overlay"></div>
+      <div class="corner-tag">
+        <span class="dot"></span>
+        <span data-i18n-es="EN VIVO · 11 JUN 2026" data-i18n-en="LIVE · JUN 11, 2026">EN VIVO · 11 JUN 2026</span>
+      </div>
+      <div class="hero-caption">
+        <p data-i18n-es="EL TROFEO · BALÓN OFICIAL TRIONDA" data-i18n-en="THE TROPHY · OFFICIAL TRIONDA BALL">EL TROFEO · BALÓN OFICIAL TRIONDA</p>
+        <h3 data-i18n-es="Todo está <em>listo</em>." data-i18n-en="Everything is <em>ready</em>.">Todo está <em>listo</em>.</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento grid -->
+  <section class="wrap section">
+    <div class="bento">
+      <!-- Probabilities -->
+      <div class="b b-hero" data-section="probs" data-host="mx">
+        <span class="eyebrow"
+          data-i18n-es="● Predicciones del oráculo"
+          data-i18n-en="● Oracle predictions">● Predicciones del oráculo</span>
+        <h3 class="h2"
+          data-i18n-es="Probabilidad de<br><em style='color:var(--accent);font-style:italic'>levantar la copa</em>"
+          data-i18n-en="Probability of<br><em style='color:var(--accent);font-style:italic'>lifting the cup</em>">
+          Probabilidad de<br><em style="color:var(--accent);font-style:italic">levantar la copa</em>
+        </h3>
+        <div style="margin-top:28px">
+          <div class="prob-row" data-team="ar"><div class="ph flag flag-ar prob-flag"></div><div><span class="prob-name">Argentina</span><div class="prob-bar"><span style="width:22%"></span></div></div><div class="prob-pct">22.4%</div></div>
+          <div class="prob-row" data-team="fr"><div class="ph flag flag-fr prob-flag"></div><div><span class="prob-name">Francia</span><div class="prob-bar"><span style="width:18%"></span></div></div><div class="prob-pct">18.1%</div></div>
+          <div class="prob-row" data-team="br"><div class="ph flag flag-br prob-flag"></div><div><span class="prob-name">Brasil</span><div class="prob-bar"><span style="width:14%"></span></div></div><div class="prob-pct">14.2%</div></div>
+          <div class="prob-row" data-team="es"><div class="ph flag flag-es prob-flag"></div><div><span class="prob-name">España</span><div class="prob-bar"><span style="width:11%"></span></div></div><div class="prob-pct">11.3%</div></div>
+          <div class="prob-row" data-team="en"><div class="ph flag flag-en prob-flag"></div><div><span class="prob-name"
+            data-i18n-es="Inglaterra" data-i18n-en="England">Inglaterra</span><div class="prob-bar"><span style="width:9%"></span></div></div><div class="prob-pct">9.0%</div></div>
+        </div>
+        <a href="oraculo.html" class="mono" style="margin-top:24px; display:inline-block; color:var(--accent); text-decoration:underline;"
+          data-i18n-es="↗ VER TODOS LOS CÁLCULOS"
+          data-i18n-en="↗ VIEW ALL FORECASTS">↗ VER TODOS LOS CÁLCULOS</a>
+      </div>
+
+      <!-- Featured mascot -->
+      <div class="b b-side" data-host="ca" style="background: linear-gradient(180deg, oklch(0.62 0.22 25 / 0.2), var(--surface) 70%);">
+        <span class="chip soft b-label"
+          data-i18n-es="Mascota · 2026" data-i18n-en="Mascot · 2026">Mascota · 2026</span>
+        <div style="height:220px; margin: 24px -28px 24px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+          <img src="assets/mascots-2026.png" alt="Maple, Zayu &amp; Clutch" style="height: 100%; width: auto; object-fit: contain; object-position: center;" />
+        </div>
+        <h3 class="h3" style="margin:0 0 8px"
+          data-i18n-es="Zayu, Maple &amp; Clutch"
+          data-i18n-en="Zayu, Maple &amp; Clutch">Zayu, Maple &amp; Clutch</h3>
+        <p class="body" style="margin:0 0 16px; font-size:13px;"
+          data-i18n-es="Tres mascotas conceptuales — un jaguar, un alce y un águila calva — representan a los tres anfitriones."
+          data-i18n-en="Three conceptual mascots — a jaguar, a moose and a bald eagle — for the three hosts.">
+          Tres mascotas conceptuales — un jaguar, un alce y un águila calva — representan a los tres anfitriones.
+        </p>
+        <a href="mascotas.html" class="mono" style="color:var(--accent); text-decoration:underline;"
+          data-i18n-es="↗ TODAS LAS MASCOTAS"
+          data-i18n-en="↗ ALL MASCOTS">↗ TODAS LAS MASCOTAS</a>
+      </div>
+
+      <!-- Live matches ticker -->
+      <div class="b b-half" data-host="us">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+          <span class="eyebrow"
+            data-i18n-es="Últimos amistosos" data-i18n-en="Recent friendlies">Últimos amistosos</span>
+          <span class="mono" style="color:var(--text-faint);">QUALIFIERS</span>
+        </div>
+        <div class="match">
+          <div class="flag-side"><div class="ph flag flag-ar mini-flag"></div><span class="team">Argentina</span></div>
+          <div><div class="score">3 – 1</div><div class="date">12 MAY</div></div>
+          <div class="flag-side away"><span class="team">Brasil</span><div class="ph flag flag-br mini-flag"></div></div>
+        </div>
+        <div class="match">
+          <div class="flag-side"><div class="ph flag flag-fr mini-flag"></div><span class="team">Francia</span></div>
+          <div><div class="score">2 – 2</div><div class="date">10 MAY</div></div>
+          <div class="flag-side away"><span class="team"
+            data-i18n-es="Alemania" data-i18n-en="Germany">Alemania</span><div class="ph flag flag-de mini-flag"></div></div>
+        </div>
+        <div class="match">
+          <div class="flag-side"><div class="ph flag flag-es mini-flag"></div><span class="team">España</span></div>
+          <div><div class="score live">LIVE 1–0</div><div class="date">HOY · 85'</div></div>
+          <div class="flag-side away"><span class="team">Italia</span><div class="ph flag flag-it mini-flag"></div></div>
+        </div>
+        <div class="match">
+          <div class="flag-side"><div class="ph flag flag-mx mini-flag"></div><span class="team">México</span></div>
+          <div><div class="score">1 – 0</div><div class="date">08 MAY</div></div>
+          <div class="flag-side away"><span class="team"
+            data-i18n-es="Estados Unidos" data-i18n-en="United States">Estados Unidos</span><div class="ph flag flag-us mini-flag"></div></div>
+        </div>
+      </div>
+
+      <!-- Featured player -->
+      <div class="b b-half" data-host="white" style="display:grid; grid-template-columns: 1fr 200px; gap: 28px; align-items: center;">
+        <div>
+          <span class="eyebrow"
+            data-i18n-es="Figura destacada · Goleadores"
+            data-i18n-en="Featured star · Scorers">Figura destacada · Goleadores</span>
+          <h3 class="h1" style="margin:14px 0 10px; font-size: clamp(32px, 4vw, 54px);">Kylian <em style="color:var(--accent); font-style:italic">Mbappé</em></h3>
+          <p class="body" style="margin-bottom: 18px;"
+            data-i18n-es="Capitán de Francia, 26 años. Máximo goleador de su selección en Qatar 2022 con 8 tantos, incluyendo hat-trick en la final."
+            data-i18n-en="Captain of France, age 26. Top scorer at Qatar 2022 with 8 goals, including a final hat-trick.">
+            Capitán de Francia, 26 años. Máximo goleador de su selección en Qatar 2022 con 8 tantos, incluyendo hat-trick en la final.
+          </p>
+          <div style="display: flex; gap: 28px; padding-top: 14px; border-top: 1px solid var(--line);">
+            <div><div class="mono" style="color:var(--text-faint)">GOLES · MUNDIALES</div><div style="font-family:var(--f-display); font-size:30px; color:var(--accent); margin-top:4px;">12</div></div>
+            <div><div class="mono" style="color:var(--text-faint)">PARTIDOS</div><div style="font-family:var(--f-display); font-size:30px; margin-top:4px;">14</div></div>
+            <div><div class="mono" style="color:var(--text-faint)">EDAD · USA26</div><div style="font-family:var(--f-display); font-size:30px; margin-top:4px;">27</div></div>
+          </div>
+        </div>
+        <div style="aspect-ratio: 3/4; height: 280px; width: auto; border-radius: 12px; overflow: hidden; position: relative; background: var(--surface-2);">
+          <img src="assets/mbappe.jpg" alt="Kylian Mbappé celebrando con Francia"
+               style="width: 100%; height: 100%; object-fit: cover; object-position: 25% center; filter: saturate(0.95) contrast(1.05);" />
+          <div style="position:absolute; inset:0; background: linear-gradient(180deg, transparent 50%, rgba(10,10,13,0.85) 100%); pointer-events:none;"></div>
+          <div style="position:absolute; left:14px; bottom:12px; font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.2em; color: rgba(255,255,255,0.85); text-transform: uppercase;">FRANCIA · No. 10</div>
+        </div>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="b b-full" style="padding: 40px;">
+        <div class="stats-strip">
+          <div class="stat-cell"><div class="num"><em>48</em></div><span class="lbl" data-i18n-es="Selecciones" data-i18n-en="Teams">Selecciones</span></div>
+          <div class="stat-cell"><div class="num"><em>104</em></div><span class="lbl" data-i18n-es="Partidos" data-i18n-en="Matches">Partidos</span></div>
+          <div class="stat-cell"><div class="num"><em>16</em></div><span class="lbl" data-i18n-es="Ciudades sede" data-i18n-en="Host cities">Ciudades sede</span></div>
+          <div class="stat-cell"><div class="num"><em>39</em></div><span class="lbl" data-i18n-es="Días de torneo" data-i18n-en="Tournament days">Días de torneo</span></div>
+        </div>
+      </div>
+
+      <!-- Hosts -->
+      <div class="b b-full" style="padding: 28px 28px 0;">
+        <span class="eyebrow"
+          data-i18n-es="Tres países, un balón"
+          data-i18n-en="Three nations, one ball">Tres países, un balón</span>
+        <h3 class="h2" style="margin:12px 0 0;"
+          data-i18n-es="Por primera vez, un Mundial con <em style='color:var(--accent);font-style:italic'>tres anfitriones.</em>"
+          data-i18n-en="The first-ever World Cup with <em style='color:var(--accent);font-style:italic'>three host nations.</em>">
+          Por primera vez, un Mundial con <em style="color:var(--accent);font-style:italic">tres anfitriones.</em>
+        </h3>
+        <div class="hosts">
+          <div class="host" data-host="ca"><div class="ph flag flag-ca flag-bar"></div><div><div class="name">Canadá</div><div class="stat" data-i18n-es="2 sedes · Toronto, Vancouver" data-i18n-en="2 venues · Toronto, Vancouver">2 sedes · Toronto, Vancouver</div></div><div class="mono host-num" style="align-self:flex-end;">13 PARTIDOS</div></div>
+          <div class="host" data-host="us"><div class="ph flag flag-us flag-bar"></div><div><div class="name" data-i18n-es="Estados Unidos" data-i18n-en="United States">Estados Unidos</div><div class="stat" data-i18n-es="11 sedes · Final: MetLife NJ" data-i18n-en="11 venues · Final: MetLife NJ">11 sedes · Final: MetLife NJ</div></div><div class="mono host-num" style="align-self:flex-end;">78 PARTIDOS</div></div>
+          <div class="host" data-host="mx"><div class="ph flag flag-mx flag-bar"></div><div><div class="name">México</div><div class="stat" data-i18n-es="3 sedes · Azteca, Guadalajara, Monterrey" data-i18n-en="3 venues · Azteca, Guadalajara, Monterrey">3 sedes · Azteca, Guadalajara, Monterrey</div></div><div class="mono host-num" style="align-self:flex-end;">13 PARTIDOS</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ticker -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">Uruguay 1930</span><span class="ticker-item">Brasil 1950</span>
+      <span class="ticker-item">Maradona 1986</span><span class="ticker-item">Zidane 1998</span>
+      <span class="ticker-item">Iniesta 2010</span><span class="ticker-item">Messi 2022</span>
+      <span class="ticker-item">Uruguay 1930</span><span class="ticker-item">Brasil 1950</span>
+      <span class="ticker-item">Maradona 1986</span><span class="ticker-item">Zidane 1998</span>
+      <span class="ticker-item">Iniesta 2010</span><span class="ticker-item">Messi 2022</span>
+    </div>
+  </div>
+
+  <!-- Editorial -->
+  <section class="wrap section-tight">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 40px;">
+      <div>
+        <span class="eyebrow"
+          data-i18n-es="Explora el Mundial"
+          data-i18n-en="Explore the Cup">Explora el Mundial</span>
+        <h2 class="h1" style="margin-top:12px;"
+          data-i18n-es="Nueve capítulos<br>para <em style='color:var(--accent);font-style:italic'>una sola copa.</em>"
+          data-i18n-en="Nine chapters<br>for <em style='color:var(--accent);font-style:italic'>one cup.</em>">
+          Nueve capítulos<br>para <em style="color:var(--accent);font-style:italic">una sola copa.</em>
+        </h2>
+      </div>
+      <span class="mono" style="color:var(--text-faint);">01 / 09</span>
+    </div>
+
+    <div class="editorial-grid">
+      <a class="ed-card" href="selecciones.html" data-host="mx">
+        <div class="ph"><img src="assets/seccion-selecciones.png" alt="Las 48 selecciones"/></div>
+        <span class="chip">01 · <span data-i18n-es="Selecciones" data-i18n-en="Teams">Selecciones</span></span>
+        <h4 data-i18n-es="Las 48 naciones" data-i18n-en="The 48 nations">Las 48 naciones</h4>
+        <p class="body"
+          data-i18n-es="Galería completa por grupos con plantillas, banderas y ruta clasificatoria."
+          data-i18n-en="Full gallery by group with squads, flags and qualifying route.">
+          Galería completa por grupos con plantillas, banderas y ruta clasificatoria.
+        </p>
+      </a>
+      <a class="ed-card" href="historia.html" data-host="us">
+        <div class="ph"><img src="assets/seccion-mascotas.png" alt="La historia de los Mundiales"/></div>
+        <span class="chip">02 · <span data-i18n-es="Historia" data-i18n-en="History">Historia</span></span>
+        <h4 data-i18n-es="Un siglo de copas" data-i18n-en="A century of cups">Un siglo de copas</h4>
+        <p class="body"
+          data-i18n-es="Desde Montevideo 1930 hasta Doha 2022, un recorrido por cada edición."
+          data-i18n-en="From Montevideo 1930 to Doha 2022 — every edition.">
+          Desde Montevideo 1930 hasta Doha 2022, un recorrido por cada edición.
+        </p>
+      </a>
+      <a class="ed-card" href="jugadores.html" data-host="ca">
+        <div class="ph"><img src="assets/seccion-figuras.png" alt="Jugadores insignia del Mundial 2026"/></div>
+        <span class="chip">03 · <span data-i18n-es="Insignia" data-i18n-en="Stars">Insignia</span></span>
+        <h4 data-i18n-es="Capitanes y genios" data-i18n-en="Captains &amp; geniuses">Capitanes y genios</h4>
+        <p class="body"
+          data-i18n-es="El número 10 de cada selección: el hombre que lleva la camiseta más pesada."
+          data-i18n-en="The number 10 of every team: the man in the heaviest jersey.">
+          El número 10 de cada selección: el hombre que lleva la camiseta más pesada.
+        </p>
+      </a>
+      <a class="ed-card" href="finales.html" data-host="mx">
+        <div class="ph"><img src="assets/seccion-final.png" alt="Final del Mundial Qatar 2022"/></div>
+        <span class="chip">04 · <span data-i18n-es="Finales" data-i18n-en="Finals">Finales</span></span>
+        <h4 data-i18n-es="Todos los goles de final" data-i18n-en="Every final goal">Todos los goles de final</h4>
+        <p class="body"
+          data-i18n-es="Edición por edición, minuto a minuto: cada gol que definió un campeonato."
+          data-i18n-en="Edition by edition, minute by minute: every goal that decided a cup.">
+          Edición por edición, minuto a minuto: cada gol que definió un campeonato.
+        </p>
+      </a>
+      <a class="ed-card" href="goleadores.html" data-host="us">
+        <div class="ph"><img src="assets/seccion-goleadores.png" alt="Máximos goleadores de los Mundiales"/></div>
+        <span class="chip">05 · <span data-i18n-es="Goleadores" data-i18n-en="Scorers">Goleadores</span></span>
+        <h4 data-i18n-es="La Bota de Oro" data-i18n-en="The Golden Boot">La Bota de Oro</h4>
+        <p class="body"
+          data-i18n-es="Los artilleros de cada mundial, con galerías de video y tarjetas de leyenda."
+          data-i18n-en="Every cup's top scorers, with video galleries and legend cards.">
+          Los artilleros de cada mundial, con galerías de video y tarjetas de leyenda.
+        </p>
+      </a>
+      <a class="ed-card" href="mascotas.html" data-host="ca">
+        <div class="ph"><img src="assets/seccion-historia.png" alt="Colección de mascotas mundialistas"/></div>
+        <span class="chip">06 · <span data-i18n-es="Mascotas" data-i18n-en="Mascots">Mascotas</span></span>
+        <h4 data-i18n-es="Colección de criaturas" data-i18n-en="Creature collection">Colección de criaturas</h4>
+        <p class="body"
+          data-i18n-es="Willie, Tip &amp; Tap, Ciao, Footix, Zakumi: 55 años de compañeros gráficos."
+          data-i18n-en="Willie, Tip &amp; Tap, Ciao, Footix, Zakumi: 55 years of graphic companions.">
+          Willie, Tip &amp; Tap, Ciao, Footix, Zakumi: 55 años de compañeros gráficos.
+        </p>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<div id="m26-footer-slot"></div>
+
+<script src="assets/shared.js"></script>
+<script>
+  M26.init({ active: "inicio" });
+
+  // Countdown: 11 Jun 2026
+  const TARGET = new Date("2026-06-11T18:00:00Z").getTime();
+  function tick() {
+    const now = Date.now();
+    let diff = Math.max(0, Math.floor((TARGET - now) / 1000));
+    const d = Math.floor(diff / 86400); diff -= d*86400;
+    const h = Math.floor(diff / 3600);  diff -= h*3600;
+    const m = Math.floor(diff / 60);    diff -= m*60;
+    const s = diff;
+    const set = (sel,val)=>{ const el=document.querySelector(`#countdown [data-${sel}]`); if(el) el.textContent = String(val).padStart(2,"0"); };
+    set("d",d); set("h",h); set("m",m); set("s",s);
+  }
+  tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>

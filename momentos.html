@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es" data-accent="carmine">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundial 26 — Momentos Históricos</title>
+<link rel="stylesheet" href="assets/shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Anton&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  /* ───── Hero ───── */
+  .mom-hero {
+    position: relative;
+    padding: 100px 0 40px;
+    overflow: hidden;
+  }
+  .mom-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 900px 500px at 25% 30%, color-mix(in oklch, var(--accent) 20%, transparent), transparent 70%),
+      radial-gradient(ellipse 600px 300px at 80% 60%, oklch(0.68 0.22 350 / 0.08), transparent 70%);
+    pointer-events: none;
+  }
+  .mom-hero .wrap { position: relative; }
+  .mom-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(56px, 9vw, 140px);
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+    margin: 28px 0 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+    max-width: 16ch;
+  }
+  .mom-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .mom-hero .sub {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+    align-items: end;
+  }
+  .mom-hero .sub p { max-width: 58ch; font-size: 17px; line-height: 1.55; color: var(--text-dim); }
+
+  /* ───── Timeline ───── */
+  .timeline-wrap {
+    position: relative;
+    padding: 80px 0;
+  }
+  .timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, var(--accent-soft) 5%, var(--accent-soft) 95%, transparent);
+    transform: translateX(-50%);
+  }
+
+  .moment-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    gap: 0;
+    margin-bottom: 60px;
+  }
+  .moment-row.right .moment-card { grid-column: 3; }
+  .moment-row.left  .moment-card { grid-column: 1; }
+  .moment-year {
+    grid-column: 2;
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+  .moment-year .yr {
+    font-family: var(--f-display);
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+    background: var(--bg);
+    padding: 8px 4px;
+    line-height: 1;
+    font-variation-settings: "opsz" 144;
+    z-index: 2;
+    position: relative;
+  }
+  .moment-year .dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 20px var(--accent-soft);
+    position: absolute;
+    z-index: 3;
+  }
+
+  .moment-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color .3s, transform .3s;
+    position: relative;
+  }
+  .moment-card:hover {
+    border-color: var(--accent-soft);
+    transform: scale(1.02);
+  }
+
+  .moment-card .card-top {
+    position: relative;
+    min-height: 80px;
+    padding: 24px 28px;
+    background: linear-gradient(135deg, color-mix(in oklch, var(--accent) 18%, var(--surface)), var(--surface) 70%);
+    border-bottom: 1px solid var(--line);
+  }
+  .moment-card .card-top .minute {
+    position: absolute;
+    top: 16px; right: 20px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--accent-soft);
+  }
+  .moment-card .card-top .match-info {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+  .moment-card .card-top .moment-title {
+    font-family: var(--f-display);
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    font-variation-settings: "opsz" 144;
+    margin: 0;
+  }
+  .moment-card .card-top .moment-title em {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .moment-card .card-body {
+    padding: 24px 28px;
+  }
+  .moment-card .card-body p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-dim);
+    margin: 0 0 16px;
+  }
+
+  .moment-card .card-body .impact-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+  .impact-tag.drama { background: oklch(0.63 0.22 20 / 0.15); border: 1px solid oklch(0.63 0.22 20 / 0.3); color: oklch(0.78 0.18 20); }
+  .impact-tag.gol { background: oklch(0.72 0.17 155 / 0.15); border: 1px solid oklch(0.72 0.17 155 / 0.3); color: oklch(0.82 0.14 155); }
+  .impact-tag.polemica { background: oklch(0.74 0.16 60 / 0.15); border: 1px solid oklch(0.74 0.16 60 / 0.3); color: oklch(0.84 0.14 60); }
+  .impact-tag.hazana { background: oklch(0.78 0.14 210 / 0.15); border: 1px solid oklch(0.78 0.14 210 / 0.3); color: oklch(0.85 0.12 210); }
+  .impact-tag.emocion { background: oklch(0.68 0.22 300 / 0.15); border: 1px solid oklch(0.68 0.22 300 / 0.3); color: oklch(0.80 0.18 300); }
+  .impact-tag.tragedia { background: oklch(0.50 0.10 0 / 0.20); border: 1px solid oklch(0.50 0.10 0 / 0.4); color: oklch(0.70 0.06 0); }
+
+  .moment-card .video-embed {
+    margin: 0 -28px -24px;
+    aspect-ratio: 16/9;
+    background: var(--surface-2);
+    border-top: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .moment-card .video-embed iframe {
+    width: 100%; height: 100%; border: none;
+  }
+  .moment-card .video-embed .play-overlay {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    background: rgba(10,10,13,0.5);
+    cursor: pointer;
+    transition: background .3s;
+  }
+  .moment-card .video-embed .play-overlay:hover {
+    background: rgba(10,10,13,0.3);
+  }
+  .moment-card .video-embed .play-btn {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: grid; place-items: center;
+    box-shadow: 0 0 30px var(--accent-soft);
+  }
+  .moment-card .video-embed .play-btn::after {
+    content: "▶";
+    color: var(--accent-ink);
+    font-size: 18px;
+    margin-left: 3px;
+  }
+
+  /* ───── Category filter ───── */
+  .cat-bar {
+    position: sticky;
+    top: 68px;
+    z-index: 20;
+    background: color-mix(in oklch, var(--bg) 82%, transparent);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+  }
+  .cat-bar .wrap {
+    display: flex; gap: 6px; align-items: center;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .cat-bar .wrap::-webkit-scrollbar { display: none; }
+  .cat-btn {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--text-dim);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .cat-btn:hover { color: var(--text); border-color: var(--line-strong); }
+  .cat-btn.active { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+
+  /* ───── Iconic strip ───── */
+  .iconic-ticker {
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+    margin: 0 0 60px;
+  }
+  .iconic-track {
+    display: flex;
+    gap: 60px;
+    animation: slide 50s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .iconic-item {
+    font-family: var(--f-display);
+    font-size: 36px;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    font-variation-settings: "WONK" 1;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 60px;
+  }
+  .iconic-item::after {
+    content: "●";
+    font-style: normal;
+    color: var(--accent);
+    font-size: 14px;
+  }
+
+  /* ───── Stats section ───── */
+  .mom-stats {
+    padding: 60px 0;
+  }
+  .mom-stats .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 32px;
+    margin-top: 32px;
+  }
+  .mom-stats .s-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+    transition: border-color .3s;
+  }
+  .mom-stats .s-card:hover { border-color: var(--accent-soft); }
+  .mom-stats .s-card .num {
+    font-family: var(--f-display);
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144;
+  }
+  .mom-stats .s-card .lbl {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 10px;
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    .mom-hero .sub { grid-template-columns: 1fr; }
+    .moment-row { grid-template-columns: 1fr; }
+    .moment-row.right .moment-card,
+    .moment-row.left  .moment-card { grid-column: 1; }
+    .moment-year { display: none; }
+    .timeline-line { display: none; }
+    .mom-stats .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div id="m26-nav-slot"></div>
+
+<main>
+  <!-- Hero -->
+  <section class="mom-hero">
+    <div class="wrap">
+      <span class="eyebrow" data-i18n-es="● Los instantes eternos" data-i18n-en="● The eternal instants">● Los instantes eternos</span>
+      <h1 data-i18n-es="Los momentos<br>que el mundo<br><em>no olvida.</em>" data-i18n-en="The moments<br>the world<br><em>never forgets.</em>">Los momentos<br>que el mundo<br><em>no olvida.</em></h1>
+
+      <div class="sub">
+        <p data-i18n-es="Desde el cabezazo de Zidane hasta el hat-trick de Mbappé, pasando por la Mano de Dios y el penal errado de Baggio. Cada Mundial deja una imagen grabada a fuego en la memoria colectiva del fútbol. Estos son los momentos que definieron 96 años de historia." data-i18n-en="From Zidane's headbutt to Mbappé's hat-trick, through the Hand of God and Baggio's missed penalty. Every World Cup leaves an image burned into football's collective memory. These are the moments that defined 96 years of history.">Desde el cabezazo de Zidane hasta el hat-trick de Mbappé, pasando por la Mano de Dios y el penal errado de Baggio. Cada Mundial deja una imagen grabada a fuego en la memoria colectiva del fútbol. Estos son los momentos que definieron 96 años de historia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category filter -->
+  <div class="cat-bar">
+    <div class="wrap" id="cat-filters"></div>
+  </div>
+
+  <!-- Iconic ticker -->
+  <div class="iconic-ticker" style="margin-top: 40px;">
+    <div class="iconic-track">
+      <span class="iconic-item">Maracanazo 1950</span>
+      <span class="iconic-item">Mano de Dios 1986</span>
+      <span class="iconic-item">Baggio 1994</span>
+      <span class="iconic-item">Zidane 2006</span>
+      <span class="iconic-item">Iniesta 2010</span>
+      <span class="iconic-item">7–1 Brasil 2014</span>
+      <span class="iconic-item">Mbappé 2022</span>
+      <span class="iconic-item">Maracanazo 1950</span>
+      <span class="iconic-item">Mano de Dios 1986</span>
+      <span class="iconic-item">Baggio 1994</span>
+      <span class="iconic-item">Zidane 2006</span>
+      <span class="iconic-item">Iniesta 2010</span>
+      <span class="iconic-item">7–1 Brasil 2014</span>
+      <span class="iconic-item">Mbappé 2022</span>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <section class="mom-stats wrap">
+    <div class="stats-grid">
+      <div class="s-card"><div class="num">22</div><span class="lbl" data-i18n-es="Momentos icónicos" data-i18n-en="Iconic moments">Momentos icónicos</span></div>
+      <div class="s-card"><div class="num">96</div><span class="lbl" data-i18n-es="Años de historia" data-i18n-en="Years of history">Años de historia</span></div>
+      <div class="s-card"><div class="num">3</div><span class="lbl" data-i18n-es="Hat-tricks en finales" data-i18n-en="Hat-tricks in finals">Hat-tricks en finales</span></div>
+      <div class="s-card"><div class="num">7</div><span class="lbl" data-i18n-es="Penales decisivos" data-i18n-en="Decisive penalties">Penales decisivos</span></div>
+      <div class="s-card"><div class="num">∞</div><span class="lbl" data-i18n-es="Emociones" data-i18n-en="Emotions">Emociones</span></div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="timeline-wrap wrap">
+    <div class="timeline-line"></div>
+    <div id="moments-timeline"></div>
+  </section>
+</main>
+
+<div id="m26-footer-slot"></div>
+
+<script src="assets/shared.js"></script>
+<script>
+M26.init({ active: "momentos" });
+
+const MOMENTS = [
+  {
+    year: 1930, side: "right",
+    match: "URUGUAY VS ARGENTINA · FINAL",
+    title: "El primer <em>campeón</em> del mundo",
+    minute: "MIN 68 · GOL",
+    desc: "Uruguay remontó un 1-2 en el descanso para ganar 4-2 la primera final mundialista ante 93.000 espectadores en el Estadio Centenario de Montevideo. Los argentinos cruzaron el Río de la Plata en barco para asistir. Nacía la Copa del Mundo.",
+    tags: ["hazana"],
+    video: "https://www.youtube.com/embed/OMQkPm53oBc"
+  },
+  {
+    year: 1950, side: "left",
+    match: "URUGUAY VS BRASIL · PARTIDO DECISIVO",
+    title: "El <em>Maracanazo</em>",
+    minute: "MIN 79 · GOL",
+    desc: "Con 199.854 espectadores en el Maracaná (la mayor asistencia en la historia del fútbol), Brasil solo necesitaba un empate para ser campeón. Ghiggia marcó el 2-1 definitivo en el minuto 79. El silencio del estadio fue tan profundo que se escuchó un llanto colectivo. Brasil cambió su camiseta blanca por la amarilla para olvidar la tragedia.",
+    tags: ["drama", "tragedia"],
+    video: "https://www.youtube.com/embed/IEhgCOuW4Zg"
+  },
+  {
+    year: 1958, side: "right",
+    match: "BRASIL VS SUECIA · FINAL",
+    title: "Pelé, el niño de <em>17 años</em>",
+    minute: "MIN 55 · GOL",
+    desc: "Un adolescente de 17 años llamado Edson Arantes do Nascimento marcó dos goles en la final: el primero con un sombrero sobre un defensor seguido de volea, el segundo un cabezazo imparable. El mundo conoció a Pelé y el fútbol ya no fue el mismo.",
+    tags: ["gol", "hazana"],
+    video: "https://www.youtube.com/embed/0G8m6SJNBSQ"
+  },
+  {
+    year: 1966, side: "left",
+    match: "INGLATERRA VS ALEMANIA · FINAL",
+    title: "El gol <em>fantasma</em> de Wembley",
+    minute: "MIN 101 · ¿GOL?",
+    desc: "En la prórroga de la final, el disparo de Geoff Hurst golpeó el larguero y botó en la línea de gol. ¿Entró o no entró? El árbitro soviético Tofiq Bahramov concedió el gol. 60 años después, los estudios digitales sugieren que NO cruzó la línea completamente. Hurst marcó después el 4-2 definitivo y completó el único hat-trick en una final mundialista hasta Mbappé.",
+    tags: ["polemica", "gol"],
+    video: "https://www.youtube.com/embed/0nqMjRMttOo"
+  },
+  {
+    year: 1970, side: "right",
+    match: "BRASIL VS ITALIA · FINAL",
+    title: "El gol <em>perfecto</em> de Carlos Alberto",
+    minute: "MIN 86 · GOL",
+    desc: "Considerado el mejor gol en equipo de la historia: una jugada de 9 toques que recorrió todo el campo, con Pelé, Tostão, Jairzinho, Rivelino y Carlos Alberto Torres, quien remató al fondo de la red con un derechazo fulminante. Brasil ganó 4-1 y se quedó con la Copa Jules Rimet para siempre.",
+    tags: ["gol", "hazana"],
+    video: "https://www.youtube.com/embed/M5HbmeNKino"
+  },
+  {
+    year: 1974, side: "left",
+    match: "HOLANDA VS SUECIA · FASE DE GRUPOS",
+    title: "La <em>Naranja Mecánica</em> y el giro Cruyff",
+    minute: "MIN — · JUGADA",
+    desc: "Johan Cruyff ejecutó su legendario 'giro Cruyff' — un amague con el cuerpo hacia un lado mientras pasaba el balón por detrás del pie de apoyo hacia el otro — dejando petrificado al defensor sueco Jan Olsson. El movimiento se convirtió en el regate más imitado del fútbol moderno.",
+    tags: ["hazana"],
+    video: "https://www.youtube.com/embed/U1k7DGqRF5g"
+  },
+  {
+    year: 1978, side: "right",
+    match: "ARGENTINA VS HOLANDA · FINAL",
+    title: "Kempes y la lluvia de <em>papelitos</em>",
+    minute: "MIN 105 · GOL",
+    desc: "Mario Alberto Kempes marcó dos goles en la final ante Holanda bajo una lluvia de papelitos en el Monumental de Buenos Aires. Su melena al viento, corriendo entre los confetis, es una de las imágenes más emblemáticas del fútbol. Argentina fue campeona del mundo por primera vez.",
+    tags: ["gol", "emocion"],
+    video: "https://www.youtube.com/embed/QCEqUn7If44"
+  },
+  {
+    year: 1982, side: "left",
+    match: "ITALIA VS BRASIL · SEGUNDA FASE",
+    title: "El hat-trick de Paolo <em>Rossi</em>",
+    minute: "MIN 74 · TERCER GOL",
+    desc: "Paolo Rossi, que venía de una suspensión de 2 años por apuestas, marcó los 3 goles con los que Italia eliminó al Brasil más bello de la historia (3-2). El 'Jogo Bonito' de Zico, Sócrates y Falcão cayó ante la eficiencia italiana. Rossi terminó como Bota de Oro y Balón de Oro del torneo.",
+    tags: ["gol", "drama"],
+    video: "https://www.youtube.com/embed/0wZGRLqEJuA"
+  },
+  {
+    year: 1986, side: "right",
+    match: "ARGENTINA VS INGLATERRA · CUARTOS",
+    title: "La <em>Mano de Dios</em>",
+    minute: "MIN 51 · ¿GOL?",
+    desc: "Diego Armando Maradona saltó junto al portero Peter Shilton y empujó el balón con la mano izquierda. El árbitro Ali Bin Nasser validó el gol. Maradona declaró después: 'Fue un poco con la cabeza de Maradona y un poco con la mano de Dios'. Cuatro minutos después marcaría el Gol del Siglo.",
+    tags: ["polemica", "drama"],
+    video: "https://www.youtube.com/embed/1wVho3I0NtU"
+  },
+  {
+    year: 1986, side: "left",
+    match: "ARGENTINA VS INGLATERRA · CUARTOS",
+    title: "El <em>Gol del Siglo</em>",
+    minute: "MIN 55 · GOL",
+    desc: "Solo 4 minutos después de la Mano de Dios, Maradona tomó el balón en su propio campo y recorrió 60 metros driblando a 6 jugadores ingleses — Beardsley, Reid, Butcher (dos veces), Fenwick y Shilton — antes de marcar. Fue elegido el Gol del Siglo por la FIFA. La jugada duró 10.6 segundos.",
+    tags: ["gol", "hazana"],
+    video: "https://www.youtube.com/embed/1wVho3I0NtU"
+  },
+  {
+    year: 1990, side: "right",
+    match: "ARGENTINA VS ITALIA · SEMIFINAL",
+    title: "Las <em>lágrimas</em> de Maradona",
+    minute: "PENALES · DRAMA",
+    desc: "En Nápoles, donde Maradona era ídolo del Napoli, Argentina eliminó a Italia por penales. El himno argentino fue silbado por todo el estadio. Tras el partido, las cámaras captaron a Maradona llorando durante la ceremonia del himno. Sus lágrimas se convirtieron en un símbolo de la presión que soportaba.",
+    tags: ["drama", "emocion"],
+    video: "https://www.youtube.com/embed/V-Mx7VhtKm8"
+  },
+  {
+    year: 1994, side: "left",
+    match: "BRASIL VS ITALIA · FINAL",
+    title: "El penal errado de <em>Baggio</em>",
+    minute: "PENALES · QUINTO TIRO",
+    desc: "La primera final decidida por penales. Roberto Baggio, el mejor jugador del torneo y Balón de Oro, se acercó al punto de penal con la responsabilidad de mantener viva a Italia. Disparó por encima del travesaño. Se quedó inmóvil, con la cabeza baja, la camiseta azul empapada de sudor. Es la imagen más triste de la historia de los Mundiales.",
+    tags: ["drama", "tragedia"],
+    video: "https://www.youtube.com/embed/VPCmMnElUfE"
+  },
+  {
+    year: 1998, side: "right",
+    match: "FRANCIA VS BRASIL · FINAL",
+    title: "Los dos cabezazos de <em>Zidane</em>",
+    minute: "MIN 27 Y 46 · GOLES",
+    desc: "Zinedine Zidane, hijo de inmigrantes argelinos, marcó dos goles de cabeza idénticos en la final del Stade de France ante Brasil (3-0). Francia ganó su primer Mundial mientras un millón de personas celebraban en los Campos Elíseos. Los goles de Zidane unieron a una nación multicultural.",
+    tags: ["gol", "hazana"],
+    video: "https://www.youtube.com/embed/mHk0CNnUNag"
+  },
+  {
+    year: 2002, side: "left",
+    match: "BRASIL VS ALEMANIA · FINAL",
+    title: "La <em>redención</em> de Ronaldo",
+    minute: "MIN 67 Y 79 · GOLES",
+    desc: "Ronaldo Nazário, que sufrió convulsiones antes de la final de 1998 y fue criticado por su rendimiento, volvió 4 años después para marcar los dos goles de la final ante Alemania. Terminó como máximo goleador con 8 tantos. Se rapó el cabello dejando solo un triángulo frontal que el mundo entero imitó.",
+    tags: ["gol", "emocion"],
+    video: "https://www.youtube.com/embed/89bnCCxLLiY"
+  },
+  {
+    year: 2006, side: "right",
+    match: "ITALIA VS FRANCIA · FINAL",
+    title: "El <em>cabezazo</em> de Zidane",
+    minute: "MIN 110 · EXPULSIÓN",
+    desc: "En su último partido como profesional, Zinedine Zidane le dio un cabezazo en el pecho a Marco Materazzi tras un intercambio verbal. Fue expulsado con roja directa en la prórroga de la final del Mundial. Francia perdió en penales. Zidane caminó junto a la Copa del Mundo sin poder tocarla. La imagen de su espalda alejándose es una de las más poderosas del deporte.",
+    tags: ["drama", "polemica"],
+    video: "https://www.youtube.com/embed/zAjWi663kXc"
+  },
+  {
+    year: 2010, side: "left",
+    match: "ESPAÑA VS HOLANDA · FINAL",
+    title: "El gol de <em>Iniesta</em> que calló al mundo",
+    minute: "MIN 116 · GOL",
+    desc: "Andrés Iniesta recibió un pase de Cesc Fàbregas en el área y disparó con el empeine derecho al segundo palo de Stekelenburg. Gol en el minuto 116 de la prórroga. Se quitó la camiseta mostrando un mensaje: 'Dani Jarque, siempre con nosotros', dedicado a su amigo fallecido. España ganó su primer y único Mundial.",
+    tags: ["gol", "emocion"],
+    video: "https://www.youtube.com/embed/IJaRxMjvKnY"
+  },
+  {
+    year: 2014, side: "right",
+    match: "BRASIL VS ALEMANIA · SEMIFINAL",
+    title: "El <em>7-1</em> · Mineirazo",
+    minute: "MIN 29 · 5-0",
+    desc: "Alemania marcó 5 goles en 18 minutos (del minuto 11 al 29) ante Brasil en Belo Horizonte. El resultado final fue 7-1, la peor derrota de Brasil en su historia y en una semifinal mundialista. Los aficionados brasileños lloraban en las gradas. Klose se convirtió en el máximo goleador histórico de Mundiales con su gol 16. Fue bautizado como el 'Mineirazo'.",
+    tags: ["drama", "tragedia"],
+    video: "https://www.youtube.com/embed/uMVmhI0SUoY"
+  },
+  {
+    year: 2014, side: "left",
+    match: "ALEMANIA VS ARGENTINA · FINAL",
+    title: "El gol de <em>Götze</em> en el 113'",
+    minute: "MIN 113 · GOL",
+    desc: "Mario Götze, suplente de 22 años, controló un centro de Schürrle con el pecho y volea al fondo de la red en el minuto 113. Su entrenador, Joachim Löw, le había dicho antes de entrar: 'Muéstrale al mundo que eres mejor que Messi'. Alemania ganó su cuarta estrella.",
+    tags: ["gol", "hazana"],
+    video: "https://www.youtube.com/embed/GiHdpAVaOSU"
+  },
+  {
+    year: 2018, side: "right",
+    match: "ALEMANIA VS COREA DEL SUR · FASE DE GRUPOS",
+    title: "La caída del <em>campeón</em>",
+    minute: "MIN 90+2 · GOL",
+    desc: "Alemania, campeona vigente, fue eliminada en la fase de grupos tras perder 2-0 ante Corea del Sur. Los dos goles llegaron en el tiempo de descuento, incluyendo uno anotado por el portero coreano tras robar el balón a Kroos. Manuel Neuer estaba en el área rival cuando le robaron la pelota. La 'maldición del campeón' se cobró otra víctima.",
+    tags: ["drama", "polemica"],
+    video: "https://www.youtube.com/embed/BKcRGZvEaS0"
+  },
+  {
+    year: 2022, side: "left",
+    match: "ARGENTINA VS FRANCIA · FINAL",
+    title: "El hat-trick de <em>Mbappé</em>",
+    minute: "MIN 80, 81, 118 · 3 GOLES",
+    desc: "Francia perdía 2-0 ante Argentina en la final hasta el minuto 79. Entonces Kylian Mbappé hizo lo impensable: marcó dos goles en 97 segundos (penal al 80' y volea al 81') para empatar 2-2. En la prórroga, tras el 3-2 de Messi, Mbappé volvió a empatar de penal (3-3). Su hat-trick en una final solo es comparable al de Hurst en 1966.",
+    tags: ["gol", "hazana"],
+    video: "https://www.youtube.com/embed/DFSxs6fDBqg"
+  },
+  {
+    year: 2022, side: "right",
+    match: "ARGENTINA VS FRANCIA · FINAL",
+    title: "Messi levanta la <em>Copa</em>",
+    minute: "PENALES · CAMPEÓN",
+    desc: "Tras la tanda de penales (4-2), Lionel Messi levantó la Copa del Mundo a los 35 años vestido con una bisht árabe que le puso el Emir de Qatar. El hombre que había perdido 4 finales con su selección finalmente tocó el cielo. Argentina entera se paralizó. Más de 4 millones de personas salieron a las calles de Buenos Aires.",
+    tags: ["emocion", "hazana"],
+    video: "https://www.youtube.com/embed/0sMBFSOQbh4"
+  }
+];
+
+const CATEGORIES = [
+  { id: "all", es: "Todos", en: "All" },
+  { id: "gol", es: "Goles", en: "Goals" },
+  { id: "drama", es: "Drama", en: "Drama" },
+  { id: "polemica", es: "Polémica", en: "Controversy" },
+  { id: "hazana", es: "Hazaña", en: "Feat" },
+  { id: "emocion", es: "Emoción", en: "Emotion" },
+  { id: "tragedia", es: "Tragedia", en: "Tragedy" }
+];
+
+const TAG_LABELS = {
+  drama: "Drama", gol: "Gol", polemica: "Polémica",
+  hazana: "Hazaña", emocion: "Emoción", tragedia: "Tragedia"
+};
+
+function renderFilters() {
+  const lang = M26.getLang();
+  document.getElementById("cat-filters").innerHTML = CATEGORIES.map(c =>
+    `<button class="cat-btn ${c.id === 'all' ? 'active' : ''}" data-cat="${c.id}">${c[lang]}</button>`
+  ).join("");
+}
+
+function renderTimeline(filter) {
+  const container = document.getElementById("moments-timeline");
+  const filtered = filter === "all" ? MOMENTS : MOMENTS.filter(m => m.tags.includes(filter));
+
+  container.innerHTML = filtered.map((m, i) => {
+    const side = i % 2 === 0 ? "right" : "left";
+    const tagsHtml = m.tags.map(t =>
+      `<span class="impact-tag ${t}">${TAG_LABELS[t]}</span>`
+    ).join("");
+
+    return `
+      <div class="moment-row ${side}">
+        <div class="moment-year"><span class="yr">${m.year}</span><span class="dot"></span></div>
+        <div class="moment-card">
+          <div class="card-top">
+            <div class="minute">${m.minute}</div>
+            <div class="match-info">${m.match}</div>
+            <h3 class="moment-title">${m.title}</h3>
+          </div>
+          <div class="card-body">
+            <p>${m.desc}</p>
+            <div>${tagsHtml}</div>
+          </div>
+          ${m.video ? `
+          <div class="video-embed">
+            <iframe src="${m.video}" title="${m.title.replace(/<[^>]*>/g, '')}" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+// Filter events
+document.addEventListener("click", e => {
+  const btn = e.target.closest(".cat-btn");
+  if (btn) {
+    document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderTimeline(btn.dataset.cat);
+  }
+});
+
+renderFilters();
+renderTimeline("all");
+</script>
+</body>
+</html>

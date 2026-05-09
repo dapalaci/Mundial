@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundial 26 — Fan Fest</title>
+<link rel="stylesheet" href="assets/shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .ff-hero { padding: 100px 0 24px; position: relative; overflow: hidden; }
+  .ff-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 1000px 500px at 70% 20%, color-mix(in oklch, var(--accent) 22%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .ff-hero .wrap { position: relative; }
+  .ff-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 160px);
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    margin: 24px 0 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+    max-width: 14ch;
+  }
+  .ff-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .ff-hero .lead { margin-top: 28px; max-width: 64ch; }
+
+  /* City selector */
+  .city-bar {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    margin: 48px 0 28px;
+    align-items: center;
+  }
+  .city-bar .label {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-faint);
+  }
+  .city-bar button {
+    padding: 10px 18px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text-dim);
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: all .15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .city-bar button .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--c, var(--accent));
+  }
+  .city-bar button.active { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+
+  /* Mosaic grid */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 120px;
+    gap: 14px;
+  }
+  .tile {
+    position: relative;
+    background: var(--tilebg, var(--surface-2));
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+  }
+  .tile:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 20px 40px -16px color-mix(in oklch, var(--accent) 30%, transparent);
+  }
+  .tile::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(255,255,255,0.14), transparent 50%),
+      linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85) 100%);
+    pointer-events: none; z-index: 1;
+  }
+  .tile::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent 0 20px, rgba(255,255,255,0.015) 20px 22px
+    );
+    pointer-events: none;
+  }
+  .tile .content {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    width: 100%;
+  }
+  .tile .kicker {
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tile .kicker .chip {
+    padding: 3px 9px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .tile .kicker .chip.video { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .tile .kicker .chip.live::before { content: "●"; color: #ff4040; margin-right: 4px; }
+  .tile .tl {
+    font-family: var(--f-display);
+    line-height: 1.05;
+    letter-spacing: -0.022em;
+    color: #fff;
+    font-variation-settings: "opsz" 144;
+  }
+  .tile .tl em { color: var(--accent); font-style: italic; }
+  .tile .tl.big { font-size: clamp(30px, 4.4vw, 60px); }
+  .tile .tl.md { font-size: clamp(20px, 2.4vw, 28px); }
+  .tile .tl.sm { font-size: 18px; }
+  .tile .city {
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* Video tile */
+  .tile.video .play {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255,255,255,0.9);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+    transition: all .2s;
+  }
+  .tile.video .play::before {
+    content: "";
+    width: 0; height: 0;
+    border-left: 16px solid #fff;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    margin-left: 4px;
+  }
+  .tile.video:hover .play {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  .tile.video:hover .play::before { border-left-color: var(--accent-ink); }
+  .tile .duration {
+    position: absolute; top: 16px; right: 16px;
+    z-index: 3;
+    padding: 4px 10px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 999px;
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    color: #fff;
+    backdrop-filter: blur(8px);
+  }
+
+  /* Editorial quote tile */
+  .tile.quote { background: var(--accent); }
+  .tile.quote::before, .tile.quote::after { display: none; }
+  .tile.quote .content { padding: 32px; }
+  .tile.quote .tl {
+    color: var(--accent-ink);
+    font-style: italic;
+    font-size: clamp(24px, 2.6vw, 36px);
+  }
+  .tile.quote .attrib {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: color-mix(in oklch, var(--accent-ink) 70%, transparent);
+  }
+
+  /* Stat tile */
+  .tile.stat {
+    background: var(--bg);
+    border: 1px solid var(--line);
+  }
+  .tile.stat::before, .tile.stat::after { display: none; }
+  .tile.stat .big-n {
+    font-family: var(--f-display);
+    font-size: clamp(56px, 9vw, 128px);
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144;
+  }
+  .tile.stat .lbl {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--text-dim);
+    margin-top: 6px;
+    max-width: 24ch;
+    line-height: 1.5;
+  }
+
+  /* Pattern art tile */
+  .tile.pattern { overflow: hidden; }
+  .pattern-svg { width: 100%; height: 100%; position: absolute; inset: 0; }
+
+  /* Column spans */
+  .c-6 { grid-column: span 6; }
+  .c-5 { grid-column: span 5; }
+  .c-4 { grid-column: span 4; }
+  .c-3 { grid-column: span 3; }
+  .c-2 { grid-column: span 2; }
+  .c-7 { grid-column: span 7; }
+  .c-8 { grid-column: span 8; }
+  .r-2 { grid-row: span 2; }
+  .r-3 { grid-row: span 3; }
+  .r-4 { grid-row: span 4; }
+
+  @media (max-width: 1100px) {
+    .mosaic { grid-template-columns: repeat(6, 1fr); }
+    .c-8, .c-7, .c-6 { grid-column: span 6; }
+    .c-5, .c-4 { grid-column: span 6; }
+    .c-3, .c-2 { grid-column: span 3; }
+  }
+  @media (max-width: 640px) {
+    .mosaic { grid-template-columns: repeat(2, 1fr); }
+    [class*="c-"] { grid-column: span 2; }
+  }
+
+  /* Lightbox */
+  .lb {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.94);
+    backdrop-filter: blur(12px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 40px;
+  }
+  .lb.open { display: flex; }
+  .lb-inner {
+    max-width: 960px; width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+  }
+  .lb-media {
+    background: var(--cbg);
+    position: relative;
+    min-height: 480px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lb-media::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.14), transparent 55%);
+  }
+  .lb-media .play {
+    width: 92px; height: 92px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255,255,255,0.9);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+  }
+  .lb-media .play::before {
+    content: "";
+    width: 0; height: 0;
+    border-left: 22px solid #fff;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    margin-left: 6px;
+  }
+  .lb-info { padding: 44px 40px; }
+  .lb-info .ck {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .lb-info h3 {
+    font-family: var(--f-display);
+    font-size: 44px;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+    margin: 12px 0 16px;
+    font-variation-settings: "opsz" 144;
+  }
+  .lb-info h3 em { color: var(--accent); font-style: italic; }
+  .lb-info .body {
+    font-size: 15px; line-height: 1.7; color: var(--text-dim);
+    max-width: 50ch;
+  }
+  .lb-info .meta {
+    margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  }
+  .lb-info .meta .k { font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 4px; }
+  .lb-info .meta .v { font-family: var(--f-display); font-size: 18px; letter-spacing: -0.015em; font-variation-settings: "opsz" 144; }
+  .lb-close {
+    position: absolute; top: 24px; right: 24px;
+    width: 44px; height: 44px;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    color: #fff; font-size: 18px; z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  @media (max-width: 800px) {
+    .lb-inner { grid-template-columns: 1fr; }
+    .lb-media { min-height: 260px; }
+  }
+
+  /* Map strip */
+  .map-sec {
+    margin-top: 80px;
+    padding: 48px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .map-sec h2 {
+    font-family: var(--f-display); font-size: 44px; letter-spacing: -0.03em;
+    margin: 0 0 6px;
+    font-variation-settings: "opsz" 144;
+  }
+  .map-sec h2 em { color: var(--accent); font-style: italic; }
+  .map-sec .kicker {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-dim); margin-bottom: 32px;
+  }
+  .map-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;
+  }
+  .map-card {
+    padding: 18px 20px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+  .map-card .city-name {
+    font-family: var(--f-display); font-size: 22px; letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+  }
+  .map-card .cty { font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); margin-top: 4px; }
+  .map-card .cap {
+    margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line);
+    font-family: var(--f-mono); font-size: 10px; color: var(--text-dim);
+    display: flex; justify-content: space-between;
+  }
+  .map-card .cap em { color: var(--accent); font-style: italic; font-family: var(--f-display); font-size: 16px; }
+</style>
+</head>
+<body>
+<div id="m26-nav-slot"></div>
+
+<section class="ff-hero">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n-es="● 16 ciudades · 3 países · una sola fiesta" data-i18n-en="● 16 cities · 3 countries · one single party">● 16 ciudades · 3 países · una sola fiesta</span>
+    <h1 data-i18n-es="El <em>Fan Fest</em><br>nunca fue tan grande." data-i18n-en="The <em>Fan Fest</em><br>has never been this big.">El <em>Fan Fest</em><br>nunca fue tan grande.</h1>
+    <p class="lead" data-i18n-es="Desde el Zócalo de la CDMX hasta Times Square, pasando por la plaza Dundas de Toronto: tres países, decenas de pantallas gigantes, millones de aficionados. El espectáculo que sucede fuera del estadio." data-i18n-en="From Mexico City's Zócalo to Times Square and Toronto's Dundas Square: three countries, dozens of giant screens, millions of fans. The spectacle that happens outside the stadium.">
+      Desde el Zócalo de la CDMX hasta Times Square, pasando por la plaza Dundas de Toronto: tres países, decenas de pantallas gigantes, millones de aficionados. El espectáculo que sucede fuera del estadio.
+    </p>
+  </div>
+</section>
+
+<main class="wrap" style="padding-bottom:80px;">
+  <div class="city-bar">
+    <span class="label" data-i18n-es="Ciudades" data-i18n-en="Cities">Ciudades</span>
+    <button data-c="all" class="active" data-i18n-es="Todas" data-i18n-en="All">Todas</button>
+    <button data-c="mx" style="--c:#006847"><span class="dot"></span>México</button>
+    <button data-c="us" style="--c:#b22234"><span class="dot"></span>EE. UU.</button>
+    <button data-c="ca" style="--c:#d52b1e"><span class="dot"></span>Canadá</button>
+  </div>
+
+  <!-- Mosaic -->
+  <div class="mosaic" id="mosaic"></div>
+
+  <!-- Host cities map -->
+  <section class="map-sec">
+    <h2 data-i18n-es="Las <em>16 sedes</em> del Mundial" data-i18n-en="The <em>16 host</em> cities">Las <em>16 sedes</em> del Mundial</h2>
+    <div class="kicker" data-i18n-es="11 en EE. UU., 3 en México, 2 en Canadá · El Fan Fest oficial en cada una" data-i18n-en="11 in USA, 3 in Mexico, 2 in Canada · Official Fan Fest in every city">11 en EE. UU., 3 en México, 2 en Canadá · El Fan Fest oficial en cada una</div>
+    <div class="map-grid" id="map-grid"></div>
+  </section>
+</main>
+
+<!-- Lightbox -->
+<div class="lb" id="lb">
+  <button class="lb-close" id="lb-close">✕</button>
+  <div class="lb-inner" id="lb-inner"></div>
+</div>
+
+<div id="m26-footer-slot"></div>
+
+<script src="assets/shared.js"></script>
+<script>M26.init({ active: "fanfest" });</script>
+<script>
+const TILES = [
+  // [size class(es), country, type, data...]
+  { c:"c-7 r-3", country:"mx", type:"video", dur:"2:18",
+    title:{es:"El <em>Zócalo</em> tembló", en:"The <em>Zócalo</em> shook"},
+    city:{es:"Ciudad de México · Final de CONCACAF", en:"Mexico City · CONCACAF Final"},
+    bg:"linear-gradient(135deg, #006847 0%, #1a5d3a 50%, #0d3520 100%)",
+    body:{es:"Doscientas mil personas ondean el tricolor mientras México juega un amistoso ante Portugal. Un documental de 2:18 que captura la plaza más grande de América Latina vibrando al ritmo del Cielito Lindo.", en:"Two hundred thousand people wave the tricolor as Mexico plays a friendly against Portugal. A 2:18 doc capturing Latin America's largest square vibrating to Cielito Lindo."},
+    meta:{aud:"212k", date:"15 JUN", dur:"2:18"}
+  },
+  { c:"c-5 r-2", country:"us", type:"video", dur:"1:42",
+    title:{es:"Times Square a las <em>3 AM</em>", en:"Times Square at <em>3 AM</em>"},
+    city:{es:"Nueva York · Apertura", en:"New York · Opening"},
+    bg:"linear-gradient(135deg, #b22234 0%, #3a1518 60%, #0a0a0d 100%)",
+    body:{es:"La apertura del Mundial convierte al corazón de Manhattan en un mar de banderas. Drones capturan el momento exacto en que cinco mil argentinos cantan después del primer gol.", en:"The opening turns the heart of Manhattan into a sea of flags. Drones capture the exact moment when five thousand Argentines chant after the first goal."},
+    meta:{aud:"58k", date:"11 JUN", dur:"1:42"}
+  },
+  { c:"c-5 r-1", country:"ca", type:"photo",
+    title:{es:"<em>Dundas Square</em>, el hemisferio norte", en:"<em>Dundas Square</em>, the northern hemisphere"},
+    city:{es:"Toronto · Fase de grupos", en:"Toronto · Group stage"},
+    bg:"linear-gradient(135deg, #d52b1e 0%, #5d1410 60%, #0a0a0d 100%)",
+    body:{es:"La plaza más transitada de Canadá se transforma en tribuna al aire libre. Portugueses de Kensington Market y brasileños de Little Brazil se mezclan bajo pantallas gigantes.", en:"Canada's busiest square becomes an open-air tribune. Portuguese from Kensington Market and Brazilians from Little Brazil mix under giant screens."},
+    meta:{aud:"34k", date:"19 JUN", dur:"Foto"}
+  },
+  { c:"c-3 r-2", country:"mx", type:"stat",
+    statN:"67M",
+    statLbl:{es:"Aficionados esperados en los Fan Fests de CDMX, Guadalajara y Monterrey combinados.", en:"Expected fans across the CDMX, Guadalajara and Monterrey Fan Fests combined."}
+  },
+  { c:"c-4 r-2", country:"us", type:"photo",
+    title:{es:"Miami <em>bailó</em> salsa", en:"Miami <em>danced</em> salsa"},
+    city:{es:"Miami · Noche Colombia vs Uruguay", en:"Miami · Colombia vs Uruguay night"},
+    bg:"linear-gradient(135deg, #ff006e 0%, #7a1548 60%, #0a0a0d 100%)",
+    body:{es:"El calor de Miami Beach se mezcla con tambores de Barranquilla y Montevideo. El único Fan Fest oficial que rotó su música entre partidos.", en:"Miami Beach's heat mixes with drums from Barranquilla and Montevideo. The only official Fan Fest that rotated its music between matches."},
+    meta:{aud:"42k", date:"23 JUN", dur:"Foto"}
+  },
+  { c:"c-5 r-1", country:"us", type:"quote",
+    quote:{es:"\"Nunca vi a mi ciudad así. Hay banderas de países que jamás había oído, y todo el mundo canta aunque no conozca el himno.\"", en:"\"Never saw my city like this. Flags from countries I'd never heard of, and everyone sings even if they don't know the anthem.\""},
+    attrib:{es:"— Carla M., bartender en SoFi Stadium", en:"— Carla M., bartender at SoFi Stadium"}
+  },
+  { c:"c-4 r-2", country:"mx", type:"video", dur:"0:58",
+    title:{es:"La <em>ola</em> de Guadalajara", en:"Guadalajara's <em>wave</em>"},
+    city:{es:"Guadalajara · Estadio Akron", en:"Guadalajara · Estadio Akron"},
+    bg:"linear-gradient(135deg, #f57f17 0%, #803b08 60%, #0a0a0d 100%)",
+    body:{es:"Una sola ola humana rodeó el perímetro del Akron durante 47 minutos. Un reel de 58 segundos que se volvió el video más compartido del Mundial.", en:"A single human wave circled the Akron's perimeter for 47 minutes. A 58-second reel that became the most shared video of the Cup."},
+    meta:{aud:"8.4M", date:"26 JUN", dur:"0:58"}
+  },
+  { c:"c-4 r-1", country:"ca", type:"photo",
+    title:{es:"<em>BC Place</em> se cubrió de rojo", en:"<em>BC Place</em> turned red"},
+    city:{es:"Vancouver · Canadá vs España", en:"Vancouver · Canada vs Spain"},
+    bg:"linear-gradient(135deg, #d52b1e 0%, #7a1812 50%, #1a0605 100%)",
+    body:{es:"La noche más épica de la selección canadiense. Davies inauguró el marcador a los 4 minutos. El estadio entero coreó durante 94 minutos seguidos.", en:"The most epic night for Canada. Davies opened the scoring at 4'. The whole stadium chanted for 94 straight minutes."},
+    meta:{aud:"54k", date:"17 JUN", dur:"Foto"}
+  },
+  { c:"c-3 r-2", country:"us", type:"pattern",
+    title:{es:"11 ciudades, una <em>sola</em> bandera", en:"11 cities, a <em>single</em> flag"},
+    city:{es:"Estados Unidos", en:"United States"},
+    bg:"linear-gradient(135deg, #3c1a4e 0%, #0a0a0d 100%)",
+    svgPattern:true
+  },
+  { c:"c-5 r-1", country:"mx", type:"photo",
+    title:{es:"Monterrey y los <em>rayos</em>", en:"Monterrey and the <em>thunderbolts</em>"},
+    city:{es:"Monterrey · Tormenta eléctrica", en:"Monterrey · Lightning storm"},
+    bg:"linear-gradient(135deg, #311b92 0%, #1a0a3a 50%, #0a0a0d 100%)",
+    body:{es:"Una tormenta de 22 minutos detuvo el Fan Fest regio. Pero ni un alma se movió. La lluvia y la cerveza bien fría: la mejor postal del norte.", en:"A 22-minute storm halted Monterrey's Fan Fest. Nobody moved. Rain and cold beer: the finest postcard from the north."},
+    meta:{aud:"38k", date:"22 JUN", dur:"Foto"}
+  },
+  { c:"c-4 r-1", country:"us", type:"video", dur:"1:06",
+    title:{es:"<em>Atlanta</em> rompió récord", en:"<em>Atlanta</em> broke the record"},
+    city:{es:"Atlanta · Mercedes-Benz Stadium", en:"Atlanta · Mercedes-Benz Stadium"},
+    bg:"linear-gradient(135deg, #1a73e8 0%, #0f3a7a 60%, #0a0a0d 100%)",
+    body:{es:"El Fan Fest más grande del sur estadounidense superó las 80 000 personas. Récord absoluto del torneo fuera de las sedes.", en:"The largest Fan Fest in the American South surpassed 80,000 people. An outright tournament record outside venues."},
+    meta:{aud:"80k", date:"24 JUN", dur:"1:06"}
+  },
+  { c:"c-4 r-1", country:"all", type:"stat",
+    statN:"2.1B",
+    statLbl:{es:"Aficionados globales viendo el torneo según estimaciones combinadas de FIFA.", en:"Global fans watching the tournament according to FIFA's combined estimates."}
+  },
+  { c:"c-4 r-1", country:"ca", type:"quote",
+    quote:{es:"\"Toronto nunca se había sentido tan internacional. Era un Mundial en versión urbana.\"", en:"\"Toronto had never felt so international. It was a World Cup in urban form.\""},
+    attrib:{es:"— Ahmed K., taxista en College St.", en:"— Ahmed K., cab driver on College St."}
+  },
+];
+
+const HOST_CITIES = [
+  { name:"Ciudad de México", cty:"MX", cap:87000, stad:"Azteca" },
+  { name:"Guadalajara", cty:"MX", cap:49800, stad:"Akron" },
+  { name:"Monterrey", cty:"MX", cap:53500, stad:"BBVA" },
+  { name:"Toronto", cty:"CA", cap:45500, stad:"BMO Field" },
+  { name:"Vancouver", cty:"CA", cap:54500, stad:"BC Place" },
+  { name:"Atlanta", cty:"US", cap:75000, stad:"Mercedes-Benz" },
+  { name:"Boston", cty:"US", cap:65900, stad:"Gillette" },
+  { name:"Dallas", cty:"US", cap:80000, stad:"AT&T" },
+  { name:"Houston", cty:"US", cap:72000, stad:"NRG" },
+  { name:"Kansas City", cty:"US", cap:76400, stad:"Arrowhead" },
+  { name:"Los Ángeles", cty:"US", cap:70200, stad:"SoFi" },
+  { name:"Miami", cty:"US", cap:65300, stad:"Hard Rock" },
+  { name:"Nueva York", cty:"US", cap:82500, stad:"MetLife" },
+  { name:"Filadelfia", cty:"US", cap:69000, stad:"Lincoln Fin." },
+  { name:"San Francisco", cty:"US", cap:68500, stad:"Levi's" },
+  { name:"Seattle", cty:"US", cap:68700, stad:"Lumen" },
+];
+
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+let currentCountry = "all";
+
+function renderMosaic() {
+  const lang = M26.getLang();
+  const visible = TILES.map((t, i) => ({t, i})).filter(({t}) => currentCountry === "all" || t.country === currentCountry || t.country === "all");
+  $("#mosaic").innerHTML = visible.map(({t, i}) => {
+    const cls = `tile ${t.c} ${t.type}`;
+    const bg = t.bg ? `background:${t.bg}` : '';
+    let inner = "";
+    if (t.type === "video" || t.type === "photo") {
+      inner = `
+        <div class="content">
+          <div class="kicker">
+            <span class="chip ${t.type==='video'?'video':''}">${t.type === "video" ? (lang==="en"?"VIDEO":"VIDEO") : (lang==="en"?"PHOTO":"FOTO")}</span>
+            <span>${t.country==="mx"?"MX":t.country==="us"?"US":t.country==="ca"?"CA":""}</span>
+          </div>
+          <div>
+            <div class="tl ${t.c.includes('c-7')||t.c.includes('c-8')?'big':t.c.includes('c-5')?'md':'sm'}">${t.title[lang]}</div>
+            <div class="city" style="margin-top:8px">${t.city[lang]}</div>
+          </div>
+        </div>
+        ${t.type === "video" ? `<div class="duration">${t.dur}</div><div class="play"></div>` : ""}
+      `;
+    } else if (t.type === "quote") {
+      inner = `
+        <div class="content">
+          <div class="kicker" style="color:color-mix(in oklch, var(--accent-ink) 70%, transparent)"><span>“</span></div>
+          <div>
+            <div class="tl md">${t.quote[lang]}</div>
+            <div class="attrib" style="margin-top:14px">${t.attrib[lang]}</div>
+          </div>
+        </div>
+      `;
+    } else if (t.type === "stat") {
+      inner = `
+        <div class="content" style="justify-content:center">
+          <div>
+            <div class="big-n">${t.statN}</div>
+            <div class="lbl">${t.statLbl[lang]}</div>
+          </div>
+        </div>
+      `;
+    } else if (t.type === "pattern") {
+      inner = `
+        <svg class="pattern-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="stars" x="0" y="0" width="36" height="36" patternUnits="userSpaceOnUse">
+              <circle cx="18" cy="18" r="1.4" fill="var(--accent)" opacity="0.3"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="240" fill="url(#stars)"/>
+          <path d="M 0 80 Q 100 60 200 80 T 400 80" stroke="var(--accent)" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <path d="M 0 130 Q 100 110 200 130 T 400 130" stroke="var(--accent)" stroke-width="1.5" fill="none" opacity="0.35"/>
+          <path d="M 0 180 Q 100 160 200 180 T 400 180" stroke="var(--accent)" stroke-width="1.5" fill="none" opacity="0.2"/>
+        </svg>
+        <div class="content" style="position:relative;z-index:3;">
+          <div class="kicker"><span class="chip">${lang==="en"?"FEATURE":"REPORTAJE"}</span></div>
+          <div>
+            <div class="tl md">${t.title[lang]}</div>
+            <div class="city" style="margin-top:8px">${t.city[lang]}</div>
+          </div>
+        </div>
+      `;
+    }
+    return `<div class="${cls}" style="${bg}" data-idx="${i}">${inner}</div>`;
+  }).join("");
+}
+
+function openLightbox(idx) {
+  const lang = M26.getLang();
+  const t = TILES[idx];
+  if (t.type !== "video" && t.type !== "photo") return;
+  $("#lb-inner").innerHTML = `
+    <div class="lb-media" style="--cbg:${t.bg}; background:${t.bg}">
+      ${t.type === "video" ? '<div class="play"></div>' : ''}
+    </div>
+    <div class="lb-info">
+      <div class="ck">${t.type.toUpperCase()} · ${t.country.toUpperCase()} · ${t.meta.date}</div>
+      <h3>${t.title[lang]}</h3>
+      <p class="body">${t.body[lang]}</p>
+      <div class="meta">
+        <div><div class="k">${lang==="en"?"Audience":"Audiencia"}</div><div class="v">${t.meta.aud}</div></div>
+        <div><div class="k">${lang==="en"?"Date":"Fecha"}</div><div class="v">${t.meta.date}</div></div>
+        <div><div class="k">${lang==="en"?"Length":"Duración"}</div><div class="v">${t.meta.dur}</div></div>
+      </div>
+    </div>
+  `;
+  $("#lb").classList.add("open");
+}
+
+function renderMap() {
+  $("#map-grid").innerHTML = HOST_CITIES.map(c => `
+    <div class="map-card">
+      <div class="city-name">${c.name}</div>
+      <div class="cty">${c.cty} · ${c.stad}</div>
+      <div class="cap"><span>CAPACIDAD</span><em>${(c.cap/1000).toFixed(0)}k</em></div>
+    </div>
+  `).join("");
+}
+
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".city-bar button");
+  if (b) {
+    currentCountry = b.dataset.c;
+    $$(".city-bar button").forEach(x => x.classList.toggle("active", x === b));
+    renderMosaic();
+    return;
+  }
+  const tile = e.target.closest(".tile");
+  if (tile) { openLightbox(+tile.dataset.idx); return; }
+  if (e.target.id === "lb-close" || e.target.id === "lb") {
+    $("#lb").classList.remove("open");
+  }
+});
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#lb").classList.remove("open"); });
+
+const orig = M26.applyI18n;
+M26.applyI18n = function() { orig(); renderMosaic(); };
+renderMosaic();
+renderMap();
+</script>
+</body>
+</html>

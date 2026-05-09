@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Participating Teams - AI INSIGHTS World Cup 2026</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary": "#2f3131",
+            "on-primary-fixed-variant": "#6900b3",
+            "primary": "#ddb7ff",
+            "surface-bright": "#393939",
+            "on-primary": "#490080",
+            "inverse-primary": "#842bd2",
+            "secondary": "#c6c6c7",
+            "secondary-fixed": "#e2e2e2",
+            "inverse-on-surface": "#303030",
+            "on-tertiary": "#313030",
+            "on-error-container": "#ffdad6",
+            "secondary-fixed-dim": "#c6c6c7",
+            "on-error": "#690005",
+            "on-surface-variant": "#cfc2d6",
+            "on-primary-container": "#400071",
+            "surface-container-low": "#1b1b1b",
+            "background": "#131313",
+            "on-tertiary-container": "#2a2a2a",
+            "surface-container-highest": "#353535",
+            "on-secondary-container": "#b4b5b5",
+            "surface-container-high": "#2a2a2a",
+            "error-container": "#93000a",
+            "error": "#ffb4ab",
+            "surface": "#131313",
+            "tertiary": "#c8c6c5",
+            "tertiary-fixed": "#e5e2e1",
+            "outline": "#988d9f",
+            "on-primary-fixed": "#2c0051",
+            "on-tertiary-fixed": "#1c1b1b",
+            "outline-variant": "#4d4354",
+            "tertiary-container": "#929090",
+            "surface-container-lowest": "#0e0e0e",
+            "on-surface": "#e2e2e2",
+            "tertiary-fixed-dim": "#c8c6c5",
+            "primary-container": "#b76dff",
+            "inverse-surface": "#e2e2e2",
+            "on-secondary-fixed": "#1a1c1c",
+            "on-tertiary-fixed-variant": "#474746",
+            "surface-dim": "#131313",
+            "primary-fixed-dim": "#ddb7ff",
+            "primary-fixed": "#f0dbff",
+            "on-background": "#e2e2e2",
+            "surface-variant": "#353535",
+            "surface-container": "#1f1f1f",
+            "surface-tint": "#ddb7ff",
+            "on-secondary-fixed-variant": "#454747",
+            "secondary-container": "#454747"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "section-gap": "120px",
+            "stack-lg": "32px",
+            "unit": "8px",
+            "container-max": "1440px",
+            "stack-md": "16px",
+            "gutter": "24px",
+            "margin-desktop": "64px",
+            "margin-mobile": "16px",
+            "stack-sm": "8px"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "label-bold": ["Inter"],
+            "headline-lg": ["Epilogue"],
+            "headline-md": ["Epilogue"],
+            "display-xl": ["Epilogue"]
+          },
+          "fontSize": {
+            "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+            "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+            "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0", "fontWeight": "500"}],
+            "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+            "headline-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+            "display-xl": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .neon-glow {
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+    }
+    body {
+      background-color: #000000;
+      color: #e2e2e2;
+    }
+    .hero-gradient {
+      background: radial-gradient(circle at top right, rgba(168, 85, 247, 0.15), transparent 50%),
+                  radial-gradient(circle at bottom left, rgba(64, 0, 113, 0.2), transparent 50%);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-on-background selection:bg-primary/30 min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-[20px] border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+<div class="flex justify-between items-center px-6 h-16 w-full max-w-[1440px] mx-auto">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container flex items-center justify-center">
+<img alt="Tournament Logo" data-alt="Official World Cup 2026 logo featuring a stylized gold trophy and host nation colors on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTRCOt0fw55RkaqKu8VMh20xb6gNtuvzsKquGp2UMwM174b3A2gEYTGECIg4cohOLjyY_dCqEcWiQgkbgtTyyAkX12LcZWM-rhBkW3HNu0888A9asHvF1PfLAhmT0JRh3H8HS2HTkliXb51AYZfWOEOago8mYo0eCZhiDwmI6-pNP2FcvdgdAP2uvWEdESwucAZU3meAT0sp_hRDqJ8416sKasKEeR4o174cu_rkJxY5f-koJfrkhfGriNDU51Mf3dF7BgF4eud0Q"/>
+</div>
+<h1 class="text-xl font-black text-purple-500 italic font-sans tracking-tight">AI INSIGHTS</h1>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-zinc-400 hover:text-purple-400 transition-colors cursor-pointer" data-icon="search">search</span>
+<div class="hidden md:flex gap-8">
+<a class="font-label-bold text-zinc-400 hover:text-purple-400 transition-colors" href="#">MATCHES</a>
+<a class="font-label-bold text-purple-500 transition-colors" href="#">TEAMS</a>
+<a class="font-label-bold text-zinc-400 hover:text-purple-400 transition-colors" href="#">NEWS</a>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="pt-24 pb-32 hero-gradient min-h-screen">
+<div class="max-w-[1440px] mx-auto px-6">
+<!-- Page Header -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="font-label-bold text-primary tracking-widest uppercase mb-2 block">North America 2026</span>
+<h2 class="font-headline-lg text-white">National Teams Gallery</h2>
+</div>
+<div class="flex gap-4">
+<button class="glass-card px-6 py-2 rounded-full font-label-bold text-white flex items-center gap-2 hover:bg-white/10 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+              ALL GROUPS
+            </button>
+<button class="glass-card px-6 py-2 rounded-full font-label-bold text-white flex items-center gap-2 hover:bg-white/10 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="sort">sort</span>
+              RANKING
+            </button>
+</div>
+</div>
+</section>
+<!-- Teams Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Team Card 1: USA -->
+<div class="glass-card rounded-2xl overflow-hidden group transition-all duration-300 hover:border-primary/50 hover:-translate-y-1">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Atmospheric shot of a modern brightly lit football stadium at night under a clear dark sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5aOyjZ6xwehad0YZ-PyBNBNaQ4BFd_PZG7DRgYvgbjhmZfLE_ZyIeTx1r-ky0puR56DdZB310HqFz6ASL7gAnomSs2LHJ0CljpHivpKpXsnRNZwupgS81BTN_iqZpGWzon-X3YrvTImt8FDGSf-otXZRhCr4jBMzy3a4fChhZ5COLpPs05O1Sbyms583o2UNOdOjJ6h7LpffvgdfKZz9_TRpW8tdYUpbWB-P2OhpEWGa7sS8FlW6NP5yI36O4mXtfnIRV2c__4Is"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute top-4 left-4 bg-primary text-on-primary font-label-bold px-3 py-1 rounded-full text-xs neon-glow">GROUP A</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-white/10 flex items-center justify-center p-1 overflow-hidden">
+<img alt="USA Flag" class="w-full h-full object-contain" data-alt="National flag of the United States of America with stars and stripes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAoZeg8L-6VXLQSn-xGxw_PKHHvpMo_Gm375uqLIDNOnt4fhN3_EjZXo1R-4swSdoBKTFSi8OulqjfDhNfeCqLuz9_j8ZCZVingTsaXHoqU90NRaDeUGHAWbXU6whffb6Ss8aptcux231mlTWf1v4AzhLTv__HMt97pV4PrxKWgjqjjZ0B1Bnz4JSrstaWYH-nTNnegvui-_vucHeIE8SFB3VOrCDKvfXwi4BF6AOhJM0wtV5Hnowlv92V9mrqFY9hECYsbXwu1rE"/>
+</div>
+<div>
+<h3 class="font-headline-md text-white text-xl">United States</h3>
+<p class="font-label-sm text-zinc-500 uppercase tracking-tighter">Host Nation</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Headshot of a star football player for the US national team with a focused expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0lYljBxIyJ-i15OQ5wFMUfQZJ_zGNGnzNi009RjpyPBHDfwNRNt03OVllz_ADehbZ4R9hZtf9eYiKp7m1GVrmzPHl5vwnJ5DE4nR6grDTcUJ7-z7XnbNr8oOIlrJ4uZAP0vFt3wh8SuQRjZz7F7N2WLfcT0pjZUrxOR9Xc6cylWMO20S5Jqsi-fZVz8cIWN0e0B-4yR7SrhXIqb8w_fqULDlUejfwAOwiZWtYGSUYFwAGYyOZpzE7PgRzewO29mApKC_3gnwE35U"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Headshot of an athletic professional soccer player in a team jersey" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVIJkSKCgR3O-ULcxMAVRoMzZq5Wf7qKTPWafI2GWo79rWSrzlP2lubmfR0uCLi03yW4HJKmXf7-AkVrno0ZnMbHUksI2ik7Dx-bEEimpI4o2R1EiGrlXclmS1ahBp0CiRveBBPERDConnx4tZPwaljqe8FniorrC7GUDQh3skWAbcz6FnjKh6Wh0GUKX9ychwm_RCkPTBMIr5tr35OBujgKrSRbfHAuTMVi7bfObnNCNScbmjwL40QvoPkmBm1YbikvbyupOWYb0"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background bg-surface-container flex items-center justify-center">
+<span class="text-[10px] font-bold">+24</span>
+</div>
+</div>
+<button class="bg-primary text-on-primary font-label-bold px-4 py-2 rounded-xl flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-base" data-icon="gallery_thumbnail">gallery_thumbnail</span>
+                GALLERY
+              </button>
+</div>
+</div>
+</div>
+<!-- Team Card 2: Brazil -->
+<div class="glass-card rounded-2xl overflow-hidden group transition-all duration-300 hover:border-primary/50 hover:-translate-y-1">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of a vibrant yellow and green football kit on a grass pitch with golden sunlight flare" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6ZaDWBeumkz7U1q1ni6OYkyi0aXhvSfBwIArb1k6UYQg5rOdGw6DvFk7tP3D7bH86ovPpQdptcdZIjnrx6Z-9GG0PBuTjKwlBP3048zL6xl9bPRxORvSO7-j5Xxvc22M-utHx6sQhVXI7RSQ4m0KbTdkzHXbW7eV-UvIKOxw61tHmYK4FIPa6e8P7vj0rbMQR_iDnlGzrV8cIMhON7RSXJBcOcW8yVJSPjy1Gx8xB0SEXwjFl0A-yUqQh46PsLfv4bnntV8Gh-Kw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute top-4 left-4 bg-white/20 backdrop-blur-md text-white font-label-bold px-3 py-1 rounded-full text-xs">GROUP B</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-white/10 flex items-center justify-center p-1 overflow-hidden">
+<img alt="Brazil Flag" class="w-full h-full object-contain" data-alt="National flag of Brazil with the green field and yellow diamond" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR3_KNEcMo_wp3fuedH6MJGs5enN4Ab-QUrRFuONPenKZkXoV_3IIK3wgKg03iCYbvAkHpeUaV7rt0LUYph4xuiVyQHPDbGzn0bZdKEUBxJoYJtk9QWCgUEMCpGwxawDz1ezsME3Em-1-kOFM_Lmoj3Ds4IUENO781nCzdpZ0IScseMHkmaxa5jqXEGjsLnZuJWvHppHDIEl6g2hYUhMwUaQ3sN7sKoXx7GGMjc3nazfj-ru-jBjroYWEwqvSzjf7K9wil686ajQU"/>
+</div>
+<div>
+<h3 class="font-headline-md text-white text-xl">Brazil</h3>
+<p class="font-label-sm text-zinc-500 uppercase tracking-tighter">CONMEBOL Qualifiers</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young Brazilian soccer talent smiling against a stadium backdrop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBbi4j1_9pPo9LGj2aVORyf3KGl-H_5pK3a_IrqjD9sAywCLgYYOoAk47OirK39q0saRvkb-tUQS-v18Ou4bWyr_jr-NhRfSKdCra80DeYQLtqzihpbjJhUuPyclxkIS36e6hkCo-KRvAJ2K7PabecDhMW6FbnQfFhMhn02WS_AKiCRVS9izkpbQPFJwEysEseMujWon5cvEaMm3cak1bNZUlEknJKAQ8XDmuFxwgBsdcouqqkEidhO52jkGhyRTuJm1Vjn3nVD54"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional athlete profile picture with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxPUoFJpVgoheEPMoFckPaCcURHhMvpOAp1z4idDQD_qZEsrKU8K0gOKsyAqWFvIDqzXmvleyMRZ7GKnzlA9h2_zzZt9REukIqMrh8U68b-aK1hr8eSrEQ-8Wu-8I5sj1XFiOuT-Fs4igTM2UWq07kNHwFDAvilnreAinPDEnFEmXhfzCvktn1TXp0-3vpUrUoTqRHyiUQvK3owUb4afgm0mTOjnuaW58LDXEd0aicYq9k3yahM9C2ITHc_O9clm_pUxMPBVs0Fm8"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background bg-surface-container flex items-center justify-center">
+<span class="text-[10px] font-bold">+24</span>
+</div>
+</div>
+<button class="bg-white/5 hover:bg-white/10 text-white border border-white/10 font-label-bold px-4 py-2 rounded-xl flex items-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-base" data-icon="gallery_thumbnail">gallery_thumbnail</span>
+                GALLERY
+              </button>
+</div>
+</div>
+</div>
+<!-- Team Card 3: France -->
+<div class="glass-card rounded-2xl overflow-hidden group transition-all duration-300 hover:border-primary/50 hover:-translate-y-1">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Abstract cinematic blue and red lights reflecting off a polished stadium surface with deep shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5boZJHblJP0zyH4iVoxzxJfFycEprjaaqTtmNcnX3TYO31xagfNVwtYo7Vz0pF-VzKy39fiY2ov4lHHPNtg9YGifClCnm2I4mxhsTiQSmfwmH9yB8XDAbExKijIJa43JCn4BB4Hya0yzDrMOOD58MKbC_OFrQ3VvQwD1htNJW7iiaIPDOgHJv2DQ0pMX6X1XJAVb4Oo47YEU2Er08GlWdfQhV1Mq6WOZN-vphiND0M9vyQ85V8CLGF0G899XGWgqr4qQT-fm2YRA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute top-4 left-4 bg-white/20 backdrop-blur-md text-white font-label-bold px-3 py-1 rounded-full text-xs">GROUP D</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-white/10 flex items-center justify-center p-1 overflow-hidden">
+<img alt="France Flag" class="w-full h-full object-contain" data-alt="The tricolor national flag of France in blue white and red" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF3c6FPLQOoatdyBYVP99Du_KDlG_ak4WbOgQvgKydDbc3K4VAAfAKE5LtDvUrNiZwYkHZKpKXEd3L8ooHrsz6Oc8bTrOdLcruGa_kkRgB-S-Akj26gPqYrbwFCUdh06rfFDE4ZmDDeu8p1d9VCodfpSIrNEgptIK06Nj57abvvDyj0JGyKo8ju_bbtaKtQbql_5x9eYJBT-V7VqS5rsFtAOKdtAuZKBLBEznwQVKjyuMGIwcv5rj4N8VuJd_IElpbwRT4D46C6qg"/>
+</div>
+<div>
+<h3 class="font-headline-md text-white text-xl">France</h3>
+<p class="font-label-sm text-zinc-500 uppercase tracking-tighter">UEFA Qualifiers</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="French football star with a determined gaze in high contrast studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA51GHGVq6VyIR9qo7kzgCGDU8l8pRJMWFYhqh9tEQ5-frD8vGwPtLghF7u8d09Ta58FXThffBJ473e0gkE1svQsHN78ZZAVxR3ZTGM7OL_ZR-tlvkkN0ZFV20fuQnCB0lZQFJnWJQFfdxCNMaYEsfB2ItZUHrkcZnYtVhwAa5CuuGZzfxm8R_-yZ2cLzR-xCHYFsoZS4LTeeh_ooXG-YqDDihTtp7krSy3FFKrvT__ARtvixEznuDeuLue3r5pxaYxypqiOHi_qxw"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Profile of a professional soccer player with blurry stadium lights background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANm39vDMwAsXOxGuVKuUsWo9hoA2UXTaos2BtFHW0Wc6cCEqn8z4KgVdVBZVg7RroV8WzP0PrshVrUvKuMjoFY2yl_e6lTStbIS9TyHsHBWBLNWCnEVoQok4lYhwCzdtEh5linlGzBvV-2gYfC3dN5hrFGKmq_FzwsKrmbIL1OFdT62JK0fY1rTsW77_VGJbTLUa3rXiN5_3nx3YFGARGNTakjhZU1wPRpyau3LpqsR18-uXBgWe2pnvZYxE30DX1rVKaOehh8jqs"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background bg-surface-container flex items-center justify-center">
+<span class="text-[10px] font-bold">+24</span>
+</div>
+</div>
+<button class="bg-white/5 hover:bg-white/10 text-white border border-white/10 font-label-bold px-4 py-2 rounded-xl flex items-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-base" data-icon="gallery_thumbnail">gallery_thumbnail</span>
+                GALLERY
+              </button>
+</div>
+</div>
+</div>
+<!-- Team Card 4: Mexico -->
+<div class="glass-card rounded-2xl overflow-hidden group transition-all duration-300 hover:border-primary/50 hover:-translate-y-1">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A crowd of enthusiastic fans in a stadium waving flags and celebrating with green smoke effects" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzy6z3L71mHQHPvqdwK0uDbScL76TyoCXyCDBbBT0A7HkT4zELSlfNYYIG82CGqrKWU8iLwACxE5r8jxULu9e2Tmnll8ivvbD-8jNggGwRooxM9BiVTSWgXKORuSFCDwmU0msnlARZwlZm5Lh_2AsMsrADkeQwHOFmRlchfbdHF6z2EE4DI8V_JhFB_qMszXTGVt9h42hjAuIv47AKJspLMADcI7AJiHp1p4SN104jy4hRWz8zXoV-SjxSnRkmwHIyh4VBIlXJy3g"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute top-4 left-4 bg-primary text-on-primary font-label-bold px-3 py-1 rounded-full text-xs neon-glow">GROUP A</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-white/10 flex items-center justify-center p-1 overflow-hidden">
+<img alt="Mexico Flag" class="w-full h-full object-contain" data-alt="National flag of Mexico with green white and red vertical stripes and central emblem" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBB9YeSINNVY6h24Osh725_Svzn49DqEGGbnFa8sq2aMnE9uAMnYp8xXSl_1tovAyXZFtUR0G6GK3JGthQhyBTIm3xkIItqFvz32H3HhVPhgKne6iGjsf2rPMtU4uX-ghYpV59VSI3V2pyxO9H1X146hG5w3p1PiGERZNyDvtRQ_SVpK1zfKGU2r9MOIKwk33Ha1jyLCLknDenOoAN53K8jFXhrY39amIvBYBChCZCXN5IaKoey_X1-nwlxZg-6Bt8cs-tx2Ux8GyI"/>
+</div>
+<div>
+<h3 class="font-headline-md text-white text-xl">Mexico</h3>
+<p class="font-label-sm text-zinc-500 uppercase tracking-tighter">Host Nation</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Mexican national team player celebrating with arms raised in a blurry stadium" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMaR2iQEMlzGp4GGQ8Xl9Y1VRaXcQ-wpGQSTg6OjDNLn3zHtgzRJjlEhNc945kuLZJkLbvF_TwvLYshbSyUaieHFcnycgz2PuXNRc07Fop9empQ3ENRQzr__uTU7Z-Y-fegLpqzxILDsO-KrvnftfRCrCjV1JXAw3tNhbBfA5QXtM698RlJW-HaQiorE1rufoKKP4w2N2r0t7HkpZjaIBMMRbTC4BVhW4IK_yr23uAXeYOrqZ0AAo8SNxakC2_4tegxv9AlHrPrWM"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close up of a soccer player's face with sweat and intense focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi-rcTcFcaWlrS4k2k9Mhcc-TIZ8nW4K34exadBKXEBa4qgn6k8Zushr4c_h4LVMgyJgxs9nSv1sAOrk8Ug2GtcuLufLkye8r0eurYlrUlBpuXymlqbgRCajgoXA6r0Ak2C8hfCR6Xc9EBL6t6afuSJk_FH8HQhRIRDDZu5gPC4BR8IYTngWvX80RsCz3yol5eQXdq1siau0434nATDoys-5Y2z_Ns9b1KIyRk0mTkFYjJbe5FgiRpDNLTzOagY19KG-0UmeG92S0"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background bg-surface-container flex items-center justify-center">
+<span class="text-[10px] font-bold">+24</span>
+</div>
+</div>
+<button class="bg-primary text-on-primary font-label-bold px-4 py-2 rounded-xl flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-base" data-icon="gallery_thumbnail">gallery_thumbnail</span>
+                GALLERY
+              </button>
+</div>
+</div>
+</div>
+<!-- Add more team cards as needed following the same pattern -->
+<!-- Team Card 5: Argentina -->
+<div class="glass-card rounded-2xl overflow-hidden group transition-all duration-300 hover:border-primary/50 hover:-translate-y-1">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of a leather soccer ball on a dew covered grass field in the early morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDyZVGozcZTW-Ti146NumDw9s_kYYXuslC-xnFC4u1MOSe0yLMOhA-dxqJYo7HeQn740TEZGq0PkE-ACNBt8Xf26axNhFhj7Vtpgc3cTDJD9MVefmDee5E4YB8sFe4p31pgj_rMEF7coPY8R28yMmcQa9gdR1VqWD0s3VBDvk7AQjnzqWVCwaGpp9BD-aXqSZM6vJBG6ibzv-D9iWFb5BeF6WR0Uby8lSCZY7SQPt11PKrI6ULvtKIAhrKvPjmQUQqIwF7SI5B92o"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute top-4 left-4 bg-white/20 backdrop-blur-md text-white font-label-bold px-3 py-1 rounded-full text-xs">GROUP C</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-white/10 flex items-center justify-center p-1 overflow-hidden">
+<img alt="Argentina Flag" class="w-full h-full object-contain" data-alt="Light blue and white horizontal stripes with a golden sun in the center of the Argentina flag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4dSMOUuPBvrn5nNfojWRXizt5oQpPUP65fj9l9stdUiO6saY3WAeK_1Yta5yYYRcwggdopmYIzN8jxwxh3RJluoKNeim6XmpiGNkD41FhTgeeB_9a2ly9Ho-DYAnQg2tm5VuHAojCURyeJ3uBSMyF7vGnFugqLdfBksPsaYebXu7-XljNLVNhvZeAiQQP2CLCQfhHGg1z3o8rvSAFOo90PixLlaTLWWiZq9WS8BjrW0WCa-bUlk0a3krr2yQmpGRMm6eGw0LOW0U"/>
+</div>
+<div>
+<h3 class="font-headline-md text-white text-xl">Argentina</h3>
+<p class="font-label-sm text-zinc-500 uppercase tracking-tighter">Defending Champions</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Legendary Argentine soccer player looking thoughtful in a studio portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjX4Oe8oiUyyLmuUGRWPy7eAkbTnhnY0P_enidttmquHNJsRatjvSECwdx9FK4XOkSobdxRWNdpejNmwcxpsnWx8iRVmTrFHL1TiuzGAvGuNUtNffTXM0yBCVqyV-f8Xgj-0K3Zuwr2djob5TWsO7IgGMQ2l2-9uQN-Sv7tuL8vcjbWKDpNNHhxcg1zEHK0u2ZnjmSxilXFj6xwKK0eDcY5d_8-OyqSnNVhnUeGutRtDC-keE8vwrBhwwqQe6-kcwf7wcxNbHQsTY"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Skillful athlete in a blue and white striped jersey" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1zYVPf3dUAZ8h59BatWooRqiURiId47_B7IabV_KbR3ihr9XYhw1dJ-dDdyQXYZxEZ-Q0T4sb305H-ElNXEcCAf7jxqGszyqKs0wyRVa8YwP8QEnraqBP2W4yazzvX-52l9BrbVfN9PtcH5vgGI37vtYAsm7Qe6uomEaWj7HnbvtzOQbVJyo0jY4dXJsfoQoB2-1Vbnn1v7fRkf8L6baRFN93y4kyiam2OXlCTs2yApGp_FJ_AJDg4qbYO0RxaV-ZISoOTYvIqlw"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background bg-surface-container flex items-center justify-center">
+<span class="text-[10px] font-bold">+24</span>
+</div>
+</div>
+<button class="bg-white/5 hover:bg-white/10 text-white border border-white/10 font-label-bold px-4 py-2 rounded-xl flex items-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-base" data-icon="gallery_thumbnail">gallery_thumbnail</span>
+                GALLERY
+              </button>
+</div>
+</div>
+</div>
+<!-- Team Card 6: Canada -->
+<div class="glass-card rounded-2xl overflow-hidden group transition-all duration-300 hover:border-primary/50 hover:-translate-y-1">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Scenic aerial view of a futuristic city stadium in Vancouver at dusk with city lights glowing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB23EQNuhN_A9Nd3hjB9vmHaeQMDD0UsbF6t1obke1jHfPuWQaCLX5uvvr9QWlhONs_BGEpUZzoivcr_JMuZJOR9L4srHIom35n4rJqGfJhGPDLXSgXJeIxt9aMbyi0rA9Oa4jUrRBV_BeQ9r1OxfHbvn1pTf0pvuqYACIwKD-tpBxbkTQryaMlBiVIOUaZWMbCCAFcEo_zMOYSI4xx0Yi23fUnUVnaQwpyZFRzUUdU-K-z5T0ZtgwByHIaT5k8DyKkaYuyNhrsFmA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute top-4 left-4 bg-primary text-on-primary font-label-bold px-3 py-1 rounded-full text-xs neon-glow">GROUP A</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-white/10 flex items-center justify-center p-1 overflow-hidden">
+<img alt="Canada Flag" class="w-full h-full object-contain" data-alt="The red and white flag of Canada featuring a central maple leaf" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcD64PBB_2o3N0KTzeRrBzJ-1xQwFZyt37C_bkbjr1_JFT9Ptx_LvPrgcb9VSxAENnVFvKfc8UcMoznFEGWSt9_roAkPlVpW2tLFp4qJQI9LOF0OAii53xQfi0u9m9uhCPNKPd_dPbzfN_doLaa2uHUtCx3eYyr9tKQhT9GuUmy2143RY0m9cnhqb0u2rXjNWdz-hARPU-7rByRaC8cFtggiQlW1uV76Vk6ERjDHLNNSsKL-bc224DAFMs0WgtGbHzrfxJMLA2vu8"/>
+</div>
+<div>
+<h3 class="font-headline-md text-white text-xl">Canada</h3>
+<p class="font-label-sm text-zinc-500 uppercase tracking-tighter">Host Nation</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young Canadian soccer player with a determined look" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVB9ilc7rd-bm3OdchWl_w_SP3BtMVeKXmcgHyqEklVDc_fyExpjr-qGQLLyweyz06C0LrCwQxXZnYjJc-9KQvQa0o06-jjJX8R6Etk1E2ZDUbEOthLGJvPDY83owXC9gcc8PhMBGetzOlEKXX9GRQk4-YCXRyb7ZrRswlaRNveaZo3F7odSEDRZ2r89rHAZfnqORiffUfRKZoNh1wFvbSn6lOOjx_8dtwz5998UvqiESvZpUavXVFm5FINkgHjMitOHfJwEb1GIM"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Athletic professional runner in a training environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGXVqXpFobY3pY69k9gJyxRJZuOgsVsVkaM9cQ7KKRfLdnAiq6AKgGJsho2ZiTXcf8qMECquEpi516sjLwIdn8AYe5d8EwE68it0UfA1YNHjFsfjJNefr1TnnVSWi7UIoqMmSMEJAjRzBtNx1rDEO8pu9gv44IA2Ob6Cjbrl5dWW9Gyoe2BUj7AkfAyDjl5RtIBGK56h2kP9wI3eJVoSMZX8U4waxCGjESSZnA16NTPiWaMpszorbTKCOdSuZArq6GDFQiLRUVwyE"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background bg-surface-container flex items-center justify-center">
+<span class="text-[10px] font-bold">+24</span>
+</div>
+</div>
+<button class="bg-primary text-on-primary font-label-bold px-4 py-2 rounded-xl flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-base" data-icon="gallery_thumbnail">gallery_thumbnail</span>
+                GALLERY
+              </button>
+</div>
+</div>
+</div>
+<!-- Team Card 7: England -->
+<div class="glass-card rounded-2xl overflow-hidden group transition-all duration-300 hover:border-primary/50 hover:-translate-y-1">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of a leather soccer ball on a dew covered grass field in the early morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDyZVGozcZTW-Ti146NumDw9s_kYYXuslC-xnFC4u1MOSe0yLMOhA-dxqJYo7HeQn740TEZGq0PkE-ACNBt8Xf26axNhFhj7Vtpgc3cTDJD9MVefmDee5E4YB8sFe4p31pgj_rMEF7coPY8R28yMmcQa9gdR1VqWD0s3VBDvk7AQjnzqWVCwaGpp9BD-aXqSZM6vJBG6ibzv-D9iWFb5BeF6WR0Uby8lSCZY7SQPt11PKrI6ULvtKIAhrKvPjmQUQqIwF7SI5B92o"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute top-4 left-4 bg-white/20 backdrop-blur-md text-white font-label-bold px-3 py-1 rounded-full text-xs">GROUP E</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-white/10 flex items-center justify-center p-1 overflow-hidden">
+<img alt="England Flag" class="w-full h-full object-contain" data-alt="White flag with a red cross of St George for England" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCb6kPtsX9mL4ChdiaziUEq_exWQKxpgeL8_QsrYmrzACGH8OzsLA3gppCpx3krIjmuGWCpxJ1gKI5KgVe2z_LwYpXmwEzLiZag4OtK3ecsWPdKy8y_F8jurTWaryNBYib_GWF0PKDRKu3_PAIEFlFiDSNIhqPFiF8CFez0GFwu4abAB9PKbgML8muWmSbIaryqE4W1d-XHt9wWU-3aNngjACJDiQ-UAt6PrG67gl2JltoTYMVYwB_amK6rn7dfajeLEPQDhV09-hQ"/>
+</div>
+<div>
+<h3 class="font-headline-md text-white text-xl">England</h3>
+<p class="font-label-sm text-zinc-500 uppercase tracking-tighter">UEFA Qualifiers</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="High quality professional headshot of an English soccer captain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIOfmsRhjJRAIIX6WeY8KRlgoMLcQ_DflGaX9XwmzS5xhv3xZp24a4Gdyv0Ib8ybcbnA_E7tiSUTDn-YRxvoZaU5b2EOnnnB7wjRgK7gXFMZk-LydsRmKaXd3ff50RPKSVgTx5iBF-2rkTx6pN-TTO5XIBVTrTbZ7RByY1CAzpjCArdtx_-i4AT6xIFx4sxEo_O4Lp_WwTgp5Pu20dJ6J5_2C1vQWiTxIS77zJFBaFl1HPwipbDmFVMU6smtxEOXwv8bmZ7V1z44M"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Profile photo of an athletic player in a white training kit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUtXBuCFODfX7X3Cw7P3480vhM8KAnvNifw11oFAGGCo-g-d0-_mLsp6QHajVCEIad5FiEVXHkJDIR9VhgGJuKSY9QfqdDI6Hxb6zUxMtSrtc4t8T9YYpXd90YNQZRasZ4l1eJG0CngT6-yqlXMiIFZrkP4_F3QhgosDRPyJYP_aJXWwWGcxB8oANGUZtu9OPaAYeLuhRZNloIbpkNRp_TopaznseCFWHPdCBGIezXIxShwQNVzFPfZqXP9rOZq9ZLOkzTiblMAu0"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background bg-surface-container flex items-center justify-center">
+<span class="text-[10px] font-bold">+24</span>
+</div>
+</div>
+<button class="bg-white/5 hover:bg-white/10 text-white border border-white/10 font-label-bold px-4 py-2 rounded-xl flex items-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-base" data-icon="gallery_thumbnail">gallery_thumbnail</span>
+                GALLERY
+              </button>
+</div>
+</div>
+</div>
+<!-- Team Card 8: Japan -->
+<div class="glass-card rounded-2xl overflow-hidden group transition-all duration-300 hover:border-primary/50 hover:-translate-y-1">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Sharp cinematic architectural detail of a modern stadium roof against a deep indigo twilight sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDE_j9erWxFIT9Xw8BGAx-p7Ju02VNsCplnzrVGjYCkXsOVj9RIzYndHuFhCPe2wyLbkp4iM4qA1YcIC-F6z2AZ0BccO3YOyHVn1nacCAwbGneaywldf2-6PazZT8tHeyTow58zu70V3T84jz3tBe3w4ATi7CKvStvqMPib7TPmd1vCWfCRVaDIVFrsiCL7YyEAv_bDY5oVfDy32xGSHitqA3Z08_Lr98we3fjAkbOlkvwbSS8jCFYmEr4xtKzXSstO07H5jp5yfg4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute top-4 left-4 bg-white/20 backdrop-blur-md text-white font-label-bold px-3 py-1 rounded-full text-xs">GROUP F</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-white/10 flex items-center justify-center p-1 overflow-hidden">
+<img alt="Japan Flag" class="w-full h-full object-contain" data-alt="National flag of Japan with a white field and central red circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdZZOD1_iVIL66M7l1CZplDtReeXcyJOXHZb5HwZUzJIM74ppzHG99pIkFGAPXxdvqbye9eEgkrYHNJIr6gWtNu0glQ-GKtr4c2FW_jRr62UITCfkG_Kl5m8TfFAxEur2J0LJLHMqvizF2OQU78wvZu38dOsTMocIquusVAByS5SpMgQLKjGS148I_Qly4Kp_5QQqVi49jKyZvpgAPjdrpCEuf-rT05dQV-j-IOYBDP1qRCc0E-fo1t6wmTu20cy_aN1R7CBAUpV8"/>
+</div>
+<div>
+<h3 class="font-headline-md text-white text-xl">Japan</h3>
+<p class="font-label-sm text-zinc-500 uppercase tracking-tighter">AFC Qualifiers</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a focused Japanese midfielder in a dark blue kit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3wOKeIkaU4s5fHwJ5yB6C29Kuweq4xkoSVvl1uEbqQKJAzGSD4W2sOSZnLco-wX-QC32woem-zzJC3dZWFpPieqjPe-zlgsLuHizli5mYra4spE1tjSAkLjivBRhWJaOw76axi6vwW6nWd3EZNlYHd_toIBs5S3vTxd4jizOxkGNMmgzDuwvjfbcg6R4btRw5Ru95uMFd7wTO7ldlwhZGR0VIJ9FvnfXiljEy_a0tM-3WkEFnPGE234BrhtUi6-UlSsZkf1CCGss"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Profile of an athletic sports professional with short dark hair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATxLD0YVlyNcCX6DU7sPvPJcbMrkPlRFxczb2d24x6R5t929gLLhwXXhUCMxfo0PnF-uKKyXBhizIIDizihjpr4g0XebwZF9POVpJ1p_UjBx0FBoiz_6v0goylOEp2VocZDR87GXgADytMm9OZovvKCYCc08HPAcP8PqYl_6oyU2hlaM62ge9fpc0ycNyzOLpPM8-43rX7YbdU-RrHunVGUWWvY4c25uOO4v52FcI5wormOpWBpXpkwUPomhKWMWgFI9EDyNC9xCQ"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-background bg-surface-container flex items-center justify-center">
+<span class="text-[10px] font-bold">+24</span>
+</div>
+</div>
+<button class="bg-white/5 hover:bg-white/10 text-white border border-white/10 font-label-bold px-4 py-2 rounded-xl flex items-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-base" data-icon="gallery_thumbnail">gallery_thumbnail</span>
+                GALLERY
+              </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Gallery Modal Overlay (Static Example) -->
+<div class="hidden fixed inset-0 z-[60] bg-black/90 flex items-center justify-center p-6">
+<div class="w-full max-w-5xl glass-card rounded-3xl overflow-hidden relative">
+<button class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<div class="grid grid-cols-1 md:grid-cols-2 h-[618px]">
+<div class="h-full">
+<img class="w-full h-full object-cover" data-alt="Intense high-action shot of soccer players competing for the ball on a rain-slicked pitch under stadium floodlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCcgMAGGXnN0b1zU3tV-k7tAPTwIy9AFdG-j_EtvnE1AZ3kbRECmeERly7jNrqQ0axpVZwxmm7qDsLZpLCsQLS2wu8yGP5NURdBT8EdtuDttfE_q541vI-L8nAgIPCKEi3SrI2rirxMoXEzTyzlk2gURHPKVX1sD_mhpuClsWIqHpBs4FGQKFzArCk1PjdYmwDnL5av5VzsOD2FHP-7R4d6gEACPM3bt8RpZH-3q1MacFQBYL-AllDvSW29CvHf6wYmB6Wx4ht7jk"/>
+</div>
+<div class="p-12 flex flex-col justify-center">
+<h4 class="font-headline-lg text-white mb-4">Team USA Moments</h4>
+<p class="text-zinc-400 font-body-lg mb-8">Exclusive high-resolution captures from the training camp and stadium arrivals in New Jersey.</p>
+<div class="grid grid-cols-3 gap-4">
+<div class="aspect-square rounded-xl overflow-hidden border border-white/10">
+<img class="w-full h-full object-cover" data-alt="A soccer ball nestled in the net of a goal with soft sunset light in the background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOH5rRfTVPFYFwA2c-C2AI3a0iO-zRA8AmM1mXTVbj5LuyYktv0ACwHh7TT9l1zZ_6wf2D7EBZ0nZCSeACM3r1oLS8ggLQEOZ14gtKRRAxJrKB2EHYpljrLEScd4EQqhyERsysXORoKKbOvmSqIn93HZWRSQOhhPY7KsbnXa588s4Ywd9ZmOoiO6RESQDKmNd5uH1zDB3OjTBTMXDPwYJxdJQOhm5EcdGS8KMYTdAeD_ee_Wtfkq7hRQ4DfE0d1EXwy8MeTMpnQCI"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden border border-white/10">
+<img class="w-full h-full object-cover" data-alt="Athletic players running across a green field during a morning practice session" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUVSgDDKtlGrtWic2_upStJ5dR7ZZg6ZjGwxNexraSxFJBsmRp6OpOdXo3a4-yySpkNGss4gYjmu7n5i8SF_r_NLEbMJqNdZk2r6kLv00rwWcrOKvCxwLgJTq7NXx5KrzUK9NQjvbV0UhAfnry_4HqaHgETqzqvPB4rfcFZhQ937zh7Av4ljIOMu0yFVEONULzE5nPgH4QNedZGk1y4F2bqdfzBAfbh5-Ps1Hd6hrCfTutf1SJ6Cs_0thGaYpQvIuLyaQK-dY1EHk"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden border border-white/20 ring-2 ring-primary">
+<img class="w-full h-full object-cover" data-alt="Wide shot of a massive crowd of fans wearing white and red colors inside a cheering stadium" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJa7sb0MI-02YzfuZTyqsClXctQJk9-6ReAYps2L37tDSMQsjDk3Sp7UzZYLmRL5XJBKkl6E0EyoEd220r4xXkSaAdx7IBfWhs7ocTDnJjOm0BgLinl2xnIcknzQ0VSRxE9xrtelg9kxyF-gyzLo88T-yMCQQVhEzQgM8Fe4ZRfe-42zK732b8soE6ERhGyzu5GOxpsAt0j3HAghQ-H1795n7rgcPJM_bvIn-PeBb9Z70Ev2zJ2AnPkvL548EKlEvriLatW9R6oEs"/>
+</div>
+</div>
+<button class="mt-12 bg-primary text-on-primary font-label-bold py-4 rounded-2xl w-full hover:brightness-110">VIEW FULL 100+ PHOTOS</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-black/90 backdrop-blur-[20px] border-t border-white/10 shadow-[0_-10px_20px_rgba(168,85,247,0.05)] rounded-t-2xl">
+<div class="flex justify-around items-center px-4 pb-6 pt-3">
+<div class="flex flex-col items-center justify-center text-zinc-500 hover:bg-white/5 transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-[10px] font-semibold tracking-wider uppercase mt-1">Stats</span>
+</div>
+<div class="flex flex-col items-center justify-center text-zinc-500 hover:bg-white/5 transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="text-[10px] font-semibold tracking-wider uppercase mt-1">History</span>
+</div>
+<div class="flex flex-col items-center justify-center text-purple-500 bg-purple-500/10 rounded-xl px-4 py-1.5 transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-[10px] font-semibold tracking-wider uppercase mt-1">Teams</span>
+</div>
+<div class="flex flex-col items-center justify-center text-zinc-500 hover:bg-white/5 transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="star">star</span>
+<span class="text-[10px] font-semibold tracking-wider uppercase mt-1">Players</span>
+</div>
+</div>
+</nav>
+</body></html>

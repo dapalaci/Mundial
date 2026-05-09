@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#1e1e30",
+                        "surface-container-lowest": "#0a0a12",
+                        "on-error-container": "#ffa0a0",
+                        "on-primary": "#1a0010",
+                        "on-surface": "#e8e0f0",
+                        "on-secondary-fixed": "#001a1a",
+                        "tertiary-fixed-dim": "#ffe04a",
+                        "surface-tint": "#ff2d78",
+                        "primary-fixed-dim": "#ff80aa",
+                        "surface-bright": "#1a1a2e",
+                        "secondary": "#00ffcc",
+                        "on-secondary-container": "#c0fff4",
+                        "inverse-on-surface": "#0a0a12",
+                        "secondary-container": "#004d3d",
+                        "on-primary-fixed-variant": "#8c0038",
+                        "error-container": "#3d0f0f",
+                        "on-secondary-fixed-variant": "#004d4d",
+                        "inverse-surface": "#e8e0f0",
+                        "surface-container": "#141422",
+                        "primary-fixed": "#ffe0ec",
+                        "inverse-primary": "#8c0038",
+                        "tertiary-fixed": "#fff0c0",
+                        "surface-variant": "#1e1e30",
+                        "tertiary": "#ffe04a",
+                        "on-background": "#e8e0f0",
+                        "on-primary-container": "#ffe0ec",
+                        "surface-dim": "#0f0f1a",
+                        "on-tertiary-container": "#fff0c0",
+                        "on-tertiary": "#1a1000",
+                        "tertiary-container": "#665200",
+                        "surface-container-highest": "#28283e",
+                        "on-tertiary-fixed-variant": "#665200",
+                        "on-secondary": "#001a1a",
+                        "surface": "#0f0f1a",
+                        "on-error": "#1a0000",
+                        "surface-container-low": "#111118",
+                        "outline": "#5a5068",
+                        "on-primary-fixed": "#3d0020",
+                        "secondary-fixed": "#c0fff4",
+                        "outline-variant": "#302840",
+                        "on-tertiary-fixed": "#1a1000",
+                        "on-surface-variant": "#a098b0",
+                        "secondary-fixed-dim": "#00e6b8",
+                        "error": "#ff4444",
+                        "primary": "#ff2d78",
+                        "primary-container": "#b3004e",
+                        "background": "#0a0a12"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Sora"],
+                        "display": ["Sora"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0a0a12;
+            color: #e8e0f0;
+            font-family: 'Inter', sans-serif;
+        }
+        .neon-glow-pink { text-shadow: 0 0 8px #ff2d78; }
+        .neon-glow-cyan { text-shadow: 0 0 8px #00ffcc; }
+        .glass-card {
+            background: rgba(30, 30, 48, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 45, 120, 0.2);
+        }
+        .scanline-bg {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 4px, 3px 100%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background selection:bg-primary selection:text-white">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0a0a12]/90 backdrop-blur-md border-b border-[#ff2d78]/30 shadow-[0_0_15px_rgba(255,45,120,0.2)] flex justify-between items-center px-6 h-16">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#ff2d78]" style="font-variation-settings: 'FILL' 1;">sports_soccer</span>
+<h1 class="text-xl font-black text-[#ff2d78] uppercase tracking-tighter [text-shadow:0_0_8px_#ff2d78] font-headline">FANFEST TOKYO</h1>
+</div>
+<div class="w-8 h-8 rounded-full border border-secondary overflow-hidden">
+<img alt="User avatar" data-alt="close-up portrait of a young fan with neon face paint in a futuristic aesthetic, soft purple lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_FZWjMgyU9_sgRWIXekW_mm7vyU1PW_io875w6z481j8xw57aHJE1a95rsLKdcRB2FEIrO2kiQS0L3VYpnNX2cpqKh0VyfKoG4qmtNmcMS6VnKrJIHPGs8xkd0xuQb8yz3hJk1k4UmgJEdeU-n784NTJuXriyBKmf0tipml5XR13irlQ7bsv495pD-9DuTiYyS28CGuou72c0cCX-cFaiM_Qm3A4ZrIDJiILl3k1RAazUsAcyTfR3_WCdDVl211q9gB5MQ9UAol4"/>
+</div>
+</header>
+<main class="pt-16 pb-24 overflow-x-hidden">
+<!-- Hero Section -->
+<section class="relative h-[751px] flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Stadium background" class="w-full h-full object-cover opacity-40 grayscale" data-alt="Massive futuristic soccer stadium at night with intense pink and blue laser beams shooting into the dark sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5JMRAB8Syw5DLEicc_rgKKPBX9UX3D8Wc_QSq0LBXZ8QhaMFV710aFXjl9Edl7vkuPsoRFkM44jjkmbTiCO7BM2cnUBISaJz6y8ALfZpGxzJVWzVTGFaiyoJE02SW91PelTxGWpdS0zw4FLCdwa7bfbkqhN4zf8F_j-fr9I9zlRiDXo-zMW3eSu3iA_ptUCFss3jSTQoGl5CW4Rw4dJ_4Vyd7DsOw9k2gaaTWWhnxp9CFZv9DbsegYGVdSj90q_yiYTrhm3QytcU"/>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/60 to-background"></div>
+<div class="absolute inset-0 scanline-bg opacity-30"></div>
+</div>
+<div class="relative z-10 space-y-4">
+<div class="inline-block px-4 py-1 rounded-full border border-secondary text-secondary font-label text-xs tracking-widest uppercase mb-4 bg-secondary/10">
+                    LIVE FROM TOKYO BAY
+                </div>
+<h2 class="text-7xl font-black font-headline tracking-tighter text-white leading-none">
+                    FAN <span class="text-primary neon-glow-pink">FEST</span>
+</h2>
+<p class="text-on-surface-variant font-body max-w-xs mx-auto text-sm tracking-wide">
+                    The electric heartbeat of the World Cup. Experience the future of football celebration.
+                </p>
+<div class="pt-8">
+<button class="px-8 py-4 bg-transparent border-2 border-primary text-primary font-headline font-bold uppercase tracking-widest text-sm rounded-none hover:bg-primary hover:text-white transition-all duration-300 shadow-[0_0_16px_rgba(255,45,120,0.4)] active:scale-95">
+                        GET ACCESS PASS
+                    </button>
+</div>
+</div>
+</section>
+<!-- Live Music Schedule (Bento Style) -->
+<section class="px-6 py-12">
+<h3 class="font-headline font-bold text-2xl text-white mb-6 flex items-center gap-2">
+<span class="w-2 h-8 bg-secondary"></span> MAIN STAGE LINEUP
+            </h3>
+<div class="grid grid-cols-2 gap-4">
+<!-- Highlighted Artist -->
+<div class="col-span-2 glass-card rounded-xl overflow-hidden p-0 relative h-48">
+<img alt="DJ Set" class="absolute inset-0 w-full h-full object-cover opacity-50" data-alt="Electronic dance music DJ performing behind glowing neon decks in a packed futuristic arena with pink lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZCcySzK7t4MEC1inhDEDPIXkUvvP0N9Cbfre94qIh5wn1MkEoBpYkRI64pWFTG1eLEFBfmcfnQm_vEjIrkimCmflSwtfoztA6FsCGQurVp_0qeaDchxjMUEGTaRuuhJwA-TQ3LkRK-fDCms4NCaChKUndvc1F0uychvo7qM7zRLLI69HMfj-zXksXVxzfReevhaHwK8_4pJu_L5-QycdIVlnkTdu2pknh8pWeWjEamKNSo6GIY43NPp03XtFpJx6NbIcBxjidoik"/>
+<div class="absolute bottom-0 left-0 p-4 w-full bg-gradient-to-t from-background to-transparent">
+<span class="text-secondary font-label text-[10px] tracking-widest uppercase">HEADLINER • 21:00</span>
+<h4 class="text-2xl font-black text-white font-headline">NEO-SHIBUYA DJ SET</h4>
+</div>
+</div>
+<div class="glass-card rounded-xl p-4 flex flex-col justify-between border-secondary/20">
+<span class="text-on-surface-variant font-label text-[10px]">18:30</span>
+<h5 class="text-white font-bold font-headline mt-2 uppercase">CYBER-DRUM TRIO</h5>
+<p class="text-secondary text-[10px] mt-1 font-label">STAGE A</p>
+</div>
+<div class="glass-card rounded-xl p-4 flex flex-col justify-between border-tertiary/20">
+<span class="text-on-surface-variant font-label text-[10px]">20:00</span>
+<h5 class="text-white font-bold font-headline mt-2 uppercase">SYNTH SOUL</h5>
+<p class="text-tertiary text-[10px] mt-1 font-label">SKY LOUNGE</p>
+</div>
+</div>
+</section>
+<!-- Cinematic Gallery -->
+<section class="py-12 bg-surface-container-low/50">
+<div class="px-6 mb-6">
+<h3 class="font-headline font-bold text-2xl text-white flex items-center gap-2">
+<span class="w-2 h-8 bg-primary"></span> ATMOSPHERE
+                </h3>
+</div>
+<div class="flex overflow-x-auto gap-4 px-6 no-scrollbar snap-x">
+<div class="flex-none w-64 h-80 rounded-2xl overflow-hidden snap-center relative border border-white/10">
+<img alt="Crowd" class="w-full h-full object-cover" data-alt="Thousands of football fans cheering in a futuristic stadium under glowing magenta and teal spotlights with confetti falling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpoYu1S1axCi9pGlcKoH7KqqZhtq3musNwh5Zi37fa0nKn16S1YPUvvhO36Thaa79hT7nd6CMLGBRPjKcbSDYvb1vfCnj5DZXv4Ag1Dir-bEJjjllmK_A51I3YunDtVwLh_yDYhs6mpslrBOR_8zhhYZVo7_z_MCPbGtqBf0l7zJADmii-a-Fx7ejQSqolX80siheIhqc2LlLB0g07hriECYaSQhcRXWSuOnfLC_yR5cJMYEKgGQQjmxEBCM-SWlQF_PSQao909hM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
+</div>
+<div class="flex-none w-64 h-80 rounded-2xl overflow-hidden snap-center relative border border-white/10">
+<img alt="Night club" class="w-full h-full object-cover" data-alt="Vibrant night scene of a fan zone with giant vertical LED screens showing football matches and neon signs everywhere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMdzUkkXgFTUrwWWgkNBJ9cgpgGVIczbimwc5sIqau2tDrlxK5qVMvI6uSTmVehfXY7CoRIv_OrctobwFyvT-1hjCEzjp_t8QaB-wTkN2-SsxKwws2hHmzxfc3rchp7AVh3A0z_c-StOrOLPszE2FTCprSCZ-RGgHWtd1ldsL2zPXglVc46akMUKMTvgs8Y3jVOioacG2d_0b7K-S2rhe0vnLPX8LpP0KakCyi0LqtlPuPqLuBZ7iAnBJ0Qr51I2t9oMCBylx0c7U"/>
+<div class="absolute inset-0 bg-gradient-to-t from-secondary/40 to-transparent"></div>
+</div>
+<div class="flex-none w-64 h-80 rounded-2xl overflow-hidden snap-center relative border border-white/10">
+<img alt="Concert" class="w-full h-full object-cover" data-alt="Close up of a fan wearing futuristic LED-lit glasses reflecting a soccer stadium crowd at night" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvmDUjqUmgdYUzr_OfZtsS7OmrD6jPA745CB0RVRg_e4q1q88Ode3-riyeflrlIgyK4SFwOIOnfBfEAlR1XD-QrzXl8XweVO6Itxzxdw5iuX-QO4ioGY3aFmvy_jBsBWhssaMpVhaQV9kKILrsHnvCzZumFfSfEgMgDmzq26Z8NALOopr-jO64vl-jdX0vd6i13Geum6wULSpP1PtrRBEROR9WBpB_umziiecBDIe9dT0LB4ZRD0GwpY1NdCg9XspLUsfH1-5SbR4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-tertiary/40 to-transparent"></div>
+</div>
+</div>
+</section>
+<!-- Zones & Info -->
+<section class="px-6 py-12 space-y-6">
+<div class="glass-card rounded-2xl p-6 relative overflow-hidden">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="text-xl font-bold font-headline text-white neon-glow-cyan">NEON FOOD PLAZA</h4>
+<p class="text-on-surface-variant font-body text-sm mt-1">24/7 Digital Dining &amp; Cocktails</p>
+</div>
+<span class="material-symbols-outlined text-secondary text-3xl">restaurant</span>
+</div>
+<div class="mt-4 flex gap-2">
+<span class="px-3 py-1 bg-surface-container rounded text-[10px] text-white font-label uppercase">RAMEN</span>
+<span class="px-3 py-1 bg-surface-container rounded text-[10px] text-white font-label uppercase">SUSHI BARS</span>
+<span class="px-3 py-1 bg-surface-container rounded text-[10px] text-white font-label uppercase">TECH-DRINKS</span>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-6 border-tertiary/20">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="text-xl font-bold font-headline text-white">INTERACTIVE HUB</h4>
+<p class="text-on-surface-variant font-body text-sm mt-1">VR Match Play &amp; Hologram Booths</p>
+</div>
+<span class="material-symbols-outlined text-tertiary text-3xl">headset</span>
+</div>
+<div class="mt-6 flex items-center justify-between text-xs font-label">
+<span class="text-on-surface-variant">CURRENT WAIT TIME</span>
+<span class="text-tertiary">15 MIN</span>
+</div>
+<div class="w-full h-1 bg-surface-container mt-2">
+<div class="w-1/4 h-full bg-tertiary shadow-[0_0_8px_#ffe04a]"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-2xl bg-[#0a0a12]/95 backdrop-blur-xl border-t border-[#ff2d78]/30 shadow-[0_-4px_20px_rgba(255,45,120,0.15)] flex justify-around items-center h-20 px-4">
+<a class="flex flex-col items-center text-[#ff2d78] [text-shadow:0_0_8px_#ff2d78] scale-110" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">live_tv</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest mt-1">Live</span>
+</a>
+<a class="flex flex-col items-center text-slate-500 opacity-70 hover:text-[#00ffcc] transition-all" href="#">
+<span class="material-symbols-outlined">music_note</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest mt-1">Stages</span>
+</a>
+<a class="flex flex-col items-center text-slate-500 opacity-70 hover:text-[#00ffcc] transition-all" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest mt-1">Fanzone</span>
+</a>
+<a class="flex flex-col items-center text-slate-500 opacity-70 hover:text-[#00ffcc] transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest mt-1">Squad</span>
+</a>
+<a class="flex flex-col items-center text-slate-500 opacity-70 hover:text-[#00ffcc] transition-all" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

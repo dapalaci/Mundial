@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="es" data-accent="gold">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundial 26 — Balones oficiales</title>
+<link rel="stylesheet" href="assets/shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ——— Hero ——— */
+  .bl-hero { padding: 100px 0 48px; position: relative; overflow: hidden; }
+  .bl-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 800px 380px at 30% 30%, color-mix(in oklch, var(--accent) 22%, transparent), transparent 70%),
+      radial-gradient(ellipse 500px 300px at 80% 60%, color-mix(in oklch, var(--accent) 12%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .bl-hero .wrap { position: relative; z-index: 1; }
+  .bl-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 10vw, 176px);
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    margin: 24px 0 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+    max-width: 16ch;
+  }
+  .bl-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .bl-hero .lead { margin-top: 28px; max-width: 66ch; }
+  .bl-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .bl-meta .cell .num {
+    font-family: var(--f-display);
+    font-size: clamp(44px, 5vw, 72px);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    font-variation-settings: "opsz" 144;
+  }
+  .bl-meta .cell .num em { font-style: italic; color: var(--accent); }
+  .bl-meta .cell .lbl {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* ——— Featured: Trionda 2026 ——— */
+  .featured {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    padding: 100px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .featured .art {
+    aspect-ratio: 1 / 1;
+    position: relative;
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(circle at 40% 35%, oklch(0.55 0.18 250 / 0.3), transparent 60%),
+      radial-gradient(circle at 65% 70%, oklch(0.62 0.22 25 / 0.25), transparent 60%),
+      radial-gradient(circle at 50% 50%, oklch(0.65 0.18 145 / 0.2), transparent 70%),
+      linear-gradient(135deg, var(--surface-2), var(--surface));
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--line);
+  }
+  .featured .art .ball-svg { width: 72%; height: 72%; filter: drop-shadow(0 40px 60px rgba(0,0,0,0.55)); }
+  .featured .art .corner-tag {
+    position: absolute; top: 20px; left: 20px;
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em;
+    padding: 8px 14px; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+    border-radius: 999px; border: 1px solid rgba(255,255,255,0.12);
+  }
+  .featured h2 {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 6vw, 96px);
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+    margin: 12px 0 20px;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+  }
+  .featured h2 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .featured .specs {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 28px;
+  }
+  .featured .spec { padding: 14px 0; border-top: 1px solid var(--line); }
+  .featured .spec .k {
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-faint); margin-bottom: 4px;
+  }
+  .featured .spec .v { font-family: var(--f-display); font-size: 22px; line-height: 1.1; }
+
+  /* ——— Gallery grid ——— */
+  .gal-section { padding: 100px 0; }
+  .section-head { display: grid; grid-template-columns: 1fr auto; align-items: end; margin-bottom: 56px; gap: 32px; }
+  .section-head h3 { font-family: var(--f-display); font-size: clamp(36px, 5vw, 64px); line-height: 0.94; letter-spacing: -0.03em; margin: 12px 0 0; font-variation-settings: "SOFT" 30, "opsz" 144; max-width: 18ch; }
+  .section-head h3 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1; }
+
+  .ball-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .b-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all .3s;
+    cursor: pointer;
+    display: flex; flex-direction: column;
+  }
+  .b-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 20px 44px -18px color-mix(in oklch, var(--accent) 35%, transparent);
+  }
+  .b-card .art {
+    aspect-ratio: 1/1;
+    position: relative;
+    background: var(--cardbg, radial-gradient(circle at 40% 35%, rgba(255,255,255,0.12), transparent 60%), var(--surface-2));
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .b-card .art::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,255,255,0.16), transparent 55%),
+      radial-gradient(circle at 75% 80%, rgba(0,0,0,0.35), transparent 60%);
+    pointer-events: none;
+  }
+  .b-card .art svg.ball { width: 70%; height: 70%; filter: drop-shadow(0 24px 32px rgba(0,0,0,0.55)); transition: transform .4s ease; }
+  .b-card:hover .art svg.ball { transform: rotate(15deg) scale(1.06); }
+  .b-card .yr {
+    position: absolute; top: 14px; left: 16px;
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 42px;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: rgba(255,255,255,0.92);
+    font-variation-settings: "opsz" 144;
+    z-index: 2;
+    text-shadow: 0 4px 14px rgba(0,0,0,0.5);
+  }
+  .b-card .host-chip {
+    position: absolute; top: 16px; right: 16px;
+    padding: 6px 10px;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 999px;
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fff;
+    z-index: 2;
+  }
+  .b-card .info { padding: 18px 20px 20px; border-top: 1px solid var(--line); }
+  .b-card .name {
+    font-family: var(--f-display);
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-variation-settings: "opsz" 144;
+    margin-bottom: 4px;
+  }
+  .b-card:hover .name { color: var(--accent); font-style: italic; }
+  .b-card .brand {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+  .b-card .panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .b-card .stat .k {
+    font-family: var(--f-mono); font-size: 8px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--text-faint);
+  }
+  .b-card .stat .v {
+    font-family: var(--f-display); font-size: 17px; line-height: 1.1; margin-top: 2px;
+  }
+
+  /* ——— Timeline strip ——— */
+  .tl-strip {
+    padding: 60px 0 100px;
+    border-top: 1px solid var(--line);
+  }
+  .tl-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 32px 0 24px;
+    scroll-snap-type: x mandatory;
+  }
+  .tl-track::-webkit-scrollbar { height: 6px; }
+  .tl-track::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 3px; }
+  .tl-node {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    width: 160px;
+    text-align: center;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+  }
+  .tl-node::before {
+    content: "";
+    position: absolute;
+    top: calc(80px); left: 50%; transform: translateX(-50%);
+    width: calc(100% + 20px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--line), var(--accent, var(--line)));
+    z-index: 0;
+    opacity: 0.4;
+  }
+  .tl-node .dot {
+    position: relative; z-index: 1;
+    width: 140px; height: 140px;
+    margin: 0 auto 12px;
+    border-radius: 12px;
+    background: #0d0d12;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+  }
+  .tl-node .dot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tl-node .dot svg { width: 72%; height: 72%; }
+  .tl-node:hover .dot {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 0 1px var(--accent);
+  }
+  .tl-node .yr {
+    font-family: var(--f-display); font-size: 18px; font-style: italic;
+    letter-spacing: -0.02em; color: var(--text);
+    font-variation-settings: "opsz" 144, "WONK" 1;
+    margin-top: 2px;
+  }
+  .tl-node .nm {
+    font-family: var(--f-mono); font-size: 9px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-dim); margin-top: 3px;
+  }
+
+  /* ——— Evolution panel ——— */
+  .evo {
+    padding: 100px 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+  }
+  .evo h3 {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 4.5vw, 58px);
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    margin: 14px 0 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+  }
+  .evo h3 em { font-style: italic; color: var(--accent); }
+  .era-list { margin-top: 8px; }
+  .era {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .era:last-child { border-bottom: none; }
+  .era .years {
+    font-family: var(--f-display);
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144, "WONK" 1;
+    line-height: 1;
+  }
+  .era .era-title {
+    font-family: var(--f-display);
+    font-size: 22px;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    font-variation-settings: "opsz" 144;
+  }
+  .era .era-desc { color: var(--text-dim); font-size: 14px; line-height: 1.55; }
+
+  @media (max-width: 900px) {
+    .bl-meta { grid-template-columns: repeat(2, 1fr); }
+    .featured, .evo, .section-head { grid-template-columns: 1fr; }
+    .featured .specs { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="m26-nav-slot"></div>
+
+<main>
+  <!-- HERO -->
+  <section class="bl-hero">
+    <div class="wrap">
+      <span class="eyebrow"
+        data-i18n-es="⚽ Catálogo oficial · 1930 → 2026"
+        data-i18n-en="⚽ Official catalog · 1930 → 2026">⚽ Catálogo oficial · 1930 → 2026</span>
+      <h1 data-i18n-es="El <em>objeto</em><br>más disputado<br>del planeta."
+          data-i18n-en="The most <em>disputed</em><br>object on the planet.">El <em>objeto</em><br>más disputado<br>del planeta.</h1>
+      <p class="body lead"
+        data-i18n-es="22 balones oficiales, desde el Tiento de cuero cosido a mano en Montevideo 1930 hasta el Trionda con sensores de movimiento en 2026. Cada edición ha dejado su huella en la forma de rodar de una esfera que cambió el deporte para siempre."
+        data-i18n-en="22 official balls, from the hand-stitched leather Tiento in Montevideo 1930 to the motion-sensor Trionda of 2026. Each edition has left its mark on the way a sphere rolls — reshaping the sport forever.">
+        22 balones oficiales, desde el Tiento de cuero cosido a mano en Montevideo 1930 hasta el Trionda con sensores de movimiento en 2026. Cada edición ha dejado su huella en la forma de rodar de una esfera que cambió el deporte para siempre.
+      </p>
+
+      <div class="bl-meta">
+        <div class="cell"><div class="num"><em>22</em></div><span class="lbl"
+          data-i18n-es="Balones oficiales" data-i18n-en="Official balls">Balones oficiales</span></div>
+        <div class="cell"><div class="num"><em>96</em><span style="font-size:0.5em;color:var(--text-dim)"> años</span></div><span class="lbl"
+          data-i18n-es="De evolución" data-i18n-en="Of evolution">De evolución</span></div>
+        <div class="cell"><div class="num"><em>Adidas</em></div><span class="lbl"
+          data-i18n-es="Fabricante desde 1970" data-i18n-en="Maker since 1970">Fabricante desde 1970</span></div>
+        <div class="cell"><div class="num"><em>32</em></div><span class="lbl"
+          data-i18n-es="Paneles · Telstar 70" data-i18n-en="Panels · Telstar 70">Paneles · Telstar 70</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED: TRIONDA 2026 -->
+  <section class="wrap featured">
+    <div class="art">
+      <span class="corner-tag"
+        data-i18n-es="★ BALÓN OFICIAL 2026"
+        data-i18n-en="★ OFFICIAL BALL 2026">★ BALÓN OFICIAL 2026</span>
+      <img src="assets/balon 2026.png" alt="Adidas Trionda 2026" class="ball-svg"
+        style="object-fit:contain;width:100%;height:100%;border-radius:50%;box-shadow:0 0 80px oklch(0.65 0.18 145 / 0.35), 0 0 140px oklch(0.62 0.22 25 / 0.20);"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+      <svg class="ball-svg" viewBox="0 0 200 200" style="display:none;">
+        <defs>
+          <radialGradient id="trionda-body" cx="38%" cy="32%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="70%" stop-color="#f1f1ef"/>
+            <stop offset="100%" stop-color="#bcbcb8"/>
+          </radialGradient>
+          <radialGradient id="trionda-hi" cx="30%" cy="22%" r="40%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.95)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </radialGradient>
+        </defs>
+        <circle cx="100" cy="100" r="88" fill="url(#trionda-body)"/>
+        <path d="M 100 20 Q 40 50 48 112 Q 60 90 100 80 Q 115 55 100 20 Z" fill="oklch(0.65 0.18 145)" opacity="0.88"/>
+        <path d="M 100 180 Q 160 150 152 88 Q 140 110 100 120 Q 85 145 100 180 Z" fill="oklch(0.62 0.22 25)" opacity="0.88"/>
+        <g fill="rgba(255,255,255,0.9)">
+          <path d="M 75 70 l 3 -9 l 3 9 l 9 0 l -7 5 l 3 9 l -8 -5 l -8 5 l 3 -9 l -7 -5 z"/>
+          <path d="M 125 130 l 3 -9 l 3 9 l 9 0 l -7 5 l 3 9 l -8 -5 l -8 5 l 3 -9 l -7 -5 z"/>
+        </g>
+        <circle cx="100" cy="100" r="88" fill="url(#trionda-hi)"/>
+        <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <div>
+      <span class="eyebrow"
+        data-i18n-es="Edición actual · Canadá · EE.UU · México"
+        data-i18n-en="Current edition · Canada · USA · Mexico">Edición actual · Canadá · EE.UU · México</span>
+      <h2>Adidas<br><em>Trionda</em></h2>
+      <p class="body"
+        data-i18n-es="Tres paneles, tres anfitriones. El Trionda es el primer balón mundialista con identidad tricontinental explícita: rojo por Canadá, verde por México y azul por Estados Unidos, unidos en una curva continua. Incorpora el sistema Connected Ball Technology — un sensor inercial de 500Hz que transmite datos al VAR en tiempo real."
+        data-i18n-en="Three panels, three hosts. The Trionda is the first World Cup ball with explicit tricontinental identity: red for Canada, green for Mexico and blue for the United States, united in a continuous curve. It features Connected Ball Technology — a 500Hz inertial sensor streaming data to the VAR in real time.">
+        Tres paneles, tres anfitriones. El Trionda es el primer balón mundialista con identidad tricontinental explícita: rojo por Canadá, verde por México y azul por Estados Unidos, unidos en una curva continua. Incorpora el sistema Connected Ball Technology — un sensor inercial de 500Hz que transmite datos al VAR en tiempo real.
+      </p>
+      <div class="specs">
+        <div class="spec"><div class="k"
+          data-i18n-es="Fabricante" data-i18n-en="Maker">Fabricante</div><div class="v">Adidas</div></div>
+        <div class="spec"><div class="k"
+          data-i18n-es="Paneles" data-i18n-en="Panels">Paneles</div><div class="v"
+          data-i18n-es="4 · termosellados" data-i18n-en="4 · heat-sealed">4 · termosellados</div></div>
+        <div class="spec"><div class="k"
+          data-i18n-es="Peso" data-i18n-en="Weight">Peso</div><div class="v">430 g</div></div>
+        <div class="spec"><div class="k"
+          data-i18n-es="Circunferencia" data-i18n-en="Circumference">Circunferencia</div><div class="v">68.5 cm</div></div>
+        <div class="spec"><div class="k"
+          data-i18n-es="Sensor" data-i18n-en="Sensor">Sensor</div><div class="v">IMU 500 Hz</div></div>
+        <div class="spec"><div class="k"
+          data-i18n-es="Presentación" data-i18n-en="Unveiled">Presentación</div><div class="v"
+          data-i18n-es="2 NOV 2025" data-i18n-en="2 NOV 2025">2 NOV 2025</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE STRIP -->
+  <section class="wrap tl-strip">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow"
+          data-i18n-es="Línea del tiempo" data-i18n-en="Timeline">Línea del tiempo</span>
+        <h3 data-i18n-es="96 años en <em>una curva</em> de cuero y polímero."
+            data-i18n-en="96 years in <em>a single arc</em> of leather and polymer.">96 años en <em>una curva</em> de cuero y polímero.</h3>
+      </div>
+      <div class="body" style="max-width: 30ch; color: var(--text-dim);"
+        data-i18n-es="Navega lateralmente para ver los 22 balones oficiales."
+        data-i18n-en="Scroll sideways through the 22 official balls.">
+        Navega lateralmente para ver los 22 balones oficiales.
+      </div>
+    </div>
+
+    <div class="tl-track" id="tl-track"><!-- populated by JS --></div>
+  </section>
+
+  <!-- FULL GALLERY -->
+  <section class="wrap gal-section">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow"
+          data-i18n-es="Galería completa" data-i18n-en="Full gallery">Galería completa</span>
+        <h3 data-i18n-es="Los <em>veintidós</em> balones,<br>edición por edición."
+            data-i18n-en="The <em>twenty-two</em> match balls,<br>edition by edition.">Los <em>veintidós</em> balones,<br>edición por edición.</h3>
+      </div>
+    </div>
+
+    <div class="ball-grid" id="ball-grid"><!-- populated by JS --></div>
+  </section>
+
+  <!-- EVOLUTION -->
+  <section class="wrap evo">
+    <div>
+      <span class="eyebrow"
+        data-i18n-es="Tres eras de ingeniería"
+        data-i18n-en="Three engineering eras">Tres eras de ingeniería</span>
+      <h3 data-i18n-es="De la piel <em>cosida</em><br>al polímero <em>impreso</em>."
+          data-i18n-en="From <em>stitched</em> leather<br>to <em>printed</em> polymer.">De la piel <em>cosida</em><br>al polímero <em>impreso</em>.</h3>
+    </div>
+
+    <div class="era-list">
+      <div class="era">
+        <div class="years">1930<br>— 1966</div>
+        <div>
+          <div class="era-title"
+            data-i18n-es="Era del cuero cosido a mano"
+            data-i18n-en="Era of hand-stitched leather">Era del cuero cosido a mano</div>
+          <div class="era-desc"
+            data-i18n-es="Balones fabricados con 12 a 18 tiras de cuero natural, cosidos con hilo encerado. Pesaban 450 g y absorbían agua: un balón mojado podía llegar a los 600 g al final de un partido."
+            data-i18n-en="Balls made from 12 to 18 natural leather strips, stitched with waxed thread. They weighed 450 g and absorbed water — a wet ball could reach 600 g by match's end.">
+            Balones fabricados con 12 a 18 tiras de cuero natural, cosidos con hilo encerado. Pesaban 450 g y absorbían agua: un balón mojado podía llegar a los 600 g al final de un partido.
+          </div>
+        </div>
+      </div>
+      <div class="era">
+        <div class="years">1970<br>— 2002</div>
+        <div>
+          <div class="era-title"
+            data-i18n-es="Revolución del Telstar y el hexágono"
+            data-i18n-en="Telstar revolution &amp; the hexagon">Revolución del Telstar y el hexágono</div>
+          <div class="era-desc"
+            data-i18n-es="Adidas presenta en México 70 el Telstar: 32 paneles (20 hexágonos blancos + 12 pentágonos negros) cosidos, visible en televisión en blanco y negro. Esta geometría definirá la iconografía del fútbol durante 32 años."
+            data-i18n-en="Adidas debuts the Telstar at Mexico 70: 32 panels (20 white hexagons + 12 black pentagons) sewn together, visible on black-and-white TV. This geometry defines football iconography for 32 years.">
+            Adidas presenta en México 70 el Telstar: 32 paneles (20 hexágonos blancos + 12 pentágonos negros) cosidos, visible en televisión en blanco y negro. Esta geometría definirá la iconografía del fútbol durante 32 años.
+          </div>
+        </div>
+      </div>
+      <div class="era">
+        <div class="years">2006<br>— 2026</div>
+        <div>
+          <div class="era-title"
+            data-i18n-es="Era de los termosellados y sensores"
+            data-i18n-en="Thermo-sealed &amp; sensor era">Era de los termosellados y sensores</div>
+          <div class="era-desc"
+            data-i18n-es="El +Teamgeist rompe con la tradición al usar 14 paneles termo-unidos. Brazuca (6 paneles), Telstar 18 (6), Al Rihla (20 texturizados) y finalmente el Trionda con sensor IMU integrado marcan la era digital. La esfera ya no es solo cuero: es red inalámbrica."
+            data-i18n-en="The +Teamgeist breaks with tradition using 14 thermally-bonded panels. Brazuca (6 panels), Telstar 18 (6), Al Rihla (20 textured) and finally the Trionda with integrated IMU sensor mark the digital era. The sphere is no longer just leather — it's a wireless network.">
+            El +Teamgeist rompe con la tradición al usar 14 paneles termo-unidos. Brazuca (6 paneles), Telstar 18 (6), Al Rihla (20 texturizados) y finalmente el Trionda con sensor IMU integrado marcan la era digital. La esfera ya no es solo cuero: es red inalámbrica.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="m26-footer-slot"></div>
+
+<script src="assets/shared.js"></script>
+<script>
+  M26.init({ active: "balones" });
+
+  /* ========================================================
+     Data: 22 World Cup balls, 1930–2026
+     ======================================================== */
+  const BALLS = [
+    { yr: 1930, name: "Tiento / T-Model", maker: "Argentina/Uruguay", host: "URU", panels: "12 tiras", weight: "450g", bg: "#8b5a2b",
+      note_es: "Dos balones diferentes en la final, uno por tiempo.",
+      note_en: "Two different balls in the final, one per half.",
+      render: "stripes", colors: ["#8b5a2b","#6d4521"] },
+    { yr: 1934, name: "Federale 102", maker: "ECAS (Italia)", host: "ITA", panels: "13 paneles", weight: "450g", bg: "#a66838",
+      note_es: "Inspiró el diseño europeo posterior.",
+      note_en: "Inspired later European designs.",
+      render: "stripes", colors: ["#a66838","#8a4d20"] },
+    { yr: 1938, name: "Allen", maker: "Allen (Francia)", host: "FRA", panels: "13 paneles", weight: "450g", bg: "#7c5438",
+      note_es: "Paneles circulares en los extremos.",
+      note_en: "Circular end panels.",
+      render: "stripes", colors: ["#7c5438","#5c3a24"] },
+    { yr: 1950, name: "Duplo T", maker: "Super Ball (Brasil)", host: "BRA", panels: "12 paneles", weight: "450g", bg: "#a87744",
+      note_es: "Primer balón sin cordón visible.",
+      note_en: "First ball without visible lace.",
+      render: "stripes", colors: ["#a87744","#7d5430"] },
+    { yr: 1954, name: "Swiss World Champion", maker: "Kost Sport", host: "SUI", panels: "18 paneles", weight: "450g", bg: "#b8843f",
+      note_es: "Balón oficialmente amarillo por primera vez.",
+      note_en: "First officially yellow ball.",
+      render: "stripes", colors: ["#d4a04b","#8b6224"] },
+    { yr: 1958, name: "Top Star", maker: "Sydsvenska Läder", host: "SWE", panels: "24 paneles", weight: "450g", bg: "#d8a558",
+      note_es: "Seleccionado ciegamente entre 100 candidatos.",
+      note_en: "Blind-selected from 100 candidates.",
+      render: "stripes", colors: ["#d8a558","#9e6f2c"] },
+    { yr: 1962, name: "Crack", maker: "Señor Custodio Zamora", host: "CHI", panels: "18 paneles", weight: "450g", bg: "#8f5a30",
+      note_es: "Fabricado por un solo artesano chileno.",
+      note_en: "Made by a single Chilean craftsman.",
+      render: "stripes", colors: ["#8f5a30","#644024"] },
+    { yr: 1966, name: "Challenge 4-star", maker: "Slazenger", host: "ENG", panels: "25 paneles", weight: "440g", bg: "#e2b35a",
+      note_es: "Último balón hecho de cuero 100% natural.",
+      note_en: "Last ball made of 100% natural leather.",
+      render: "stripes", colors: ["#e2b35a","#a07a2a"] },
+    { yr: 1970, name: "Telstar", maker: "Adidas", host: "MEX", panels: "32 paneles B/N", weight: "430g", bg: "#f2f2f2",
+      note_es: "Primer balón Adidas. Patrón truncado de icosaedro: 20 hexágonos blancos + 12 pentágonos negros.",
+      note_en: "First Adidas ball. Truncated icosahedron: 20 white hexagons + 12 black pentagons.",
+      render: "telstar", colors: ["#ffffff","#0a0a0a"] },
+    { yr: 1974, name: "Telstar Durlast", maker: "Adidas", host: "FRG", panels: "32 paneles", weight: "430g", bg: "#f2f2f2",
+      note_es: "Versión impermeable del Telstar con poliuretano.",
+      note_en: "Waterproof Telstar version with polyurethane.",
+      render: "telstar", colors: ["#ffffff","#0a0a0a"] },
+    { yr: 1978, name: "Tango", maker: "Adidas", host: "ARG", panels: "32 paneles", weight: "435g", bg: "#f4f4f4",
+      note_es: "Debut del icónico patrón de triadas. Se reutilizó diseño en 5 ediciones.",
+      note_en: "Debut of the iconic triad pattern. Design reused across 5 editions.",
+      render: "tango", colors: ["#ffffff","#111111"] },
+    { yr: 1982, name: "Tango España", maker: "Adidas", host: "ESP", panels: "32 paneles", weight: "435g", bg: "#f4f4f4",
+      note_es: "Primer balón con costuras impermeables.",
+      note_en: "First ball with waterproof seams.",
+      render: "tango", colors: ["#ffffff","#111111"] },
+    { yr: 1986, name: "Azteca", maker: "Adidas", host: "MEX", panels: "32 paneles", weight: "440g", bg: "#f5e8c7",
+      note_es: "Primer balón 100% sintético. Diseño inspirado en la arquitectura azteca.",
+      note_en: "First fully synthetic ball. Design inspired by Aztec architecture.",
+      render: "tango-deco", colors: ["#f2e6c8","#8a4f15"] },
+    { yr: 1990, name: "Etrusco Unico", maker: "Adidas", host: "ITA", panels: "32 paneles", weight: "440g", bg: "#f4f4f4",
+      note_es: "Tres cabezas de león etruscas en cada triada.",
+      note_en: "Three Etruscan lion heads in each triad.",
+      render: "tango-deco", colors: ["#ffffff","#111111","#b44a1e"] },
+    { yr: 1994, name: "Questra", maker: "Adidas", host: "USA", panels: "32 paneles", weight: "440g", bg: "#f4f4f4",
+      note_es: "Espuma de poliestireno de alta energía — más rápido.",
+      note_en: "High-energy polystyrene foam — faster ball.",
+      render: "questra", colors: ["#ffffff","#1a237e"] },
+    { yr: 1998, name: "Tricolore", maker: "Adidas", host: "FRA", panels: "32 paneles", weight: "440g", bg: "#fafafa",
+      note_es: "Primer balón mundialista multicolor. Azul, rojo y blanco.",
+      note_en: "First multicolor World Cup ball. Blue, red and white.",
+      render: "tricolore", colors: ["#ffffff","#2e4cb5","#c1272d"] },
+    { yr: 2002, name: "Fevernova", maker: "Adidas", host: "KOR/JPN", panels: "32 paneles", weight: "440g", bg: "#fafafa",
+      note_es: "Diseño inspirado en triángulos de fuego asiáticos.",
+      note_en: "Design inspired by Asian fire triangles.",
+      render: "fevernova", colors: ["#fffde3","#d9b000","#c1272d"] },
+    { yr: 2006, name: "+Teamgeist", maker: "Adidas", host: "GER", panels: "14 termosellados", weight: "441g", bg: "#fafafa",
+      note_es: "Rompe con los 32 paneles tradicionales. Termoensamblado.",
+      note_en: "Breaks from 32 traditional panels. Thermally bonded.",
+      render: "teamgeist", colors: ["#ffffff","#0a0a0a","#f5c542"] },
+    { yr: 2010, name: "Jabulani", maker: "Adidas", host: "RSA", panels: "8 termosellados", weight: "440g", bg: "#fafafa",
+      note_es: "11 colores para los 11 jugadores. Criticado por su vuelo impredecible.",
+      note_en: "11 colors for 11 players. Criticized for unpredictable flight.",
+      render: "jabulani", colors: ["#ffffff","#65c1df","#f6c22f","#1f9d3a"] },
+    { yr: 2014, name: "Brazuca", maker: "Adidas", host: "BRA", panels: "6 termosellados", weight: "437g", bg: "#fafafa",
+      note_es: "Seis paneles en forma de rehilete. Nombre elegido por voto público.",
+      note_en: "Six pinwheel-shaped panels. Name chosen by public vote.",
+      render: "brazuca", colors: ["#ffffff","#f26323","#00a752","#0095d5"] },
+    { yr: 2018, name: "Telstar 18", maker: "Adidas", host: "RUS", panels: "6 termosellados", weight: "437g", bg: "#fafafa",
+      note_es: "Homenaje al Telstar de 1970 con chip NFC embebido.",
+      note_en: "Tribute to the 1970 Telstar, with embedded NFC chip.",
+      render: "telstar18", colors: ["#ffffff","#111111"] },
+    { yr: 2022, name: "Al Rihla", maker: "Adidas", host: "QAT", panels: "20 termosellados", weight: "437g", bg: "#fafafa",
+      note_es: "El balón más rápido en la historia del Mundial. Textura de perla.",
+      note_en: "Fastest-flying World Cup ball ever. Pearl texture.",
+      render: "alrihla", colors: ["#ffffff","#ff004d","#ffbf00","#00b5cc"] },
+    { yr: 2026, name: "Trionda", maker: "Adidas", host: "USA/MEX/CAN", panels: "4 termosellados", weight: "430g", bg: "#0a0a0d",
+      note_es: "Sensor IMU 500 Hz integrado. Tres anfitriones, un balón.",
+      note_en: "Integrated 500 Hz IMU sensor. Three hosts, one ball.",
+      render: "alrihla", colors: ["#ffffff","#1a7a3c","#cc2200","#1a3fa0"] },
+  ];
+
+  /* ========================================================
+     SVG ball renderers — each era gets its own illustration
+     ======================================================== */
+  function ball(render, colors) {
+    const [c1,c2,c3,c4] = colors;
+    const hi = `<circle cx="100" cy="100" r="88" fill="url(#_hi)"/><circle cx="100" cy="100" r="88" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>`;
+    const defs = `<defs><radialGradient id="_hi" cx="30%" cy="22%" r="45%"><stop offset="0%" stop-color="rgba(255,255,255,0.85)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient></defs>`;
+    switch (render) {
+      case "stripes": // old leather — 12 leather strips
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}
+          <circle cx="100" cy="100" r="88" fill="${c1}"/>
+          <g stroke="${c2}" stroke-width="2.2" fill="none" opacity="0.85">
+            <ellipse cx="100" cy="100" rx="88" ry="22"/>
+            <ellipse cx="100" cy="100" rx="88" ry="44"/>
+            <ellipse cx="100" cy="100" rx="88" ry="66"/>
+            <line x1="100" y1="12" x2="100" y2="188"/>
+            <line x1="56" y1="20" x2="56" y2="180"/>
+            <line x1="144" y1="20" x2="144" y2="180"/>
+          </g>
+          <g stroke="${c2}" stroke-width="0.7" stroke-dasharray="2 2" fill="none" opacity="0.7">
+            <ellipse cx="100" cy="100" rx="88" ry="22"/>
+            <line x1="100" y1="12" x2="100" y2="188"/>
+          </g>
+          ${hi}</svg>`;
+      case "telstar": // 1970 B/W icosahedron
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}
+          <circle cx="100" cy="100" r="88" fill="${c1}"/>
+          <g fill="${c2}">
+            <polygon points="100,35 115,48 109,66 91,66 85,48"/>
+            <polygon points="60,70 75,82 69,100 51,99 47,82"/>
+            <polygon points="140,70 155,82 151,99 133,100 127,82"/>
+            <polygon points="76,118 91,130 85,148 67,148 61,130"/>
+            <polygon points="124,118 139,130 133,148 115,148 109,130"/>
+            <polygon points="100,160 110,168 107,176 93,176 90,168"/>
+          </g>
+          <g stroke="${c2}" stroke-width="1.4" fill="none" opacity="0.6">
+            <path d="M 100 35 L 60 70 M 100 35 L 140 70 M 60 70 L 76 118 M 140 70 L 124 118 M 76 118 L 100 160 M 124 118 L 100 160"/>
+          </g>
+          ${hi}</svg>`;
+      case "tango": // 1978–1982 — 20 triads
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}
+          <circle cx="100" cy="100" r="88" fill="${c1}"/>
+          <g fill="none" stroke="${c2}" stroke-width="2.4">
+            <circle cx="100" cy="55" r="16"/>
+            <circle cx="60" cy="90" r="16"/>
+            <circle cx="140" cy="90" r="16"/>
+            <circle cx="75" cy="140" r="16"/>
+            <circle cx="125" cy="140" r="16"/>
+          </g>
+          <g fill="none" stroke="${c2}" stroke-width="1.4" opacity="0.75">
+            <path d="M 100 39 Q 80 70 60 74 M 100 39 Q 120 70 140 74 M 60 106 Q 68 124 75 124 M 140 106 Q 132 124 125 124 M 91 140 L 109 140"/>
+          </g>
+          ${hi}</svg>`;
+      case "tango-deco": // 1986/1990 decorative
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}
+          <circle cx="100" cy="100" r="88" fill="${c1}"/>
+          <g fill="${c2}" opacity="0.85">
+            <path d="M 100 39 l 6 11 l -12 0 z M 100 39 l -6 11 l 12 0 z" transform="translate(0 0)"/>
+            <circle cx="100" cy="55" r="8" fill="none" stroke="${c2}" stroke-width="2"/>
+            <circle cx="60" cy="90" r="8" fill="none" stroke="${c2}" stroke-width="2"/>
+            <circle cx="140" cy="90" r="8" fill="none" stroke="${c2}" stroke-width="2"/>
+            <circle cx="75" cy="140" r="8" fill="none" stroke="${c2}" stroke-width="2"/>
+            <circle cx="125" cy="140" r="8" fill="none" stroke="${c2}" stroke-width="2"/>
+          </g>
+          ${c3 ? `<g fill="${c3}" opacity="0.8">
+            <rect x="96" y="51" width="8" height="8" rx="1" transform="rotate(45 100 55)"/>
+            <rect x="56" y="86" width="8" height="8" rx="1" transform="rotate(45 60 90)"/>
+            <rect x="136" y="86" width="8" height="8" rx="1" transform="rotate(45 140 90)"/>
+          </g>` : ""}
+          <g stroke="${c2}" stroke-width="1.6" fill="none" opacity="0.55">
+            <path d="M 100 55 L 60 90 L 75 140 L 125 140 L 140 90 Z"/>
+          </g>
+          ${hi}</svg>`;
+      case "questra": // 1994 stars
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}
+          <circle cx="100" cy="100" r="88" fill="${c1}"/>
+          <g fill="${c2}" opacity="0.88">
+            ${[[100,45],[60,80],[140,80],[75,135],[125,135]].map(([x,y]) =>
+              `<path d="M ${x} ${y-10} l 3 7 l 7 0 l -6 4 l 2 7 l -6 -4 l -6 4 l 2 -7 l -6 -4 l 7 0 z"/>`
+            ).join("")}
+          </g>
+          <g stroke="${c2}" stroke-width="1.6" fill="none" opacity="0.4">
+            <circle cx="100" cy="45" r="14"/>
+            <circle cx="60" cy="80" r="14"/>
+            <circle cx="140" cy="80" r="14"/>
+            <circle cx="75" cy="135" r="14"/>
+            <circle cx="125" cy="135" r="14"/>
+          </g>
+          ${hi}</svg>`;
+      case "tricolore": // 1998 blue+red flames
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}
+          <circle cx="100" cy="100" r="88" fill="${c1}"/>
+          <g opacity="0.9">
+            <path d="M 100 40 Q 85 60 95 80 Q 90 72 80 70 Q 88 56 100 40 Z" fill="${c3}"/>
+            <path d="M 60 80 Q 50 100 66 118 Q 56 108 44 110 Q 50 94 60 80 Z" fill="${c3}"/>
+            <path d="M 140 80 Q 150 100 134 118 Q 144 108 156 110 Q 150 94 140 80 Z" fill="${c3}"/>
+            <path d="M 80 140 Q 92 152 100 148 Q 92 144 86 138 Q 82 138 80 140 Z" fill="${c3}"/>
+          </g>
+          <g opacity="0.7">
+            <path d="M 100 40 Q 115 60 105 80 Q 110 72 120 70 Q 112 56 100 40 Z" fill="${c2}"/>
+            <path d="M 120 140 Q 108 152 100 148 Q 108 144 114 138 Q 118 138 120 140 Z" fill="${c2}"/>
+          </g>
+          <g stroke="${c2}" stroke-width="1" fill="none" opacity="0.4"><circle cx="100" cy="100" r="60"/></g>
+          ${hi}</svg>`;
+      case "fevernova": // 2002 asian triangles
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}
+          <circle cx="100" cy="100" r="88" fill="${c1}"/>
+          <g fill="${c2}" opacity="0.85">
+            <polygon points="100,50 88,74 112,74"/>
+            <polygon points="60,85 48,109 72,109"/>
+            <polygon points="140,85 128,109 152,109"/>
+            <polygon points="80,140 68,164 92,164" transform="scale(1 -1) translate(0 -280)"/>
+            <polygon points="120,140 108,164 132,164" transform="scale(1 -1) translate(0 -280)"/>
+          </g>
+          <g fill="${c3}" opacity="0.75">
+            <circle cx="100" cy="100" r="10"/>
+          </g>
+          <g stroke="${c2}" stroke-width="1.4" fill="none" opacity="0.45">
+            <path d="M 100 74 L 60 109 M 100 74 L 140 109 M 60 109 L 80 140 M 140 109 L 120 140 M 80 140 L 120 140"/>
+          </g>
+          ${hi}</svg>`;
+      case "teamgeist": // 2006 — bold curves
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}
+          <circle cx="100" cy="100" r="88" fill="${c1}"/>
+          <g fill="${c2}" opacity="0.92">
+            <path d="M 30 100 Q 100 60 170 100 Q 100 80 30 100 Z"/>
+            <path d="M 30 100 Q 100 140 170 100 Q 100 120 30 100 Z"/>
+          </g>
+          <g fill="${c3}" opacity="0.85">
+            <circle cx="100" cy="55" r="8"/>
+            <circle cx="100" cy="145" r="8"/>
+          </g>
+          ${hi}</svg>`;
+      case "jabulani": // 2010 — chromatic dots
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}
+          <circle cx="100" cy="100" r="88" fill="${c1}"/>
+          <g opacity="0.88">
+            <circle cx="75" cy="60" r="11" fill="${c2}"/>
+            <circle cx="135" cy="75" r="9" fill="${c3}"/>
+            <circle cx="130" cy="130" r="11" fill="${c4}"/>
+            <circle cx="65" cy="128" r="9" fill="${c2}"/>
+            <circle cx="100" cy="100" r="7" fill="${c3}"/>
+            <circle cx="155" cy="110" r="6" fill="${c4}"/>
+            <circle cx="45" cy="95" r="6" fill="${c2}"/>
+          </g>
+          <g stroke="${c3}" stroke-width="1.2" fill="none" opacity="0.35">
+            <path d="M 40 100 Q 100 70 160 100"/>
+            <path d="M 40 100 Q 100 130 160 100"/>
+          </g>
+          ${hi}</svg>`;
+      case "brazuca": // 2014 — pinwheel
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}
+          <circle cx="100" cy="100" r="88" fill="${c1}"/>
+          <g transform="translate(100 100)">
+            <g stroke="${c2}" stroke-width="5" fill="none" stroke-linecap="round">
+              <path d="M 0 -75 Q 20 -40 15 -15"/>
+              <path d="M 0 75 Q -20 40 -15 15"/>
+              <path d="M -75 0 Q -40 -20 -15 -15"/>
+              <path d="M 75 0 Q 40 20 15 15"/>
+            </g>
+            <g fill="${c3}" opacity="0.85">
+              <circle cx="0" cy="-60" r="4"/>
+              <circle cx="60" cy="0" r="4"/>
+              <circle cx="0" cy="60" r="4"/>
+              <circle cx="-60" cy="0" r="4"/>
+            </g>
+            <g fill="${c4}" opacity="0.85">
+              <circle cx="42" cy="-42" r="3.5"/>
+              <circle cx="42" cy="42" r="3.5"/>
+              <circle cx="-42" cy="42" r="3.5"/>
+              <circle cx="-42" cy="-42" r="3.5"/>
+            </g>
+          </g>
+          ${hi}</svg>`;
+      case "telstar18": // 2018 — pixel tribute
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}
+          <circle cx="100" cy="100" r="88" fill="${c1}"/>
+          <g fill="${c2}">
+            <polygon points="100,38 118,50 112,70 88,70 82,50"/>
+            <polygon points="55,75 70,90 65,110 42,106 38,88"/>
+            <polygon points="145,75 162,88 158,106 135,110 130,90"/>
+            <polygon points="75,128 94,138 90,158 66,156 60,138"/>
+            <polygon points="125,128 140,138 134,158 110,156 110,138"/>
+          </g>
+          <g fill="${c2}" opacity="0.4">
+            <rect x="92" y="48" width="3" height="3"/><rect x="100" y="48" width="3" height="3"/>
+            <rect x="58" y="88" width="3" height="3"/><rect x="138" y="98" width="3" height="3"/>
+          </g>
+          ${hi}</svg>`;
+      case "alrihla": // 2022 — pearl waves
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}
+          <circle cx="100" cy="100" r="88" fill="${c1}"/>
+          <g opacity="0.88" fill="none" stroke-width="3" stroke-linecap="round">
+            <path d="M 45 80 Q 70 60 100 78 Q 130 96 155 80" stroke="${c2}"/>
+            <path d="M 45 110 Q 70 90 100 108 Q 130 126 155 110" stroke="${c3}"/>
+            <path d="M 45 140 Q 70 120 100 138 Q 130 156 155 140" stroke="${c4}"/>
+          </g>
+          <g fill="${c2}" opacity="0.6">
+            <circle cx="55" cy="75" r="2.5"/><circle cx="145" cy="75" r="2.5"/>
+            <circle cx="100" cy="62" r="2.5"/><circle cx="100" cy="158" r="2.5"/>
+          </g>
+          ${hi}</svg>`;
+      default:
+        return `<svg class="ball" viewBox="0 0 200 200">${defs}<circle cx="100" cy="100" r="88" fill="${c1}"/>${hi}</svg>`;
+    }
+  }
+
+  /* ========================================================
+     Render timeline strip
+     ======================================================== */
+  const tlTrack = document.getElementById("tl-track");
+  BALLS.forEach(b => {
+    const node = document.createElement("a");
+    node.className = "tl-node";
+    node.href = `#ball-${b.yr}`;
+    node.innerHTML = `
+      <div class="dot" style="background:#1a1a1a; overflow:hidden;">
+        <img src="assets/balon ${b.yr}.png" alt="${b.name}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.outerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;width:100%;height:100%;\\'>'+\`${ball(b.render, b.colors).replace(/`/g,'\\`')}\`+'</div>'"/>
+      </div>
+      <div class="yr">${b.yr}</div>
+      <div class="nm">${b.name.split("/")[0].split("—")[0].trim().slice(0,12)}</div>
+    `;
+    tlTrack.appendChild(node);
+  });
+
+  /* ========================================================
+     Render full gallery
+     ======================================================== */
+  const grid = document.getElementById("ball-grid");
+  const lang = () => document.documentElement.lang === "en" ? "en" : "es";
+  BALLS.forEach(b => {
+    const card = document.createElement("a");
+    card.className = "b-card";
+    card.id = `ball-${b.yr}`;
+    card.href = "#";
+    card.innerHTML = `
+      <div class="art" style="background: #1a1a1a;">
+        <span class="yr">${b.yr}</span>
+        <span class="host-chip">${b.host}</span>
+        <img src="assets/balon ${b.yr}.png" alt="${b.name}" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0; z-index:1;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'; this.nextElementSibling.style.alignItems='center'; this.nextElementSibling.style.justifyContent='center';" />
+        <div style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">${ball(b.render, b.colors)}</div>
+      </div>
+      <div class="info">
+        <div class="name">${b.name}</div>
+        <div class="brand">${b.maker}</div>
+        <div class="panels">
+          <div class="stat"><div class="k" data-i18n-es="Paneles" data-i18n-en="Panels">Paneles</div><div class="v">${b.panels}</div></div>
+          <div class="stat"><div class="k" data-i18n-es="Peso" data-i18n-en="Weight">Peso</div><div class="v">${b.weight}</div></div>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  /* Re-run i18n for newly-injected content */
+  if (window.M26 && M26.applyI18n) setTimeout(M26.applyI18n, 10);
+</script>
+</body>
+</html>

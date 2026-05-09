@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es" data-accent="emerald">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundial 26 — Revelaciones</title>
+<link rel="stylesheet" href="assets/shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Anton&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  /* ───── Hero ───── */
+  .rev-hero {
+    position: relative;
+    padding: 100px 0 40px;
+    overflow: hidden;
+  }
+  .rev-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 900px 400px at 30% 40%, color-mix(in oklch, var(--accent) 18%, transparent), transparent 70%),
+      radial-gradient(ellipse 600px 300px at 80% 20%, color-mix(in oklch, var(--accent) 10%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .rev-hero .wrap { position: relative; }
+  .rev-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(56px, 9vw, 140px);
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+    margin: 28px 0 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+    max-width: 16ch;
+  }
+  .rev-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .rev-hero .sub {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+    align-items: end;
+  }
+  .rev-hero .sub p { max-width: 58ch; font-size: 17px; line-height: 1.55; color: var(--text-dim); }
+  .rev-hero .grand-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .rev-hero .gs .n {
+    font-family: var(--f-display);
+    font-size: 44px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variation-settings: "opsz" 144;
+  }
+  .rev-hero .gs .n em { color: var(--accent); font-style: italic; }
+  .rev-hero .gs .l {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+
+  /* ───── Decade filter ───── */
+  .decade-bar {
+    position: sticky;
+    top: 68px;
+    z-index: 20;
+    background: color-mix(in oklch, var(--bg) 82%, transparent);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+  }
+  .decade-bar .wrap {
+    display: flex; gap: 6px; align-items: center;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .decade-bar .wrap::-webkit-scrollbar { display: none; }
+  .decade-btn {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--text-dim);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .decade-btn:hover { color: var(--text); border-color: var(--line-strong); }
+  .decade-btn.active { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+
+  /* ───── Revelation cards ───── */
+  .rev-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 24px;
+    padding: 60px 0 80px;
+  }
+  .rev-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color .3s, transform .3s;
+    position: relative;
+  }
+  .rev-card:hover { border-color: var(--accent-soft); transform: translateY(-4px); }
+
+  .rev-card-header {
+    position: relative;
+    padding: 28px 28px 20px;
+    background: linear-gradient(135deg, color-mix(in oklch, var(--accent) 14%, var(--surface)), var(--surface) 70%);
+    border-bottom: 1px solid var(--line);
+  }
+  .rev-card-header .year-badge {
+    position: absolute; top: 20px; right: 20px;
+    font-family: var(--f-display);
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    opacity: 0.25;
+    font-variation-settings: "opsz" 144;
+  }
+  .rev-card-header .host-line {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 10px;
+  }
+  .rev-card-header .team-name {
+    font-family: var(--f-display);
+    font-size: 32px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variation-settings: "opsz" 144;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .rev-card-header .mini-flag {
+    width: 40px; height: 28px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+  .rev-card-header .achievement {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-soft);
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .rev-card-body {
+    padding: 24px 28px 28px;
+  }
+  .rev-card-body p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-dim);
+    margin: 0 0 18px;
+  }
+  .rev-card-body .key-match {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--surface-2);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+  .rev-card-body .key-match .score {
+    font-family: var(--f-display);
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+    min-width: 60px;
+    text-align: center;
+  }
+  .rev-card-body .key-match .desc {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+  }
+  .rev-card-body .curiosity {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--text-faint);
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+    font-style: italic;
+  }
+  .rev-card-body .curiosity::before {
+    content: "💡 ";
+  }
+
+  /* ───── Impact strip ───── */
+  .impact-strip {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 48px 0;
+    margin: 0 0 80px;
+  }
+  .impact-strip .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+  .impact-strip .stat-cell {
+    border-left: 1px solid var(--line);
+    padding-left: 20px;
+  }
+  .impact-strip .stat-cell:first-child { border-left: none; padding-left: 0; }
+  .impact-strip .num {
+    font-family: var(--f-display);
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+  }
+  .impact-strip .num em { color: var(--text); font-style: italic; }
+  .impact-strip .lbl {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* ───── Greatest revelation section ───── */
+  .greatest {
+    padding: 80px 0;
+  }
+  .greatest-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  .greatest-card {
+    background: linear-gradient(135deg, color-mix(in oklch, var(--accent) 18%, var(--surface)), var(--surface) 55%);
+    border: 1px solid color-mix(in oklch, var(--accent) 25%, var(--line));
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .greatest-card .rank {
+    position: absolute;
+    top: -10px; right: 20px;
+    font-family: var(--f-display);
+    font-size: 120px;
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.1;
+    font-variation-settings: "opsz" 144;
+  }
+  .greatest-card .team-hero {
+    font-family: var(--f-display);
+    font-size: 36px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0 0 8px;
+    font-variation-settings: "opsz" 144;
+  }
+  .greatest-card .team-hero em { color: var(--accent); font-style: italic; }
+  .greatest-card .edition {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+    display: block;
+  }
+  .greatest-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  /* ───── Video embed section ───── */
+  .video-section {
+    padding: 60px 0 80px;
+  }
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .video-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 16/9;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: border-color .3s;
+  }
+  .video-card:hover { border-color: var(--accent-soft); }
+  .video-card iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .video-card .video-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 14px 16px;
+    background: linear-gradient(transparent, rgba(10,10,13,0.9));
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    pointer-events: none;
+  }
+
+  @media (max-width: 900px) {
+    .rev-hero .sub { grid-template-columns: 1fr; }
+    .rev-grid { grid-template-columns: 1fr; }
+    .impact-strip .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .impact-strip .stat-cell { border-left: none; padding-left: 0; }
+    .greatest-grid { grid-template-columns: 1fr; }
+    .video-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="m26-nav-slot"></div>
+
+<main>
+  <!-- Hero -->
+  <section class="rev-hero">
+    <div class="wrap">
+      <span class="eyebrow" data-i18n-es="● Las sorpresas del balón" data-i18n-en="● The ball's surprises">● Las sorpresas del balón</span>
+      <h1 data-i18n-es="Las selecciones<br>que nadie<br><em>esperaba.</em>" data-i18n-en="The teams<br>nobody<br><em>expected.</em>">Las selecciones<br>que nadie<br><em>esperaba.</em></h1>
+
+      <div class="sub">
+        <p data-i18n-es="En cada Mundial hay una historia que rompe todos los pronósticos. Selecciones sin tradición que derrotan a gigantes, países pequeños que llegan a semifinales y momentos donde David vence a Goliat con el balón como única arma." data-i18n-en="Every World Cup has a story that breaks all predictions. Teams without tradition defeating giants, small countries reaching semifinals, and moments where David beats Goliath with the ball as their only weapon.">En cada Mundial hay una historia que rompe todos los pronósticos. Selecciones sin tradición que derrotan a gigantes, países pequeños que llegan a semifinales y momentos donde David vence a Goliat con el balón como única arma.</p>
+        <div class="grand-stats">
+          <div class="gs"><div class="n"><em>22</em></div><div class="l" data-i18n-es="Mundiales" data-i18n-en="World Cups">Mundiales</div></div>
+          <div class="gs"><div class="n"><em>17</em></div><div class="l" data-i18n-es="Revelaciones" data-i18n-en="Surprises">Revelaciones</div></div>
+          <div class="gs"><div class="n"><em>5</em></div><div class="l" data-i18n-es="Semifinalistas" data-i18n-en="Semifinalists">Semifinalistas</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Decade filter -->
+  <div class="decade-bar">
+    <div class="wrap" id="decade-filters"></div>
+  </div>
+
+  <!-- Stats strip -->
+  <section class="wrap" style="padding-top: 60px;">
+    <div class="impact-strip" style="border-top: none; padding-top: 0;">
+      <div class="stats-row">
+        <div class="stat-cell"><div class="num"><em>38</em></div><span class="lbl" data-i18n-es="Victorias contra favoritos" data-i18n-en="Upsets vs favorites">Victorias contra favoritos</span></div>
+        <div class="stat-cell"><div class="num"><em>5</em></div><span class="lbl" data-i18n-es="Campeones eliminados en fase de grupos" data-i18n-en="Champions eliminated in group stage">Campeones eliminados en fase de grupos</span></div>
+        <div class="stat-cell"><div class="num"><em>3</em></div><span class="lbl" data-i18n-es="Debutantes en semifinales" data-i18n-en="Debutants in semifinals">Debutantes en semifinales</span></div>
+        <div class="stat-cell"><div class="num"><em>1930</em></div><span class="lbl" data-i18n-es="Primera gran sorpresa" data-i18n-en="First great surprise">Primera gran sorpresa</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Revelation cards grid -->
+  <section class="wrap">
+    <div class="rev-grid" id="rev-grid"></div>
+  </section>
+
+  <!-- Greatest revelations -->
+  <section class="greatest wrap">
+    <span class="eyebrow" data-i18n-es="Top 4 · Las más grandes" data-i18n-en="Top 4 · The greatest">Top 4 · Las más grandes</span>
+    <h2 class="h1" style="margin-top: 12px;" data-i18n-es="Las revelaciones<br>que cambiaron el <em>fútbol.</em>" data-i18n-en="The revelations<br>that changed <em>football.</em>">Las revelaciones<br>que cambiaron el <em>fútbol.</em></h2>
+
+    <div class="greatest-grid">
+      <div class="greatest-card">
+        <div class="rank">1</div>
+        <span class="edition">QATAR 2022</span>
+        <div class="team-hero">Marruecos 🇲🇦</div>
+        <p data-i18n-es="Primera selección africana en alcanzar las semifinales de un Mundial. Eliminaron a Bélgica, España (penales) y Portugal, concediendo solo un gol en todo el torneo hasta la semifinal contra Francia. Hakimi, Amrabat y Bounou se convirtieron en leyendas continentales." data-i18n-en="First African team to reach a World Cup semifinal. Eliminated Belgium, Spain (penalties) and Portugal, conceding just one goal until the semifinal against France. Hakimi, Amrabat and Bounou became continental legends.">Primera selección africana en alcanzar las semifinales de un Mundial. Eliminaron a Bélgica, España (penales) y Portugal, concediendo solo un gol en todo el torneo hasta la semifinal contra Francia. Hakimi, Amrabat y Bounou se convirtieron en leyendas continentales.</p>
+      </div>
+      <div class="greatest-card">
+        <div class="rank">2</div>
+        <span class="edition">COREA-JAPÓN 2002</span>
+        <div class="team-hero">Corea del Sur 🇰🇷</div>
+        <p data-i18n-es="Como anfitrión, Corea del Sur alcanzó las semifinales eliminando a España e Italia en partidos polémicos. Guus Hiddink transformó al equipo en una máquina de presión y contraataque. El 'Red Devils Army' hizo del Estadio de Seúl un infierno para los rivales." data-i18n-en="As hosts, South Korea reached the semifinals eliminating Spain and Italy in controversial matches. Guus Hiddink transformed the team into a pressing and counter-attacking machine. The 'Red Devils Army' made Seoul Stadium hell for rivals.">Como anfitrión, Corea del Sur alcanzó las semifinales eliminando a España e Italia en partidos polémicos. Guus Hiddink transformó al equipo en una máquina de presión y contraataque. El 'Red Devils Army' hizo del Estadio de Seúl un infierno para los rivales.</p>
+      </div>
+      <div class="greatest-card">
+        <div class="rank">3</div>
+        <span class="edition">ITALIA 1990</span>
+        <div class="team-hero">Camerún 🇨🇲</div>
+        <p data-i18n-es="Los 'Leones Indomables' de Roger Milla vencieron a la Argentina de Maradona en el partido inaugural. Milla, con 38 años, bailaba en el banderín del córner tras cada gol. Llegaron a cuartos de final y cambiaron la percepción del fútbol africano para siempre." data-i18n-en="Roger Milla's 'Indomitable Lions' beat Maradona's Argentina in the opening match. Milla, aged 38, danced by the corner flag after each goal. They reached the quarterfinals and changed the perception of African football forever.">Los 'Leones Indomables' de Roger Milla vencieron a la Argentina de Maradona en el partido inaugural. Milla, con 38 años, bailaba en el banderín del córner tras cada gol. Llegaron a cuartos de final y cambiaron la percepción del fútbol africano para siempre.</p>
+      </div>
+      <div class="greatest-card">
+        <div class="rank">4</div>
+        <span class="edition">FRANCIA 1998</span>
+        <div class="team-hero">Croacia 🇭🇷</div>
+        <p data-i18n-es="En su primera participación mundialista como nación independiente, Croacia alcanzó el tercer lugar. Davor Šuker ganó la Bota de Oro con 6 goles y eliminaron a la poderosa Alemania 3-0 en cuartos de final. Un país de 4 millones de habitantes asombró al mundo." data-i18n-en="In their first World Cup as an independent nation, Croatia reached third place. Davor Šuker won the Golden Boot with 6 goals and they eliminated mighty Germany 3-0 in the quarterfinals. A country of 4 million people astonished the world.">En su primera participación mundialista como nación independiente, Croacia alcanzó el tercer lugar. Davor Šuker ganó la Bota de Oro con 6 goles y eliminaron a la poderosa Alemania 3-0 en cuartos de final. Un país de 4 millones de habitantes asombró al mundo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video section -->
+  <section class="video-section wrap">
+    <span class="eyebrow" data-i18n-es="● Revive las sorpresas" data-i18n-en="● Relive the surprises">● Revive las sorpresas</span>
+    <h2 class="h2" style="margin-top: 12px;" data-i18n-es="Los goles que nadie <em>predijo.</em>" data-i18n-en="The goals nobody <em>predicted.</em>">Los goles que nadie <em>predijo.</em></h2>
+    <div class="video-grid">
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/0WVXngp6bJQ" title="Camerún vs Argentina 1990" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/kePH0m7JMiQ" title="Senegal vs Francia 2002" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/LJsKbf0yMeo" title="Marruecos en Qatar 2022" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="m26-footer-slot"></div>
+
+<script src="assets/shared.js"></script>
+<script>
+M26.init({ active: "revelaciones" });
+
+const REVELATIONS = [
+  {
+    year: 1930, host: "Uruguay", team: "Estados Unidos", flag: "flag-us",
+    achievement: "Semifinalista",
+    desc: "En el primer Mundial de la historia, EE.UU. llegó a semifinales goleando a Bélgica 3-0 y Paraguay 3-0. Perdieron 6-1 ante Argentina en semis, pero su aventura fue la primera gran sorpresa del torneo.",
+    keyMatch: { score: "3 – 0", desc: "EE.UU. vs Paraguay · Semifinales" },
+    curiosity: "El equipo estaba compuesto por emigrantes europeos, muchos escoceses y británicos."
+  },
+  {
+    year: 1938, host: "Francia", team: "Cuba", flag: "flag-ws",
+    achievement: "Cuartos de final",
+    desc: "Cuba venció a Rumanía en un replay 2-1 tras empatar 3-3, convirtiéndose en la primera selección caribeña en ganar un partido mundialista y alcanzar cuartos de final. Cayeron 8-0 ante Suecia.",
+    keyMatch: { score: "2 – 1", desc: "Cuba vs Rumanía · Replay octavos" },
+    curiosity: "Héctor Socorro anotó el primer gol mundialista del Caribe. Cuba no ha vuelto a clasificarse."
+  },
+  {
+    year: 1950, host: "Brasil", team: "Estados Unidos", flag: "flag-us",
+    achievement: "Victoria histórica",
+    desc: "La mayor sorpresa de la historia mundialista: una selección amateur de EE.UU. venció 1-0 a la todopoderosa Inglaterra con gol de Joe Gaetjens, un haitiano-americano que lavaba platos en un restaurante de Nueva York.",
+    keyMatch: { score: "1 – 0", desc: "EE.UU. vs Inglaterra · Fase de grupos" },
+    curiosity: "Los diarios ingleses pensaron que el 1-0 era un error tipográfico y publicaron que fue 10-1."
+  },
+  {
+    year: 1954, host: "Suiza", team: "Hungría", flag: "flag-hr",
+    achievement: "Finalista invicta",
+    desc: "Aunque Hungría era favorita, su derrota en la final ante Alemania (3-2) tras ir ganando 2-0 es conocida como 'El Milagro de Berna'. Llevaban 4 años invictos con 32 partidos consecutivos sin perder.",
+    keyMatch: { score: "2 – 3", desc: "Hungría vs Alemania · Final" },
+    curiosity: "Hungría le había ganado 8-3 a Alemania en fase de grupos del mismo torneo."
+  },
+  {
+    year: 1966, host: "Inglaterra", team: "Corea del Norte", flag: "flag-kr",
+    achievement: "Cuartos de final",
+    desc: "Corea del Norte derrotó 1-0 a Italia, una de las mayores vergüenzas del fútbol europeo. En cuartos, iban ganando 3-0 a Portugal antes de que Eusébio protagonizara una remontada épica (5-3).",
+    keyMatch: { score: "1 – 0", desc: "Corea del Norte vs Italia · Fase de grupos" },
+    curiosity: "Los jugadores italianos fueron recibidos con tomates al volver a casa. El gol lo marcó Pak Doo-ik, un dentista militar."
+  },
+  {
+    year: 1982, host: "España", team: "Argelia", flag: "flag-sa",
+    achievement: "Victoria contra Alemania",
+    desc: "Argelia venció 2-1 a la Alemania de Rummenigge en uno de los grandes batacazos mundialistas. Sin embargo, fue eliminada por el 'Pacto de no agresión de Gijón' entre Alemania y Austria.",
+    keyMatch: { score: "2 – 1", desc: "Argelia vs Alemania · Fase de grupos" },
+    curiosity: "El escándalo de Gijón llevó a la FIFA a programar los últimos partidos de grupo a la misma hora."
+  },
+  {
+    year: 1986, host: "México", team: "Dinamarca", flag: "flag-dk",
+    achievement: "Octavos de final",
+    desc: "La 'Dinamita Danesa' de Michael Laudrup deslumbró en la fase de grupos con fútbol total: golearon 6-1 a Uruguay y 2-0 a Alemania. Cayeron 5-1 ante España en octavos, pero dejaron un legado de juego ofensivo brillante.",
+    keyMatch: { score: "6 – 1", desc: "Dinamarca vs Uruguay · Fase de grupos" },
+    curiosity: "Era la primera participación mundialista de Dinamarca. La 'Dinamita' inspiró a toda una generación."
+  },
+  {
+    year: 1990, host: "Italia", team: "Camerún", flag: "flag-ma",
+    achievement: "Cuartos de final",
+    desc: "Los 'Leones Indomables' de Roger Milla abrieron el torneo derrotando a la Argentina campeona. Milla, con 38 años, se convirtió en el goleador más veterano de la historia mundialista y en un ícono global.",
+    keyMatch: { score: "1 – 0", desc: "Camerún vs Argentina · Inauguración" },
+    curiosity: "Milla fue convocado por pedido personal del presidente de Camerún, Paul Biya."
+  },
+  {
+    year: 1994, host: "Estados Unidos", team: "Bulgaria", flag: "flag-hr",
+    achievement: "Semifinalista",
+    desc: "Bulgaria de Hristo Stoichkov eliminó a la Alemania campeona en cuartos (2-1) y alcanzó las semifinales. Stoichkov compartió la Bota de Oro con Salenko (6 goles). Primera gran actuación búlgara en la historia.",
+    keyMatch: { score: "2 – 1", desc: "Bulgaria vs Alemania · Cuartos de final" },
+    curiosity: "Stoichkov celebró sus goles con un saludo militar que se hizo icónico."
+  },
+  {
+    year: 1998, host: "Francia", team: "Croacia", flag: "flag-hr",
+    achievement: "Tercer lugar",
+    desc: "En su debut como nación independiente, Croacia eliminó a Alemania 3-0 en cuartos y terminó tercera. Davor Šuker ganó la Bota de Oro con 6 goles, incluyendo un lob majestuoso ante Dinamarca.",
+    keyMatch: { score: "3 – 0", desc: "Croacia vs Alemania · Cuartos de final" },
+    curiosity: "Croacia se independizó en 1991. Solo 7 años después ya estaba entre los 4 mejores del mundo."
+  },
+  {
+    year: 2002, host: "Corea-Japón", team: "Senegal", flag: "flag-sn",
+    achievement: "Cuartos de final",
+    desc: "Senegal debutó venciendo a Francia (campeona vigente) 1-0 con gol de Papa Bouba Diop, quien celebró bailando alrededor de su camiseta. Llegaron a cuartos eliminando a Suecia en la prórroga.",
+    keyMatch: { score: "1 – 0", desc: "Senegal vs Francia · Inauguración" },
+    curiosity: "Muchos jugadores de Senegal militaban en la liga francesa y conocían perfectamente a sus rivales."
+  },
+  {
+    year: 2002, host: "Corea-Japón", team: "Corea del Sur", flag: "flag-kr",
+    achievement: "Semifinalista",
+    desc: "Como anfitrión, Corea del Sur eliminó a España (penales) e Italia (gol de oro) en un camino polémico pero épico hasta semifinales. Guus Hiddink fue condecorado como héroe nacional y recibió la ciudadanía honoraria.",
+    keyMatch: { score: "2 – 1", desc: "Corea del Sur vs Italia · Octavos (gol de oro)" },
+    curiosity: "Hiddink se convirtió en figura tan popular que un parque fue bautizado con su nombre en Seúl."
+  },
+  {
+    year: 2010, host: "Sudáfrica", team: "Ghana", flag: "flag-sa",
+    achievement: "Cuartos de final",
+    desc: "Ghana fue la última selección africana en pie y estuvo a segundos de ser semifinalista. Suárez paró un gol con la mano en el minuto 120 y Asamoah Gyan falló el penal resultante. Fue eliminada por Uruguay en la tanda.",
+    keyMatch: { score: "1 – 1", desc: "Ghana vs Uruguay · Cuartos (penales)" },
+    curiosity: "La 'Mano de Dios' de Suárez generó un debate ético global sobre el fair play."
+  },
+  {
+    year: 2014, host: "Brasil", team: "Costa Rica", flag: "flag-cr",
+    achievement: "Cuartos de final",
+    desc: "En el 'Grupo de la Muerte' con Uruguay, Italia e Inglaterra, Costa Rica terminó primera invicta. El arquero Keylor Navas fue nombrado mejor portero del torneo. Cayeron en cuartos ante Holanda en penales.",
+    keyMatch: { score: "1 – 0", desc: "Costa Rica vs Italia · Fase de grupos" },
+    curiosity: "Navas fue fichado por el Real Madrid directamente después del Mundial."
+  },
+  {
+    year: 2018, host: "Rusia", team: "Rusia", flag: "flag-hr",
+    achievement: "Cuartos de final · Anfitrión",
+    desc: "La selección peor clasificada del torneo (70° del ranking) eliminó a España en octavos por penales tras un partido táctico donde aguantaron con un bloque bajo impenetrable. La euforia en Moscú fue incontenible.",
+    keyMatch: { score: "1 – 1", desc: "Rusia vs España · Octavos (penales 4-3)" },
+    curiosity: "Rusia goleó 5-0 a Arabia Saudita en la inauguración, pero nadie les daba opciones de avanzar."
+  },
+  {
+    year: 2022, host: "Qatar", team: "Marruecos", flag: "flag-ma",
+    achievement: "Semifinalista",
+    desc: "Primera selección africana y árabe en alcanzar semifinales. Eliminaron a Bélgica, España (penales) y Portugal con una defensa de acero liderada por Bounou, Hakimi y Amrabat. Solo concedieron un gol (en propia puerta) en 5 partidos.",
+    keyMatch: { score: "1 – 0", desc: "Marruecos vs Portugal · Cuartos de final" },
+    curiosity: "Youssef En-Nesyri marcó el gol contra Portugal. Los jugadores dedicaron cada victoria a Palestina."
+  },
+  {
+    year: 2022, host: "Qatar", team: "Japón", flag: "flag-jp",
+    achievement: "Venció a Alemania y España",
+    desc: "Japón protagonizó dos remontadas históricas: perdía 1-0 contra Alemania y España, y terminó ganando 2-1 en ambos casos. El gol de Tanaka ante España, validado por el VAR con milímetros, eliminó a Alemania del torneo.",
+    keyMatch: { score: "2 – 1", desc: "Japón vs España · Fase de grupos" },
+    curiosity: "Los jugadores japoneses dejaron el vestuario impecable tras cada partido, tradición del país."
+  },
+  {
+    year: 2022, host: "Qatar", team: "Arabia Saudita", flag: "flag-sa",
+    achievement: "Victoria contra Argentina",
+    desc: "La mayor sorpresa de Qatar 2022: Arabia Saudita derrotó 2-1 a Argentina, que llevaba 36 partidos invicta. Salem Al-Dawsari marcó un golazo para la historia. El rey declaró feriado nacional.",
+    keyMatch: { score: "2 – 1", desc: "Arabia Saudita vs Argentina · Fase de grupos" },
+    curiosity: "Argentina tenía 3 goles anulados por fuera de juego antes de la remontada saudí."
+  }
+];
+
+const DECADES = ["Todos", "1930s", "1950s", "1960s", "1980s", "1990s", "2000s", "2010s", "2020s"];
+
+function renderFilters() {
+  const c = document.getElementById("decade-filters");
+  c.innerHTML = DECADES.map((d, i) =>
+    `<button class="decade-btn ${i === 0 ? 'active' : ''}" data-decade="${d}">${d === "Todos" ? (M26.getLang() === "en" ? "All" : "Todos") : d}</button>`
+  ).join("");
+}
+
+function renderGrid(filter) {
+  const grid = document.getElementById("rev-grid");
+  const filtered = filter === "Todos" ? REVELATIONS :
+    REVELATIONS.filter(r => {
+      const decade = Math.floor(r.year / 10) * 10;
+      return filter === `${decade}s`;
+    });
+
+  grid.innerHTML = filtered.map(r => `
+    <div class="rev-card" data-year="${r.year}">
+      <div class="rev-card-header">
+        <div class="year-badge">${r.year}</div>
+        <div class="host-line">${r.host} ${r.year}</div>
+        <div class="team-name">
+          <div class="ph flag ${r.flag} mini-flag"></div>
+          ${r.team}
+        </div>
+        <div class="achievement">⭐ ${r.achievement}</div>
+      </div>
+      <div class="rev-card-body">
+        <p>${r.desc}</p>
+        <div class="key-match">
+          <div class="score">${r.keyMatch.score}</div>
+          <div class="desc">${r.keyMatch.desc}</div>
+        </div>
+        <div class="curiosity">${r.curiosity}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+// Events
+document.addEventListener("click", e => {
+  const btn = e.target.closest(".decade-btn");
+  if (btn) {
+    document.querySelectorAll(".decade-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderGrid(btn.dataset.decade);
+  }
+});
+
+renderFilters();
+renderGrid("Todos");
+</script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundial 26 — Historia</title>
+<link rel="stylesheet" href="assets/shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .hist-hero {
+    padding: 100px 0 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hist-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 900px 400px at 30% 40%, color-mix(in oklch, var(--accent) 16%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .hist-hero .wrap { position: relative; }
+  .hist-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 152px);
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    margin: 28px 0 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+    max-width: 14ch;
+  }
+  .hist-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .hist-hero .sub {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+    align-items: end;
+  }
+  .hist-hero .sub p { max-width: 56ch; font-size: 17px; line-height: 1.55; color: var(--text-dim); }
+  .hist-hero .grand-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .hist-hero .gs .n {
+    font-family: var(--f-display);
+    font-size: 44px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variation-settings: "opsz" 144;
+  }
+  .hist-hero .gs .n em { color: var(--accent); font-style: italic; }
+  .hist-hero .gs .l {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+
+  /* Timeline rail */
+  .timeline {
+    position: relative;
+    padding: 40px 0 80px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--line-strong) 5%, var(--line-strong) 95%, transparent);
+    transform: translateX(-50%);
+  }
+  .t-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    gap: 0;
+    margin-bottom: 56px;
+  }
+  .t-row.right .t-card { grid-column: 3; }
+  .t-row.left  .t-card { grid-column: 1; }
+  .t-year {
+    grid-column: 2;
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+  .t-year .yr {
+    font-family: var(--f-display);
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    background: var(--bg);
+    padding: 8px 0;
+    line-height: 1;
+    font-variation-settings: "opsz" 144;
+    z-index: 2;
+  }
+  .t-year::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px var(--line-strong), 0 0 20px var(--accent);
+    transform: translate(-50%, calc(-50% + 40px));
+  }
+  .t-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color .2s;
+    position: relative;
+  }
+  .t-card:hover { border-color: var(--line-strong); }
+  .t-row.right .t-card { margin-left: 40px; }
+  .t-row.left  .t-card { margin-right: 40px; }
+  .t-art {
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--t-c1, var(--accent)), color-mix(in oklch, var(--t-c1, var(--accent)) 40%, #000));
+  }
+  .t-art::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 22px),
+      radial-gradient(ellipse 300px 200px at 80% 80%, rgba(0,0,0,0.45), transparent);
+  }
+  .t-art-era {
+    position: absolute;
+    top: 14px; left: 14px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    background: rgba(0,0,0,0.35);
+    padding: 6px 10px;
+    border-radius: 999px;
+    backdrop-filter: blur(8px);
+  }
+  .t-art-flag {
+    position: absolute;
+    bottom: 16px; right: 16px;
+    width: 80px; height: 54px;
+    border-radius: 6px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.15);
+  }
+  .t-art-big {
+    position: absolute;
+    bottom: -10px; left: 20px;
+    font-family: var(--f-display);
+    font-size: 140px;
+    line-height: 1;
+    color: rgba(255,255,255,0.1);
+    letter-spacing: -0.04em;
+    font-variation-settings: "opsz" 144;
+  }
+  .t-body { padding: 24px 26px 26px; }
+  .t-host {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .t-champ {
+    font-family: var(--f-display);
+    font-size: 32px;
+    margin: 10px 0 8px;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+  }
+  .t-champ em { color: var(--accent); font-style: italic; }
+  .t-story {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-dim);
+    margin: 0 0 16px;
+  }
+  .t-row-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding: 14px 0 0;
+    border-top: 1px dashed var(--line);
+  }
+  .t-row-stats .s .v {
+    font-family: var(--f-display);
+    font-size: 18px;
+    letter-spacing: -0.015em;
+  }
+  .t-row-stats .s .v em { color: var(--accent); font-style: italic; }
+  .t-row-stats .s .k {
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-top: 4px;
+  }
+  .t-moment {
+    margin: 16px 0 0;
+    padding: 12px 14px;
+    background: color-mix(in oklch, var(--accent) 8%, var(--surface-2));
+    border-left: 2px solid var(--accent);
+    border-radius: 4px;
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--text);
+  }
+
+  /* Decade group markers */
+  .decade-mark {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 32px;
+    align-items: center;
+    margin: 12px 0 48px;
+  }
+  .decade-mark .line { height: 1px; background: var(--line-strong); }
+  .decade-mark h2 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 5vw, 72px);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--text);
+    font-variation-settings: "opsz" 144;
+  }
+  .decade-mark h2 em { color: var(--accent); font-style: italic; }
+  .decade-mark .tag {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: block;
+    margin-top: 8px;
+    max-width: 32ch;
+  }
+
+  /* Filter tabs */
+  .era-filter {
+    position: sticky;
+    top: 68px;
+    z-index: 20;
+    background: color-mix(in oklch, var(--bg) 82%, transparent);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+  }
+  .era-inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .era-inner .legend {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .era-tabs { display: flex; gap: 4px; background: var(--surface); padding: 4px; border-radius: 999px; border: 1px solid var(--line); }
+  .era-tabs button {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 0;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: all .15s;
+  }
+  .era-tabs button.active { background: var(--accent); color: var(--accent-ink); }
+  .era-tabs button:hover:not(.active) { color: var(--text); }
+  .jump-dots { margin-left: auto; display: flex; gap: 6px; }
+  .jump-dots a {
+    padding: 6px 10px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: all .15s;
+  }
+  .jump-dots a:hover { color: var(--accent); border-color: var(--accent-soft); }
+
+  @media (max-width: 900px) {
+    .timeline::before { left: 18px; }
+    .t-row { grid-template-columns: 36px 1fr; }
+    .t-row.right .t-card, .t-row.left .t-card { grid-column: 2; margin: 0; }
+    .t-year { grid-column: 1; }
+    .t-year .yr { font-size: 18px; writing-mode: vertical-rl; transform: rotate(180deg); }
+  }
+</style>
+</head>
+<body>
+<div id="m26-nav-slot"></div>
+
+<section class="hist-hero">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n-es="● 1930 — 2026 · 96 años de historia" data-i18n-en="● 1930 — 2026 · 96 years of history">● 1930 — 2026 · 96 años de historia</span>
+    <h1 data-i18n-es="Un siglo de <em>gloria</em> sobre el césped."
+        data-i18n-en="A century of <em>glory</em> on the pitch.">
+      Un siglo de <em>gloria</em> sobre el césped.
+    </h1>
+    <div class="sub">
+      <p data-i18n-es="Desde aquella final uruguaya de 1930 hasta los tres anfitriones que abrirán las puertas en 2026 — la Copa del Mundo ha sido el escenario donde los pueblos se cuentan a sí mismos. 22 ediciones, 8 campeones, millones de relatos." data-i18n-en="From that Uruguayan final in 1930 to the three hosts that will open doors in 2026 — the World Cup has been the stage where nations tell themselves their own story. 22 editions, 8 champions, millions of tales.">
+        Desde aquella final uruguaya de 1930 hasta los tres anfitriones que abrirán las puertas en 2026 — la Copa del Mundo ha sido el escenario donde los pueblos se cuentan a sí mismos. 22 ediciones, 8 campeones, millones de relatos.
+      </p>
+      <div class="grand-stats">
+        <div class="gs"><div class="n">22</div><div class="l" data-i18n-es="Ediciones" data-i18n-en="Editions">Ediciones</div></div>
+        <div class="gs"><div class="n"><em>8</em></div><div class="l" data-i18n-es="Campeones distintos" data-i18n-en="Distinct champions">Campeones distintos</div></div>
+        <div class="gs"><div class="n">2 648</div><div class="l" data-i18n-es="Goles totales" data-i18n-en="Total goals">Goles totales</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="era-filter">
+  <div class="wrap era-inner">
+    <span class="legend" data-i18n-es="Filtrar por era" data-i18n-en="Filter by era">Filtrar por era</span>
+    <div class="era-tabs" id="era-tabs">
+      <button data-era="all" class="active" data-i18n-es="Todo" data-i18n-en="All">Todo</button>
+      <button data-era="pioneers" data-i18n-es="Pioneros · 30–50" data-i18n-en="Pioneers · 30s–50s">Pioneros · 30–50</button>
+      <button data-era="kings" data-i18n-es="Reyes · 60–80" data-i18n-en="Kings · 60s–80s">Reyes · 60–80</button>
+      <button data-era="modern" data-i18n-es="Modernos · 90–10" data-i18n-en="Modern · 90s–10s">Modernos · 90–10</button>
+      <button data-era="contemporary" data-i18n-es="Contemporáneos · 18–26" data-i18n-en="Contemporary · 18–26">Contemporáneos · 18–26</button>
+    </div>
+    <div class="jump-dots">
+      <a href="#d1930">30s</a><a href="#d1950">50s</a><a href="#d1970">70s</a><a href="#d1990">90s</a><a href="#d2010">10s</a><a href="#d2026">26</a>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="timeline" id="timeline">
+    <!-- populated by JS -->
+  </div>
+</main>
+
+<div id="m26-footer-slot"></div>
+
+<script src="assets/shared.js"></script>
+<script>M26.init({ active: "historia" });</script>
+<script>
+/* ── History data ─────────────────────────────────────────── */
+const E = (y, host, hflag, champ, champFlag, score, runner, goals, matches, venue, story, moment, topScorer, era, color) => ({
+  y, host, hflag, champ, champFlag, score, runner, goals, matches, venue, story, moment, topScorer, era, color
+});
+
+const EDITIONS = [
+  E(1930, "Uruguay", "ur", "Uruguay", "ur", "4–2", "Argentina", 70, 18, "Centenario", {
+    es: "El estreno. Trece selecciones, dos continentes representados y un país entero convertido en anfitrión y campeón en su propio estadio.",
+    en: "The debut. Thirteen teams, two continents represented, a whole country turned both host and champion in its own stadium."
+  }, { es: "Cea iguala. Iriarte adelanta. Castro sentencia. Nació un rito mundial.", en: "Cea equalizes. Iriarte leads. Castro seals it. A global ritual was born." }, "G. Stábile (ARG · 8g)", "pioneers", "oklch(0.55 0.2 240)"),
+
+  E(1934, "Italia", "it", "Italia", "it", "2–1", "Checoslovaquia", 70, 17, "Stadio del PNF", {
+    es: "La Copa cruza el Atlántico. Italia la gana en prórroga bajo las banderas del fascismo, en un torneo lleno de controversias.",
+    en: "The Cup crosses the Atlantic. Italy wins it in extra time under fascist banners, in a tournament full of controversy."
+  }, { es: "Schiavio marca el gol del cuento, a minutos del final extra.", en: "Schiavio scores the fairy-tale goal in extra time." }, "O. Nejedlý (TCH · 5g)", "pioneers", "oklch(0.58 0.18 140)"),
+
+  E(1938, "Francia", "fr", "Italia", "it", "4–2", "Hungría", 84, 18, "Stade de Colombes", {
+    es: "Italia revalida: segundo título seguido para Pozzo. La víspera de la guerra reduce la inscripción y el mundo aún no sabe lo que vendrá.",
+    en: "Italy defends: second straight title for Pozzo. War's eve shrinks the field; the world doesn't yet know what comes next."
+  }, { es: "Piola firma un doblete de clase mayor.", en: "Piola nets a masterful brace." }, "L. Leônidas (BRA · 7g)", "pioneers", "oklch(0.55 0.22 260)"),
+
+  E(1950, "Brasil", "br", "Uruguay", "ur", "2–1", "Brasil", 88, 22, "Maracanã", {
+    es: "El Maracanazo. Ante 200 000 brasileños, Uruguay silencia al mundo y gana el segundo título en su propio dolor ajeno.",
+    en: "The Maracanazo. Before 200,000 Brazilians, Uruguay silences the world and wins a second title on borrowed grief."
+  }, { es: "Ghiggia dispara — el silencio más famoso del fútbol.", en: "Ghiggia shoots — football's most famous silence." }, "Ademir (BRA · 8g)", "pioneers", "oklch(0.55 0.2 240)"),
+
+  E(1954, "Suiza", "ch", "Alemania Occidental", "de", "3–2", "Hungría", 140, 26, "Wankdorf", {
+    es: "El milagro de Berna. Los Magiares invencibles caen ante una Alemania dividida que comienza su leyenda en el césped mojado.",
+    en: "The miracle of Bern. The invincible Magyars fall to a divided Germany that begins its legend on the wet grass."
+  }, { es: "Rahn vuelve a marcar: 'Aus dem Hintergrund…'", en: "Rahn strikes again: 'From the back…'" }, "S. Kocsis (HUN · 11g)", "pioneers", "oklch(0.3 0.05 60)"),
+
+  E(1958, "Suecia", "se", "Brasil", "br", "5–2", "Suecia", 126, 35, "Råsunda", {
+    es: "Brasil gana su primer Mundial. Aparece un jugador de 17 años llamado Pelé y cambia todo para siempre.",
+    en: "Brazil wins its first World Cup. A 17-year-old called Pelé appears — and changes everything forever."
+  }, { es: "Pelé pasa el balón por encima, gira y fusila. Nace un rey.", en: "Pelé flicks it up, spins, and strikes. A king is born." }, "J. Fontaine (FRA · 13g)", "pioneers", "oklch(0.72 0.17 155)"),
+
+  E(1962, "Chile", "cl", "Brasil", "br", "3–1", "Checoslovaquia", 89, 32, "Nacional", {
+    es: "Brasil bicampeón. Garrincha toma la batuta cuando Pelé se lesiona: pie torcido, fútbol divino.",
+    en: "Brazil back-to-back. Garrincha takes the wheel when Pelé gets hurt: crooked feet, divine football."
+  }, { es: "Garrincha driblea a tres, remata con el exterior, suena la red.", en: "Garrincha dribbles past three, strikes with the outside, the net sings." }, "varios · 4g", "kings", "oklch(0.72 0.17 155)"),
+
+  E(1966, "Inglaterra", "en", "Inglaterra", "en", "4–2", "Alemania Occidental", 89, 32, "Wembley", {
+    es: "It's coming home. La única estrella inglesa, en Wembley, con el gol fantasma que aún se discute. Eusebio se marcha como goleador.",
+    en: "It's coming home. England's only star, at Wembley, with the ghost goal still debated. Eusébio leaves as top scorer."
+  }, { es: "'They think it's all over…' Hurst remata el sueño.", en: "'They think it's all over…' Hurst ends the dream." }, "Eusébio (POR · 9g)", "kings", "oklch(0.55 0.22 260)"),
+
+  E(1970, "México", "mx", "Brasil", "br", "4–1", "Italia", 95, 32, "Azteca", {
+    es: "La obra maestra. Brasil gana la copa definitiva con Pelé, Jairzinho, Rivellino y Tostão. Se la queda para siempre.",
+    en: "The masterpiece. Brazil wins the definitive cup with Pelé, Jairzinho, Rivellino and Tostão. They keep her forever."
+  }, { es: "El gol de Carlos Alberto: nueve toques, final de película.", en: "Carlos Alberto's goal: nine passes, cinematic finish." }, "G. Müller (RFA · 10g)", "kings", "oklch(0.72 0.17 155)"),
+
+  E(1974, "Alemania Federal", "de", "Alemania Occidental", "de", "2–1", "Países Bajos", 97, 38, "Olympiastadion", {
+    es: "Revolución total. La Naranja Mecánica de Cruyff inventa el fútbol moderno, pero la Alemania de Beckenbauer se queda la copa.",
+    en: "Total revolution. Cruyff's Clockwork Orange invents modern football, but Beckenbauer's Germany takes the cup."
+  }, { es: "Müller, de espaldas, media vuelta — 2–1 y adiós.", en: "Müller, back to goal, half-turn — 2–1 and goodbye." }, "G. Lato (POL · 7g)", "kings", "oklch(0.3 0.05 60)"),
+
+  E(1978, "Argentina", "ar", "Argentina", "ar", "3–1", "Países Bajos", 102, 38, "Monumental", {
+    es: "El torneo polémico. Argentina se corona en casa en medio de la dictadura; Kempes se convierte en leyenda con sus goles bajo el papel picado.",
+    en: "The controversial cup. Argentina crowns at home mid-dictatorship; Kempes becomes legend with his goals under confetti."
+  }, { es: "Kempes, melena al viento, firma el doblete en la final.", en: "Kempes, hair flying, delivers a brace in the final." }, "M. Kempes (ARG · 6g)", "kings", "oklch(0.62 0.18 240)"),
+
+  E(1982, "España", "es", "Italia", "it", "3–1", "Alemania Occidental", 146, 52, "Bernabéu", {
+    es: "Paolo Rossi vuelve de una suspensión y mete a Italia en la historia con seis goles decisivos.",
+    en: "Paolo Rossi returns from a ban and drags Italy into history with six decisive goals."
+  }, { es: "Rossi enfrenta a Brasil y anota un hat-trick que hiela el Sarrià.", en: "Rossi faces Brazil and scores a hat-trick that chills Sarrià." }, "P. Rossi (ITA · 6g)", "kings", "oklch(0.58 0.18 140)"),
+
+  E(1986, "México", "mx", "Argentina", "ar", "3–2", "Alemania Occidental", 132, 52, "Azteca", {
+    es: "Maradona. 'La mano de Dios' y 'el gol del siglo' en cinco minutos contra Inglaterra. Argentina vuelve a ser campeón con el 10 en solitario.",
+    en: "Maradona. 'The Hand of God' and 'the goal of the century' five minutes apart against England. Argentina champion again with the 10 alone."
+  }, { es: "Maradona arranca desde su campo, cinco rivales, red. Himno.", en: "Maradona starts on his own half, past five, into the net. Anthem." }, "G. Lineker (ENG · 6g)", "kings", "oklch(0.62 0.18 240)"),
+
+  E(1990, "Italia", "it", "Alemania Occidental", "de", "1–0", "Argentina", 115, 52, "Olimpico", {
+    es: "Italia 90. Las lágrimas de Gascoigne, el penal de Brehme, la última copa de la Alemania unificada justo antes del muro caer del todo.",
+    en: "Italia 90. Gascoigne's tears, Brehme's penalty, the last cup of unified Germany just as the wall finishes falling."
+  }, { es: "Brehme engancha, inmóvil, pega: 1–0 eterno.", en: "Brehme hooks, motionless, strikes: a lasting 1–0." }, "S. Schillaci (ITA · 6g)", "modern", "oklch(0.3 0.05 60)"),
+
+  E(1994, "Estados Unidos", "us", "Brasil", "br", "0–0*", "Italia", 141, 52, "Rose Bowl", {
+    es: "EE.UU. celebra su primer Mundial y Brasil gana la tercera estrella en penales. Baggio, el divino, falla el último. El llanto de toda Italia.",
+    en: "The USA hosts its first World Cup and Brazil wins its third star on penalties. Baggio, the divine, misses the last. All of Italy weeps."
+  }, { es: "Baggio, cola de caballo, mira el palo. El balón se va por encima.", en: "Baggio, ponytail, eyes the post. The ball sails over." }, "H. Stoichkov / O. Salenko (6g)", "modern", "oklch(0.72 0.17 155)"),
+
+  E(1998, "Francia", "fr", "Francia", "fr", "3–0", "Brasil", 171, 64, "Stade de France", {
+    es: "Zinédine Zidane, cabezazo, cabezazo. Francia gana en casa con una generación multiétnica y el tricolor ilumina los Campos Elíseos.",
+    en: "Zinédine Zidane, header, header. France wins at home with a multi-ethnic generation; the tricolor lights up the Champs-Élysées."
+  }, { es: "ZZ, dos de cabeza; Petit sella. Black–Blanc–Beur.", en: "ZZ, two headers; Petit seals it. Black–Blanc–Beur." }, "D. Šuker (CRO · 6g)", "modern", "oklch(0.55 0.22 270)"),
+
+  E(2002, "Corea del Sur / Japón", "kr", "Brasil", "br", "2–0", "Alemania", 161, 64, "Yokohama", {
+    es: "Primer Mundial en Asia. Ronaldo fenómeno se reivindica con los dos goles de la final. Corea del Sur hace milagro hasta semifinales.",
+    en: "First World Cup in Asia. Phenomenon Ronaldo redeems himself with two final goals. South Korea makes it to the semis, stunning the world."
+  }, { es: "Ronaldo pica, engancha, fusila. El 9 vuelve a ser rey.", en: "Ronaldo prods, hooks, strikes. The 9 is king again." }, "Ronaldo (BRA · 8g)", "modern", "oklch(0.72 0.17 155)"),
+
+  E(2006, "Alemania", "de", "Italia", "it", "1–1*", "Francia", 147, 64, "Olympiastadion", {
+    es: "El cabezazo. Zidane empuja a Materazzi y se va expulsado en su última final. Italia gana en penales el cuarto título.",
+    en: "The headbutt. Zidane headbutts Materazzi and walks off in his last final. Italy wins a fourth title on penalties."
+  }, { es: "El 10 baja la cabeza, camina junto a la copa sin mirarla.", en: "The 10 drops his head, walks past the cup without looking at it." }, "M. Klose (ALE · 5g)", "modern", "oklch(0.58 0.18 140)"),
+
+  E(2010, "Sudáfrica", "sn", "España", "es", "1–0", "Países Bajos", 145, 64, "Soccer City", {
+    es: "Vuvuzelas, waka waka y la única estrella de España. Iniesta marca en el 116; la Roja corona una generación dorada.",
+    en: "Vuvuzelas, waka waka, and Spain's only star. Iniesta scores in the 116th; La Roja crowns a golden generation."
+  }, { es: "Iniesta baja, perfila, zurda al palo. 'Dedicado a Jarque.'", en: "Iniesta pulls it down, leans, left-foot to post. 'For Jarque.'" }, "T. Müller / varios · 5g", "modern", "oklch(0.63 0.22 20)"),
+
+  E(2014, "Brasil", "br", "Alemania", "de", "1–0*", "Argentina", 171, 64, "Maracanã", {
+    es: "El 7–1 que paralizó un país. Alemania golea a Brasil en semifinales y luego vence a Argentina con gol de Götze en la prórroga.",
+    en: "The 7–1 that paralyzed a country. Germany hammers Brazil in the semis, then beats Argentina with Götze's extra-time goal."
+  }, { es: "Götze, de pecho, zurda al rincón. Un país calla, otro grita.", en: "Götze, chest down, left-foot corner. One country silent, another roaring." }, "J. Rodríguez (COL · 6g)", "modern", "oklch(0.3 0.05 60)"),
+
+  E(2018, "Rusia", "ru", "Francia", "fr", "4–2", "Croacia", 169, 64, "Luzhniki", {
+    es: "Francia campeona con Mbappé, Pogba y Griezmann. Croacia escribe una gesta inolvidable hasta la final, bajo la lluvia de Moscú.",
+    en: "France champion with Mbappé, Pogba and Griezmann. Croatia writes an unforgettable feat all the way to the final, in Moscow rain."
+  }, { es: "Mbappé corre al espacio como si tuviera 16. Tenía 19.", en: "Mbappé runs into space like a 16-year-old. He was 19." }, "H. Kane (ING · 6g)", "contemporary", "oklch(0.55 0.22 270)"),
+
+  E(2022, "Catar", "qa", "Argentina", "ar", "3–3*", "Francia", 172, 64, "Lusail", {
+    es: "La final de las finales. Messi levanta la copa después de tres prórrogas, un hat-trick de Mbappé y penales. Argentina tricampeona.",
+    en: "The final of finals. Messi lifts the cup after three extensions, a Mbappé hat-trick and penalties. Argentina three-time champion."
+  }, { es: "Montiel patea, lo gira, 5–4. Muchachos, ahora nos volvimos a ilusionar.", en: "Montiel strikes, spins, 5–4. The kid shirt lifts it all." }, "K. Mbappé (FRA · 8g)", "contemporary", "oklch(0.62 0.18 240)"),
+
+  E(2026, "EE.UU. · México · Canadá", "us", "TBD", "xx", "—", "TBD", 0, 104, "MetLife Stadium", {
+    es: "Primer Mundial en tres países. 48 selecciones, 104 partidos, 16 ciudades anfitrionas. La copa del siglo comienza el 11 de junio.",
+    en: "First three-nation World Cup. 48 teams, 104 matches, 16 host cities. The century's cup begins on June 11."
+  }, { es: "La historia sigue en blanco. Alguien la va a escribir.", en: "History is still blank. Someone will write it." }, "?", "contemporary", "oklch(0.80 0.14 85)"),
+];
+
+/* ── Render ── */
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+
+function renderTimeline() {
+  const lang = M26.getLang();
+  const era = document.querySelector("#era-tabs button.active")?.dataset.era || "all";
+  const list = EDITIONS.filter(e => era === "all" ? true : e.era === era);
+
+  const tl = $("#timeline");
+  let html = "";
+  let lastDecade = null;
+
+  list.forEach((e, i) => {
+    const decade = Math.floor(e.y / 10) * 10;
+    if (decade !== lastDecade) {
+      lastDecade = decade;
+      const decadeLabel = lang === "en" ? `${decade}s` : `Década ${decade}`;
+      const decadeDesc = {
+        1930: { es: "Pioneros. Sudamérica inventa el Mundial.", en: "Pioneers. South America invents the Cup." },
+        1950: { es: "El fútbol vuelve tras la guerra.", en: "Football returns after the war." },
+        1960: { es: "La era de los reyes: Pelé, Garrincha.", en: "The age of kings: Pelé, Garrincha." },
+        1970: { es: "Total futbol, colores vivos, televisión.", en: "Total football, vivid colors, television." },
+        1980: { es: "Maradona y el 10 en solitario.", en: "Maradona and the lone 10." },
+        1990: { es: "La copa se vuelve global, EE.UU. se une.", en: "The cup goes global, the US joins." },
+        2000: { es: "Asia entra, Brasil consolida.", en: "Asia enters, Brazil consolidates." },
+        2010: { es: "Tiki-taka, Mineirazo, nuevos dominios.", en: "Tiki-taka, Mineirazo, new dominions." },
+        2020: { es: "Messi cierra el ciclo. Llega el salto a 48.", en: "Messi closes the cycle. The jump to 48 arrives." },
+      }[decade];
+      html += `
+        <div class="decade-mark" id="d${decade}">
+          <div class="line"></div>
+          <div style="text-align:center;">
+            <h2>${decadeLabel.replace(/(\d+)/, '<em>$1</em>')}</h2>
+            <span class="tag">${decadeDesc ? decadeDesc[lang] : ""}</span>
+          </div>
+          <div class="line"></div>
+        </div>`;
+    }
+    const side = i % 2 === 0 ? "left" : "right";
+    html += `
+      <div class="t-row ${side}">
+        <div class="t-card" style="--t-c1:${e.color}">
+          <div class="t-art">
+            <span class="t-art-era">${e.host}</span>
+            <div class="t-art-big">${String(e.y).slice(-2)}</div>
+            <div class="t-art-flag ph flag flag-${e.hflag}"></div>
+          </div>
+          <div class="t-body">
+            <div class="t-host">${lang==="en"?"Hosted in":"Sede"}: ${e.host} · ${e.venue}</div>
+            <h3 class="t-champ">${lang==="en"?"Champion":"Campeón"}: <em>${e.champ}</em></h3>
+            <p class="t-story">${e.story[lang]}</p>
+            <div class="t-moment">${e.moment[lang]}</div>
+            <div class="t-row-stats">
+              <div class="s"><div class="v">${e.score}</div><div class="k">${lang==="en"?"Final":"Final"}</div></div>
+              <div class="s"><div class="v"><em>${e.goals||"—"}</em></div><div class="k">${lang==="en"?"Goals":"Goles"}</div></div>
+              <div class="s"><div class="v">${e.matches}</div><div class="k">${lang==="en"?"Matches":"Partidos"}</div></div>
+              <div class="s"><div class="v" style="font-size:13px;">${e.topScorer}</div><div class="k">${lang==="en"?"Top scorer":"Goleador"}</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="t-year"><span class="yr">${e.y}</span></div>
+      </div>
+    `;
+  });
+  tl.innerHTML = html;
+}
+
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("#era-tabs button");
+  if (b) {
+    $$("#era-tabs button").forEach(x => x.classList.toggle("active", x === b));
+    renderTimeline();
+  }
+});
+
+const origApply = M26.applyI18n;
+M26.applyI18n = function() { origApply(); renderTimeline(); };
+renderTimeline();
+</script>
+</body>
+</html>

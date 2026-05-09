@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WC2026_NEON | STRAT_CENTER</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&amp;family=Inter:wght@300;400;600&amp;family=Space_Grotesk:wght@300;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#ffe04a",
+                        "on-error": "#1a0000",
+                        "inverse-on-surface": "#0a0a12",
+                        "on-primary-fixed": "#3d0020",
+                        "surface": "#0f0f1a",
+                        "on-primary-container": "#ffe0ec",
+                        "on-error-container": "#ffa0a0",
+                        "on-background": "#e8e0f0",
+                        "on-secondary-fixed": "#001a1a",
+                        "surface-container": "#141422",
+                        "error": "#ff4444",
+                        "tertiary-container": "#665200",
+                        "secondary-fixed-dim": "#00e6b8",
+                        "outline": "#5a5068",
+                        "inverse-surface": "#e8e0f0",
+                        "tertiary": "#ffe04a",
+                        "background": "#0a0a12",
+                        "primary-fixed-dim": "#ff80aa",
+                        "outline-variant": "#302840",
+                        "on-secondary": "#001a1a",
+                        "error-container": "#3d0f0f",
+                        "primary-fixed": "#ffe0ec",
+                        "on-secondary-container": "#c0fff4",
+                        "on-tertiary-fixed": "#1a1000",
+                        "surface-dim": "#0f0f1a",
+                        "secondary": "#00ffcc",
+                        "on-tertiary-container": "#fff0c0",
+                        "on-tertiary": "#1a1000",
+                        "on-secondary-fixed-variant": "#004d4d",
+                        "surface-container-lowest": "#0a0a12",
+                        "surface-container-low": "#111118",
+                        "on-surface-variant": "#a098b0",
+                        "surface-container-highest": "#28283e",
+                        "surface-variant": "#1e1e30",
+                        "secondary-container": "#004d3d",
+                        "on-primary-fixed-variant": "#8c0038",
+                        "surface-container-high": "#1e1e30",
+                        "primary-container": "#b3004e",
+                        "on-primary": "#1a0010",
+                        "surface-tint": "#ff2d78",
+                        "primary": "#ff2d78",
+                        "secondary-fixed": "#c0fff4",
+                        "on-tertiary-fixed-variant": "#665200",
+                        "on-surface": "#e8e0f0",
+                        "inverse-primary": "#8c0038",
+                        "surface-bright": "#1a1a2e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Sora"],
+                        "display": ["Sora"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a12; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .neon-glow-primary { text-shadow: 0 0 8px #ff2d78; }
+        .neon-glow-secondary { text-shadow: 0 0 8px #00ffcc; }
+        .neon-border-primary { border: 1px solid rgba(255, 45, 120, 0.3); box-shadow: inset 0 0 12px rgba(255, 45, 120, 0.1); }
+        .neon-border-secondary { border: 1px solid rgba(0, 255, 204, 0.3); box-shadow: inset 0 0 12px rgba(0, 255, 204, 0.1); }
+        .grid-bg { background-image: linear-gradient(rgba(255, 45, 120, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 45, 120, 0.05) 1px, transparent 1px); background-size: 20px 20px; }
+        .scanline { background: linear-gradient(to bottom, transparent 50%, rgba(10, 10, 18, 0.2) 50%), linear-gradient(to right, rgba(255, 45, 120, 0.05), rgba(0, 255, 204, 0.05)); background-size: 100% 4px, 100% 100%; }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar -->
+<header class="fixed top-0 z-50 w-full bg-[#0a0a12]/90 backdrop-blur-md border-b border-[#ff2d78]/30 shadow-[0_4_20px_rgba(255,45,120,0.15)] px-6 py-4 flex justify-between items-center h-16">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-[#ff2d78] drop-shadow-[0_0_8px_rgba(255,45,120,0.6)] font-headline tracking-tight">WC2026_NEON</span>
+<nav class="hidden md:flex gap-6 items-center h-full">
+<a class="text-[#00ffcc] border-b-2 border-[#00ffcc] drop-shadow-[0_0_5px_rgba(0,255,204,0.5)] transition-colors duration-300 font-label uppercase text-xs tracking-widest px-1 py-5" href="#">ANALYTICS</a>
+<a class="text-slate-400 hover:text-white transition-colors duration-300 font-label uppercase text-xs tracking-widest px-1 py-5" href="#">SQUAD_DATABASE</a>
+<a class="text-slate-400 hover:text-white transition-colors duration-300 font-label uppercase text-xs tracking-widest px-1 py-5" href="#">LIVE_TRACK</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary text-sm">search</span>
+<input class="bg-surface-container-low border border-primary/30 rounded-none pl-10 pr-4 py-1 text-xs font-label focus:outline-none focus:border-primary transition-all placeholder:text-slate-600" placeholder="QUERY_SYSTEM..." type="text"/>
+</div>
+<div class="flex gap-4">
+<button class="text-on-background hover:text-primary transition-colors duration-300"><span class="material-symbols-outlined">notifications</span></button>
+<button class="text-on-background hover:text-primary transition-colors duration-300"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col bg-[#0a0a12] border-r border-[#ff2d78]/30 py-8 gap-4 z-40 hidden md:flex pt-20">
+<div class="px-6 mb-4">
+<div class="text-[#ff2d78] font-bold font-headline text-lg">STRAT_CENTER</div>
+<div class="text-slate-500 font-label text-[10px] tracking-[0.2em]">TOKYO_NODE_01</div>
+</div>
+<nav class="flex flex-col gap-1 flex-grow divide-y divide-[#ff2d78]/10">
+<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-white/5 hover:text-white group transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-xl group-hover:translate-x-1 duration-200">sensors</span>
+<span class="font-label text-sm uppercase tracking-widest">Live Feed</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-white/5 hover:text-white group transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-xl group-hover:translate-x-1 duration-200">leaderboard</span>
+<span class="font-label text-sm uppercase tracking-widest">Standings</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-white/5 hover:text-white group transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-xl group-hover:translate-x-1 duration-200">person_search</span>
+<span class="font-label text-sm uppercase tracking-widest">Player Stats</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 bg-[#ff2d78]/10 text-[#ff2d78] border-r-4 border-[#ff2d78] shadow-[inset_0_0_12px_rgba(255,45,120,0.1)] group transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-xl group-hover:translate-x-1 duration-200">analytics</span>
+<span class="font-label text-sm uppercase tracking-widest">Team Analysis</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-slate-500 hover:bg-white/5 hover:text-white group transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-xl group-hover:translate-x-1 duration-200">history</span>
+<span class="font-label text-sm uppercase tracking-widest">Archives</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full py-3 bg-transparent border border-primary text-primary font-label text-xs tracking-widest hover:bg-primary/10 transition-all hover:shadow-[0_0_16px_rgba(255,45,120,0.4)]">
+                PREDICT WINNER
+            </button>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:ml-64 pt-20 pb-12 px-6">
+<div class="max-w-7xl mx-auto space-y-6">
+<!-- Hero Data Viz: Brazil vs France -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 surface-container-low neon-border-primary p-6 relative overflow-hidden group">
+<div class="absolute inset-0 scanline opacity-20 pointer-events-none"></div>
+<div class="flex justify-between items-end mb-8 relative z-10">
+<div>
+<h2 class="font-headline font-extrabold text-3xl text-on-background mb-1 italic">BRA <span class="text-primary mx-2">VS</span> FRA</h2>
+<p class="font-label text-slate-400 text-xs tracking-tighter uppercase">Quarter-Final / Simulation Alpha-09</p>
+</div>
+<div class="text-right">
+<span class="bg-secondary/20 text-secondary border border-secondary/50 px-2 py-0.5 text-[10px] font-label uppercase animate-pulse">Live Probability</span>
+</div>
+</div>
+<div class="flex items-end justify-between gap-4 h-48 mb-6 relative z-10">
+<!-- Neon Probability Chart -->
+<div class="flex-1 flex flex-col items-center justify-end h-full">
+<div class="w-full bg-surface-container-high rounded-sm overflow-hidden flex items-end h-32 relative">
+<div class="w-full bg-gradient-to-t from-primary/80 to-primary/20 h-[58%] border-t-2 border-primary shadow-[0_0_15px_rgba(255,45,120,0.5)]"></div>
+<div class="absolute inset-0 flex items-center justify-center font-headline font-black text-4xl text-white drop-shadow-[0_0_10px_rgba(255,45,120,0.8)]">58%</div>
+</div>
+<span class="font-label text-xs mt-3 text-slate-300">BRAZIL_WIN</span>
+</div>
+<div class="flex-none flex flex-col items-center justify-end h-full pb-4">
+<div class="font-label text-xs text-slate-600 rotate-90 mb-4">DRAW_12%</div>
+</div>
+<div class="flex-1 flex flex-col items-center justify-end h-full">
+<div class="w-full bg-surface-container-high rounded-sm overflow-hidden flex items-end h-32 relative">
+<div class="w-full bg-gradient-to-t from-secondary/80 to-secondary/20 h-[30%] border-t-2 border-secondary shadow-[0_0_15px_rgba(0,255,204,0.5)]"></div>
+<div class="absolute inset-0 flex items-center justify-center font-headline font-black text-4xl text-white drop-shadow-[0_0_10px_rgba(0,255,204,0.8)]">30%</div>
+</div>
+<span class="font-label text-xs mt-3 text-slate-300">FRANCE_WIN</span>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-4 text-center border-t border-white/5 pt-4">
+<div><p class="font-label text-[10px] text-slate-500 uppercase">Aggression</p><p class="font-headline text-lg text-primary">8.4</p></div>
+<div><p class="font-label text-[10px] text-slate-500 uppercase">Formation</p><p class="font-headline text-lg text-secondary">4-3-3</p></div>
+<div><p class="font-label text-[10px] text-slate-500 uppercase">Def_Solid</p><p class="font-headline text-lg text-tertiary">91%</p></div>
+<div><p class="font-label text-[10px] text-slate-500 uppercase">Temp_C</p><p class="font-headline text-lg text-on-background">24°</p></div>
+</div>
+</div>
+<!-- AI Insights Feed -->
+<div class="surface-container-low neon-border-secondary flex flex-col overflow-hidden">
+<div class="bg-secondary/10 px-4 py-3 border-b border-secondary/20 flex justify-between items-center">
+<span class="font-label text-xs tracking-widest text-secondary font-bold">AI_INSIGHTS_FEED</span>
+<span class="material-symbols-outlined text-secondary text-sm">psychology</span>
+</div>
+<div class="flex-grow overflow-y-auto p-4 space-y-4 custom-scrollbar">
+<div class="border-l-2 border-primary/40 pl-3 py-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-primary/20 text-primary text-[8px] font-black px-1 py-0.5 rounded-none">REAL-TIME</span>
+<span class="text-[10px] text-slate-500 font-label">T+ 14:02</span>
+</div>
+<p class="text-xs font-body leading-relaxed text-on-background/80 italic">Brazil's left-wing pressure (Vini Jr.) is creating a 12.4% increase in turnover probability against Koundé.</p>
+</div>
+<div class="border-l-2 border-secondary/40 pl-3 py-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-secondary/20 text-secondary text-[8px] font-black px-1 py-0.5 rounded-none">PREDICTIVE</span>
+<span class="text-[10px] text-slate-500 font-label">T+ 12:45</span>
+</div>
+<p class="text-xs font-body leading-relaxed text-on-background/80">Mbappé's counter-attack vector has reached critical speed. Tactical foul predicted in neutral zone within 5 mins.</p>
+</div>
+<div class="border-l-2 border-tertiary/40 pl-3 py-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-tertiary/20 text-tertiary text-[8px] font-black px-1 py-0.5 rounded-none">ANOMALY</span>
+<span class="text-[10px] text-slate-500 font-label">T+ 10:11</span>
+</div>
+<p class="text-xs font-body leading-relaxed text-on-background/80">Unusual heart-rate spike detected in French midfield anchor. Fatigue factor rising above threshold.</p>
+</div>
+<div class="border-l-2 border-primary/40 pl-3 py-1 opacity-50">
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-primary/20 text-primary text-[8px] font-black px-1 py-0.5 rounded-none">REAL-TIME</span>
+<span class="text-[10px] text-slate-500 font-label">T+ 08:32</span>
+</div>
+<p class="text-xs font-body leading-relaxed text-on-background/80">Brazil offensive transition efficiency optimized at 88% success rate.</p>
+</div>
+</div>
+<div class="p-3 border-t border-secondary/10 text-center">
+<button class="text-[10px] font-label text-secondary hover:underline tracking-widest uppercase">Expand_Full_Node</button>
+</div>
+</div>
+</section>
+<!-- Bento Grid Section -->
+<section class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-6">
+<!-- Tactical Heat Map -->
+<div class="md:col-span-2 lg:col-span-3 surface-container-low neon-border-primary h-80 flex flex-col overflow-hidden relative group">
+<div class="absolute inset-0 grid-bg opacity-20"></div>
+<div class="p-4 border-b border-primary/10 relative z-10 flex justify-between items-center bg-background/50">
+<span class="font-label text-xs uppercase tracking-widest text-primary">Tactical Heat Map</span>
+<div class="flex gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+</div>
+</div>
+<div class="flex-grow flex items-center justify-center p-6 relative">
+<!-- Pitch Representation -->
+<div class="w-full h-full border border-white/10 rounded-sm relative flex items-center justify-center overflow-hidden">
+<div class="absolute left-1/2 top-0 bottom-0 w-[1px] bg-white/20"></div>
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 border border-white/20 rounded-full"></div>
+<!-- Heat Glows -->
+<div class="absolute top-4 left-8 w-16 h-16 bg-primary/40 blur-2xl rounded-full"></div>
+<div class="absolute bottom-12 right-12 w-24 h-24 bg-primary/60 blur-3xl rounded-full"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-secondary/30 blur-xl rounded-full"></div>
+<div class="absolute bottom-4 left-24 w-10 h-10 bg-primary/30 blur-xl rounded-full"></div>
+<!-- Player Nodes -->
+<div class="absolute top-1/4 left-1/4 w-2 h-2 bg-primary shadow-[0_0_8px_#ff2d78]"></div>
+<div class="absolute bottom-1/3 right-1/4 w-2 h-2 bg-secondary shadow-[0_0_8px_#00ffcc]"></div>
+<div class="absolute top-1/2 right-1/3 w-2 h-2 bg-primary shadow-[0_0_8px_#ff2d78]"></div>
+</div>
+</div>
+</div>
+<!-- Golden Boot Race -->
+<div class="md:col-span-2 lg:col-span-2 surface-container-low neon-border-secondary p-5 flex flex-col">
+<h3 class="font-label text-xs uppercase tracking-widest text-secondary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">workspace_premium</span> GOLDEN_BOOT_RACE
+                    </h3>
+<div class="space-y-5 flex-grow">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-none bg-surface-container-high border border-primary/30 p-0.5">
+<img class="w-full h-full object-cover" data-alt="professional portrait of a confident athlete in a futuristic neon-lit sports studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjICRkieres_lgZ_-RTTeZZBFT4p47gYWFvZdKiGhA-HOiRX5plgrDULG171rniEzUo7saH1L1C6Yk3x9j2gAGIMS5_RQCz8fiBrzZknTQizYYPJ8KqdintQ35hF03TohbIgMhvxvlzvVrOGrtSHzk7Bb6xBdA910EN5mhxwmmZbGWRJrcXjb0fZlgm_mCOKEm6-hvNqTISQphTVgflvSpUB2tLJoGJpaymd6oNlhaX3wMzjZNguuisctCW_75qq3iIGZTcyAqzog"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-end mb-1">
+<span class="font-headline text-sm font-bold">V. JUNIOR</span>
+<span class="font-label text-xs text-primary">6 GOALS</span>
+</div>
+<div class="w-full bg-white/5 h-1">
+<div class="bg-primary h-full shadow-[0_0_8px_#ff2d78]" style="width: 85%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-none bg-surface-container-high border border-white/10 p-0.5">
+<img class="w-full h-full object-cover" data-alt="close up of a determined professional footballer under cool cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJymKEgOybmjq3v5ypeYuQo5Hs3wR6pqxvG3U8xYAx_sSYPyvtfkWZkgRdNINnqB745_WBOHos03HVhN4vNQYp8a18lZnvFcbRtUmYjki1stf6LD1GKbFMZeIUtCxsZl8iGXtneuuoQj7Ay1CcFGLlPKggQ8zmhOn3mEBKzVqNAbeGcJpuY6bTbcHzUwJbMZ7DvisOYkouuEErb1yM44GgaSfAnUkKEIlSLe77JYxMXOqt-UmRWpYEv2EHgo1f9Ynawmvk26-uDgo"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-end mb-1">
+<span class="font-headline text-sm font-bold">K. MBAPPÉ</span>
+<span class="font-label text-xs text-secondary">5 GOALS</span>
+</div>
+<div class="w-full bg-white/5 h-1">
+<div class="bg-secondary h-full shadow-[0_0_8px_#00ffcc]" style="width: 70%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 opacity-70">
+<div class="w-12 h-12 rounded-none bg-surface-container-high border border-white/10 p-0.5">
+<img class="w-full h-full object-cover" data-alt="intense profile shot of a male soccer player with dramatic high-contrast lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoWtieZSHzhy7Omv8h4RanJC2H0SlXNpGU3Grn0DCdYTFH91bWz4vLta5jplxTkGn0JuUHMd2W6HdE_rowuWyL0off9BnOW9j47DD4Eh77B9ax1-TeQ1f-wtmNcjxYFFZSm8wRy2pI0l9_a9Z6z4_xI8c_90mouSb0zRNs9eh2sH5ZecPSe19E3riqOCtJGcNwEBvpIBk4RrDFDUJppdoh8iEVnbfAXuPS-nZcrfcmd5IISpIhg3vIlSODW2h4iomTA6XYT41Mjbg"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-end mb-1">
+<span class="font-headline text-sm font-bold">J. MUSIALA</span>
+<span class="font-label text-xs text-slate-400">4 GOALS</span>
+</div>
+<div class="w-full bg-white/5 h-1">
+<div class="bg-slate-400 h-full" style="width: 55%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Small Data Card: Network Traffic -->
+<div class="surface-container-low border border-white/5 p-5 flex flex-col justify-center items-center">
+<span class="font-label text-[10px] text-slate-500 uppercase mb-2">Node_Load</span>
+<div class="relative w-20 h-20 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90">
+<circle class="text-white/5" cx="40" cy="40" fill="transparent" r="35" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-tertiary drop-shadow-[0_0_5px_#ffe04a]" cx="40" cy="40" fill="transparent" r="35" stroke="currentColor" stroke-dasharray="219.9" stroke-dashoffset="66" stroke-width="4"></circle>
+</svg>
+<span class="absolute font-headline font-bold text-lg text-tertiary">70%</span>
+</div>
+<span class="font-label text-[10px] text-tertiary mt-2">OPTIMAL</span>
+</div>
+</section>
+<!-- Performance Trends -->
+<section class="surface-container-low neon-border-primary p-6 overflow-hidden">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline font-bold text-xl tracking-tight flex items-center gap-3 uppercase">
+<span class="w-2 h-8 bg-primary block"></span> PERFORMANCE_TRENDS_MATRIX
+                    </h3>
+<div class="flex gap-4">
+<span class="font-label text-[10px] text-slate-400 flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary"></span> ATTACK_XG</span>
+<span class="font-label text-[10px] text-slate-400 flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span> DEF_STAB</span>
+</div>
+</div>
+<div class="h-64 relative w-full flex items-end gap-1">
+<div class="absolute inset-0 pointer-events-none">
+<div class="w-full h-[1px] bg-white/5 absolute top-0"></div>
+<div class="w-full h-[1px] bg-white/5 absolute top-1/4"></div>
+<div class="w-full h-[1px] bg-white/5 absolute top-2/4"></div>
+<div class="w-full h-[1px] bg-white/5 absolute top-3/4"></div>
+</div>
+<!-- Dynamic Bars -->
+<div class="flex-grow h-full flex items-end gap-2 px-2">
+<div class="flex-1 flex flex-col gap-1 items-center justify-end h-full">
+<div class="w-full bg-primary/20 h-[40%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-secondary/20 h-[30%] hover:bg-secondary/40 transition-colors"></div>
+</div>
+<div class="flex-1 flex flex-col gap-1 items-center justify-end h-full">
+<div class="w-full bg-primary/20 h-[55%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-secondary/20 h-[45%] hover:bg-secondary/40 transition-colors"></div>
+</div>
+<div class="flex-1 flex flex-col gap-1 items-center justify-end h-full">
+<div class="w-full bg-primary/20 h-[70%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-secondary/20 h-[60%] hover:bg-secondary/40 transition-colors"></div>
+</div>
+<div class="flex-1 flex flex-col gap-1 items-center justify-end h-full">
+<div class="w-full bg-primary/20 h-[45%] hover:bg-primary/40 transition-colors shadow-[0_0_15px_rgba(255,45,120,0.3)] border-t border-primary"></div>
+<div class="w-full bg-secondary/20 h-[80%] hover:bg-secondary/40 transition-colors shadow-[0_0_15px_rgba(0,255,204,0.3)] border-t border-secondary"></div>
+</div>
+<div class="flex-1 flex flex-col gap-1 items-center justify-end h-full">
+<div class="w-full bg-primary/20 h-[60%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-secondary/20 h-[35%] hover:bg-secondary/40 transition-colors"></div>
+</div>
+<div class="flex-1 flex flex-col gap-1 items-center justify-end h-full">
+<div class="w-full bg-primary/20 h-[85%] hover:bg-primary/40 transition-colors shadow-[0_0_15px_rgba(255,45,120,0.3)] border-t border-primary"></div>
+<div class="w-full bg-secondary/20 h-[25%] hover:bg-secondary/40 transition-colors"></div>
+</div>
+<div class="flex-1 flex flex-col gap-1 items-center justify-end h-full">
+<div class="w-full bg-primary/20 h-[50%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-secondary/20 h-[50%] hover:bg-secondary/40 transition-colors"></div>
+</div>
+<div class="flex-1 flex flex-col gap-1 items-center justify-end h-full">
+<div class="w-full bg-primary/20 h-[30%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-secondary/20 h-[70%] hover:bg-secondary/40 transition-colors shadow-[0_0_15px_rgba(0,255,204,0.3)] border-t border-secondary"></div>
+</div>
+<div class="flex-1 flex flex-col gap-1 items-center justify-end h-full">
+<div class="w-full bg-primary/20 h-[75%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-secondary/20 h-[40%] hover:bg-secondary/40 transition-colors"></div>
+</div>
+<div class="flex-1 flex flex-col gap-1 items-center justify-end h-full">
+<div class="w-full bg-primary/20 h-[90%] hover:bg-primary/40 transition-colors shadow-[0_0_15px_rgba(255,45,120,0.3)] border-t border-primary"></div>
+<div class="w-full bg-secondary/20 h-[10%] hover:bg-secondary/40 transition-colors"></div>
+</div>
+</div>
+</div>
+<div class="flex justify-between px-2 mt-4 font-label text-[10px] text-slate-600 uppercase tracking-widest">
+<span>Group_Stage</span>
+<span>Round_16</span>
+<span>Quarter_Finals</span>
+<span>Current_Node</span>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer Decoration -->
+<footer class="md:ml-64 px-6 pb-8">
+<div class="max-w-7xl mx-auto border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 bg-secondary rounded-full"></div>
+<span class="font-label text-[10px] tracking-widest text-slate-500">SYSTEM_STATUS: NOMINAL</span>
+<span class="font-label text-[10px] tracking-widest text-slate-500 ml-4">LATENCY: 12ms</span>
+</div>
+<div class="text-[10px] font-label text-slate-600 uppercase tracking-tighter">
+                © 2026 Tokyo Node Zero - World Cup Strategic Data Cluster
+            </div>
+</div>
+</footer>
+</body></html>

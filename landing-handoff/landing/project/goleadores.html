@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundial 26 — Goleadores</title>
+<link rel="stylesheet" href="assets/shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .gl-hero { padding: 100px 0 30px; position: relative; overflow: hidden; }
+  .gl-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 900px 420px at 80% 30%, color-mix(in oklch, var(--accent) 18%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .gl-hero .wrap { position: relative; }
+  .gl-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 160px);
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    margin: 24px 0 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+    max-width: 14ch;
+  }
+  .gl-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .gl-hero .lead { margin-top: 28px; max-width: 64ch; }
+
+  /* Podium */
+  .podium {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1fr;
+    gap: 18px;
+    margin: 56px 0 64px;
+    align-items: end;
+  }
+  .pod-card {
+    position: relative;
+    padding: 36px 28px 28px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .pod-card.first {
+    background: linear-gradient(180deg, color-mix(in oklch, var(--accent) 14%, var(--surface)), var(--surface));
+    border-color: color-mix(in oklch, var(--accent) 40%, var(--line));
+    padding-top: 56px;
+    padding-bottom: 44px;
+  }
+  .pod-card .rank {
+    position: absolute; top: 20px; right: 24px;
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em;
+    color: var(--text-faint); text-transform: uppercase;
+  }
+  .pod-card.first .rank { color: var(--accent); }
+  .pod-card .medal {
+    position: absolute; top: -32px; left: 28px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, color-mix(in oklch, var(--accent) 70%, #fff), var(--accent));
+    opacity: 0.08;
+    filter: blur(20px);
+  }
+  .pod-card.first .medal { opacity: 0.25; }
+  .pod-card h4 {
+    font-family: var(--f-display);
+    font-size: 44px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin: 0 0 8px;
+    font-variation-settings: "opsz" 144;
+  }
+  .pod-card.first h4 { font-size: 60px; }
+  .pod-card h4 em { color: var(--accent); font-style: italic; }
+  .pod-card .nation {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-dim);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 20px;
+  }
+  .pod-card .nation .fl { width: 24px; height: 16px; border-radius: 3px; }
+  .pod-card .goals {
+    font-family: var(--f-display);
+    font-size: 96px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-variation-settings: "opsz" 144;
+  }
+  .pod-card.first .goals { font-size: 120px; color: var(--accent); font-style: italic; }
+  .pod-card .goals .u {
+    font-family: var(--f-mono); font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-faint); vertical-align: top; margin-left: 6px;
+  }
+  .pod-card .editions {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    display: flex; gap: 14px;
+  }
+  .pod-card .editions .ed {
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em;
+    color: var(--text-dim); text-transform: uppercase;
+  }
+  .pod-card .editions .ed span { display: block; font-family: var(--f-display); font-size: 22px; letter-spacing: -0.02em; color: var(--text); }
+
+  /* Filters */
+  .gl-filters {
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    margin: 0 0 20px;
+    padding: 18px 22px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .gl-filters .label {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-faint);
+    margin-right: 4px;
+  }
+  .gl-filters select, .gl-filters input {
+    padding: 8px 14px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .gl-filters input[type="search"] {
+    text-transform: none;
+    letter-spacing: normal;
+    min-width: 200px;
+  }
+  .gl-filters select:focus, .gl-filters input:focus {
+    outline: 1px solid var(--accent);
+    border-color: var(--accent);
+  }
+  .gl-filters .count {
+    margin-left: auto;
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em;
+    color: var(--text-dim); text-transform: uppercase;
+  }
+  .gl-filters .count em { color: var(--accent); font-style: normal; }
+
+  /* Table */
+  .gl-table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .gl-table { width: 100%; border-collapse: collapse; }
+  .gl-table thead th {
+    text-align: left;
+    padding: 20px 24px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    user-select: none;
+    background: var(--surface-2);
+  }
+  .gl-table thead th:hover { color: var(--accent); }
+  .gl-table thead th.sorted { color: var(--accent); }
+  .gl-table thead th.sorted::after { content: " ↓"; }
+  .gl-table thead th.sorted.asc::after { content: " ↑"; }
+  .gl-table tbody tr {
+    border-bottom: 1px solid var(--line);
+    transition: background .15s;
+    cursor: pointer;
+  }
+  .gl-table tbody tr:hover { background: var(--surface-2); }
+  .gl-table tbody tr.open { background: color-mix(in oklch, var(--accent) 6%, var(--surface)); }
+  .gl-table td {
+    padding: 18px 24px;
+    font-size: 14px;
+  }
+  .gl-table .rank {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--text-faint);
+    width: 64px;
+  }
+  .gl-table tbody tr:nth-child(-n+3) .rank { color: var(--accent); }
+  .gl-table .name {
+    font-family: var(--f-display);
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+  }
+  .gl-table .name em { color: var(--accent); font-style: italic; }
+  .gl-table .nation {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .gl-table .nation .fl { width: 24px; height: 16px; border-radius: 3px; }
+  .gl-table .wc {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+  }
+  .gl-table .goals {
+    font-family: var(--f-display);
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+    text-align: right;
+  }
+  .gl-table .goals em { color: var(--accent); font-style: italic; }
+  .gl-table .ratio {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .expand {
+    background: var(--bg);
+  }
+  .expand td {
+    padding: 0;
+  }
+  .expand-inner {
+    padding: 32px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
+  }
+  .expand-inner h5 {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 16px;
+  }
+  .expand-inner .tag-q {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    margin: 0;
+    max-width: 40ch;
+  }
+  .expand-inner .body {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-dim);
+    margin-top: 18px;
+    max-width: 50ch;
+  }
+  .wc-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 10px;
+  }
+  .wc-pill {
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  .wc-pill .yr { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--text-faint); }
+  .wc-pill .g {
+    font-family: var(--f-display); font-size: 32px; letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+  }
+  .wc-pill .g em { color: var(--accent); font-style: italic; }
+
+  /* Golden boots section */
+  .boots-sec {
+    margin-top: 80px;
+  }
+  .boots-sec h2 {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 6vw, 84px);
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    margin: 0 0 8px;
+    font-variation-settings: "opsz" 144;
+  }
+  .boots-sec h2 em { color: var(--accent); font-style: italic; }
+  .boots-sec .kicker {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-dim);
+    margin-bottom: 40px;
+  }
+  .boots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .boot-card {
+    padding: 26px 24px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    transition: all .15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .boot-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .boot-card .yr {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-faint);
+  }
+  .boot-card .name {
+    font-family: var(--f-display);
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 8px 0;
+    font-variation-settings: "opsz" 144;
+  }
+  .boot-card .goals {
+    display: flex; align-items: baseline; gap: 6px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .boot-card .goals .n {
+    font-family: var(--f-display); font-size: 44px; letter-spacing: -0.03em;
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144;
+  }
+  .boot-card .goals .u {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em;
+    color: var(--text-faint); text-transform: uppercase;
+  }
+  .boot-card .nation {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em;
+    color: var(--text-dim); text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .boot-card .nation .fl { width: 22px; height: 14px; border-radius: 3px; }
+
+  /* Scatter */
+  .scatter-sec {
+    margin-top: 80px;
+    padding: 48px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .scatter-sec h2 {
+    font-family: var(--f-display);
+    font-size: 44px;
+    letter-spacing: -0.03em;
+    margin: 0 0 8px;
+    font-variation-settings: "opsz" 144;
+  }
+  .scatter-sec h2 em { color: var(--accent); font-style: italic; }
+  .scatter-sec .kicker {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-dim); margin-bottom: 24px;
+  }
+  .scatter {
+    position: relative;
+    height: 420px;
+    padding: 20px 40px 40px;
+    border-left: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .scatter .ax-y, .scatter .ax-x {
+    position: absolute;
+    font-family: var(--f-mono); font-size: 9px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .scatter .ax-y { left: -30px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+  .scatter .ax-x { bottom: -28px; left: 50%; transform: translateX(-50%); }
+  .dot {
+    position: absolute;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.6;
+    transform: translate(-50%, -50%);
+    transition: all .15s;
+    cursor: pointer;
+  }
+  .dot:hover {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.6);
+    z-index: 2;
+  }
+  .dot .lbl {
+    position: absolute;
+    bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s;
+  }
+  .dot:hover .lbl { opacity: 1; }
+
+  /* Grid/Scale tweaks */
+  .scatter-grid {
+    position: absolute; inset: 20px 40px 40px 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 20% 20%;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  @media (max-width: 900px) {
+    .podium { grid-template-columns: 1fr; }
+    .gl-table .nation, .gl-table .ratio { display: none; }
+    .expand-inner { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="m26-nav-slot"></div>
+
+<section class="gl-hero">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n-es="● El número que importa es el del tablero" data-i18n-en="● The only number that matters is on the board">● El número que importa es el del tablero</span>
+    <h1 data-i18n-es="Las botas que<br><em>hicieron</em> historia." data-i18n-en="The boots that<br><em>made</em> history.">Las botas que<br><em>hicieron</em> historia.</h1>
+    <p class="lead" data-i18n-es="89 años, 22 ediciones, 2 648 goles. Aquí está el ranking histórico de los delanteros que más clavaron la pelota al fondo. Filtra, ordena, explora." data-i18n-en="89 years, 22 editions, 2,648 goals. Here's the all-time ranking of strikers who pushed the ball furthest into the net. Filter, sort, explore.">
+      89 años, 22 ediciones, 2 648 goles. Aquí está el ranking histórico de los delanteros que más clavaron la pelota al fondo. Filtra, ordena, explora.
+    </p>
+  </div>
+</section>
+
+<main class="wrap" style="padding-bottom:80px;">
+  <!-- Podium -->
+  <div class="podium" id="podium"></div>
+
+  <!-- Filters -->
+  <div class="gl-filters">
+    <span class="label" data-i18n-es="Filtros" data-i18n-en="Filters">Filtros</span>
+    <select id="f-wc">
+      <option value="all" data-i18n-es="Todas las ediciones" data-i18n-en="All editions">Todas las ediciones</option>
+      <option value="2022">2022</option>
+      <option value="2018">2018</option>
+      <option value="2014">2014</option>
+      <option value="2010">2010</option>
+      <option value="2006">2006</option>
+      <option value="2002">2002</option>
+      <option value="1998">1998</option>
+      <option value="1994">1994</option>
+      <option value="1990">1990</option>
+      <option value="1986">1986</option>
+      <option value="1982">1982</option>
+      <option value="1978">1978</option>
+      <option value="1974">1974</option>
+      <option value="1970">1970</option>
+      <option value="1966">1966</option>
+      <option value="1962">1962</option>
+      <option value="1958">1958</option>
+      <option value="1954">1954</option>
+      <option value="1950">1950</option>
+    </select>
+    <select id="f-conf">
+      <option value="all" data-i18n-es="Todas las confederaciones" data-i18n-en="All confederations">Todas las confederaciones</option>
+      <option value="uefa" data-i18n-es="UEFA (Europa)" data-i18n-en="UEFA (Europe)">UEFA (Europa)</option>
+      <option value="conmebol" data-i18n-es="CONMEBOL (Sudamérica)" data-i18n-en="CONMEBOL (South America)">CONMEBOL (Sudamérica)</option>
+      <option value="concacaf" data-i18n-es="CONCACAF (N. América)" data-i18n-en="CONCACAF (N. America)">CONCACAF (N. América)</option>
+      <option value="caf" data-i18n-es="CAF (África)" data-i18n-en="CAF (Africa)">CAF (África)</option>
+      <option value="afc" data-i18n-es="AFC (Asia)" data-i18n-en="AFC (Asia)">AFC (Asia)</option>
+    </select>
+    <input type="search" id="f-q" placeholder="Buscar jugador…" data-i18n-es-placeholder="Buscar jugador…" data-i18n-en-placeholder="Search player…">
+    <span class="count" id="count"><em>0</em> jugadores</span>
+  </div>
+
+  <!-- Table -->
+  <div class="gl-table-wrap">
+    <table class="gl-table">
+      <thead>
+        <tr>
+          <th data-sort="rank" class="sorted asc">#</th>
+          <th data-sort="name" data-i18n-es="Jugador" data-i18n-en="Player">Jugador</th>
+          <th data-sort="nation" data-i18n-es="Selección" data-i18n-en="Nation">Selección</th>
+          <th data-sort="wcs" data-i18n-es="Mundiales" data-i18n-en="World Cups">Mundiales</th>
+          <th data-sort="goals" style="text-align:right" data-i18n-es="Goles" data-i18n-en="Goals">Goles</th>
+          <th data-sort="ratio" style="text-align:right" data-i18n-es="Goles/Partido" data-i18n-en="Goals/Match">Goles/Partido</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- Golden Boots -->
+  <section class="boots-sec">
+    <h2 data-i18n-es="La <em>Bota de Oro</em>, una por edición" data-i18n-en="The <em>Golden Boot</em>, one per edition">La <em>Bota de Oro</em>, una por edición</h2>
+    <div class="kicker" data-i18n-es="Máximo goleador del torneo — de Stábile 1930 a Kolo Muani empataría en 2022" data-i18n-en="Top scorer — from Stábile 1930 to the 2022 contenders">Máximo goleador del torneo — de Stábile 1930 hasta hoy</div>
+    <div class="boots-grid" id="boots"></div>
+  </section>
+
+  <!-- Scatter -->
+  <section class="scatter-sec">
+    <h2 data-i18n-es="La <em>eficiencia</em>: goles vs partidos jugados" data-i18n-en="<em>Efficiency</em>: goals vs matches played">La <em>eficiencia</em>: goles vs partidos jugados</h2>
+    <div class="kicker" data-i18n-es="Cuanto más arriba y a la izquierda, más letal. Top 20 histórico." data-i18n-en="The higher and further left, the more lethal. Historical top 20.">Cuanto más arriba y a la izquierda, más letal. Top 20 histórico.</div>
+    <div class="scatter">
+      <div class="scatter-grid"></div>
+      <div class="ax-y" data-i18n-es="GOLES →" data-i18n-en="GOALS →">GOLES →</div>
+      <div class="ax-x" data-i18n-es="PARTIDOS JUGADOS →" data-i18n-en="MATCHES PLAYED →">PARTIDOS JUGADOS →</div>
+      <div id="dots"></div>
+    </div>
+  </section>
+</main>
+
+<div id="m26-footer-slot"></div>
+
+<script src="assets/shared.js"></script>
+<script>M26.init({ active: "goleadores" });</script>
+<script>
+/* Top goleadores históricos del Mundial — datos reales */
+const PLAYERS = [
+  { name:"Miroslav Klose",  nat:"Alemania",   fl:"de", conf:"uefa",     goals:16, matches:24, wcs:["2002","2006","2010","2014"], byWc:{2002:5,2006:5,2010:4,2014:2}, champ:true,  note:{es:"El goleador metódico. Llegó al récord en el 7–1 ante Brasil.", en:"The methodical striker. Broke the record in the 7–1 vs Brazil."}, tag:{es:"Eficiencia pura y un salto mortal al aterrizar.", en:"Pure efficiency and a front-flip on landing."} },
+  { name:"Ronaldo",         nat:"Brasil",     fl:"br", conf:"conmebol", goals:15, matches:19, wcs:["1994","1998","2002","2006"], byWc:{1994:0,1998:4,2002:8,2006:3}, champ:true,  note:{es:"El fenómeno brasileño. Bota de Oro en 2002 tras la redención.", en:"The Brazilian phenomenon. Golden Boot in 2002 after redemption."}, tag:{es:"La definición más natural del siglo.", en:"The most natural finishing of the century."} },
+  { name:"Gerd Müller",     nat:"Alemania O.",fl:"de", conf:"uefa",     goals:14, matches:13, wcs:["1970","1974"], byWc:{1970:10,1974:4}, champ:true, note:{es:"Der Bomber. 10 goles en México 70; 14 en dos Mundiales.", en:"Der Bomber. 10 goals at Mexico 70; 14 across two World Cups."}, tag:{es:"Media vuelta, fusilamiento, gol.", en:"Half turn, strike, goal."} },
+  { name:"Lionel Messi",    nat:"Argentina",  fl:"ar", conf:"conmebol", goals:13, matches:26, wcs:["2006","2010","2014","2018","2022"], byWc:{2006:1,2010:0,2014:4,2018:1,2022:7}, champ:true, note:{es:"Coronó Qatar 2022 con 7 goles, incluidos dos en la final.", en:"Crowned Qatar 2022 with 7 goals, including two in the final."}, tag:{es:"Mira Messi, mira lo que va a hacer.", en:"Watch Messi, watch what he's about to do."} },
+  { name:"Just Fontaine",   nat:"Francia",    fl:"fr", conf:"uefa",     goals:13, matches:6,  wcs:["1958"], byWc:{1958:13}, champ:false, note:{es:"13 goles en un solo Mundial. Récord absoluto por edición.", en:"13 goals in one World Cup. Absolute single-edition record."}, tag:{es:"Seis partidos, trece goles. La marca más inalcanzable.", en:"Six matches, thirteen goals. The most untouchable mark."} },
+  { name:"Pelé",            nat:"Brasil",     fl:"br", conf:"conmebol", goals:12, matches:14, wcs:["1958","1962","1966","1970"], byWc:{1958:6,1962:1,1966:1,1970:4}, champ:true, note:{es:"Tres Mundiales ganados — único jugador en la historia.", en:"Three World Cups won — the only player in history."}, tag:{es:"Un rey con diecisiete años. Y con treinta.", en:"A king at seventeen. And at thirty."} },
+  { name:"Sándor Kocsis",   nat:"Hungría",    fl:"hr", conf:"uefa",     goals:11, matches:5,  wcs:["1954"], byWc:{1954:11}, champ:false, note:{es:"Cabeza de Oro húngara. Cuatro goles ante Alemania Occidental quedaron en nada.", en:"Hungary's Golden Head. Four goals against W. Germany went to waste."}, tag:{es:"El cabeceador más preciso del fútbol.", en:"Football's most accurate header."} },
+  { name:"Jürgen Klinsmann",nat:"Alemania",   fl:"de", conf:"uefa",     goals:11, matches:17, wcs:["1990","1994","1998"], byWc:{1990:3,1994:5,1998:3}, champ:true, note:{es:"El clavado tras el gol fue su firma.", en:"The diving celebration became his signature."}, tag:{es:"Tres ediciones, un mismo depredador rubio.", en:"Three editions, same blond predator."} },
+  { name:"Helmut Rahn",     nat:"Alemania O.",fl:"de", conf:"uefa",     goals:10, matches:10, wcs:["1954","1958"], byWc:{1954:4,1958:6}, champ:true, note:{es:"El 'milagro de Berna'. Disparó el 3–2 a Hungría bajo la lluvia.", en:"The 'miracle of Bern'. Struck the 3–2 vs Hungary in the rain."}, tag:{es:"El gol de la remontada que fundó una nación.", en:"The comeback goal that founded a nation."} },
+  { name:"Gary Lineker",    nat:"Inglaterra", fl:"en", conf:"uefa",     goals:10, matches:12, wcs:["1986","1990"], byWc:{1986:6,1990:4}, champ:false, note:{es:"Bota de Oro en 1986 sin cobrar un solo penal.", en:"1986 Golden Boot without taking a single penalty."}, tag:{es:"Caballero del área pequeña.", en:"Gentleman of the six-yard box."} },
+  { name:"Gabriel Batistuta",nat:"Argentina", fl:"ar", conf:"conmebol", goals:10, matches:12, wcs:["1994","1998","2002"], byWc:{1994:4,1998:5,2002:1}, champ:false, note:{es:"Único en anotar triplete en dos Mundiales distintos.", en:"Only player with a hat-trick at two different World Cups."}, tag:{es:"La pierna más potente de Sudamérica.", en:"South America's strongest leg."} },
+  { name:"Teófilo Cubillas",nat:"Perú",       fl:"pe", conf:"conmebol", goals:10, matches:13, wcs:["1970","1978","1982"], byWc:{1970:5,1978:5,1982:0}, champ:false, note:{es:"El 'Nene' hizo cinco goles en 1970 y cinco en 1978.", en:"'Nene' scored five in 1970 and five in 1978."}, tag:{es:"El corazón del fútbol peruano.", en:"The heart of Peruvian football."} },
+  { name:"Grzegorz Lato",   nat:"Polonia",    fl:"pl", conf:"uefa",     goals:10, matches:20, wcs:["1974","1978","1982"], byWc:{1974:7,1978:2,1982:1}, champ:false, note:{es:"Bota de Oro 1974. Polonia terminó tercera.", en:"1974 Golden Boot. Poland finished third."}, tag:{es:"Velocidad polaca de la vieja escuela.", en:"Polish old-school speed."} },
+  { name:"Thomas Müller",   nat:"Alemania",   fl:"de", conf:"uefa",     goals:10, matches:18, wcs:["2010","2014","2018","2022"], byWc:{2010:5,2014:5,2018:0,2022:0}, champ:true, note:{es:"El 'Raumdeuter' que siempre aparecía. 5 goles en 2010 y 2014.", en:"The 'space-interpreter' who always showed up. 5 goals in both 2010 and 2014."}, tag:{es:"Donde no estaba, aparecía.", en:"Where he wasn't — he appeared."} },
+  { name:"Kylian Mbappé",   nat:"Francia",    fl:"fr", conf:"uefa",     goals:12, matches:14, wcs:["2018","2022"], byWc:{2018:4,2022:8}, champ:true, note:{es:"Hat-trick en final de 2022. Bota de Oro. Tiene 27 en 2026.", en:"Hat-trick in the 2022 final. Golden Boot. Turns 27 for 2026."}, tag:{es:"Su cuarto de final con Polonia fue pedagogía del gol.", en:"His round-of-16 vs Poland was a lesson in finishing."} },
+  { name:"Eusébio",         nat:"Portugal",   fl:"pt", conf:"uefa",     goals:9, matches:6,  wcs:["1966"], byWc:{1966:9}, champ:false, note:{es:"Nueve goles en un solo Mundial — cuatro de ellos a Corea del Norte.", en:"Nine goals in one World Cup — four against North Korea."}, tag:{es:"La pantera negra de Lisboa.", en:"The black panther of Lisbon."} },
+  { name:"Paolo Rossi",     nat:"Italia",     fl:"it", conf:"uefa",     goals:9, matches:14, wcs:["1978","1982"], byWc:{1978:3,1982:6}, champ:true, note:{es:"Redención absoluta en 1982: Bota de Oro y campeón.", en:"Full redemption in 1982: Golden Boot and champion."}, tag:{es:"Seis goles tras dos años suspendido.", en:"Six goals after two years banned."} },
+  { name:"Oleg Salenko",    nat:"Rusia",      fl:"ru", conf:"uefa",     goals:6, matches:3,  wcs:["1994"], byWc:{1994:6}, champ:false, note:{es:"Cinco goles en un solo partido (Rusia 6–1 Camerún). Imposible.", en:"Five goals in one match (Russia 6–1 Cameroon). Impossible."}, tag:{es:"Jamás otro delantero marcó 5 en un partido del Mundial.", en:"No striker has ever scored 5 in a World Cup match since."} },
+  { name:"Harry Kane",      nat:"Inglaterra", fl:"en", conf:"uefa",     goals:8, matches:13, wcs:["2018","2022"], byWc:{2018:6,2022:2}, champ:false, note:{es:"Bota de Oro 2018 con 6 goles.", en:"2018 Golden Boot with 6 goals."}, tag:{es:"Definición precisa, clásica, quirúrgica.", en:"Precise, classical, surgical finishing."} },
+  { name:"Diego Maradona",  nat:"Argentina",  fl:"ar", conf:"conmebol", goals:8, matches:21, wcs:["1982","1986","1990","1994"], byWc:{1982:2,1986:5,1990:1,1994:0}, champ:true, note:{es:"El genio de 1986. Dos goles a Inglaterra que cambiaron la historia.", en:"The genius of 1986. Two goals vs England that changed history."}, tag:{es:"La mano, la pierna y la divinidad.", en:"The hand, the leg and the divinity."} },
+];
+
+const BOOTS = [
+  { y:1930, name:"Guillermo Stábile", fl:"ar", goals:8 },
+  { y:1934, name:"Oldřich Nejedlý", fl:"hr", goals:5 },
+  { y:1938, name:"Leônidas", fl:"br", goals:7 },
+  { y:1950, name:"Ademir", fl:"br", goals:8 },
+  { y:1954, name:"Sándor Kocsis", fl:"hr", goals:11 },
+  { y:1958, name:"Just Fontaine", fl:"fr", goals:13 },
+  { y:1962, name:"Varios (6 jugadores)", fl:"ph", goals:4 },
+  { y:1966, name:"Eusébio", fl:"pt", goals:9 },
+  { y:1970, name:"Gerd Müller", fl:"de", goals:10 },
+  { y:1974, name:"Grzegorz Lato", fl:"pl", goals:7 },
+  { y:1978, name:"Mario Kempes", fl:"ar", goals:6 },
+  { y:1982, name:"Paolo Rossi", fl:"it", goals:6 },
+  { y:1986, name:"Gary Lineker", fl:"en", goals:6 },
+  { y:1990, name:"Salvatore Schillaci", fl:"it", goals:6 },
+  { y:1994, name:"O. Salenko / H. Stoichkov", fl:"ph", goals:6 },
+  { y:1998, name:"Davor Šuker", fl:"hr", goals:6 },
+  { y:2002, name:"Ronaldo", fl:"br", goals:8 },
+  { y:2006, name:"Miroslav Klose", fl:"de", goals:5 },
+  { y:2010, name:"Thomas Müller", fl:"de", goals:5 },
+  { y:2014, name:"James Rodríguez", fl:"ph", goals:6 },
+  { y:2018, name:"Harry Kane", fl:"en", goals:6 },
+  { y:2022, name:"Kylian Mbappé", fl:"fr", goals:8 },
+];
+
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+let sortKey = "goals";
+let sortAsc = false;
+let openIdx = -1;
+
+function currentList() {
+  const wc = $("#f-wc").value;
+  const conf = $("#f-conf").value;
+  const q = $("#f-q").value.trim().toLowerCase();
+  let list = [...PLAYERS];
+  if (wc !== "all") list = list.filter(p => p.byWc[wc] > 0);
+  if (conf !== "all") list = list.filter(p => p.conf === conf);
+  if (q) list = list.filter(p => p.name.toLowerCase().includes(q) || p.nat.toLowerCase().includes(q));
+  const cmp = {
+    rank: (a,b) => b.goals - a.goals,
+    goals: (a,b) => b.goals - a.goals,
+    name: (a,b) => a.name.localeCompare(b.name),
+    nation: (a,b) => a.nat.localeCompare(b.nat),
+    wcs: (a,b) => b.wcs.length - a.wcs.length,
+    ratio: (a,b) => (b.goals/b.matches) - (a.goals/a.matches),
+  }[sortKey];
+  list.sort(cmp);
+  if (sortAsc) list.reverse();
+  return list;
+}
+
+function renderPodium() {
+  const lang = M26.getLang();
+  const top3 = [...PLAYERS].sort((a,b) => b.goals - a.goals).slice(0, 3);
+  // Reorder: 2nd, 1st, 3rd for visual podium
+  const order = [top3[1], top3[0], top3[2]];
+  $("#podium").innerHTML = order.map((p, i) => {
+    const realRank = PLAYERS.sort((a,b) => b.goals - a.goals).indexOf(p) + 1;
+    const first = realRank === 1;
+    return `
+      <div class="pod-card ${first?'first':''}">
+        <div class="medal"></div>
+        <div class="rank">${first?'#1 · ALL-TIME':'#'+realRank}</div>
+        <h4>${first?'<em>'+p.name+'</em>':p.name}</h4>
+        <div class="nation"><div class="fl ph flag flag-${p.fl}"></div>${p.nat}</div>
+        <div class="goals">${first?'<em>'+p.goals+'</em>':p.goals}<span class="u">${lang==="en"?"goals":"goles"}</span></div>
+        <div class="editions">
+          <div class="ed">${lang==="en"?"Editions":"Ediciones"}<span>${p.wcs.length}</span></div>
+          <div class="ed">${lang==="en"?"Matches":"Partidos"}<span>${p.matches}</span></div>
+          <div class="ed">${lang==="en"?"Rate":"Promedio"}<span>${(p.goals/p.matches).toFixed(2)}</span></div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderTable() {
+  const lang = M26.getLang();
+  const list = currentList();
+  $("#count").innerHTML = `<em>${list.length}</em> ${lang==="en"?"players":"jugadores"}`;
+  const globalRank = [...PLAYERS].sort((a,b) => b.goals - a.goals);
+  $("#tbody").innerHTML = list.map((p) => {
+    const rank = globalRank.indexOf(p) + 1;
+    const idx = PLAYERS.indexOf(p);
+    const rows = [`
+      <tr data-idx="${idx}" class="${openIdx===idx?'open':''}">
+        <td class="rank">${String(rank).padStart(2,"0")}</td>
+        <td><div class="name">${rank<=3?'<em>'+p.name+'</em>':p.name}</div></td>
+        <td><div class="nation"><div class="fl ph flag flag-${p.fl}"></div>${p.nat}</div></td>
+        <td class="wc">${p.wcs.join(" · ")}</td>
+        <td class="goals">${rank<=3?'<em>'+p.goals+'</em>':p.goals}</td>
+        <td class="ratio">${(p.goals/p.matches).toFixed(2)}</td>
+      </tr>
+    `];
+    if (openIdx === idx) {
+      const pills = p.wcs.map(w => `<div class="wc-pill"><div class="yr">${w}</div><div class="g">${(p.byWc[w]||0) >= 5 ? '<em>'+p.byWc[w]+'</em>' : p.byWc[w]||0}</div></div>`).join("");
+      rows.push(`
+        <tr class="expand">
+          <td colspan="6">
+            <div class="expand-inner">
+              <div>
+                <h5>${lang==="en"?"WHY HE MATTERS":"POR QUÉ IMPORTA"}</h5>
+                <p class="tag-q">"${p.tag[lang]}"</p>
+                <p class="body">${p.note[lang]}</p>
+              </div>
+              <div>
+                <h5>${lang==="en"?"BREAKDOWN BY WORLD CUP":"DESGLOSE POR MUNDIAL"}</h5>
+                <div class="wc-breakdown">${pills}</div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      `);
+    }
+    return rows.join("");
+  }).join("");
+}
+
+function renderBoots() {
+  $("#boots").innerHTML = BOOTS.slice().reverse().map(b => `
+    <div class="boot-card">
+      <div class="yr">${b.y}</div>
+      <div class="name">${b.name}</div>
+      <div class="nation"><div class="fl ph flag flag-${b.fl}"></div>${b.fl.toUpperCase()}</div>
+      <div class="goals"><span class="n">${b.goals}</span><span class="u">goles</span></div>
+    </div>
+  `).join("");
+}
+
+function renderScatter() {
+  const list = [...PLAYERS].sort((a,b) => b.goals - a.goals).slice(0, 20);
+  const maxG = 16, maxM = 26;
+  $("#dots").innerHTML = list.map(p => {
+    const x = (p.matches / maxM) * 100;
+    const y = 100 - (p.goals / maxG) * 100;
+    return `<div class="dot" style="left:${x}%;top:${y}%"><span class="lbl">${p.name} · ${p.goals}/${p.matches}</span></div>`;
+  }).join("");
+}
+
+document.addEventListener("click", (e) => {
+  const th = e.target.closest("th[data-sort]");
+  if (th) {
+    const k = th.dataset.sort;
+    if (sortKey === k) sortAsc = !sortAsc;
+    else { sortKey = k; sortAsc = k === "name" || k === "nation"; }
+    $$(".gl-table th").forEach(t => t.classList.remove("sorted","asc"));
+    th.classList.add("sorted");
+    if (sortAsc) th.classList.add("asc");
+    renderTable();
+    return;
+  }
+  const row = e.target.closest("tr[data-idx]");
+  if (row) {
+    const idx = +row.dataset.idx;
+    openIdx = openIdx === idx ? -1 : idx;
+    renderTable();
+  }
+});
+
+["#f-wc","#f-conf","#f-q"].forEach(sel => $(sel).addEventListener("input", () => { openIdx=-1; renderTable(); }));
+
+const orig = M26.applyI18n;
+M26.applyI18n = function() {
+  orig();
+  // placeholder swap
+  const q = document.querySelector("#f-q");
+  const lang = M26.getLang();
+  q.placeholder = lang === "en" ? "Search player…" : "Buscar jugador…";
+  renderPodium();
+  renderTable();
+};
+
+renderPodium();
+renderTable();
+renderBoots();
+renderScatter();
+</script>
+</body>
+</html>

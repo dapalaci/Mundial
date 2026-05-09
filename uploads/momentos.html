@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NEON_STRIKER | World Cup Finals Gallery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&amp;family=Inter:wght@400;500&amp;family=Space_Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "tertiary-fixed-dim": "#ffe04a",
+                "surface-tint": "#ff2d78",
+                "on-secondary-fixed": "#001a1a",
+                "on-surface": "#e8e0f0",
+                "on-primary": "#1a0010",
+                "surface-container-lowest": "#0a0a12",
+                "on-error-container": "#ffa0a0",
+                "surface-container-high": "#1e1e30",
+                "on-secondary-fixed-variant": "#004d4d",
+                "secondary-container": "#004d3d",
+                "on-primary-fixed-variant": "#8c0038",
+                "error-container": "#3d0f0f",
+                "surface-bright": "#1a1a2e",
+                "secondary": "#00ffcc",
+                "on-secondary-container": "#c0fff4",
+                "inverse-on-surface": "#0a0a12",
+                "primary-fixed-dim": "#ff80aa",
+                "inverse-primary": "#8c0038",
+                "primary-fixed": "#ffe0ec",
+                "surface-container": "#141422",
+                "inverse-surface": "#e8e0f0",
+                "on-background": "#e8e0f0",
+                "tertiary": "#ffe04a",
+                "surface-variant": "#1e1e30",
+                "tertiary-fixed": "#fff0c0",
+                "on-tertiary": "#1a1000",
+                "surface-dim": "#0f0f1a",
+                "on-tertiary-container": "#fff0c0",
+                "on-primary-container": "#ffe0ec",
+                "on-secondary": "#001a1a",
+                "on-tertiary-fixed-variant": "#665200",
+                "tertiary-container": "#665200",
+                "surface-container-highest": "#28283e",
+                "secondary-fixed": "#c0fff4",
+                "outline-variant": "#302840",
+                "on-tertiary-fixed": "#1a1000",
+                "on-surface-variant": "#a098b0",
+                "surface-container-low": "#111118",
+                "outline": "#5a5068",
+                "on-primary-fixed": "#3d0020",
+                "surface": "#0f0f1a",
+                "on-error": "#1a0000",
+                "primary-container": "#b3004e",
+                "background": "#0a0a12",
+                "primary": "#ff2d78",
+                "error": "#ff4444",
+                "secondary-fixed-dim": "#00e6b8"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "fontFamily": {
+                "headline": ["Sora"],
+                "display": ["Sora"],
+                "body": ["Inter"],
+                "label": ["Space Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0a0a12;
+            background-image: 
+                linear-gradient(rgba(255, 45, 120, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 45, 120, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .neon-glow-text {
+            text-shadow: 0 0 8px currentColor;
+        }
+        .neon-border-glow {
+            box-shadow: inset 0 0 12px rgba(255, 45, 120, 0.1), 0 0 16px rgba(255, 45, 120, 0.2);
+        }
+        .neon-card-hover:hover {
+            box-shadow: 0 0 24px rgba(0, 255, 204, 0.3);
+            border-color: #00ffcc;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body text-on-surface selection:bg-primary selection:text-on-primary min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-slate-950/90 backdrop-blur-xl border-b border-fuchsia-500/30 shadow-[0_0_15px_rgba(255,45,120,0.1)] docked full-width top-0 z-50 flex justify-between items-center w-full px-6 h-16 sticky">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-fuchsia-500 text-2xl" style="font-variation-settings: 'FILL' 1;">sports_soccer</span>
+<h1 class="font-['Sora'] font-bold tracking-tighter uppercase text-fuchsia-500 drop-shadow-[0_0_8px_rgba(255,45,120,0.8)] italic font-black text-xl">NEON_STRIKER</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8">
+<a class="font-label text-[12px] font-bold uppercase text-slate-400 hover:text-cyan-400 transition-all duration-300 active:scale-95 transform transition-transform" href="#">Live Updates</a>
+<a class="font-label text-[12px] font-bold uppercase text-fuchsia-500 hover:text-cyan-400 transition-all duration-300 active:scale-95 transform transition-transform" href="#">Gallery</a>
+<a class="font-label text-[12px] font-bold uppercase text-slate-400 hover:text-cyan-400 transition-all duration-300 active:scale-95 transform transition-transform" href="#">Archives</a>
+</nav>
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden shadow-[0_0_10px_rgba(255,45,120,0.5)]">
+<img alt="User profile" data-alt="Portrait of a gamer with purple and blue neon lighting reflecting on their face, cinematic close-up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcQ8hPCoAB_UVvdeowvyenCu0ck1HiMcvIX11TR3YpqZDKLlappOI32WRUg-Za2WelvM7qAoftYTwkzMMPC4ZNuDD0EE5BlNgeY0NLdzKxoti-DpAFPMDM2zEL_s4PHKLwJ6XM0CfXrC8PE8W0KOufn9MA5vF6zfnncSfTUx7D82O9R1QsDwOTC_785meW2T10sFOUd4FlFYXY5_7Vh884rqB_Bnrjq-TWOshByrMMhbTdvFtbqN0QiwXfFDBFlV0-PEZWAuBYZX4"/>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-12">
+<!-- Hero Section -->
+<section class="mb-16 relative overflow-hidden rounded-xl border border-primary/30 h-[400px] flex items-end">
+<img alt="Stadium background" class="absolute inset-0 w-full h-full object-cover opacity-50" data-alt="Massive football stadium filled with cheering fans at night, vibrant blue and pink stadium lights illuminating the pitch and mist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAW5wmk7HlSbkFdM_ZSIRbhKlQRJskIgZVHfQw4XEAsydVKwt_pIFrRMIR8SwDA9wtuovCciBjwUGNb5kw2mROIWxewRkxjBkpO5UsfERzlMMsbp9ttsT1Yqunq0aKHTOtijYMP0k0hZKNl73tfoI-d9gHdrRFk9XzPK_MZ7Q5bGKA6ofeDUKWWuyFVCdTH-E1FZiHQuoM7t_jAyFLL48TBXagnmZrpZUYQhqKxkeeZC31VIMEre1XmefuKP_PZbVXPl3zcU-9nQ6I"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+<div class="relative p-10 w-full">
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-primary text-on-primary px-3 py-1 font-label text-xs font-bold uppercase tracking-widest">Featured</span>
+<span class="text-secondary font-label text-xs font-bold uppercase tracking-widest neon-glow-text">Eternal Glory</span>
+</div>
+<h2 class="font-headline text-5xl font-extrabold mb-4 tracking-tight leading-tight max-w-2xl">
+                    THE MOMENTS THAT <span class="text-primary italic">DEFINED</span> HISTORY.
+                </h2>
+<p class="text-on-surface-variant max-w-lg mb-8 font-body">Experience the most electric finishes in FIFA World Cup history, remastered for the digital frontier.</p>
+<button class="bg-surface-container border border-primary text-primary px-8 py-3 font-label font-bold uppercase tracking-widest flex items-center gap-3 neon-border-glow hover:bg-primary hover:text-on-primary transition-all duration-300 active:translate-y-1">
+<span class="material-symbols-outlined">play_arrow</span> Watch All
+                </button>
+</div>
+</section>
+<!-- Gallery Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Video Item 1 -->
+<div class="group relative bg-surface-container border border-outline-variant rounded-xl overflow-hidden neon-card-hover transition-all duration-500">
+<div class="aspect-video relative overflow-hidden">
+<img alt="Goal moment 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80" data-alt="Professional football player sliding on grass celebrating a goal under intense stadium lights, high contrast, cinematic sports photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAERCS_bU_xiNJGCY381fC3JySkU8rTU2WdyB5w1aqDNjMZH9tOKSczI-pNGZmbLcr2ceJqKBt47JsbTUowfzYDB47EVXq_gbrWygN7YInXTXsMp_FEJiO-M6G_MB7r2_NAYFryuBcFoi60QXEFcKGgdKRclH3jYXT3PkbInGvnE6rf97Jo4xEAd7dqTxgQ_zBqqLgDDF7owYNyS1e0iP2tiJ4W-4hgVATFgrdDycFEoL6CoIO2P6KKp4GLRSdSWNm0zxsPrKpuS3Y"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="w-16 h-16 rounded-full border-2 border-secondary flex items-center justify-center text-secondary shadow-[0_0_15px_rgba(0,255,204,0.5)]">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute top-4 left-4 bg-slate-950/80 backdrop-blur px-2 py-1 rounded border border-fuchsia-500/50">
+<span class="font-label text-[10px] font-bold text-primary">2022 QATAR</span>
+</div>
+</div>
+<div class="p-5 border-t border-outline-variant">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline font-bold text-xl text-on-surface">Lionel Messi</h3>
+<span class="text-secondary font-label text-sm font-bold">108'</span>
+</div>
+<p class="font-label text-xs text-on-surface-variant uppercase tracking-widest mb-4">Argentina vs France</p>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="text-[10px] font-bold font-label">9.8M VIEWS</span>
+</div>
+</div>
+</div>
+<!-- Video Item 2 -->
+<div class="group relative bg-surface-container border border-outline-variant rounded-xl overflow-hidden neon-card-hover transition-all duration-500">
+<div class="aspect-video relative overflow-hidden">
+<img alt="Goal moment 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80" data-alt="Close up of a football hitting the top corner of a goal net, dramatic night lighting with neon blue highlights, motion blur" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARzBWlUOmCmcPeGmZ49iZ-tfu8YbeCIQNUC1gUHc7vg9htGV_9rpN0sjAru8x9hBX1rIWUv9NgjKJ-5FvTY1z9fZCJjm4--J61yzznCO2nQAWxgKfuF1Rhr6ebeLQE58jJ608hpUZtHuIXoTAp-CAl0PCE874xHeFM2CV51sv43xxgB7pLbxksI5OVKeJirbxwf0ftS117ek0m79tKpYsutTsaOVKIy_t1MmUtVrgf50e8YFc1n6nd-qwkU9ecq7ZhnG9qsDOBRnk"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="w-16 h-16 rounded-full border-2 border-secondary flex items-center justify-center text-secondary shadow-[0_0_15px_rgba(0,255,204,0.5)]">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute top-4 left-4 bg-slate-950/80 backdrop-blur px-2 py-1 rounded border border-fuchsia-500/50">
+<span class="font-label text-[10px] font-bold text-primary">2014 BRAZIL</span>
+</div>
+</div>
+<div class="p-5 border-t border-outline-variant">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline font-bold text-xl text-on-surface">Mario Götze</h3>
+<span class="text-secondary font-label text-sm font-bold">113'</span>
+</div>
+<p class="font-label text-xs text-on-surface-variant uppercase tracking-widest mb-4">Germany vs Argentina</p>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="text-[10px] font-bold font-label">7.2M VIEWS</span>
+</div>
+</div>
+</div>
+<!-- Video Item 3 -->
+<div class="group relative bg-surface-container border border-outline-variant rounded-xl overflow-hidden neon-card-hover transition-all duration-500">
+<div class="aspect-video relative overflow-hidden">
+<img alt="Goal moment 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80" data-alt="Epic wide shot of a football player celebrating in front of a massive golden trophy, neon pink and cyan sparks in the air" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsQ-vYotZPo1LNoxiRBukMwUINELAn4rwMFpQSttbTLYazBp4jleLBFus90qJacqrgHgqJ2ezo7kP_yYpFp4JpycPpDPFi4LDxbY7Za8whBtuR4pvcKKAaPpXFrSUVvTcgE2AJI_F0AbUIE58cSdri84uq5xf9yQdTgEiMwpyy1G8tTOGtziNE_lWDDnD7NN1Qc4QXqwdNtq_xDBDp7U9wS0sRnK8njUYIsub69GYmGpELFQs1SWtgL70946VYrMLq7jsdIUVXhUk"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="w-16 h-16 rounded-full border-2 border-secondary flex items-center justify-center text-secondary shadow-[0_0_15px_rgba(0,255,204,0.5)]">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute top-4 left-4 bg-slate-950/80 backdrop-blur px-2 py-1 rounded border border-fuchsia-500/50">
+<span class="font-label text-[10px] font-bold text-primary">2010 S. AFRICA</span>
+</div>
+</div>
+<div class="p-5 border-t border-outline-variant">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline font-bold text-xl text-on-surface">Andrés Iniesta</h3>
+<span class="text-secondary font-label text-sm font-bold">116'</span>
+</div>
+<p class="font-label text-xs text-on-surface-variant uppercase tracking-widest mb-4">Spain vs Netherlands</p>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="text-[10px] font-bold font-label">6.5M VIEWS</span>
+</div>
+</div>
+</div>
+<!-- Video Item 4 -->
+<div class="group relative bg-surface-container border border-outline-variant rounded-xl overflow-hidden neon-card-hover transition-all duration-500">
+<div class="aspect-video relative overflow-hidden">
+<img alt="Goal moment 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80" data-alt="Action shot of a football player mid-kick, dramatic lighting with cyan outlines, particles of turf flying in the air" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFsWtgg0IytgfVvZrvQF5cqc0A3HzuN3GIYwEOYYc60NBgOnAYDnoInzLlIBLHKVJWv-luURcScogBIJqrmp1y888zxPso5N4-Ny-xgB6YgGb3vurYCqt1siHmd_s8V09uhaCM-rEMCJHIa00dgPHjNKlvRE5ADP85GNO7fb5iYygBYCCbaOzFkIeojp3XMZpXj-8nMjBFp81Wvd2Yn-FVMptm1U_HHlmPDw6cW9x-LExlj5neN8trzqq5e_hf_VAg5BVQPTw6cxc"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="w-16 h-16 rounded-full border-2 border-secondary flex items-center justify-center text-secondary shadow-[0_0_15px_rgba(0,255,204,0.5)]">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute top-4 left-4 bg-slate-950/80 backdrop-blur px-2 py-1 rounded border border-fuchsia-500/50">
+<span class="font-label text-[10px] font-bold text-primary">2002 KOREA/JAPAN</span>
+</div>
+</div>
+<div class="p-5 border-t border-outline-variant">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline font-bold text-xl text-on-surface">Ronaldo</h3>
+<span class="text-secondary font-label text-sm font-bold">79'</span>
+</div>
+<p class="font-label text-xs text-on-surface-variant uppercase tracking-widest mb-4">Brazil vs Germany</p>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="text-[10px] font-bold font-label">5.1M VIEWS</span>
+</div>
+</div>
+</div>
+<!-- Video Item 5 -->
+<div class="group relative bg-surface-container border border-outline-variant rounded-xl overflow-hidden neon-card-hover transition-all duration-500">
+<div class="aspect-video relative overflow-hidden">
+<img alt="Goal moment 5" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80" data-alt="Silhouetted football player doing a bicycle kick against a background of glowing pink neon stadium lights, futuristic aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRqUlHNs7onbCFy6gkx6inQgQesuELSURPo7Sl0PJ-I_dUthhiSc04Pu8C7aBygKzen3hzjnd0teggfzO0ElVk8pG669R2h4CVctwvFJXEffcAfjXMHX0ZYb8SRCUz-DNs1BerSORKARznoM4F3K8u8yRsQOLRzZj6CoOYMbbbN5j6mEoFEjgG4EZmtT-IgKbZqXEvht8pub5kimO2cPbrxGaQiYzBXzGCiFFf8nXVCVDXh91x6dhhvICv_1JGjrfb_uUsddsdKIw"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="w-16 h-16 rounded-full border-2 border-secondary flex items-center justify-center text-secondary shadow-[0_0_15px_rgba(0,255,204,0.5)]">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute top-4 left-4 bg-slate-950/80 backdrop-blur px-2 py-1 rounded border border-fuchsia-500/50">
+<span class="font-label text-[10px] font-bold text-primary">1998 FRANCE</span>
+</div>
+</div>
+<div class="p-5 border-t border-outline-variant">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline font-bold text-xl text-on-surface">Zinedine Zidane</h3>
+<span class="text-secondary font-label text-sm font-bold">45'</span>
+</div>
+<p class="font-label text-xs text-on-surface-variant uppercase tracking-widest mb-4">France vs Brazil</p>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="text-[10px] font-bold font-label">4.8M VIEWS</span>
+</div>
+</div>
+</div>
+<!-- Video Item 6 -->
+<div class="group relative bg-surface-container border border-outline-variant rounded-xl overflow-hidden neon-card-hover transition-all duration-500">
+<div class="aspect-video relative overflow-hidden">
+<img alt="Goal moment 6" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80" data-alt="Crowd cheering in a dark stadium with thousands of glowing phone lights like stars, moody blue atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjg6O28zus2_hPaYcvQy91zywA4oSpP2GmiTze8fVLvCvMYJ_IR4OSDWXwDTDeEg2wyC6phrjE294n40AdL8Br-x7yv1UeN6RJlX4bsujcUj_94mq6htfMiaJLPsKxhpw7dIkmObWM0ISNaXBu4_NV5FKxCED26z6kNL5iNRzYchLKVa67aRLImXYwJmFTSNlYu0bMbJuhLPrIIvbqELKsXYRtbEZ_21R-ZdZ2cbiuwBKct4D0DptTZ3o6CeJlqx9A9yrJtegQhfA"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="w-16 h-16 rounded-full border-2 border-secondary flex items-center justify-center text-secondary shadow-[0_0_15px_rgba(0,255,204,0.5)]">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute top-4 left-4 bg-slate-950/80 backdrop-blur px-2 py-1 rounded border border-fuchsia-500/50">
+<span class="font-label text-[10px] font-bold text-primary">1986 MEXICO</span>
+</div>
+</div>
+<div class="p-5 border-t border-outline-variant">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline font-bold text-xl text-on-surface">Jorge Burruchaga</h3>
+<span class="text-secondary font-label text-sm font-bold">84'</span>
+</div>
+<p class="font-label text-xs text-on-surface-variant uppercase tracking-widest mb-4">Argentina vs West Germany</p>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="text-[10px] font-bold font-label">3.9M VIEWS</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<footer class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-2 pb-safe border-t border-fuchsia-900/50 bg-slate-950/95 backdrop-blur-md rounded-t-xl shadow-[0_-4px_20px_rgba(0,255,204,0.15)] z-50">
+<button class="flex flex-col items-center justify-center text-slate-500 py-1 hover:text-cyan-400 transition-colors active:translate-y-1 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="leaderboard">leaderboard</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase">Scorers</span>
+</button>
+<button class="flex flex-col items-center justify-center text-fuchsia-500 drop-shadow-[0_0_10px_rgba(255,45,120,0.6)] py-1 hover:text-cyan-400 transition-colors active:translate-y-1 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="movie_filter" style="font-variation-settings: 'FILL' 1;">movie_filter</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase">Gallery</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-500 py-1 hover:text-cyan-400 transition-colors active:translate-y-1 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="history_edu">history_edu</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase">History</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-500 py-1 hover:text-cyan-400 transition-colors active:translate-y-1 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase">Profile</span>
+</button>
+</footer>
+</body></html>

@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mundial",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "3002"],
+      "port": 3002,
+      "autoPort": true
+    }
+  ]
+}

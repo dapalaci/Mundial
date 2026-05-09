@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundial 26 — Oráculo IA</title>
+<link rel="stylesheet" href="assets/shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .or-hero { padding: 100px 0 24px; position: relative; overflow: hidden; }
+  .or-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 1100px 500px at 50% 0%, color-mix(in oklch, var(--accent) 26%, transparent), transparent 60%),
+      radial-gradient(ellipse 600px 300px at 80% 80%, color-mix(in oklch, var(--accent) 18%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .or-hero .wrap { position: relative; }
+  .or-hero .eyebrow .dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); margin-right: 6px;
+    box-shadow: 0 0 12px var(--accent);
+    animation: pulse 2s infinite ease-in-out;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .or-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 160px);
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    margin: 24px 0 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+    max-width: 14ch;
+  }
+  .or-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .or-hero .lead { margin-top: 28px; max-width: 66ch; }
+
+  /* AI query card */
+  .ai-card {
+    margin-top: 56px;
+    padding: 36px 40px;
+    background: var(--surface);
+    border: 1px solid color-mix(in oklch, var(--accent) 28%, var(--line));
+    border-radius: var(--radius-lg);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .ai-card::before {
+    content: "";
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, color-mix(in oklch, var(--accent) 30%, transparent), transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  .ai-avatar {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--accent), color-mix(in oklch, var(--accent) 40%, var(--bg)), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent-ink);
+    font-family: var(--f-display);
+    font-size: 26px;
+    font-style: italic;
+    font-weight: 600;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .ai-avatar::after {
+    content: "";
+    position: absolute; inset: 4px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+  }
+  .ai-avatar span {
+    position: relative; z-index: 1;
+    color: var(--accent);
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 32px;
+  }
+  .ai-content .role {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .ai-content .role::before { content:"◉ "; animation: pulse 1.5s infinite; display:inline-block; }
+  .ai-content .q {
+    font-family: var(--f-display);
+    font-size: 28px;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+  }
+  .ai-content .q em { color: var(--accent); font-style: italic; }
+  .ai-meta {
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-faint);
+    text-align: right;
+    line-height: 1.7;
+  }
+  .ai-meta span { color: var(--accent); }
+
+  /* Filters & sorting */
+  .or-tools {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin: 48px 0 20px;
+    align-items: center;
+  }
+  .or-tools .label {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-faint);
+  }
+  .or-tools button, .or-tools select {
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text-dim);
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: all .15s;
+    cursor: pointer;
+  }
+  .or-tools button.active { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .or-tools button:hover:not(.active), .or-tools select:hover { color: var(--text); border-color: var(--line-strong); }
+  .or-tools .count { margin-left: auto; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--text-dim); text-transform: uppercase; }
+  .or-tools .count em { color: var(--accent); font-style: normal; }
+
+  /* Predictions grid */
+  .pred-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 18px;
+  }
+  .pred-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px 26px;
+    transition: all .2s;
+    overflow: hidden;
+  }
+  .pred-card:hover {
+    border-color: color-mix(in oklch, var(--accent) 40%, var(--line));
+    transform: translateY(-2px);
+  }
+  .pred-card .rank-chip {
+    position: absolute; top: 20px; right: 20px;
+    padding: 4px 10px;
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+  .pred-card.elite .rank-chip {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .pred-card .flag-row {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 18px;
+  }
+  .pred-card .fl { width: 52px; height: 36px; border-radius: 4px; }
+  .pred-card .nm {
+    font-family: var(--f-display);
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    font-variation-settings: "opsz" 144;
+  }
+  .pred-card .nm em { color: var(--accent); font-style: italic; }
+  .pred-card .sub {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--text-faint);
+    margin-top: 4px;
+  }
+
+  /* Score ring */
+  .score-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 22px;
+    align-items: center;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 18px;
+  }
+  .ring {
+    width: 96px; height: 96px;
+    position: relative;
+  }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring .bg-ring { fill: none; stroke: var(--line); stroke-width: 6; }
+  .ring .fg-ring { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+  .ring .n {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: var(--f-display);
+    font-size: 32px;
+    letter-spacing: -0.025em;
+    font-variation-settings: "opsz" 144;
+  }
+  .ring .n em { color: var(--accent); font-style: italic; }
+  .ring .n .u { font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.16em; color: var(--text-faint); text-transform: uppercase; margin-top: -2px; }
+  .meta-stack { display: flex; flex-direction: column; gap: 10px; }
+  .meta-stack .row {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 10px;
+    align-items: center;
+  }
+  .meta-stack .k {
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-faint);
+  }
+  .meta-stack .bar {
+    height: 4px; background: var(--line); border-radius: 999px; overflow: hidden;
+    position: relative;
+  }
+  .meta-stack .bar::after {
+    content: "";
+    position: absolute; inset: 0;
+    width: var(--w, 50%);
+    background: var(--accent);
+    border-radius: 999px;
+  }
+  .meta-stack .v { font-family: var(--f-mono); font-size: 11px; color: var(--text); min-width: 32px; text-align: right; }
+
+  /* Reasoning list */
+  .reasons {
+    list-style: none; padding: 0; margin: 0;
+  }
+  .reasons li {
+    padding: 10px 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--text-dim);
+    border-bottom: 1px dashed var(--line);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+  }
+  .reasons li:last-child { border-bottom: none; }
+  .reasons .ic {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: color-mix(in oklch, var(--accent) 12%, var(--surface-2));
+    color: var(--accent);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .reasons li b { color: var(--text); font-weight: 600; }
+
+  /* Projection strip */
+  .projection {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .projection .k {
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-faint);
+  }
+  .projection .v {
+    font-family: var(--f-display);
+    font-size: 20px;
+    letter-spacing: -0.015em;
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144;
+  }
+
+  /* Bracket section */
+  .bracket-sec {
+    margin-top: 88px;
+    padding: 48px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .bracket-sec h2 {
+    font-family: var(--f-display);
+    font-size: clamp(40px, 5vw, 68px);
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    margin: 0 0 6px;
+    font-variation-settings: "opsz" 144;
+  }
+  .bracket-sec h2 em { color: var(--accent); font-style: italic; }
+  .bracket-sec .kicker {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-dim); margin-bottom: 40px;
+  }
+  .bracket {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .bk-col h5 {
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--text-faint); margin: 0 0 14px;
+  }
+  .bk-match {
+    display: flex; flex-direction: column; gap: 0;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .bk-team {
+    display: grid;
+    grid-template-columns: 22px 1fr auto;
+    gap: 8px;
+    align-items: center;
+    padding: 9px 12px;
+    font-family: var(--f-display); font-size: 13px;
+    font-variation-settings: "opsz" 144;
+    border-bottom: 1px solid var(--line);
+  }
+  .bk-team:last-child { border-bottom: none; }
+  .bk-team.w { color: var(--accent); font-style: italic; }
+  .bk-team .fl { width: 22px; height: 14px; border-radius: 2px; }
+  .bk-team .p {
+    font-family: var(--f-mono); font-size: 9px;
+    color: var(--text-faint);
+  }
+  .bk-team.w .p { color: var(--accent); }
+  .bk-col.final .bk-match { border-color: var(--accent); }
+  .bk-col.champ {
+    align-self: center;
+    text-align: center;
+  }
+  .bk-col.champ .trophy {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.22em;
+    color: var(--accent); margin-bottom: 10px;
+  }
+  .bk-col.champ .ch-flag {
+    width: 64px; height: 44px; border-radius: 4px;
+    margin: 0 auto 10px;
+  }
+  .bk-col.champ .ch-name {
+    font-family: var(--f-display);
+    font-size: 34px;
+    letter-spacing: -0.03em;
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144;
+  }
+  .bk-col.champ .ch-pct {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em;
+    color: var(--text-faint); margin-top: 4px;
+  }
+
+  @media (max-width: 1100px) {
+    .bracket { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 700px) {
+    .ai-card { grid-template-columns: 1fr; }
+    .ai-meta { text-align: left; }
+    .bracket { grid-template-columns: 1fr; }
+  }
+
+  /* Disclaimer */
+  .disclaimer {
+    margin-top: 56px;
+    padding: 28px 32px;
+    background: var(--surface);
+    border: 1px dashed var(--line);
+    border-radius: 14px;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+    color: var(--text-faint);
+    max-width: 100%;
+  }
+  .disclaimer span { color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="m26-nav-slot"></div>
+
+<section class="or-hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span><span data-i18n-es="EN VIVO · SIMULACIÓN IA · V.12.4" data-i18n-en="LIVE · AI SIMULATION · V.12.4">EN VIVO · SIMULACIÓN IA · V.12.4</span></span>
+    <h1 data-i18n-es="El <em>oráculo</em><br>ya eligió campeón." data-i18n-en="The <em>oracle</em> has<br>picked a champion.">El <em>oráculo</em><br>ya eligió campeón.</h1>
+    <p class="lead" data-i18n-es="Un modelo sintético cruza rendimiento histórico, forma reciente, valor de mercado, calendario y 10 000 simulaciones Monte Carlo. El resultado: una probabilidad por cada selección. Lee con criterio." data-i18n-en="A synthetic model cross-checks historical performance, recent form, market value, schedule and 10,000 Monte Carlo simulations. The output: one probability per team. Read with nuance.">
+      Un modelo sintético cruza rendimiento histórico, forma reciente, valor de mercado, calendario y 10 000 simulaciones Monte Carlo. El resultado: una probabilidad por cada selección. Lee con criterio.
+    </p>
+
+    <!-- AI narration card -->
+    <div class="ai-card">
+      <div class="ai-avatar"><span>O</span></div>
+      <div class="ai-content">
+        <div class="role" data-i18n-es="ORÁCULO · NARRACIÓN" data-i18n-en="ORACLE · NARRATION">ORÁCULO · NARRACIÓN</div>
+        <p class="q" data-i18n-es="Mi modelo sugiere una <em>final Argentina vs. España</em> con 23 % de probabilidad. Brasil y Francia siguen muy cerca. El comodín: Marruecos podría repetir su hazaña de 2022." data-i18n-en="My model suggests an <em>Argentina vs. Spain</em> final with 23% probability. Brazil and France follow closely. The wild card: Morocco could repeat its 2022 heroics.">
+          Mi modelo sugiere una <em>final Argentina vs. España</em> con 23 % de probabilidad. Brasil y Francia siguen muy cerca. El comodín: Marruecos podría repetir su hazaña de 2022.
+        </p>
+      </div>
+      <div class="ai-meta">
+        <div data-i18n-es="MODELO" data-i18n-en="MODEL">MODELO</div>
+        <div><span>MNDL-IA v12.4</span></div>
+        <div data-i18n-es="SIMULACIONES" data-i18n-en="SIMULATIONS">SIMULACIONES</div>
+        <div><span>10 000</span></div>
+        <div data-i18n-es="ACTUALIZADO" data-i18n-en="UPDATED">ACTUALIZADO</div>
+        <div><span>Hace 7 min</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap" style="padding-bottom:80px;">
+  <!-- Tools -->
+  <div class="or-tools">
+    <span class="label" data-i18n-es="Mostrar" data-i18n-en="Show">Mostrar</span>
+    <button data-f="all" class="active" data-i18n-es="Todas" data-i18n-en="All">Todas</button>
+    <button data-f="fav" data-i18n-es="Favoritas (>10%)" data-i18n-en="Favorites (>10%)">Favoritas (>10%)</button>
+    <button data-f="dark" data-i18n-es="Dark horses" data-i18n-en="Dark horses">Dark horses</button>
+    <button data-f="host" data-i18n-es="Anfitriones" data-i18n-en="Hosts">Anfitriones</button>
+    <span class="label" style="margin-left:14px;" data-i18n-es="Ordenar" data-i18n-en="Sort">Ordenar</span>
+    <select id="sort">
+      <option value="prob" data-i18n-es="Probabilidad" data-i18n-en="Probability">Probabilidad</option>
+      <option value="form" data-i18n-es="Forma" data-i18n-en="Form">Forma</option>
+      <option value="hist" data-i18n-es="Historia" data-i18n-en="History">Historia</option>
+      <option value="att" data-i18n-es="Ataque" data-i18n-en="Attack">Ataque</option>
+    </select>
+    <span class="count" id="count"><em>48</em> selecciones</span>
+  </div>
+
+  <!-- Predictions grid -->
+  <div class="pred-grid" id="pred-grid"></div>
+
+  <!-- Bracket -->
+  <section class="bracket-sec">
+    <h2 data-i18n-es="El <em>bracket</em> más probable" data-i18n-en="The most likely <em>bracket</em>">El <em>bracket</em> más probable</h2>
+    <div class="kicker" data-i18n-es="Simulación promedio sobre 10 000 corridas · Del Round de 32 al campeón" data-i18n-en="Average simulation across 10,000 runs · From Round of 32 to champion">
+      Simulación promedio sobre 10 000 corridas · Del Round de 32 al campeón
+    </div>
+    <div class="bracket" id="bracket"></div>
+  </section>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <span data-i18n-es="◉ AVISO · " data-i18n-en="◉ DISCLAIMER · ">◉ AVISO · </span><span data-i18n-es="Las probabilidades mostradas son simuladas con fines editoriales; no constituyen un pronóstico real y tampoco deben utilizarse para apuestas. El modelo se basa en datos públicos históricos y parámetros sintéticos. El fútbol, por fortuna, siempre gana." data-i18n-en="The probabilities shown are simulated for editorial purposes; they do not constitute a real forecast and must not be used for betting. The model uses public historical data and synthetic parameters. Football, luckily, always wins.">Las probabilidades mostradas son simuladas con fines editoriales; no constituyen un pronóstico real y tampoco deben utilizarse para apuestas. El modelo se basa en datos públicos históricos y parámetros sintéticos. El fútbol, por fortuna, siempre gana.</span>
+  </div>
+</main>
+
+<div id="m26-footer-slot"></div>
+
+<script src="assets/shared.js"></script>
+<script>M26.init({ active: "oraculo" });</script>
+<script>
+/* Predicciones sintéticas para el Mundial 2026 (editorial, no apuestas) */
+const TEAMS = [
+  { n:"Argentina", fl:"ar", tag:"Campeona vigente", prob:13.4, hist:92, form:88, att:91, def:84, xp:90, cat:["fav"],
+    reasons:[{k:"C",es:"Campeona vigente — aura intacta tras Qatar 2022.",en:"Defending champion — aura intact after Qatar 2022."},{k:"M",es:"Messi podría jugar su sexto Mundial a los 39.",en:"Messi could play his sixth World Cup at 39."},{k:"B",es:"Base joven con Julián Álvarez y Mac Allister en plenitud.",en:"Young core with Julián Álvarez and Mac Allister peaking."}],
+    proj:{es:"Final (64%) · Campeón (13%)", en:"Final (64%) · Champion (13%)"}
+  },
+  { n:"España", fl:"es", tag:"Nueva generación dorada", prob:12.1, hist:78, form:94, att:89, def:82, xp:78, cat:["fav"],
+    reasons:[{k:"E",es:"Campeona de la Eurocopa 2024 con Yamal y Williams.",en:"Euro 2024 champion with Yamal and Williams."},{k:"Y",es:"Lamine Yamal será la bandera del torneo con 18 años.",en:"Lamine Yamal will be the tournament's banner at 18."},{k:"F",es:"Mejor % de posesión en eliminatorias (68%).",en:"Best possession rate in qualifiers (68%)."}],
+    proj:{es:"Final (58%) · Campeón (12%)", en:"Final (58%) · Champion (12%)"}
+  },
+  { n:"Francia", fl:"fr", tag:"Mbappé en su peak", prob:11.8, hist:88, form:85, att:96, def:79, xp:86, cat:["fav"],
+    reasons:[{k:"M",es:"Mbappé cumplirá 27 años: el peak físico exacto.",en:"Mbappé will turn 27: the exact physical peak."},{k:"D",es:"Defensa renovada con Saliba y Upamecano consolidados.",en:"Renewed defense with Saliba and Upamecano consolidated."},{k:"R",es:"Tres finales en las últimas cuatro ediciones.",en:"Three finals in the last four editions."}],
+    proj:{es:"Semis (72%) · Campeón (12%)", en:"Semis (72%) · Champion (12%)"}
+  },
+  { n:"Brasil", fl:"br", tag:"Ansia de la sexta", prob:10.9, hist:96, form:76, att:88, def:76, xp:84, cat:["fav"],
+    reasons:[{k:"H",es:"Pentacampeona — la que más sabe ganar.",en:"Five-time champion — the team that knows how to win."},{k:"V",es:"Vinicius y Rodrygo forman el ataque más rápido.",en:"Vinicius and Rodrygo form the fastest attacking pair."},{k:"C",es:"Ancelotti trajo método europeo al scratch.",en:"Ancelotti brought European method to the scratch."}],
+    proj:{es:"Semis (65%) · Campeón (11%)", en:"Semis (65%) · Champion (11%)"}
+  },
+  { n:"Inglaterra", fl:"en", tag:"La generación Bellingham", prob:8.2, hist:72, form:82, att:86, def:80, xp:74, cat:["fav"],
+    reasons:[{k:"B",es:"Bellingham y Saka lideran una base sub-26.",en:"Bellingham and Saka lead a sub-26 core."},{k:"F",es:"Finalista en las dos últimas Euros consecutivas.",en:"Finalist in the last two consecutive Euros."},{k:"K",es:"Kane mantiene la dupla con las nuevas generaciones.",en:"Kane keeps the link with the new generations."}],
+    proj:{es:"Cuartos (82%) · Campeón (8%)", en:"QF (82%) · Champion (8%)"}
+  },
+  { n:"Portugal", fl:"pt", tag:"El último Cristiano", prob:6.4, hist:66, form:81, att:90, def:72, xp:76, cat:["fav"],
+    reasons:[{k:"C",es:"CR7 podría colgar los botines con la gloria.",en:"CR7 could retire with glory."},{k:"G",es:"Generación dorada: Leão, Ruben Dias, Bernardo Silva.",en:"Golden generation: Leão, Ruben Dias, Bernardo Silva."},{k:"N",es:"Nations League 2025 ganada con autoridad.",en:"Nations League 2025 won with authority."}],
+    proj:{es:"Cuartos (68%) · Campeón (6%)", en:"QF (68%) · Champion (6%)"}
+  },
+  { n:"Alemania", fl:"de", tag:"Reconstrucción Nagelsmann", prob:5.8, hist:90, form:74, att:82, def:84, xp:82, cat:["fav"],
+    reasons:[{k:"E",es:"Euro 2024 en casa fue la plataforma para 2026.",en:"Euro 2024 at home was the 2026 springboard."},{k:"W",es:"Wirtz-Musiala: la conducción creativa más fina.",en:"Wirtz-Musiala: the finest creative duo."},{k:"M",es:"Mentalidad histórica en torneos — nunca la subestimes.",en:"Historical tournament mentality — never underestimate."}],
+    proj:{es:"Cuartos (58%) · Campeón (6%)", en:"QF (58%) · Champion (6%)"}
+  },
+  { n:"Países Bajos", fl:"nl", tag:"Oranje moderna", prob:5.2, hist:70, form:78, att:84, def:82, xp:72, cat:["fav"],
+    reasons:[{k:"V",es:"Van Dijk lidera una zaga de clase.",en:"Van Dijk leads a world-class backline."},{k:"G",es:"Gakpo-Simons: el relevo natural a la escuela neerlandesa.",en:"Gakpo-Simons: natural heirs to the Dutch school."},{k:"B",es:"Base del Ajax y PSV recuperando nivel europeo.",en:"Ajax and PSV core recovering continental level."}],
+    proj:{es:"Cuartos (62%) · Campeón (5%)", en:"QF (62%) · Champion (5%)"}
+  },
+  { n:"Marruecos", fl:"ma", tag:"La hazaña 2022 no fue accidente", prob:4.1, hist:52, form:86, att:78, def:88, xp:68, cat:["dark"],
+    reasons:[{k:"S",es:"Semifinalista en 2022 — confirmó que no fue suerte.",en:"2022 semifinalist — proved it wasn't luck."},{k:"D",es:"Defensa más sólida del Mundial pasado.",en:"The most solid defense of the past World Cup."},{k:"H",es:"Hakimi-Ziyech-Amrabat: espina dorsal intacta.",en:"Hakimi-Ziyech-Amrabat: backbone intact."}],
+    proj:{es:"Semis (32%) · Campeón (4%)", en:"Semis (32%) · Champion (4%)"}
+  },
+  { n:"Italia", fl:"it", tag:"Regreso tras dos ausencias", prob:3.8, hist:82, form:70, att:76, def:86, xp:80, cat:[],
+    reasons:[{k:"R",es:"Primer Mundial tras fallar 2018 y 2022.",en:"First World Cup after missing 2018 and 2022."},{k:"D",es:"Defensa legendaria: Bastoni, Calafiori, Donnarumma.",en:"Legendary defense: Bastoni, Calafiori, Donnarumma."},{k:"E",es:"Estilo Spalletti: presión alta y posesión.",en:"Spalletti style: high press and possession."}],
+    proj:{es:"Cuartos (48%) · Campeón (4%)", en:"QF (48%) · Champion (4%)"}
+  },
+  { n:"Uruguay", fl:"ur", tag:"Bielsa y la generación Núñez", prob:3.4, hist:76, form:74, att:82, def:78, xp:76, cat:["dark"],
+    reasons:[{k:"B",es:"Bielsa devolvió la identidad defensiva feroz.",en:"Bielsa restored ferocious defensive identity."},{k:"N",es:"Núñez-Pellistri: un ataque vertical devastador.",en:"Núñez-Pellistri: a devastating vertical attack."},{k:"S",es:"Semifinalista de Copa América 2024.",en:"2024 Copa América semifinalist."}],
+    proj:{es:"Cuartos (44%) · Campeón (3%)", en:"QF (44%) · Champion (3%)"}
+  },
+  { n:"Bélgica", fl:"be", tag:"Relevo a la generación dorada", prob:2.8, hist:60, form:68, att:82, def:72, xp:64, cat:[],
+    reasons:[{k:"D",es:"De Bruyne sigue siendo el cerebro absoluto.",en:"De Bruyne still the absolute brain."},{k:"J",es:"Joven Doku aportando desborde impredecible.",en:"Young Doku adding unpredictable dribbling."},{k:"T",es:"Tedesco reestructura la defensa con pragmatismo.",en:"Tedesco rebuilds defense with pragmatism."}],
+    proj:{es:"Octavos (72%) · Campeón (3%)", en:"R16 (72%) · Champion (3%)"}
+  },
+  { n:"Croacia", fl:"hr", tag:"La última danza Modric", prob:2.6, hist:64, form:70, att:74, def:78, xp:86, cat:[],
+    reasons:[{k:"M",es:"Modric a los 40 sigue siendo el metrónomo.",en:"Modric at 40 is still the metronome."},{k:"F",es:"Dos finalistas consecutivos en 2018 (final) y 2022 (3º).",en:"Two consecutive podiums: 2018 final and 2022 third."},{k:"K",es:"Kovačić y Sučić mantienen el ADN croata.",en:"Kovačić and Sučić keep the Croatian DNA."}],
+    proj:{es:"Cuartos (38%) · Campeón (3%)", en:"QF (38%) · Champion (3%)"}
+  },
+  { n:"México", fl:"mx", tag:"Anfitrión con nueva generación", prob:2.2, hist:54, form:72, att:74, def:70, xp:66, cat:["host"],
+    reasons:[{k:"A",es:"Anfitrión — más factor que nunca con 3 sedes.",en:"Host — stronger factor than ever with 3 venues."},{k:"G",es:"Aguirre retoma con Giménez como 9 confirmado.",en:"Aguirre returns with Giménez as confirmed 9."},{k:"H",es:"Historia: quinto partido es la obsesión.",en:"History: the fifth match remains the obsession."}],
+    proj:{es:"Octavos (78%) · Campeón (2%)", en:"R16 (78%) · Champion (2%)"}
+  },
+  { n:"Estados Unidos", fl:"us", tag:"Anfitrión en su peak", prob:1.9, hist:44, form:68, att:72, def:68, xp:62, cat:["host"],
+    reasons:[{k:"A",es:"Anfitrión principal — 11 sedes en su territorio.",en:"Main host — 11 venues on home soil."},{k:"P",es:"Pulisic, Reyna, Musah: primera generación europea.",en:"Pulisic, Reyna, Musah: first true European-trained generation."},{k:"M",es:"MLS ganando credibilidad con llegadas top.",en:"MLS gaining credibility with top arrivals."}],
+    proj:{es:"Octavos (68%) · Campeón (2%)", en:"R16 (68%) · Champion (2%)"}
+  },
+  { n:"Canadá", fl:"ca", tag:"Debut con Davies", prob:0.9, hist:22, form:64, att:70, def:64, xp:52, cat:["host"],
+    reasons:[{k:"D",es:"Davies-David-Buchanan: primera generación exportable.",en:"Davies-David-Buchanan: first exportable generation."},{k:"A",es:"Anfitrión con estadios modernos (Toronto, Vancouver).",en:"Host with modern venues (Toronto, Vancouver)."},{k:"M",es:"Marsch impuso mentalidad agresiva europea.",en:"Marsch instilled aggressive European mentality."}],
+    proj:{es:"Fase grupos (55%) · Octavos (40%)", en:"Groups (55%) · R16 (40%)"}
+  },
+  { n:"Japón", fl:"jp", tag:"Revolución asiática", prob:1.3, hist:40, form:84, att:78, def:74, xp:58, cat:["dark"],
+    reasons:[{k:"C",es:"Clasificó primera en eliminatorias asiáticas.",en:"Topped Asian qualifiers."},{k:"K",es:"Kubo, Mitoma, Ito: creatividad desde la banda.",en:"Kubo, Mitoma, Ito: creativity from the flanks."},{k:"G",es:"Ganó a Alemania y España en Qatar.",en:"Beat Germany and Spain in Qatar."}],
+    proj:{es:"Cuartos (35%) · Campeón (1%)", en:"QF (35%) · Champion (1%)"}
+  },
+  { n:"Colombia", fl:"ph", tag:"El renacer cafetero", prob:2.1, hist:48, form:86, att:80, def:72, xp:64, cat:["dark"],
+    reasons:[{k:"L",es:"Lorenzo revitalizó al equipo con fútbol ofensivo.",en:"Lorenzo revitalized the team with attacking football."},{k:"J",es:"James Rodríguez tuvo su mejor Copa América 2024.",en:"James had his best Copa América 2024."},{k:"D",es:"Racha de 28 partidos sin derrota en 2023-24.",en:"28-match unbeaten streak in 2023-24."}],
+    proj:{es:"Cuartos (38%) · Campeón (2%)", en:"QF (38%) · Champion (2%)"}
+  },
+  { n:"Senegal", fl:"ph", tag:"Los Leones del Teranga", prob:1.4, hist:36, form:76, att:80, def:74, xp:60, cat:["dark"],
+    reasons:[{k:"C",es:"Campeón de África con proyecto de largo plazo.",en:"African champion with a long-term project."},{k:"M",es:"Mané y Koulibaly mantienen el legado.",en:"Mané and Koulibaly keep the legacy."},{k:"J",es:"Jackson e Iliman Ndiaye son la nueva guardia.",en:"Jackson and Iliman Ndiaye are the new guard."}],
+    proj:{es:"Octavos (72%) · Cuartos (30%)", en:"R16 (72%) · QF (30%)"}
+  },
+];
+
+const BRACKET = [
+  { col:"R32", matches:[
+    ["Argentina","ar","—","tbd",100], ["España","es","—","tbd",100], ["Francia","fr","—","tbd",100],
+    ["Brasil","br","—","tbd",100], ["Inglaterra","en","—","tbd",100], ["Portugal","pt","—","tbd",100],
+    ["Alemania","de","—","tbd",100], ["Países Bajos","nl","—","tbd",100],
+  ]},
+  { col:"R16", matches:[
+    ["Argentina","ar","Ecuador","ph",78], ["Portugal","pt","Uruguay","ur",55],
+    ["Francia","fr","Senegal","ph",72], ["Colombia","ph","Inglaterra","en",48],
+  ]},
+  { col:"Cuartos", matches:[
+    ["Argentina","ar","Portugal","pt",64], ["Francia","fr","Inglaterra","en",54],
+    ["España","es","Alemania","de",58], ["Brasil","br","Países Bajos","nl",60],
+  ]},
+  { col:"Semis", matches:[
+    ["Argentina","ar","Francia","fr",53], ["España","es","Brasil","br",52],
+  ]},
+];
+
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+let currentFilter = "all";
+let sortBy = "prob";
+
+function renderPreds() {
+  const lang = M26.getLang();
+  let list = [...TEAMS];
+  if (currentFilter === "fav") list = list.filter(t => t.prob > 10);
+  else if (currentFilter === "dark") list = list.filter(t => t.cat.includes("dark"));
+  else if (currentFilter === "host") list = list.filter(t => t.cat.includes("host"));
+  list.sort((a,b) => b[sortBy] - a[sortBy]);
+  $("#count").innerHTML = `<em>${list.length}</em> ${lang==="en"?"teams":"selecciones"}`;
+
+  const R = 44, C = 2 * Math.PI * R;
+  $("#pred-grid").innerHTML = list.map(t => {
+    const elite = t.prob >= 8;
+    const dash = C * (1 - Math.min(t.prob, 20) / 20);
+    const reasons = t.reasons.map(r => `<li><span class="ic">${r.k}</span><span><b>${r[lang].split(' ').slice(0,2).join(' ')}</b> ${r[lang].split(' ').slice(2).join(' ')}</span></li>`).join("");
+    return `
+      <div class="pred-card ${elite?'elite':''}">
+        <div class="rank-chip">${elite ? (lang==="en"?"FAVORITE":"FAVORITA") : (t.cat.includes("dark") ? (lang==="en"?"DARK HORSE":"DARK HORSE") : (lang==="en"?"CONTENDER":"ASPIRANTE"))}</div>
+        <div class="flag-row">
+          <div class="fl ph flag flag-${t.fl}"></div>
+          <div>
+            <div class="nm">${elite?'<em>'+t.n+'</em>':t.n}</div>
+            <div class="sub">${t.tag}</div>
+          </div>
+        </div>
+        <div class="score-row">
+          <div class="ring">
+            <svg viewBox="0 0 100 100">
+              <circle class="bg-ring" cx="50" cy="50" r="${R}"/>
+              <circle class="fg-ring" cx="50" cy="50" r="${R}" stroke-dasharray="${C}" stroke-dashoffset="${dash}"/>
+            </svg>
+            <div class="n"><span><em>${t.prob}</em>%</span><span class="u">${lang==="en"?"champion":"campeón"}</span></div>
+          </div>
+          <div class="meta-stack">
+            <div class="row"><div class="k">${lang==="en"?"Form":"Forma"}</div><div class="bar" style="--w:${t.form}%"></div><div class="v">${t.form}</div></div>
+            <div class="row"><div class="k">${lang==="en"?"History":"Historia"}</div><div class="bar" style="--w:${t.hist}%"></div><div class="v">${t.hist}</div></div>
+            <div class="row"><div class="k">${lang==="en"?"Attack":"Ataque"}</div><div class="bar" style="--w:${t.att}%"></div><div class="v">${t.att}</div></div>
+            <div class="row"><div class="k">${lang==="en"?"Defense":"Defensa"}</div><div class="bar" style="--w:${t.def}%"></div><div class="v">${t.def}</div></div>
+          </div>
+        </div>
+        <ul class="reasons">${reasons}</ul>
+        <div class="projection">
+          <span class="k">${lang==="en"?"Most likely path":"Camino probable"}</span>
+          <span class="v">${t.proj[lang]}</span>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderBracket() {
+  const lang = M26.getLang();
+  const cols = BRACKET.map((c) => {
+    const matches = c.matches.map(m => {
+      const [tA, flA, tB, flB, pA] = m;
+      const pB = 100 - pA;
+      const aW = pA > pB;
+      return `
+        <div class="bk-match">
+          <div class="bk-team ${aW?'w':''}">
+            <div class="fl ph flag flag-${flA}"></div>
+            <span>${aW?'<em>'+tA+'</em>':tA}</span>
+            <span class="p">${pA}%</span>
+          </div>
+          <div class="bk-team ${!aW?'w':''}">
+            <div class="fl ph flag flag-${flB}"></div>
+            <span>${!aW?'<em>'+tB+'</em>':tB}</span>
+            <span class="p">${pB}%</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+    return `<div class="bk-col"><h5>${c.col}</h5>${matches}</div>`;
+  }).join("");
+  $("#bracket").innerHTML = cols + `
+    <div class="bk-col champ">
+      <div class="trophy">🏆 ${lang==="en"?"FORECAST CHAMPION":"CAMPEÓN PRONOSTICADO"}</div>
+      <div class="ch-flag ph flag flag-ar"></div>
+      <div class="ch-name"><em>Argentina</em></div>
+      <div class="ch-pct">13.4% ${lang==="en"?"probability":"probabilidad"}</div>
+    </div>
+  `;
+}
+
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".or-tools button");
+  if (b) {
+    currentFilter = b.dataset.f;
+    $$(".or-tools button").forEach(x => x.classList.toggle("active", x === b));
+    renderPreds();
+  }
+});
+$("#sort").addEventListener("change", (e) => { sortBy = e.target.value; renderPreds(); });
+
+const orig = M26.applyI18n;
+M26.applyI18n = function() { orig(); renderPreds(); renderBracket(); };
+renderPreds();
+renderBracket();
+</script>
+</body>
+</html>

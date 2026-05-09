@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Neon Cup History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=Space_Grotesk:wght@300;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#665200",
+                    "secondary-container": "#004d3d",
+                    "error-container": "#3d0f0f",
+                    "on-tertiary-container": "#fff0c0",
+                    "tertiary": "#ffe04a",
+                    "primary-fixed-dim": "#ff80aa",
+                    "tertiary-fixed": "#fff0c0",
+                    "on-secondary-fixed-variant": "#004d4d",
+                    "outline-variant": "#302840",
+                    "background": "#0a0a12",
+                    "error": "#ff4444",
+                    "surface-container-highest": "#28283e",
+                    "secondary-fixed": "#c0fff4",
+                    "on-primary-fixed": "#3d0020",
+                    "on-primary-container": "#ffe0ec",
+                    "primary-fixed": "#ffe0ec",
+                    "tertiary-container": "#665200",
+                    "primary": "#ff2d78",
+                    "on-surface-variant": "#a098b0",
+                    "inverse-on-surface": "#0a0a12",
+                    "surface-container-high": "#1e1e30",
+                    "on-tertiary-fixed": "#1a1000",
+                    "on-primary": "#1a0010",
+                    "tertiary-fixed-dim": "#ffe04a",
+                    "surface-tint": "#ff2d78",
+                    "primary-container": "#b3004e",
+                    "on-error-container": "#ffa0a0",
+                    "surface-variant": "#1e1e30",
+                    "surface-bright": "#1a1a2e",
+                    "on-background": "#e8e0f0",
+                    "secondary": "#00ffcc",
+                    "on-surface": "#e8e0f0",
+                    "inverse-surface": "#e8e0f0",
+                    "inverse-primary": "#8c0038",
+                    "on-secondary-container": "#c0fff4",
+                    "on-tertiary": "#1a1000",
+                    "on-primary-fixed-variant": "#8c0038",
+                    "on-error": "#1a0000",
+                    "on-secondary-fixed": "#001a1a",
+                    "outline": "#5a5068",
+                    "surface-container-low": "#111118",
+                    "on-secondary": "#001a1a",
+                    "surface-dim": "#0f0f1a",
+                    "secondary-fixed-dim": "#00e6b8",
+                    "surface-container-lowest": "#0a0a12",
+                    "surface-container": "#141422",
+                    "surface": "#0f0f1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Sora"],
+                    "display": ["Sora"],
+                    "body": ["Inter"],
+                    "label": ["Space Grotesk"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .neon-glow-primary { text-shadow: 0 0 8px #ff2d78; }
+        .neon-glow-secondary { text-shadow: 0 0 8px #00ffcc; }
+        .neon-border-primary { border: 1px solid rgba(255, 45, 120, 0.3); box-shadow: inset 0 0 12px rgba(255, 45, 120, 0.1); }
+        .neon-marker-glow { box-shadow: 0 0 15px #ff2d78; }
+        .scanline {
+            background: linear-gradient(to bottom, transparent 50%, rgba(255, 45, 120, 0.02) 50%);
+            background-size: 100% 4px;
+        }
+        .active-marker {
+            box-shadow: 0 0 20px #ff2d78, 0 0 40px #ff2d7880;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30 min-h-screen pb-24 overflow-x-hidden scanline">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 bg-[#0a0a12] dark:bg-[#0a0a12] border-b border-[#ff2d78]/30 shadow-[0_4px_20px_rgba(255,45,120,0.1)] backdrop-blur-md">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#ff2d78]" data-icon="menu">menu</span>
+<h1 class="text-xl font-black text-[#ff2d78] [text-shadow:0_0_8px_#ff2d78] font-headline tracking-widest uppercase">NEON_CUP_HISTORY</h1>
+</div>
+<div class="w-8 h-8 rounded-full border border-primary/50 overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Cyberpunk style minimalist avatar of a user with neon pink highlights and sleek futuristic gear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlaaTgY7iWDfBde2OX207Ww3gZWPi82W8hM1TZ8emH26-IYgcxUKWI-HLG0WpZhn1Yuj6UAVNN7-b_EpAtTv5gku8SPbxl0OCA8RJotCk9EK1A5zsvz5J3mkHGJA3UP52ANOcxZq9myPZBxsE9tQX6njNdzUEk2WuRRpOFJh1aCOeug2_NMPw4M4wudDlQOKnaad0tKQafmPgNtZoWgSUBsKOUj2QQiyzvMMgXrpLQByJ3-OvGioy-IZGi30TYpjaw2wPzQQY_Y2M"/>
+</div>
+</header>
+<main class="pt-24 px-4 max-w-md mx-auto relative">
+<!-- Hero Section / Title -->
+<div class="mb-8 text-center">
+<h2 class="font-headline font-extrabold text-3xl text-on-surface mb-2">WORLD CUP <span class="text-secondary neon-glow-secondary">TIMELINE</span></h2>
+<p class="font-label text-xs text-on-surface-variant tracking-widest uppercase">Tracing the legends of the electric pitch</p>
+</div>
+<!-- Vertical Timeline Container -->
+<div class="relative ml-4">
+<!-- Continuous Timeline Path -->
+<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary via-secondary to-primary/20 shadow-[0_0_10px_rgba(255,45,120,0.3)]"></div>
+<!-- Timeline Entry 1: 1930 -->
+<div class="relative pl-10 mb-12">
+<!-- Marker -->
+<div class="absolute -left-[5px] top-2 w-3 h-3 rounded-full bg-primary neon-marker-glow"></div>
+<div class="surface-container neon-border-primary p-4 rounded-xl">
+<div class="flex justify-between items-start mb-3">
+<span class="font-label font-bold text-2xl text-primary neon-glow-primary">1930</span>
+<span class="bg-primary/20 text-primary px-2 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">URUGUAY</span>
+</div>
+<div class="aspect-video w-full rounded-lg mb-3 overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover grayscale contrast-125 opacity-80" data-alt="Grainy black and white historical photo of the first World Cup stadium in Uruguay 1930 with a large crowd and vintage architecture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk3-oPzNEdg9_fMM-9BBLRcEIGG_TMDZlfw1Bt4U_QT_MCG4ohSfE8G_IsCBOGQ9ukytXyvXUbW73uZ6LKNamN6BJ4-Szrq0rbFl4QcXl_aS7ciOAHJfIEp6fEr_2ILDlFsjVbEMzH-mViAGqTfHqCJ8hWnIiXUYfXjK1mqZ9KheL-6KgCdFZP_iCtawxfm3Jq5Bnjfx8TgIE3rWnFD-HjNLNjk-fmJnk-XJRHlia5tBwG_zTUEuM2UE4JF7pNq3xgcfmgKvNlG5c"/>
+</div>
+<h3 class="font-headline font-bold text-lg mb-1">THE GENESIS</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">The inaugural tournament where hosts Uruguay triumphed in Montevideo, setting the global stage for future legends.</p>
+</div>
+</div>
+<!-- Timeline Entry 2: 1958 (Pelé Debut) -->
+<div class="relative pl-10 mb-12">
+<!-- Active Marker -->
+<div class="absolute -left-[9px] top-2 w-5 h-5 rounded-full border-2 border-primary bg-background active-marker">
+<div class="w-2 h-2 m-1 rounded-full bg-primary"></div>
+</div>
+<div class="surface-container-high border-l-4 border-secondary p-4 rounded-xl shadow-[0_10px_30px_rgba(0,255,204,0.1)]">
+<div class="flex justify-between items-start mb-3">
+<span class="font-label font-bold text-2xl text-secondary neon-glow-secondary">1958</span>
+<span class="bg-secondary/20 text-secondary px-2 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">BRAZIL</span>
+</div>
+<div class="aspect-video w-full rounded-lg mb-3 overflow-hidden bg-surface-container-highest border border-secondary/30">
+<img class="w-full h-full object-cover contrast-150 saturate-50" data-alt="Dynamic shot of a young soccer legend in 1958 vintage Brazilian kit celebrating a goal on the grass pitch" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIU7Ew7QfGOCUOr58RxFwJzaiw_rdvpiSJRVCSZ9eGPde5D7ot_zQ3f1aTc7MV_AHq0mOsR8ecGmEleIJavN5uAUvA2w9PbTM-58VHSpVE5vgqYiYcBl1433jsGm18MfR5vwjAmMLkBUB7ep9R3t7hrsxQsnDPCvECIbyzmUHf3tmnKpmbXALWNTWabwV_2AqRgQ5ynzQvT8HwqzyMX2Vp7t0nb-Lro_6HiIP2kJmygKSd7b1vL7qwHpIz4Q7bghqSsbfybS-1cXQ"/>
+</div>
+<h3 class="font-headline font-bold text-lg mb-1 text-secondary">A STAR IS BORN</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">A 17-year-old Pelé mesmerizes the world, leading Brazil to their first-ever title with breathtaking skill.</p>
+</div>
+</div>
+<!-- Timeline Entry 3: 1986 (Maradona) -->
+<div class="relative pl-10 mb-12">
+<!-- Marker -->
+<div class="absolute -left-[5px] top-2 w-3 h-3 rounded-full bg-primary neon-marker-glow"></div>
+<div class="surface-container neon-border-primary p-4 rounded-xl">
+<div class="flex justify-between items-start mb-3">
+<span class="font-label font-bold text-2xl text-primary neon-glow-primary">1986</span>
+<span class="bg-primary/20 text-primary px-2 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">ARGENTINA</span>
+</div>
+<div class="aspect-video w-full rounded-lg mb-3 overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover contrast-125 opacity-90" data-alt="Intense historical soccer match action from the 1980s with players in classic blue and white striped kits under bright stadium lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU59zX2gXsuFQNukYpp_uk6V5EgbqmMocAPs_Y5veZ57FwLXehXQeouX4nG-Dc_0TaX9Knp9ayW2Uhj8Rmhx6qGv58Jaz8w-ZsJDRofHw5w3ewRLcf8JZnV2eVGFbw8lxdLZVLMyp-7hGfafpbGfnHvstWvMA0QwZkfSo3FgbrJySxYAHFiT0lo8Hmp6zcjSVjFcmozivXwHahghLMJdOroaSDoqPNCScGIX8ka_L80z8GyT5HtPT2VYwhrZxvl6BfgcyfY6-0-ww"/>
+</div>
+<h3 class="font-headline font-bold text-lg mb-1">HAND OF GOD</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Maradona's controversial and brilliant performances define a generation as Argentina secures the trophy in Mexico.</p>
+</div>
+</div>
+<!-- Timeline Entry 4: 2022 (Messi) -->
+<div class="relative pl-10 mb-12">
+<!-- Marker -->
+<div class="absolute -left-[5px] top-2 w-3 h-3 rounded-full bg-primary/50"></div>
+<div class="surface-container border border-outline-variant p-4 rounded-xl opacity-80">
+<div class="flex justify-between items-start mb-3">
+<span class="font-label font-bold text-2xl text-on-surface-variant">2022</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">ARGENTINA</span>
+</div>
+<div class="aspect-video w-full rounded-lg mb-3 overflow-hidden bg-surface-container-highest grayscale">
+<img class="w-full h-full object-cover" data-alt="Modern celebratory soccer scene with gold confetti raining down on players lifting a trophy in a high-tech stadium environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBtYRLDNJabnxNjs4lsUbGyryBdsmU00Qhr9RVYO_jZ5x8zf8UFSHawbJSfewC1utqyKxnoTIMtb4P-UURQ6udE06fQqrztFzDrPgE1J3Ht0dLMArqt_aFv8olt6Ixp_idlh35EPC3USdxf2HWFJIlFXIFlgx4Yxr_7h0k8ctBfUh1y-qWupoouHGqqmeWtl1WtPcJkqAlQIG1HKCmwYok2ZtoIVdzl12VLAQF2GrFBbXSJ10nxArRABwL5vJabiC9l71M1dfY7Ps"/>
+</div>
+<h3 class="font-headline font-bold text-lg mb-1">ETERNAL GLORY</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">The GOAT completes his journey in a thrilling final that captivates the entire digital age.</p>
+</div>
+</div>
+</div>
+<!-- Floating Action Button (Optional Contextual) -->
+<button class="fixed right-6 bottom-24 w-14 h-14 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_0_20px_rgba(255,45,120,0.5)] active:scale-95 transition-transform z-40">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center py-3 px-4 pb-safe bg-[#0a0a12]/90 dark:bg-[#0a0a12]/90 border-t border-[#00ffcc]/30 shadow-[0_-4px_20px_rgba(0,255,204,0.1)] backdrop-blur-lg">
+<button class="flex flex-col items-center justify-center text-slate-400 opacity-60 hover:text-[#00ffcc] hover:opacity-100 transition-opacity active:translate-y-1">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+<span class="font-label text-[10px] uppercase tracking-tighter mt-1">LIVE</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#ff2d78] [text-shadow:0_0_10px_#ff2d78] scale-110 active:translate-y-1">
+<span class="material-symbols-outlined" data-icon="timeline" data-weight="fill">timeline</span>
+<span class="font-label text-[10px] uppercase tracking-tighter mt-1">HISTORY</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 opacity-60 hover:text-[#00ffcc] hover:opacity-100 transition-opacity active:translate-y-1">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-label text-[10px] uppercase tracking-tighter mt-1">STATS</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 opacity-60 hover:text-[#00ffcc] hover:opacity-100 transition-opacity active:translate-y-1">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label text-[10px] uppercase tracking-tighter mt-1">GEAR</span>
+</button>
+</nav>
+</body></html>

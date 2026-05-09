@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundial 26 — Mascotas</title>
+<link rel="stylesheet" href="assets/shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .ms-hero { padding: 100px 0 24px; position: relative; overflow: hidden; }
+  .ms-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 900px 420px at 20% 30%, color-mix(in oklch, var(--accent) 20%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .ms-hero .wrap { position: relative; }
+  .ms-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 160px);
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    margin: 24px 0 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+    max-width: 14ch;
+  }
+  .ms-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .ms-hero .lead { margin-top: 28px; max-width: 62ch; }
+
+  /* Collector grid */
+  .collect-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+    margin-top: 60px;
+  }
+  .ms-card {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    cursor: pointer;
+    transition: all .25s;
+  }
+  .ms-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 22px 48px -16px color-mix(in oklch, var(--accent) 28%, transparent);
+  }
+  .ms-card .art {
+    flex: 1;
+    position: relative;
+    background: var(--cardbg, #222);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ms-card .art::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,255,255,0.22), transparent 45%),
+      radial-gradient(circle at 70% 80%, rgba(0,0,0,0.3), transparent 60%);
+    pointer-events: none;
+  }
+  .ms-card .art::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent 0 14px,
+      rgba(255,255,255,0.03) 14px 15px
+    );
+    pointer-events: none;
+  }
+  .ms-card .emoji {
+    font-size: 140px;
+    line-height: 1;
+    filter: drop-shadow(0 16px 32px rgba(0,0,0,0.5));
+    position: relative;
+    z-index: 1;
+  }
+  .ms-card .holo {
+    position: absolute;
+    top: 16px; right: 16px;
+    padding: 6px 12px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 999px;
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+    z-index: 2;
+  }
+  .ms-card .yr-big {
+    position: absolute;
+    top: 16px; left: 20px;
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 56px;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: rgba(255,255,255,0.95);
+    font-variation-settings: "opsz" 144;
+    z-index: 2;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .ms-card .info {
+    padding: 22px 22px 20px;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+  }
+  .ms-card .name {
+    font-family: var(--f-display);
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 4px;
+    font-variation-settings: "opsz" 144;
+  }
+  .ms-card:hover .name { color: var(--accent); font-style: italic; }
+  .ms-card .host {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+  .ms-card .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .ms-card .stat .k {
+    font-family: var(--f-mono);
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .ms-card .stat .v {
+    font-family: var(--f-display);
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    margin-top: 2px;
+    font-variation-settings: "opsz" 144;
+  }
+  .ms-card .rarity {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.6;
+  }
+
+  /* Filters */
+  .ms-filters {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin: 48px 0 20px;
+    align-items: center;
+  }
+  .ms-filters .label {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-faint);
+    margin-right: 4px;
+  }
+  .ms-filters button {
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text-dim);
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: all .15s;
+  }
+  .ms-filters button.active { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .ms-filters button:hover:not(.active) { color: var(--text); border-color: var(--line-strong); }
+
+  /* Lightbox */
+  .lb {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.92);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 40px;
+    backdrop-filter: blur(12px);
+  }
+  .lb.open { display: flex; }
+  .lb-inner {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 0;
+    max-width: 1100px;
+    width: 100%;
+    max-height: 90vh;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .lb-art {
+    background: var(--cardbg, #222);
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 500px;
+  }
+  .lb-art .emoji {
+    font-size: 220px;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+  }
+  .lb-art .yr-big {
+    position: absolute;
+    top: 24px; left: 28px;
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 88px;
+    line-height: 1;
+    color: rgba(255,255,255,0.95);
+    font-variation-settings: "opsz" 144;
+    letter-spacing: -0.04em;
+  }
+  .lb-info {
+    padding: 52px 56px;
+    overflow-y: auto;
+  }
+  .lb-close {
+    position: absolute;
+    top: 24px; right: 24px;
+    width: 44px; height: 44px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .lb-close:hover { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .lb-info h3 {
+    font-family: var(--f-display);
+    font-size: 72px;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin: 0 0 4px;
+    font-variation-settings: "opsz" 144;
+  }
+  .lb-info h3 em { color: var(--accent); font-style: italic; }
+  .lb-info .host {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+  }
+  .lb-info .tag {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: var(--text-dim);
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+  .lb-info .body {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text);
+    max-width: 56ch;
+  }
+  .lb-info .stats {
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .lb-info .stats .k {
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 6px;
+  }
+  .lb-info .stats .v {
+    font-family: var(--f-display);
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+  }
+  .lb-info .stats .v em { color: var(--accent); font-style: italic; }
+
+  @media (max-width: 900px) {
+    .lb-inner { grid-template-columns: 1fr; max-height: 95vh; overflow-y: auto; }
+    .lb-art { min-height: 300px; }
+    .lb-info { padding: 32px; }
+    .lb-info h3 { font-size: 48px; }
+  }
+
+  /* Evolution strip */
+  .evo-strip {
+    margin-top: 80px;
+    padding: 44px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .evo-strip h2 {
+    font-family: var(--f-display);
+    font-size: 44px;
+    letter-spacing: -0.03em;
+    margin: 0 0 6px;
+    font-variation-settings: "opsz" 144;
+  }
+  .evo-strip h2 em { color: var(--accent); font-style: italic; }
+  .evo-strip .kicker {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-dim); margin-bottom: 28px;
+  }
+  .evo-track {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    padding-bottom: 16px;
+  }
+  .evo-track::-webkit-scrollbar { height: 6px; }
+  .evo-tick {
+    flex: 0 0 100px;
+    text-align: center;
+  }
+  .evo-tick .emoji { font-size: 56px; line-height: 1; }
+  .evo-tick .yr {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em;
+    color: var(--text-faint); margin-top: 8px;
+  }
+  .evo-tick .nm {
+    font-family: var(--f-display); font-size: 14px; letter-spacing: -0.01em;
+    margin-top: 4px; font-variation-settings: "opsz" 144;
+  }
+</style>
+</head>
+<body>
+<div id="m26-nav-slot"></div>
+
+<section class="ms-hero">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n-es="● 56 años de mascotas · 16 amuletos · un mundo de símbolos" data-i18n-en="● 56 years of mascots · 16 amulets · a world of symbols">● 56 años de mascotas · 16 amuletos · un mundo de símbolos</span>
+    <h1 data-i18n-es="Los <em>amuletos</em> de<br>cada Mundial." data-i18n-en="The <em>charms</em> of<br>every World Cup.">Los <em>amuletos</em> de<br>cada Mundial.</h1>
+    <p class="lead" data-i18n-es="Desde Willie en 1966 hasta el nuevo trío norteamericano de 2026, cada edición ha tenido su animal, su león, su jaguar, su naranja que ríe. Colecciónalas." data-i18n-en="From Willie in 1966 to the new North American trio in 2026, every edition has had its animal, its lion, its jaguar, its laughing orange. Collect them all.">
+      Desde Willie en 1966 hasta el nuevo trío norteamericano de 2026, cada edición ha tenido su animal, su león, su jaguar, su naranja que ríe. Colecciónalas.
+    </p>
+  </div>
+</section>
+
+<main class="wrap" style="padding-bottom:80px;">
+  <!-- Filters -->
+  <div class="ms-filters">
+    <span class="label" data-i18n-es="Filtrar por" data-i18n-en="Filter by">Filtrar por</span>
+    <button data-f="all" class="active" data-i18n-es="Todas" data-i18n-en="All">Todas</button>
+    <button data-f="animal" data-i18n-es="Animales" data-i18n-en="Animals">Animales</button>
+    <button data-f="human" data-i18n-es="Humanoides" data-i18n-en="Humanoids">Humanoides</button>
+    <button data-f="object" data-i18n-es="Objetos" data-i18n-en="Objects">Objetos</button>
+    <button data-f="mx" data-i18n-es="Anfitriones 2026" data-i18n-en="2026 Hosts">Anfitriones 2026</button>
+  </div>
+
+  <!-- Grid -->
+  <div class="collect-grid" id="grid"></div>
+
+  <!-- Evolution strip -->
+  <section class="evo-strip">
+    <h2 data-i18n-es="La <em>evolución</em> estética" data-i18n-en="The aesthetic <em>evolution</em>">La <em>evolución</em> estética</h2>
+    <div class="kicker" data-i18n-es="De acuarela a 3D — el diseño cambia con la época" data-i18n-en="From watercolor to 3D — design shifts with the era">De acuarela a 3D — el diseño cambia con la época</div>
+    <div class="evo-track" id="evo"></div>
+  </section>
+</main>
+
+<!-- Lightbox -->
+<div class="lb" id="lb">
+  <button class="lb-close" id="lb-close">✕</button>
+  <div class="lb-inner" id="lb-inner"></div>
+</div>
+
+<div id="m26-footer-slot"></div>
+
+<script src="assets/shared.js"></script>
+<script>M26.init({ active: "mascotas" });</script>
+<script>
+/* Datos reales de mascotas históricas del Mundial */
+const MASCOTS = [
+  { y:1966, name:"World Cup Willie", host:"Inglaterra", type:"animal", emoji:"🦁", bg:"#b71c2b",
+    tag:{es:"El primer amuleto: un león con camiseta Union Jack.", en:"The first mascot: a lion in a Union Jack jersey."},
+    body:{es:"World Cup Willie inauguró la tradición. Un león antropomórfico ilustrado por Reg Hoye, vestido con la bandera británica. Marcó el inicio del merchandising moderno del fútbol.", en:"World Cup Willie started the tradition. An anthropomorphic lion drawn by Reg Hoye, wearing the British flag. He marked the dawn of modern football merchandising."},
+    stats:{animal:"León", designer:"R. Hoye", rarity:"Histórica"}
+  },
+  { y:1970, name:"Juanito", host:"México", type:"human", emoji:"🧒", bg:"#006847",
+    tag:{es:"Un niño con sombrero de ala ancha en pleno Azteca.", en:"A boy with a wide-brim hat at the Azteca."},
+    body:{es:"Juanito fue un niño caricaturesco con sombrero de charro que encarnó el Mundial de Carlos Alberto y Pelé. Puso cara al primer Mundial a color y televisado globalmente.", en:"Juanito was a cartoon boy with a charro hat who embodied the Cup of Carlos Alberto and Pelé. He was the face of the first World Cup broadcast globally in color."},
+    stats:{animal:"Humano", designer:"—", rarity:"Histórica"}
+  },
+  { y:1974, name:"Tip y Tap", host:"Alemania O.", type:"human", emoji:"👬", bg:"#000",
+    tag:{es:"Dos niños, dos Alemanias, un solo fútbol.", en:"Two boys, two Germanies, one football."},
+    body:{es:"Dos figuras infantiles rubias en uniformes similares representaban las dos Alemanias de la época. El Mundial de Müller y Beckenbauer tuvo un dúo como amuleto.", en:"Two blond child figures in similar uniforms represented the era's two Germanies. Müller and Beckenbauer's World Cup had a duo as its mascot."},
+    stats:{animal:"Humanos", designer:"—", rarity:"Pareja"}
+  },
+  { y:1978, name:"Gauchito", host:"Argentina", type:"human", emoji:"🤠", bg:"#6ca4da",
+    tag:{es:"Un pequeño gaucho con pañuelo y boina.", en:"A little gaucho with scarf and beret."},
+    body:{es:"Gauchito encarnaba al futbolista argentino arquetípico. Camiseta albiceleste, sombrero con ala ancha y pañuelo al cuello. El torneo fue ganado por Kempes.", en:"Gauchito embodied the archetypal Argentine footballer. Sky-blue-and-white jersey, wide-brim hat and neck scarf. The tournament was won by Kempes."},
+    stats:{animal:"Humano", designer:"—", rarity:"Clásica"}
+  },
+  { y:1982, name:"Naranjito", host:"España", type:"object", emoji:"🍊", bg:"#f57f17",
+    tag:{es:"Una naranja valenciana con uniforme rojo.", en:"A Valencian orange in a red strip."},
+    body:{es:"Naranjito fue la primera mascota no-humana sin ser un animal: una naranja sonriente con camiseta de La Roja. Icono absoluto del diseño español de los 80.", en:"Naranjito was the first non-human, non-animal mascot: a smiling orange in a La Roja jersey. An absolute icon of 1980s Spanish design."},
+    stats:{animal:"Fruta", designer:"Dibujos y Diseño", rarity:"Pop"}
+  },
+  { y:1986, name:"Pique", host:"México", type:"object", emoji:"🌶️", bg:"#006847",
+    tag:{es:"Un jalapeño con bigote gigante.", en:"A jalapeño with a giant mustache."},
+    body:{es:"Pique, un chile jalapeño con sombrero mexicano y bigote, vistió el segundo Mundial organizado por México. Fue el telón de fondo del Mundial de Maradona.", en:"Pique, a jalapeño pepper with a mexican hat and mustache, dressed Mexico's second World Cup. Backdrop to Maradona's Cup."},
+    stats:{animal:"Chile", designer:"—", rarity:"Pop"}
+  },
+  { y:1990, name:"Ciao", host:"Italia", type:"object", emoji:"🧊", bg:"#008c45",
+    tag:{es:"Un jugador hecho de cubos verdes, blancos y rojos.", en:"A player made of green, white and red cubes."},
+    body:{es:"Ciao rompió moldes: una figura completamente abstracta, compuesta por bloques tricolor con una cabeza esférica. El Mundial de la genialidad de Schillaci y la derrota de Maradona.", en:"Ciao broke molds: a fully abstract figure made of tricolor blocks with a spherical head. The Cup of Schillaci's magic and Maradona's defeat."},
+    stats:{animal:"Abstracto", designer:"L. Benevelli", rarity:"Vanguardia"}
+  },
+  { y:1994, name:"Striker", host:"EE. UU.", type:"animal", emoji:"🐕", bg:"#b22234",
+    tag:{es:"El 'World Cup Pup' norteamericano.", en:"The North American World Cup Pup."},
+    body:{es:"Un perro futbolístico con uniforme rojo, blanco y azul. El Mundial que trajo el fútbol a territorio estadounidense y marcó récords de asistencia imposibles.", en:"A football-playing dog in red, white and blue. The World Cup that brought football to U.S. soil and set record attendance figures."},
+    stats:{animal:"Perro", designer:"Warner Bros.", rarity:"Comercial"}
+  },
+  { y:1998, name:"Footix", host:"Francia", type:"animal", emoji:"🐓", bg:"#0055a4",
+    tag:{es:"El gallo galo que llegó con el tricolor.", en:"The Gallic rooster that arrived with the tricolor."},
+    body:{es:"Footix, un gallo azul que proclamaba 'allez la France', acompañó el primer Mundial ganado por los anfitriones desde 1978. El cabezazo de Zidane tuvo testigo emplumado.", en:"Footix, a blue rooster proclaiming 'allez la France', accompanied the first World Cup won by the hosts since 1978. Zidane's header had a feathered witness."},
+    stats:{animal:"Gallo", designer:"F. Pichon", rarity:"Clásica"}
+  },
+  { y:2002, name:"Ato, Kaz y Nik", host:"Japón · Corea", type:"animal", emoji:"👾", bg:"#7b1fa2",
+    tag:{es:"Tres 'Sphericals' futuristas del 'Atmoball'.", en:"Three futuristic 'Sphericals' of 'Atmoball'."},
+    body:{es:"El primer Mundial asiático estrenó mascotas generadas por ordenador. Tres criaturas esféricas con colores amarillo, morado y azul — una ruptura total con la tradición ilustrada.", en:"The first Asian World Cup debuted fully computer-generated mascots. Three spherical creatures in yellow, purple and blue — a total break with illustrated tradition."},
+    stats:{animal:"CGI", designer:"Interbrand", rarity:"Rareza"}
+  },
+  { y:2006, name:"Goleo VI", host:"Alemania", type:"animal", emoji:"🦁", bg:"#000",
+    tag:{es:"Un león con los pantalones de Alemania y nada más.", en:"A lion in Germany's shorts and nothing else."},
+    body:{es:"Goleo, un león antropomórfico diseñado por Jim Henson Company, acompañó al Mundial del 'verano de cuento'. Su peculiaridad: ningún zapato. Un león cómodo.", en:"Goleo, an anthropomorphic lion designed by The Jim Henson Company, accompanied the 'fairy-tale summer' Cup. His peculiarity: no shoes. A comfortable lion."},
+    stats:{animal:"León", designer:"Jim Henson Co.", rarity:"Polémica"}
+  },
+  { y:2010, name:"Zakumi", host:"Sudáfrica", type:"animal", emoji:"🐆", bg:"#007a3d",
+    tag:{es:"Leopardo verde y amarillo: 'ZA' + 'kumi'.", en:"Green-and-yellow leopard: 'ZA' + 'kumi'."},
+    body:{es:"Zakumi, cuyo nombre une el código ISO de Sudáfrica con 'kumi' (10), fue el primer amuleto del continente africano. La final entre España y Países Bajos tuvo ojo felino.", en:"Zakumi, whose name combines South Africa's ISO code with 'kumi' (10), was Africa's first World Cup mascot. The Spain–Netherlands final had a feline witness."},
+    stats:{animal:"Leopardo", designer:"A. Msibi", rarity:"Icónica"}
+  },
+  { y:2014, name:"Fuleco", host:"Brasil", type:"animal", emoji:"🦔", bg:"#009b3a",
+    tag:{es:"Un armadillo de tres bandas en peligro de extinción.", en:"An endangered three-banded armadillo."},
+    body:{es:"Fuleco fusionó 'futebol' y 'ecologia'. Representó al tatu-bola, especie brasileña en peligro. El Mundial del Mineirazo tuvo mascota con mensaje conservacionista.", en:"Fuleco fused 'futebol' and 'ecologia'. Represented the Brazilian three-banded armadillo, an endangered species. The Mineirazo Cup had a conservationist mascot."},
+    stats:{animal:"Armadillo", designer:"100% Design", rarity:"Icónica"}
+  },
+  { y:2018, name:"Zabivaka", host:"Rusia", type:"animal", emoji:"🐺", bg:"#0044a5",
+    tag:{es:"Un lobo con gafas deportivas amarillas.", en:"A wolf in yellow sports goggles."},
+    body:{es:"Zabivaka ('el que anota' en ruso) fue elegido por voto público ruso. Un lobo siberiano con gafas naranjas que presidió el Mundial del hat-trick de Mbappé en cuartos.", en:"Zabivaka ('the one who scores' in Russian) was elected by Russian public vote. A Siberian wolf in orange goggles who presided over the Cup of Mbappé's quarterfinal hat-trick."},
+    stats:{animal:"Lobo", designer:"E. Bochkova", rarity:"Rareza"}
+  },
+  { y:2022, name:"La'eeb", host:"Catar", type:"object", emoji:"🕊️", bg:"#7a003c",
+    tag:{es:"Una keffiyeh ghutra que flota en el aire.", en:"A floating keffiyeh ghutra."},
+    body:{es:"La'eeb ('jugador experto' en árabe) es una tela tradicional árabe que flota, sin rostro definido. Presidió el torneo del 3–3 entre Argentina y Francia.", en:"La'eeb ('skilled player' in Arabic) is a traditional Arabic fabric that floats, without a defined face. It presided over the 3–3 between Argentina and France."},
+    stats:{animal:"Tela", designer:"FIFA", rarity:"Abstracta"}
+  },
+  { y:2026, name:"Maple, Zayu & Clutch", host:"CAN · MEX · USA", type:"mx", emoji:"🍁🐆🦅", bg:"#1a1a24",
+    tag:{es:"Un alce, un jaguar y un águila calva. Por primera vez: tres países, tres amuletos.", en:"A moose, a jaguar and a bald eagle. For the first time: three countries, three mascots."},
+    body:{es:"Maple (alce, Canadá), Zayu (jaguar, México) y Clutch (águila calva, EE. UU.) forman el primer trío oficial norteamericano. Cada uno representa el espíritu de su país anfitrión y juntos encarnan el primer Mundial compartido entre tres naciones.", en:"Maple (moose, Canada), Zayu (jaguar, Mexico) and Clutch (bald eagle, USA) form the first official North American trio. Each represents its host country's spirit — together, they embody the first World Cup shared by three nations."},
+    stats:{animal:"Trío", designer:"FIFA 2026", rarity:"Estreno"}
+  },
+];
+
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+let currentFilter = "all";
+
+function renderGrid() {
+  const lang = M26.getLang();
+  const list = MASCOTS.filter(m => currentFilter === "all" || m.type === currentFilter);
+  $("#grid").innerHTML = list.map((m, i) => `
+    <div class="ms-card" data-idx="${MASCOTS.indexOf(m)}" style="--cardbg:${m.bg}">
+      <div class="art">
+        <div class="yr-big">${m.y}</div>
+        <div class="holo">#${String(MASCOTS.indexOf(m)+1).padStart(2,"0")} · ${m.stats.rarity.toUpperCase()}</div>
+        <div class="emoji">${m.emoji}</div>
+      </div>
+      <div class="info">
+        <div class="name">${m.name}</div>
+        <div class="host">${m.host}</div>
+        <div class="stats">
+          <div class="stat"><div class="k">${lang==="en"?"Type":"Tipo"}</div><div class="v">${m.stats.animal}</div></div>
+          <div class="stat"><div class="k">${lang==="en"?"Design":"Diseño"}</div><div class="v">${m.stats.designer}</div></div>
+          <div class="stat"><div class="k">${lang==="en"?"Rarity":"Rareza"}</div><div class="v">${m.stats.rarity}</div></div>
+        </div>
+      </div>
+      <div class="rarity"></div>
+    </div>
+  `).join("");
+}
+
+function renderEvo() {
+  $("#evo").innerHTML = MASCOTS.map(m => `
+    <div class="evo-tick">
+      <div class="emoji">${m.emoji.slice(0, 2)}</div>
+      <div class="yr">${m.y}</div>
+      <div class="nm">${m.name.split(" ")[0]}</div>
+    </div>
+  `).join("");
+}
+
+function openLightbox(idx) {
+  const lang = M26.getLang();
+  const m = MASCOTS[idx];
+  const lb = $("#lb");
+  $("#lb-inner").innerHTML = `
+    <div class="lb-art" style="background:${m.bg}">
+      <div class="yr-big">${m.y}</div>
+      <div class="emoji">${m.emoji}</div>
+    </div>
+    <div class="lb-info">
+      <h3><em>${m.name}</em></h3>
+      <div class="host">${m.host}</div>
+      <p class="tag">"${m.tag[lang]}"</p>
+      <p class="body">${m.body[lang]}</p>
+      <div class="stats">
+        <div><div class="k">${lang==="en"?"Year":"Año"}</div><div class="v"><em>${m.y}</em></div></div>
+        <div><div class="k">${lang==="en"?"Type":"Tipo"}</div><div class="v">${m.stats.animal}</div></div>
+        <div><div class="k">${lang==="en"?"Design":"Diseño"}</div><div class="v">${m.stats.designer}</div></div>
+      </div>
+    </div>
+  `;
+  lb.classList.add("open");
+}
+
+document.addEventListener("click", (e) => {
+  const card = e.target.closest(".ms-card");
+  if (card) { openLightbox(+card.dataset.idx); return; }
+  const f = e.target.closest(".ms-filters button");
+  if (f) {
+    currentFilter = f.dataset.f;
+    $$(".ms-filters button").forEach(b => b.classList.toggle("active", b === f));
+    renderGrid();
+    return;
+  }
+  if (e.target.id === "lb-close" || e.target.id === "lb") {
+    $("#lb").classList.remove("open");
+  }
+});
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#lb").classList.remove("open"); });
+
+const orig = M26.applyI18n;
+M26.applyI18n = function() { orig(); renderGrid(); };
+renderGrid();
+renderEvo();
+</script>
+</body>
+</html>

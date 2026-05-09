@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(curl -sL \"https://api.anthropic.com/v1/design/h/DtZ7Qvj9QJaceOHszc78OQ\" -o /tmp/design_file.html)",
+      "Read(//tmp/**)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(netstat -ano)",
+      "Bash(python -m http.server 3002)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3002/balones.html)",
+      "Bash(python3 -c \"from PIL import Image; print\\('Pillow OK'\\)\")",
+      "Bash(python -c \"from PIL import Image; print\\('Pillow OK'\\)\")",
+      "Bash(python -c ' *)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(findstr :3002)",
+      "Bash(findstr LISTENING)",
+      "Bash(taskkill /PID 11764 /F)",
+      "Bash(taskkill /PID 14080 /F)",
+      "PowerShell(Stop-Process -Id 11764 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Id 14080 -Force -ErrorAction SilentlyContinue)"
+    ]
+  }
+}

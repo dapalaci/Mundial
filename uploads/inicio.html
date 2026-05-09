@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;900&amp;family=Inter:wght@400;500;600&amp;family=Montserrat:wght@900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+        body {
+            background-color: #000000;
+            color: #e2e2e2;
+            overflow-x: hidden;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#6900b3",
+                      "surface-bright": "#393939",
+                      "on-surface-variant": "#cfc2d6",
+                      "primary-fixed-dim": "#ddb7ff",
+                      "on-secondary-container": "#b4b5b5",
+                      "on-background": "#e2e2e2",
+                      "inverse-primary": "#842bd2",
+                      "on-error": "#690005",
+                      "inverse-surface": "#e2e2e2",
+                      "inverse-on-surface": "#303030",
+                      "tertiary-container": "#929090",
+                      "primary-container": "#b76dff",
+                      "on-tertiary": "#313030",
+                      "surface-tint": "#ddb7ff",
+                      "primary-fixed": "#f0dbff",
+                      "outline-variant": "#4d4354",
+                      "surface": "#131313",
+                      "on-secondary-fixed-variant": "#454747",
+                      "surface-dim": "#131313",
+                      "tertiary-fixed": "#e5e2e1",
+                      "primary": "#ddb7ff",
+                      "on-primary": "#490080",
+                      "on-secondary-fixed": "#1a1c1c",
+                      "surface-container-highest": "#353535",
+                      "on-tertiary-fixed": "#1c1b1b",
+                      "on-primary-fixed": "#2c0051",
+                      "outline": "#988d9f",
+                      "surface-container-high": "#2a2a2a",
+                      "secondary": "#c6c6c7",
+                      "on-tertiary-container": "#2a2a29",
+                      "secondary-fixed": "#e2e2e2",
+                      "surface-variant": "#353535",
+                      "on-error-container": "#ffdad6",
+                      "on-primary-container": "#400071",
+                      "tertiary": "#c8c6c5",
+                      "surface-container-lowest": "#0e0e0e",
+                      "surface-container": "#1f1f1f",
+                      "error-container": "#93000a",
+                      "secondary-fixed-dim": "#c6c6c7",
+                      "error": "#ffb4ab",
+                      "on-secondary": "#2f3131",
+                      "background": "#131313",
+                      "on-surface": "#e2e2e2",
+                      "tertiary-fixed-dim": "#c8c6c5",
+                      "surface-container-low": "#1b1b1b",
+                      "secondary-container": "#454747",
+                      "on-tertiary-fixed-variant": "#474646"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "section-gap": "120px",
+                      "unit": "8px",
+                      "stack-md": "16px",
+                      "margin-mobile": "16px",
+                      "stack-sm": "8px",
+                      "container-max": "1440px",
+                      "stack-lg": "32px",
+                      "margin-desktop": "64px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Epilogue"],
+                      "label-bold": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-md": ["Epilogue"],
+                      "display-hero": ["Montserrat"],
+                      "label-sm": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                      "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "display-hero": ["100px", {"lineHeight": "0.9", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                      "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-16 h-20 max-w-[1440px] left-1/2 -translate-x-1/2 bg-black/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_30px_rgba(168,85,247,0.2)]">
+<div class="text-2xl font-black text-white tracking-widest font-epilogue uppercase">FIFA WORLD CUP 2026</div>
+<div class="hidden md:flex items-center gap-8 font-epilogue tracking-tighter uppercase text-xs">
+<a class="text-white/70 hover:text-white transition-colors" href="#">Analytics</a>
+<a class="text-white/70 hover:text-white transition-colors" href="#">History</a>
+<a class="text-white/70 hover:text-white transition-colors" href="#">Teams</a>
+<a class="text-purple-500 border-b-2 border-purple-500 pb-1" href="#">Matches</a>
+<a class="text-white/70 hover:text-white transition-colors" href="#">Venues</a>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">search</span>
+<input class="bg-white/5 border border-white/10 rounded-full py-2 pl-10 pr-4 text-[10px] tracking-widest uppercase focus:outline-none focus:border-purple-500/50 w-48" placeholder="SEARCH TEAMS" type="text"/>
+</div>
+<button class="bg-on-primary-fixed-variant text-white px-6 py-2 rounded-full font-label-bold text-label-sm uppercase tracking-widest hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] transition-all scale-95 active:scale-90">
+                Tickets
+            </button>
+<span class="material-symbols-outlined text-white/70 cursor-pointer hover:text-white transition-colors">account_circle</span>
+</div>
+</nav>
+<main class="relative pt-20">
+<!-- Hero Section -->
+<section class="relative h-[921px] flex flex-col items-center justify-center overflow-hidden px-margin-desktop">
+<!-- Background Glows -->
+<div class="absolute inset-0 hero-gradient pointer-events-none"></div>
+<div class="absolute top-1/4 -left-1/4 w-[600px] h-[600px] bg-purple-900/20 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute bottom-1/4 -right-1/4 w-[600px] h-[600px] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+<!-- Central 3D Visual Shell -->
+<div class="relative w-full max-w-container-max flex flex-col items-center z-10">
+<span class="font-label-bold text-primary tracking-[0.4em] uppercase mb-4 opacity-80">The Pinnacle of Global Football</span>
+<h1 class="font-display-hero text-display-hero text-white text-center uppercase mb-8 drop-shadow-[0_10px_20px_rgba(0,0,0,1)]">
+                    COPA MUNDIAL<br/>DE FUTBOL
+                </h1>
+<p class="font-body-lg text-white/60 text-center max-w-2xl mb-12 uppercase tracking-wide">
+                    Experience the future of the beautiful game. Real-time cinematic data, legendary performance metrics, and the road to glory in North America.
+                </p>
+<div class="flex gap-stack-lg">
+<button class="bg-primary-container text-on-primary-container px-10 py-5 rounded-lg font-headline-md text-label-bold uppercase tracking-widest hover:shadow-[0_0_40px_rgba(168,85,247,0.6)] transition-all transform hover:scale-105 active:scale-95">
+                        View Stats
+                    </button>
+<button class="glass-card text-white px-10 py-5 rounded-lg font-headline-md text-label-bold uppercase tracking-widest hover:bg-white/10 transition-all transform hover:scale-105 active:scale-95">
+                        Match Center
+                    </button>
+</div>
+</div>
+<!-- Visual Anchor: Trophy and Players -->
+<div class="absolute bottom-0 w-full flex justify-center pointer-events-none opacity-40 mix-blend-screen">
+<img class="w-full max-w-[1200px] h-[500px] object-cover object-top mask-image-gradient" data-alt="Cinematic 3D render of the FIFA World Cup trophy glowing in gold, flanked by silhouettes of Messi and Mbappe in a futuristic stadium setting with violet neon lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_WbOSJU9FlpiSVFnWO2DQOCEW-TlgfSaUIUEUdILdSlvVq03S9VmedgbrvJfDaoNyTicfgKH50b0UyAEOGHKq2HkWzIq7kxm3gGkDzcvlbf0lagZm7itzNQROhYPvhNB7SM1MYjtfyj9vsm8b33JGCJYkUidnOJC2Rqr9D4eMfNh2jyNF-qZW2LXQBR9GPggcc0PRj_p-UY6kgX497xpbeR_vb1YEaAfcMbFAM6074VmAMeTDuTBrMTGxLd7ZnMfj4Nm_4EllLO4"/>
+<style>
+                    .mask-image-gradient {
+                        mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+                    }
+                </style>
+</div>
+</section>
+<!-- Bento Grid Data Section -->
+<section class="max-w-container-max mx-auto px-16 py-section-gap">
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Live Metric Card -->
+<div class="col-span-12 md:col-span-8 glass-card p-stack-lg rounded-xl relative overflow-hidden group">
+<div class="flex justify-between items-start mb-12">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+<span class="font-label-sm text-white/50 tracking-widest uppercase">Live AI Predictions</span>
+</div>
+<h3 class="font-headline-lg text-white">CHAMPIONSHIP PROBABILITY</h3>
+</div>
+<span class="material-symbols-outlined text-purple-500 text-4xl">monitoring</span>
+</div>
+<div class="flex items-end gap-12">
+<div class="flex flex-col">
+<span class="font-display-hero text-6xl text-white">42%</span>
+<span class="font-label-sm text-purple-400 tracking-widest uppercase">Argentina</span>
+</div>
+<div class="flex flex-col opacity-40">
+<span class="font-display-hero text-4xl text-white">38%</span>
+<span class="font-label-sm text-white/50 tracking-widest uppercase">France</span>
+</div>
+<div class="flex flex-col opacity-20">
+<span class="font-display-hero text-4xl text-white">20%</span>
+<span class="font-label-sm text-white/50 tracking-widest uppercase">Brazil</span>
+</div>
+</div>
+<div class="absolute bottom-0 right-0 w-1/2 h-full -z-10 opacity-20 group-hover:opacity-40 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="Digital wireframe of a football pitch with glowing data points and player movement trajectories in neon violet" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHBIRS0EyhwLucpB9LpH-i-ogYr1Dns9uwEQGgJdAFSZo7qfISyFPW96tPWo7lLnvuNFb_6FUqfQ9XKFTrWbTcg1TM0CEpuTxDJIZsg1eiIwNswSa2ZOmMHgriNtoq8w1mawLk4oXNkxEDB7q17bVF6ZW1qsvUN1fF8XoM9kTrZJCQo-5vNY1NoCx3utIc5EMSbJGcovAs388TIdLcmVC3tEvjCrUOUXj9JR_2rfqE3f0ZjRIu-Vt34uJACuXl_FX8rBdQUlc6BHI"/>
+</div>
+</div>
+<!-- Featured Star Card -->
+<div class="col-span-12 md:col-span-4 glass-card p-stack-lg rounded-xl flex flex-col justify-between border-purple-500/30">
+<div class="flex justify-between items-center">
+<span class="bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full font-label-sm tracking-widest uppercase">Top Scorer</span>
+<span class="material-symbols-outlined text-white/50">star</span>
+</div>
+<div class="mt-8">
+<img class="w-full aspect-square object-cover rounded-lg mb-6 grayscale hover:grayscale-0 transition-all duration-500" data-alt="Close-up of a high-end football boot with glowing aesthetic on a dark smoky background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADsF7yTrKpVbo7PLeKDQkAj5LwnKuvb41cfXsSygm9kASxavhss-hTScCxxzkGHTiE6WYO6MJHfrMKkFSzkXxlwZS4xHw2wbcQWV0k5c1JWwVstxgjo32y7VByTQPfRvpgi0P4HA_US40xWFmch3Pk6G0Qj6lkG55j0mbj0rBueP0ildznxcKfbKX2YY5WC9YSTKCLa7ZkHS0554RyJB1b_JaxK-2C1X1p5UnT1_CKjXDa49O28wMZEJczaa49e0rL0eBREenTzGQ"/>
+<h4 class="font-headline-md text-white mb-1 uppercase tracking-tighter">Vinicius Jr.</h4>
+<p class="font-label-sm text-white/40 tracking-widest uppercase">Real Madrid / Brazil</p>
+</div>
+<div class="mt-8 flex justify-between items-center border-t border-white/10 pt-4">
+<span class="font-label-bold text-white uppercase">8 Goals</span>
+<span class="material-symbols-outlined text-purple-500">arrow_forward</span>
+</div>
+</div>
+<!-- Venues Card -->
+<div class="col-span-12 md:col-span-4 glass-card p-stack-lg rounded-xl overflow-hidden group">
+<h4 class="font-label-bold text-white mb-6 uppercase tracking-widest">Iconic Venues</h4>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
+<div class="w-12 h-12 rounded bg-white/10 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Modern architectural view of a large football stadium at night with violet floodlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYs1gzCmgvf7_iYxpf9BbI-SBVBUUGlYJq_u2oycjFWJSJyuNl7E7pNtmGaJP34dC9ycCCK0DiVJ98eVYaHryZfZA5yQdDkQdG_YtsMJOirzr0zefmyL8ulb-QxqdxeOyCEZfDd8hrki2ureZCoPQOBDNLR5yiHYWx7MS5KAc6sSqS7WlB4g4L3aLI4bvqFZXylYJ6Db70Zvr7HcAbVn4qNApJwfe4ByY3ZvQSEeKpzRl7vP-8BIDftY_GeA5PEpspHhURTCBPCDo"/>
+</div>
+<div>
+<div class="text-white font-label-bold uppercase text-xs">Azteca Stadium</div>
+<div class="text-white/40 font-label-sm uppercase text-[10px]">Mexico City</div>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
+<div class="w-12 h-12 rounded bg-white/10 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Exterior of a futuristic stadium building with glass facade and atmospheric city lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7N-O_6rOvoMxPTHz4yWIe5JynmTdwfYKnF_HM07TxTOIU441V7Gjj1MK-h0v3xxa_1XWfbSQl_qlR7Kt-krbWisCAU6dRsK0OUw-YmZXxxMuKSwCOXgdYdMakKFS0hDq4JhBZyaVYDu3c9TPdfUApQwz31cEb_rziSzL1GfI7-N1t5E2z3AeoVD7SowSN6xH37aLQXSXexzNTmt8etjs_RPg9phEO8N3DGekx4E1TWTB-HltRSfum5nMoPCU_XZ-Hd1DpAB3LBm4"/>
+</div>
+<div>
+<div class="text-white font-label-bold uppercase text-xs">SoFi Stadium</div>
+<div class="text-white/40 font-label-sm uppercase text-[10px]">Los Angeles</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Match History Bento -->
+<div class="col-span-12 md:col-span-8 glass-card p-stack-lg rounded-xl">
+<div class="flex justify-between items-center mb-8">
+<h4 class="font-headline-md text-white uppercase tracking-tight">Recent Clashes</h4>
+<button class="text-white/40 hover:text-white font-label-sm tracking-widest uppercase transition-colors">See History</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-white/5 font-label-sm text-white/30 uppercase tracking-[0.2em]">
+<th class="py-4">Matchup</th>
+<th class="py-4">Result</th>
+<th class="py-4">Top Performer</th>
+<th class="py-4 text-right">Intensity</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-white/80">
+<tr class="border-b border-white/5 hover:bg-white/2 transition-colors">
+<td class="py-6 uppercase tracking-tight">ENG vs GER</td>
+<td class="py-6 font-display-hero text-xl text-primary">3 - 2</td>
+<td class="py-6 text-white">Bellingham</td>
+<td class="py-6 text-right">
+<div class="inline-flex gap-1">
+<div class="w-1 h-4 bg-purple-500"></div>
+<div class="w-1 h-4 bg-purple-500"></div>
+<div class="w-1 h-4 bg-purple-500"></div>
+<div class="w-1 h-4 bg-purple-500/20"></div>
+</div>
+</td>
+</tr>
+<tr class="border-b border-white/5 hover:bg-white/2 transition-colors">
+<td class="py-6 uppercase tracking-tight">ESP vs ITA</td>
+<td class="py-6 font-display-hero text-xl">1 - 1</td>
+<td class="py-6 text-white">Lamine Yamal</td>
+<td class="py-6 text-right">
+<div class="inline-flex gap-1">
+<div class="w-1 h-4 bg-purple-500"></div>
+<div class="w-1 h-4 bg-purple-500"></div>
+<div class="w-1 h-4 bg-purple-500"></div>
+<div class="w-1 h-4 bg-purple-500"></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<!-- Latest News Section -->
+<section class="max-w-container-max mx-auto px-16 pb-section-gap">
+<div class="flex justify-between items-end mb-12">
+<div>
+<span class="font-label-sm text-primary tracking-[0.3em] uppercase mb-2 block">Editorial Intelligence</span>
+<h2 class="font-headline-lg text-white uppercase">Latest News</h2>
+</div>
+<button class="flex items-center gap-2 text-white/50 hover:text-white transition-colors font-label-bold uppercase tracking-widest text-xs">
+        Explore Archive <span class="material-symbols-outlined">north_east</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- News Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative overflow-hidden rounded-xl mb-6 aspect-[16/10]">
+<img class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" data-alt="Dynamic shot of a football player sprinting through a wall of cinematic fog with purple light beams" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb35pW1NscX_K2W9y8Pz_JmFf0YkM8zN2I2fH3S5G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-black/60 backdrop-blur-md text-white text-[10px] px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest font-label-bold">Breakthrough</span>
+</div>
+</div>
+<h3 class="font-headline-md text-white mb-3 leading-tight group-hover:text-primary transition-colors">THE RISE OF THE HYPER-PLAYER</h3>
+<p class="font-body-md text-white/50 line-clamp-2 uppercase text-xs tracking-wide">New AI analytics reveal how positional fluidity is redefining tactical mastery in the 2026 qualifiers.</p>
+<div class="mt-4 flex items-center gap-2">
+<div class="w-8 h-[1px] bg-purple-500/50 group-hover:w-12 transition-all"></div>
+<span class="text-[10px] font-label-sm text-white/30 uppercase tracking-[0.2em]">04 MIN READ</span>
+</div>
+</div>
+<!-- News Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative overflow-hidden rounded-xl mb-6 aspect-[16/10]">
+<img class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" data-alt="Macro photography of a futuristic football with glowing geometric patterns on a dark reflective surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7z_Y8X9W0V1U2T3S4R5Q6P7O8N9M0L1K2J3I4H5G6F7E8D9C0B1A2Z3Y4X5W6V7U8T9S0R1Q2P3O4N5M6L7K8J9I0H1G2F3E4D5C6B7A8Z9"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-black/60 backdrop-blur-md text-white text-[10px] px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest font-label-bold">Tech Focus</span>
+</div>
+</div>
+<h3 class="font-headline-md text-white mb-3 leading-tight group-hover:text-primary transition-colors">VIRTUAL VAR 2.0 DEPLOYED</h3>
+<p class="font-body-md text-white/50 line-clamp-2 uppercase text-xs tracking-wide">Instantaneous 3D rendering of offside calls to be introduced across all tournament venues starting this June.</p>
+<div class="mt-4 flex items-center gap-2">
+<div class="w-8 h-[1px] bg-purple-500/50 group-hover:w-12 transition-all"></div>
+<span class="text-[10px] font-label-sm text-white/30 uppercase tracking-[0.2em]">06 MIN READ</span>
+</div>
+</div>
+<!-- News Card 3 -->
+<div class="group cursor-pointer">
+<div class="relative overflow-hidden rounded-xl mb-6 aspect-[16/10]">
+<img class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" data-alt="Wide cinematic shot of an empty stadium bowl at dusk with neon purple rim lighting around the roof structure" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9C8D7E6F5G4H3I2J1K0L9M8N7O6P5Q4R3S2T1U0V9W8X7Y6Z5A4B3C2D1E0F9G8H7I6J5K4L3M2N1O0P9Q8R7S6T5U4V3W2X1Y0Z9A8B7C6"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-black/60 backdrop-blur-md text-white text-[10px] px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest font-label-bold">Host City</span>
+</div>
+</div>
+<h3 class="font-headline-md text-white mb-3 leading-tight group-hover:text-primary transition-colors">METROPOLIS OF FOOTBALL</h3>
+<p class="font-body-md text-white/50 line-clamp-2 uppercase text-xs tracking-wide">Inside Mexico City's transformation as the historic Azteca prepares for its third World Cup opening ceremony.</p>
+<div class="mt-4 flex items-center gap-2">
+<div class="w-8 h-[1px] bg-purple-500/50 group-hover:w-12 transition-all"></div>
+<span class="text-[10px] font-label-sm text-white/30 uppercase tracking-[0.2em]">08 MIN READ</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-black border-t border-white/5 w-full py-20">
+<div class="flex flex-col items-center gap-8 w-full max-w-[1440px] mx-auto px-16">
+<div class="text-lg font-bold text-white uppercase tracking-widest font-epilogue">FIFA WORLD CUP</div>
+<div class="flex flex-wrap justify-center gap-10">
+<a class="font-epilogue text-xs tracking-widest uppercase text-white/40 hover:text-purple-400 transition-colors" href="#">Privacy Policy</a>
+<a class="font-epilogue text-xs tracking-widest uppercase text-white/40 hover:text-purple-400 transition-colors" href="#">Terms of Service</a>
+<a class="font-epilogue text-xs tracking-widest uppercase text-white/40 hover:text-purple-400 transition-colors" href="#">Analytics API</a>
+<a class="font-epilogue text-xs tracking-widest uppercase text-white/40 hover:text-purple-400 transition-colors" href="#">Media Kit</a>
+<a class="font-epilogue text-xs tracking-widest uppercase text-white/40 hover:text-purple-400 transition-colors" href="#">Contact</a>
+</div>
+<div class="flex gap-6 opacity-60">
+<span class="material-symbols-outlined cursor-pointer hover:text-purple-400 transition-colors">public</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-purple-400 transition-colors">hub</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-purple-400 transition-colors">trophy</span>
+</div>
+<p class="font-epilogue text-xs tracking-widest uppercase text-white/30 text-center">
+                © 2026 FIFA WORLD CUP. CINEMATIC PERFORMANCE DATA.
+            </p>
+</div>
+</footer>
+</body></html>

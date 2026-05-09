@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundial 26 — Finales</title>
+<link rel="stylesheet" href="assets/shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .fin-hero { padding: 100px 0 40px; position: relative; overflow: hidden; }
+  .fin-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 900px 420px at 20% 30%, color-mix(in oklch, var(--accent) 18%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .fin-hero .wrap { position: relative; }
+  .fin-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 160px);
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    margin: 24px 0 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+    max-width: 14ch;
+  }
+  .fin-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .fin-hero .lead { margin-top: 28px; max-width: 62ch; }
+
+  /* Featured goal hero */
+  .feat-goal {
+    margin: 64px 0 48px;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    min-height: 520px;
+  }
+  .feat-goal .info { padding: 48px 52px; display: flex; flex-direction: column; justify-content: space-between; }
+  .feat-goal .info .line {
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .feat-goal .info h2 {
+    font-family: var(--f-display);
+    font-size: 68px;
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    margin: 16px 0 20px;
+    font-variation-settings: "opsz" 144;
+  }
+  .feat-goal .info h2 em { color: var(--accent); font-style: italic; }
+  .feat-goal .info .tag {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--text-dim);
+    letter-spacing: -0.015em;
+    margin-bottom: 24px;
+  }
+  .feat-goal .info .body {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-dim);
+    max-width: 52ch;
+  }
+  .feat-goal .info .meta {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .feat-goal .info .meta .k {
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--text-faint);
+    margin-bottom: 4px;
+  }
+  .feat-goal .info .meta .v { font-family: var(--f-display); font-size: 18px; letter-spacing: -0.015em; }
+  .feat-goal .info .meta .v em { color: var(--accent); font-style: italic; }
+
+  /* Pitch visualisation */
+  .pitch-wrap {
+    background: radial-gradient(ellipse at 50% 40%, #0f2e1a, #071308 70%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 32px;
+  }
+  .pitch-wrap::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(90deg, rgba(0,40,10,0.5) 0 60px, rgba(0,20,5,0.4) 60px 120px);
+    pointer-events: none;
+  }
+  .pitch-svg-wrap {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pitch-svg { width: 100%; max-width: 520px; height: auto; }
+  .pitch-caption {
+    position: relative;
+    display: flex; justify-content: space-between;
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+  }
+  .pitch-caption .min { color: var(--accent); font-family: var(--f-display); font-size: 18px; font-style: italic; letter-spacing: -0.02em; }
+
+  /* Replay bar */
+  .replay-bar {
+    position: absolute;
+    top: 18px; left: 18px; right: 18px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 2;
+  }
+  .replay-bar .chip { color: #fff; border-color: rgba(255,255,255,0.15); background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
+  .replay-bar .chip.live { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .replay-btn {
+    padding: 10px 18px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 999px;
+    color: #fff;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; gap: 8px;
+    cursor: pointer;
+  }
+  .replay-btn:hover { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+
+  /* Filters */
+  .fin-filters {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin: 40px 0 20px;
+  }
+  .fin-filters button {
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text-dim);
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: all .15s;
+  }
+  .fin-filters button.active { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .fin-filters button:hover:not(.active) { color: var(--text); border-color: var(--line-strong); }
+
+  /* Finals list */
+  .finals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .fin-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 220px auto;
+    gap: 28px;
+    align-items: center;
+    padding: 22px 28px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .fin-row:hover {
+    border-color: var(--line-strong);
+    background: var(--surface-2);
+  }
+  .fin-row.active {
+    border-color: var(--accent);
+    background: color-mix(in oklch, var(--accent) 6%, var(--surface));
+  }
+  .fin-row .yr {
+    font-family: var(--f-display);
+    font-size: 40px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    font-variation-settings: "opsz" 144;
+  }
+  .fin-row.active .yr em { color: var(--accent); font-style: italic; }
+  .fin-row .teams {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .fin-row .tm {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--f-display); font-size: 20px; letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 144;
+  }
+  .fin-row .tm.w em { color: var(--accent); font-style: italic; }
+  .fin-row .tm .fl { width: 32px; height: 22px; border-radius: 3px; }
+  .fin-row .vs { color: var(--text-faint); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.18em; }
+  .fin-row .score {
+    font-family: var(--f-display);
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+  }
+  .fin-row .score em { color: var(--accent); font-style: italic; }
+  .fin-row .venue {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: right;
+  }
+  .fin-row .highlight {
+    display: block;
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-faint);
+    margin-top: 4px;
+    max-width: 40ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 1000px) {
+    .feat-goal { grid-template-columns: 1fr; }
+    .fin-row { grid-template-columns: 60px 1fr; }
+    .fin-row .score, .fin-row .venue { grid-column: 2; font-size: 22px; text-align: left; }
+  }
+
+  /* Chart section */
+  .goals-chart {
+    margin-top: 72px;
+    padding: 44px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .goals-chart h3 { font-family: var(--f-display); font-size: 40px; letter-spacing: -0.03em; margin: 0 0 10px; font-variation-settings: "opsz" 144; }
+  .goals-chart h3 em { color: var(--accent); font-style: italic; }
+  .goals-chart .sub { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 32px; }
+  .bar-chart {
+    display: grid;
+    grid-template-columns: repeat(22, 1fr);
+    gap: 4px;
+    align-items: end;
+    height: 280px;
+  }
+  .bar {
+    position: relative;
+    background: var(--accent);
+    opacity: 0.85;
+    border-radius: 4px 4px 0 0;
+    transition: all .2s;
+    cursor: pointer;
+  }
+  .bar:hover { opacity: 1; transform: scaleY(1.04); transform-origin: bottom; }
+  .bar .tip {
+    position: absolute;
+    bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s;
+  }
+  .bar:hover .tip { opacity: 1; }
+  .bar .yr {
+    position: absolute;
+    top: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%) rotate(-45deg);
+    transform-origin: top left;
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--text-faint);
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+<div id="m26-nav-slot"></div>
+
+<section class="fin-hero">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n-es="● 22 finales · 2 648 goles · un siglo" data-i18n-en="● 22 finals · 2,648 goals · one century">● 22 finales · 2 648 goles · un siglo</span>
+    <h1 data-i18n-es="Los goles que <em>cambiaron</em><br>el mundo." data-i18n-en="The goals that <em>changed</em><br>the world.">Los goles que <em>cambiaron</em><br>el mundo.</h1>
+    <p class="lead" data-i18n-es="Cada final es un capítulo. En cada uno, un segundo exacto donde un pie, una cabeza o una zurda reescriben el guion. Aquí están los instantes más memorables, con el recorrido del balón sobre la cancha." data-i18n-en="Every final is a chapter. In each one, one precise second where a foot, a head or a left boot rewrites the script. Here are the most memorable moments, with the ball's path traced across the pitch.">
+      Cada final es un capítulo. En cada uno, un segundo exacto donde un pie, una cabeza o una zurda reescriben el guion. Aquí están los instantes más memorables, con el recorrido del balón sobre la cancha.
+    </p>
+  </div>
+</section>
+
+<main class="wrap" style="padding-bottom:80px;">
+  <!-- Featured goal viewer -->
+  <div class="feat-goal" id="feat-goal">
+    <div class="info">
+      <div>
+        <div class="line" id="feat-line">2022 · FINAL DE LUSAIL</div>
+        <h2 id="feat-title">El <em>3–3</em>.<br>Messi, para siempre.</h2>
+        <div class="tag" id="feat-tag">"Mira Messi, mira lo que va a hacer. Lo va a hacer de nuevo…"</div>
+        <p class="body" id="feat-body">En el minuto 108 Lionel Messi ajusta el 3–2 ante Francia. Remate en el área chica tras un rebote; Lloris no llega. Es el gol más importante del siglo. Mbappé empataría minutos después; los penales coronarían a Argentina.</p>
+      </div>
+      <div class="meta" id="feat-meta">
+        <div><div class="k">Min</div><div class="v"><em>108'</em></div></div>
+        <div><div class="k">Asistencia</div><div class="v">L. Paredes</div></div>
+        <div><div class="k">Distancia</div><div class="v">3 m</div></div>
+        <div><div class="k">Pie</div><div class="v">Derecha</div></div>
+      </div>
+    </div>
+    <div class="pitch-wrap">
+      <div class="replay-bar">
+        <div style="display:flex; gap:8px;">
+          <span class="chip live">● <span data-i18n-es="REPLAY" data-i18n-en="REPLAY">REPLAY</span></span>
+          <span class="chip" id="feat-match">ARG 3 – 3 FRA</span>
+        </div>
+        <button class="replay-btn" id="replay-btn">↻ <span data-i18n-es="Reproducir" data-i18n-en="Play">Reproducir</span></button>
+      </div>
+      <div class="pitch-svg-wrap">
+        <svg class="pitch-svg" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="goalGlow" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="var(--accent)" stop-opacity="0"/>
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity="1"/>
+            </linearGradient>
+          </defs>
+          <!-- pitch -->
+          <rect x="10" y="10" width="380" height="240" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+          <!-- center -->
+          <line x1="200" y1="10" x2="200" y2="250" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+          <circle cx="200" cy="130" r="32" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+          <circle cx="200" cy="130" r="2" fill="rgba(255,255,255,0.5)"/>
+          <!-- penalty areas -->
+          <rect x="10" y="70" width="60" height="120" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+          <rect x="10" y="100" width="20" height="60" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+          <rect x="330" y="70" width="60" height="120" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+          <rect x="370" y="100" width="20" height="60" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+          <!-- goal path -->
+          <path id="goal-path" d="M 120 140 Q 260 70 340 128" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="4 4" opacity="0.7" stroke-linecap="round"/>
+          <!-- start dot (assist) -->
+          <circle id="assist-dot" cx="120" cy="140" r="6" fill="var(--accent)" opacity="0.5"/>
+          <text x="120" y="160" fill="rgba(255,255,255,0.7)" font-family="JetBrains Mono" font-size="7" text-anchor="middle">ASISTENCIA</text>
+          <!-- end dot (goal) with pulse -->
+          <circle id="goal-dot" cx="340" cy="128" r="9" fill="var(--accent)">
+            <animate attributeName="r" values="9;14;9" dur="1.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+          </circle>
+          <text x="340" y="150" fill="var(--accent)" font-family="JetBrains Mono" font-size="8" text-anchor="middle" font-weight="bold">GOL</text>
+          <!-- ball moving along path -->
+          <circle id="ball" r="4" fill="#fff" stroke="#000" stroke-width="0.5" opacity="0">
+            <animateMotion id="ball-anim" dur="2.5s" begin="indefinite" fill="freeze">
+              <mpath href="#goal-path"/>
+            </animateMotion>
+            <animate id="ball-opac" attributeName="opacity" from="1" to="1" begin="indefinite" dur="2.5s" fill="freeze"/>
+          </circle>
+        </svg>
+      </div>
+      <div class="pitch-caption">
+        <div><span data-i18n-es="CANCHA · LUSAIL" data-i18n-en="PITCH · LUSAIL">CANCHA · LUSAIL</span> · <span id="feat-year">2022</span></div>
+        <div class="min" id="feat-min">108'</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="fin-filters" id="fin-filters">
+    <button data-f="all" class="active" data-i18n-es="Todas las finales" data-i18n-en="All finals">Todas las finales</button>
+    <button data-f="dram" data-i18n-es="Dramáticas" data-i18n-en="Dramatic">Dramáticas</button>
+    <button data-f="pens" data-i18n-es="Decididas en penales" data-i18n-en="Decided on penalties">Decididas en penales</button>
+    <button data-f="blow" data-i18n-es="Goleadas" data-i18n-en="Blowouts">Goleadas</button>
+    <button data-f="et" data-i18n-es="Con prórroga" data-i18n-en="Extra time">Con prórroga</button>
+  </div>
+
+  <!-- Finals list -->
+  <div class="finals-list" id="finals-list"></div>
+
+  <!-- Goals per tournament chart -->
+  <div class="goals-chart">
+    <h3 data-i18n-es="Los <em>goles</em> totales por edición" data-i18n-en="Total <em>goals</em> per edition">Los <em>goles</em> totales por edición</h3>
+    <div class="sub" data-i18n-es="De 70 goles en 1930 a 172 en 2022. El Mundial gana volumen con cada generación." data-i18n-en="From 70 goals in 1930 to 172 in 2022. The World Cup grows with every generation.">
+      De 70 goles en 1930 a 172 en 2022. El Mundial gana volumen con cada generación.
+    </div>
+    <div class="bar-chart" id="bar-chart"></div>
+  </div>
+</main>
+
+<div id="m26-footer-slot"></div>
+
+<script src="assets/shared.js"></script>
+<script>M26.init({ active: "finales" });</script>
+<script>
+const FINALS = [
+  { y:1930, w:"Uruguay",  wfl:"ur", l:"Argentina", lfl:"ar", score:"4–2", venue:"Centenario · Montevideo", highlight:{es:"El gol que inauguró el Mundial", en:"The goal that opened the World Cup"}, min:"89'", scorer:"H. Castro", assist:"P. Dorado", tags:["dram"],
+    tag:{es:"Nace el rito del fútbol global.", en:"The ritual of global football is born."}, body:{es:"Uruguay remonta a Argentina en el Centenario ante 90 000 almas. Castro, 'El Manco', sentencia el 4–2 a minutos del final.", en:"Uruguay comes back against Argentina at the Centenario before 90,000 souls. Castro, 'El Manco', seals the 4–2 minutes from time."}, foot:"Derecha", dist:"8 m", path:"M 70 90 Q 200 50 340 135" },
+  { y:1934, w:"Italia", wfl:"it", l:"Checoslovaquia", lfl:"hr", score:"2–1", venue:"Stadio del PNF · Roma", highlight:{es:"Schiavio en la prórroga",en:"Schiavio in extra time"}, min:"95'", scorer:"A. Schiavio", assist:"E. Meazza", tags:["et","dram"],
+    tag:{es:"La copa cruza el Atlántico.",en:"The cup crosses the Atlantic."}, body:{es:"Italia gana su primera copa en tiempo extra. Schiavio empuja el 2–1 tras combinación con Meazza.", en:"Italy wins its first cup in extra time. Schiavio pushes in the 2–1 after a combination with Meazza."}, foot:"Derecha", dist:"6 m", path:"M 250 100 L 340 128" },
+  { y:1938, w:"Italia", wfl:"it", l:"Hungría", lfl:"hr", score:"4–2", venue:"Stade de Colombes · París", highlight:{es:"El doblete de Piola",en:"Piola's brace"}, min:"82'", scorer:"S. Piola", assist:"G. Ferrari", tags:[],
+    tag:{es:"Pozzo revalida en la víspera de la guerra.",en:"Pozzo repeats on war's eve."}, body:{es:"Italia defiende el título. Piola firma un doblete de clase mayor en el Colombes.", en:"Italy defends. Piola delivers a masterclass brace at Colombes."}, foot:"Derecha", dist:"14 m", path:"M 180 130 Q 260 80 340 120" },
+  { y:1950, w:"Uruguay", wfl:"ur", l:"Brasil", lfl:"br", score:"2–1", venue:"Maracanã · Rio", highlight:{es:"El Maracanazo eterno",en:"The eternal Maracanazo"}, min:"79'", scorer:"A. Ghiggia", assist:"J. Pérez", tags:["dram"],
+    tag:{es:"El silencio más famoso del fútbol.",en:"Football's most famous silence."}, body:{es:"Ghiggia escapa por la derecha, Barbosa espera el centro y el 9 dispara al primer palo. 200 000 callan. Uruguay bicampeón.", en:"Ghiggia escapes right, Barbosa expects the cross, the 9 shoots to the near post. 200,000 go silent. Uruguay back-to-back champions."}, foot:"Derecha", dist:"10 m", path:"M 300 80 Q 340 105 352 125" },
+  { y:1954, w:"Alemania O.", wfl:"de", l:"Hungría", lfl:"hr", score:"3–2", venue:"Wankdorf · Berna", highlight:{es:"Rahn y el 'milagro de Berna'",en:"Rahn and the 'miracle of Bern'"}, min:"84'", scorer:"H. Rahn", assist:"H. Schäfer", tags:["dram"],
+    tag:{es:"Aus dem Hintergrund müsste Rahn schiessen.",en:"From the background, Rahn should shoot."}, body:{es:"Con Hungría 2–0 arriba a los 8', Alemania remonta. Rahn dispara desde la frontal bajo la lluvia: milagro.", en:"Hungary 2–0 up at 8'. Germany mounts a comeback. Rahn shoots from the edge under the rain: a miracle."}, foot:"Derecha", dist:"18 m", path:"M 220 140 L 340 125" },
+  { y:1958, w:"Brasil", wfl:"br", l:"Suecia", lfl:"se", score:"5–2", venue:"Råsunda · Solna", highlight:{es:"El primer Pelé",en:"The first Pelé"}, min:"55'", scorer:"Pelé", assist:"Didi", tags:["blow"],
+    tag:{es:"Un chico de 17 años se convierte en rey.",en:"A 17-year-old becomes king."}, body:{es:"Pelé pasa el balón por encima al defensor, gira y fusila. Nace una leyenda; Brasil gana su primera copa.", en:"Pelé flicks over the defender, spins, and strikes. A legend is born; Brazil wins its first cup."}, foot:"Derecha", dist:"12 m", path:"M 260 110 Q 300 90 340 128" },
+  { y:1962, w:"Brasil", wfl:"br", l:"Checoslovaquia", lfl:"hr", score:"3–1", venue:"Nacional · Santiago", highlight:{es:"Vavá sentencia",en:"Vavá seals it"}, min:"78'", scorer:"Vavá", assist:"Amarildo", tags:[],
+    tag:{es:"Garrincha lleva la batuta; Vavá cierra.",en:"Garrincha leads; Vavá closes."}, body:{es:"Con Pelé lesionado, Garrincha arrastra al equipo. Vavá aprovecha un rebote y marca el 3–1 definitivo.", en:"With Pelé injured, Garrincha drags the team. Vavá pounces on a rebound and scores the final 3–1."}, foot:"Derecha", dist:"5 m", path:"M 300 110 L 340 128" },
+  { y:1966, w:"Inglaterra", wfl:"en", l:"Alemania O.", lfl:"de", score:"4–2", venue:"Wembley · Londres", highlight:{es:"'They think it's all over…'",en:"'They think it's all over…'"}, min:"120'", scorer:"G. Hurst", assist:"—", tags:["et","dram"],
+    tag:{es:"El gol que cerró el único Mundial inglés.",en:"The goal that sealed England's only cup."}, body:{es:"Prórroga. Moore larga un pase largo; Hurst recibe solo y fusila con la zurda. El relator: 'They think it's all over… it is now'.", en:"Extra time. Moore launches a long ball; Hurst receives alone and fires with the left. The commentator: 'They think it's all over… it is now'."}, foot:"Izquierda", dist:"10 m", path:"M 180 110 L 340 125" },
+  { y:1970, w:"Brasil", wfl:"br", l:"Italia", lfl:"it", score:"4–1", venue:"Azteca · Ciudad de México", highlight:{es:"Carlos Alberto y los 9 toques",en:"Carlos Alberto and the 9 touches"}, min:"86'", scorer:"Carlos Alberto", assist:"Pelé", tags:["blow"],
+    tag:{es:"La jugada definitiva del fútbol.",en:"Football's definitive play."}, body:{es:"Nueve toques, diez jugadores tocan. Pelé pausa, da el pase al segundo palo; Carlos Alberto llega corriendo y fusila. La jugada más hermosa del Mundial.", en:"Nine touches, ten players involved. Pelé pauses, feeds the far post; Carlos Alberto comes running and strikes. The most beautiful play of any World Cup."}, foot:"Derecha", dist:"18 m", path:"M 30 140 Q 180 80 340 125" },
+  { y:1974, w:"Alemania O.", wfl:"de", l:"Países Bajos", lfl:"nl", score:"2–1", venue:"Olympiastadion · Múnich", highlight:{es:"Müller de espaldas",en:"Müller back to goal"}, min:"43'", scorer:"G. Müller", assist:"R. Bonhof", tags:[],
+    tag:{es:"Der Bomber cumple con media vuelta.",en:"Der Bomber delivers with a half-turn."}, body:{es:"Müller recibe de espaldas en el área, engancha, gira y fusila. 2–1 que pesa para siempre.", en:"Müller receives back to goal in the box, pulls the ball, spins, and strikes. A 2–1 that lasts forever."}, foot:"Derecha", dist:"8 m", path:"M 290 120 L 340 130" },
+  { y:1978, w:"Argentina", wfl:"ar", l:"Países Bajos", lfl:"nl", score:"3–1", venue:"Monumental · Buenos Aires", highlight:{es:"Kempes bajo el confeti",en:"Kempes under the confetti"}, min:"105'", scorer:"M. Kempes", assist:"L. Luque", tags:["et","dram"],
+    tag:{es:"La melena que voló con cada gol.",en:"The mane that flew with every goal."}, body:{es:"Kempes recibe en el área, se cae, se levanta y mete el rebote. Argentina 3–1. El papel picado nunca se ha ido.", en:"Kempes receives in the box, falls, gets up and buries the rebound. Argentina 3–1. The confetti has never settled."}, foot:"Izquierda", dist:"6 m", path:"M 300 125 L 340 128" },
+  { y:1982, w:"Italia", wfl:"it", l:"Alemania O.", lfl:"de", score:"3–1", venue:"Bernabéu · Madrid", highlight:{es:"Rossi vuelve de la sombra",en:"Rossi returns from the shadows"}, min:"57'", scorer:"P. Rossi", assist:"C. Gentile", tags:[],
+    tag:{es:"Seis goles, un campeón del mundo.",en:"Six goals, one world champion."}, body:{es:"Rossi cabecea un centro al segundo palo. Redención para un 9 que volvía de dos años de suspensión.", en:"Rossi heads in a cross to the far post. Redemption for a 9 returning from two years of suspension."}, foot:"Cabeza", dist:"7 m", path:"M 250 70 L 340 128" },
+  { y:1986, w:"Argentina", wfl:"ar", l:"Alemania O.", lfl:"de", score:"3–2", venue:"Azteca · Ciudad de México", highlight:{es:"Burruchaga sentencia",en:"Burruchaga seals it"}, min:"83'", scorer:"J. Burruchaga", assist:"D. Maradona", tags:["dram"],
+    tag:{es:"Maradona asiste con la derecha, Burru mata.",en:"Maradona assists right-footed, Burru finishes."}, body:{es:"Maradona libra un pase entre líneas; Burruchaga entra solo y define con la derecha. Argentina bicampeona.", en:"Maradona delivers a pass between the lines; Burruchaga arrives alone and finishes with the right. Argentina two-time champions."}, foot:"Derecha", dist:"15 m", path:"M 170 130 Q 260 110 340 125" },
+  { y:1990, w:"Alemania O.", wfl:"de", l:"Argentina", lfl:"ar", score:"1–0", venue:"Olimpico · Roma", highlight:{es:"Brehme, inmóvil",en:"Brehme, unmoved"}, min:"85'", scorer:"A. Brehme", assist:"penal", tags:[],
+    tag:{es:"Una zurda eterna desde los once metros.",en:"An everlasting left from the spot."}, body:{es:"Penal. Brehme camina, ni mira la portería, engancha el balón con el exterior zurdo y lo mete pegado al palo.", en:"Penalty. Brehme walks up, doesn't look at the goal, hooks the ball with the outside of the left foot into the post."}, foot:"Izquierda", dist:"11 m", path:"M 300 130 L 340 125" },
+  { y:1994, w:"Brasil", wfl:"br", l:"Italia", lfl:"it", score:"3–2 p", venue:"Rose Bowl · Pasadena", highlight:{es:"Baggio al cielo",en:"Baggio to the sky"}, min:"Penales", scorer:"M. Taffarel (atajada)", assist:"—", tags:["pens","dram"],
+    tag:{es:"La cola de caballo que miró al cielo.",en:"The ponytail that looked up to the sky."}, body:{es:"Final sin goles. Penales. Baggio, la estrella, el último. Dispara al cielo. Brasil tetracampeón.", en:"Goalless final. Penalties. Baggio, the star, last to shoot. Blasts over. Brazil wins its fourth."}, foot:"Derecha", dist:"11 m", path:"M 300 130 L 335 100" },
+  { y:1998, w:"Francia", wfl:"fr", l:"Brasil", lfl:"br", score:"3–0", venue:"Stade de France · Saint-Denis", highlight:{es:"Zidane, dos de cabeza",en:"Zidane, two headers"}, min:"27'", scorer:"Z. Zidane", assist:"E. Petit", tags:["blow"],
+    tag:{es:"Un tricolor bajo los Campos Elíseos.",en:"A tricolor down the Champs-Élysées."}, body:{es:"Córner de Petit; ZZ se eleva en el primer palo y conecta de cabeza. Primer Mundial para Francia.", en:"Petit's corner; ZZ rises at the near post and heads it in. France's first cup."}, foot:"Cabeza", dist:"8 m", path:"M 10 120 Q 200 30 340 125" },
+  { y:2002, w:"Brasil", wfl:"br", l:"Alemania", lfl:"de", score:"2–0", venue:"Yokohama · Japón", highlight:{es:"Ronaldo redime",en:"Ronaldo redeemed"}, min:"67'", scorer:"Ronaldo", assist:"Rivaldo", tags:[],
+    tag:{es:"El fenómeno vuelve a ser rey.",en:"The phenomenon is king again."}, body:{es:"Ronaldo pica, engancha y fusila a Kahn. Era la redención tras aquella final de 1998.", en:"Ronaldo prods, hooks and finishes past Kahn. The redemption after the 1998 final."}, foot:"Derecha", dist:"9 m", path:"M 280 140 L 340 128" },
+  { y:2006, w:"Italia", wfl:"it", l:"Francia", lfl:"fr", score:"1–1 p", venue:"Olympiastadion · Berlín", highlight:{es:"El cabezazo de Materazzi",en:"Materazzi's headbutt episode"}, min:"Penales", scorer:"F. Grosso", assist:"—", tags:["pens","et"],
+    tag:{es:"Zidane se va antes del sueño.",en:"Zidane leaves before the dream."}, body:{es:"Zidane es expulsado tras el cabezazo a Materazzi. Italia gana en penales. Grosso anota el último.", en:"Zidane sent off after headbutting Materazzi. Italy wins on penalties. Grosso scores the last."}, foot:"Derecha", dist:"11 m", path:"M 300 130 L 340 125" },
+  { y:2010, w:"España", wfl:"es", l:"Países Bajos", lfl:"nl", score:"1–0", venue:"Soccer City · Johannesburgo", highlight:{es:"Iniesta en el 116'",en:"Iniesta at 116'"}, min:"116'", scorer:"A. Iniesta", assist:"C. Fàbregas", tags:["et","dram"],
+    tag:{es:"'Dedicado a Dani Jarque.'",en:"'Dedicated to Dani Jarque.'"}, body:{es:"Fàbregas filtra; Iniesta la baja y define con zurda al palo lejano. La Roja campeona por primera vez.", en:"Fàbregas threads it; Iniesta brings it down and finishes with the left to the far post. La Roja champion for the first time."}, foot:"Derecha", dist:"13 m", path:"M 210 150 Q 270 110 340 128" },
+  { y:2014, w:"Alemania", wfl:"de", l:"Argentina", lfl:"ar", score:"1–0", venue:"Maracanã · Rio", highlight:{es:"Götze pinta el sueño",en:"Götze paints the dream"}, min:"113'", scorer:"M. Götze", assist:"A. Schürrle", tags:["et","dram"],
+    tag:{es:"Pecho, zurda, rincón. Mineirazo coronado.",en:"Chest, left foot, corner. Mineirazo crowned."}, body:{es:"Centro de Schürrle, Götze la baja con el pecho y define con la zurda al segundo palo. Tres semanas después del 7–1.", en:"Schürrle cross, Götze brings it down with the chest and finishes low with the left to the far post. Three weeks after the 7–1."}, foot:"Izquierda", dist:"11 m", path:"M 100 90 Q 200 110 340 125" },
+  { y:2018, w:"Francia", wfl:"fr", l:"Croacia", lfl:"hr", score:"4–2", venue:"Luzhniki · Moscú", highlight:{es:"Pogba de pierna zurda",en:"Pogba's left footed rocket"}, min:"59'", scorer:"P. Pogba", assist:"A. Griezmann", tags:["blow"],
+    tag:{es:"Mbappé corrió al espacio como un niño.",en:"Mbappé sprinted like a child into space."}, body:{es:"Pogba empalma un rebote dentro del área. 3–1 y todo encaminado bajo la lluvia de Moscú.", en:"Pogba strikes a rebound inside the box. 3–1 and home in the Moscow rain."}, foot:"Izquierda", dist:"19 m", path:"M 240 120 L 340 125" },
+  { y:2022, w:"Argentina", wfl:"ar", l:"Francia", lfl:"fr", score:"3–3 p", venue:"Lusail · Doha", highlight:{es:"El 3–2 de Messi",en:"Messi's 3–2"}, min:"108'", scorer:"L. Messi", assist:"L. Paredes", tags:["pens","et","dram"],
+    tag:{es:"Mira Messi, mira lo que va a hacer. Lo va a hacer de nuevo…",en:"Watch Messi, watch what he's about to do. He's going to do it again…"}, body:{es:"Minuto 108. Rebote en el área chica. Messi fusila el 3–2. Mbappé empataría minutos después; los penales coronarían a Argentina tricampeona.", en:"108th minute. Rebound in the six-yard box. Messi fires in the 3–2. Mbappé would equalize; penalties crowned Argentina as three-time champions."}, foot:"Derecha", dist:"3 m", path:"M 300 110 L 340 128" },
+];
+
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+
+let activeIdx = FINALS.length - 1; // start with 2022
+let filter = "all";
+
+function matchFilter(f) {
+  if (filter === "all") return true;
+  return f.tags.includes(filter);
+}
+
+function renderList() {
+  const lang = M26.getLang();
+  const list = [...FINALS].reverse();
+  $("#finals-list").innerHTML = list.map((f, _i) => {
+    const idx = FINALS.indexOf(f);
+    const show = matchFilter(f);
+    if (!show) return "";
+    return `
+      <div class="fin-row ${idx===activeIdx?'active':''}" data-idx="${idx}">
+        <div class="yr">${idx===activeIdx?'<em>'+f.y+'</em>':f.y}</div>
+        <div class="teams">
+          <div class="tm w"><div class="fl ph flag flag-${f.wfl}"></div><em>${f.w}</em></div>
+          <span class="vs">vs</span>
+          <div class="tm"><div class="fl ph flag flag-${f.lfl}"></div>${f.l}</div>
+          <span class="highlight">— ${f.highlight[lang]}</span>
+        </div>
+        <div class="score">${f.score.replace('–','<em>–</em>')}</div>
+        <div class="venue">${f.venue}</div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderFeatured() {
+  const lang = M26.getLang();
+  const f = FINALS[activeIdx];
+  $("#feat-line").textContent = `${f.y} · ${lang==="en"?"FINAL":"FINAL"} · ${f.venue.split(' · ')[1]?.toUpperCase() || ''}`;
+  $("#feat-title").innerHTML = `El <em>${f.score}</em>.<br>${f.highlight[lang].split(' ').slice(0, 5).join(' ')}`;
+  $("#feat-tag").textContent = `"${f.tag[lang]}"`;
+  $("#feat-body").textContent = f.body[lang];
+  $("#feat-match").textContent = `${f.w.slice(0,3).toUpperCase()} ${f.score.split('–')[0]} – ${f.score.split('–')[1]} ${f.l.slice(0,3).toUpperCase()}`;
+  $("#feat-year").textContent = f.y;
+  $("#feat-min").textContent = f.min;
+  const meta = $("#feat-meta");
+  meta.innerHTML = `
+    <div><div class="k">${lang==="en"?"Min":"Min"}</div><div class="v"><em>${f.min}</em></div></div>
+    <div><div class="k">${lang==="en"?"Scorer":"Autor"}</div><div class="v">${f.scorer}</div></div>
+    <div><div class="k">${lang==="en"?"Assist":"Asistencia"}</div><div class="v">${f.assist}</div></div>
+    <div><div class="k">${lang==="en"?"Distance":"Distancia"}</div><div class="v">${f.dist}</div></div>
+  `;
+  // Update path
+  $("#goal-path").setAttribute("d", f.path);
+  // Reposition assist/goal dots
+  const m = f.path.match(/M\s*([\d.]+)\s+([\d.]+)/);
+  const l = f.path.match(/[LQ]\s*([\d.]+)\s+([\d.]+)\s*([\d.]+)?\s*([\d.]+)?/);
+  if (m) {
+    $("#assist-dot").setAttribute("cx", m[1]);
+    $("#assist-dot").setAttribute("cy", m[2]);
+  }
+  // Extract last point of path (rough)
+  const last = f.path.match(/([\d.]+)\s+([\d.]+)\s*$/);
+  if (last) {
+    $("#goal-dot").setAttribute("cx", last[1]);
+    $("#goal-dot").setAttribute("cy", last[2]);
+  }
+  playReplay();
+}
+
+function playReplay() {
+  const ball = $("#ball");
+  const anim = $("#ball-anim");
+  ball.setAttribute("opacity", "1");
+  try { anim.beginElement(); } catch(e) {}
+}
+
+document.addEventListener("click", (e) => {
+  const row = e.target.closest(".fin-row");
+  if (row) {
+    activeIdx = +row.dataset.idx;
+    renderList();
+    renderFeatured();
+    window.scrollTo({top: 100, behavior:"smooth"});
+    return;
+  }
+  const fb = e.target.closest("#fin-filters button");
+  if (fb) {
+    filter = fb.dataset.f;
+    $$("#fin-filters button").forEach(b => b.classList.toggle("active", b === fb));
+    renderList();
+    return;
+  }
+  if (e.target.closest("#replay-btn")) {
+    playReplay();
+  }
+});
+
+function renderChart() {
+  const max = Math.max(...FINALS.map(f => f.y === 2022 ? 172 : 100));
+  const goalsByYear = { 1930:70, 1934:70, 1938:84, 1950:88, 1954:140, 1958:126, 1962:89, 1966:89, 1970:95, 1974:97, 1978:102, 1982:146, 1986:132, 1990:115, 1994:141, 1998:171, 2002:161, 2006:147, 2010:145, 2014:171, 2018:169, 2022:172 };
+  const maxG = Math.max(...Object.values(goalsByYear));
+  $("#bar-chart").innerHTML = FINALS.map(f => {
+    const g = goalsByYear[f.y] || 0;
+    const h = (g / maxG) * 100;
+    return `<div class="bar" style="height:${h}%"><span class="tip">${f.y} · ${g} goles</span><span class="yr">${f.y}</span></div>`;
+  }).join("");
+}
+
+const orig = M26.applyI18n;
+M26.applyI18n = function() { orig(); renderList(); renderFeatured(); };
+renderList();
+renderFeatured();
+renderChart();
+</script>
+</body>
+</html>

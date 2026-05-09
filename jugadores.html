@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundial 26 — Jugadores insignia</title>
+<link rel="stylesheet" href="assets/shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .ins-hero {
+    padding: 100px 0 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ins-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 900px 400px at 70% 30%, color-mix(in oklch, var(--accent) 18%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .ins-hero .wrap { position: relative; }
+  .ins-hero h1 {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 9vw, 164px);
+    line-height: 0.84;
+    letter-spacing: -0.045em;
+    margin: 28px 0 0;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+  }
+  .ins-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .ins-hero p.lead { margin-top: 32px; max-width: 62ch; }
+
+  /* Featured card (big editorial) */
+  .featured {
+    margin: 80px 0 40px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    min-height: 540px;
+    position: relative;
+  }
+  .featured-media {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 600px 400px at 50% 60%, color-mix(in oklch, var(--accent) 40%, black), transparent 70%),
+      linear-gradient(135deg, color-mix(in oklch, var(--accent) 30%, #000), #0a0a10);
+    min-height: 540px;
+  }
+  .featured-media::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 60px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 60px);
+  }
+  .featured-number {
+    position: absolute;
+    top: -40px; left: -20px;
+    font-family: var(--f-display);
+    font-size: 480px;
+    line-height: 0.8;
+    color: rgba(255,255,255,0.06);
+    letter-spacing: -0.05em;
+    font-variation-settings: "opsz" 144;
+    pointer-events: none;
+  }
+  .featured-silhouette {
+    position: absolute;
+    bottom: 0; right: -40px;
+    height: 90%;
+    opacity: 0.95;
+    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.6));
+  }
+  .featured-media .chip-row {
+    position: absolute;
+    top: 28px; left: 28px;
+    display: flex; gap: 8px; z-index: 2;
+  }
+  .featured-media .era-badge {
+    position: absolute;
+    bottom: 28px; left: 28px;
+    z-index: 2;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    padding: 8px 14px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    backdrop-filter: blur(10px);
+  }
+  .featured-body {
+    padding: 56px 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .featured-body .eyebrow-g { color: var(--accent); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+  .featured-body h2 {
+    font-family: var(--f-display);
+    font-size: 72px;
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+    margin: 20px 0 16px;
+    font-variation-settings: "opsz" 144;
+  }
+  .featured-body h2 em { color: var(--accent); font-style: italic; }
+  .featured-body .tagline {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--text-dim);
+    letter-spacing: -0.015em;
+    margin-bottom: 28px;
+    line-height: 1.3;
+  }
+  .featured-body .bio {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-dim);
+    max-width: 52ch;
+  }
+  .featured-body .biglines {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  .featured-body .bl .n {
+    font-family: var(--f-display);
+    font-size: 36px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .featured-body .bl .n em { color: var(--accent); font-style: italic; }
+  .featured-body .bl .k {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-top: 8px;
+  }
+
+  /* Era nav */
+  .era-nav {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin: 48px 0 20px;
+    flex-wrap: wrap;
+  }
+  .era-nav button {
+    padding: 10px 18px;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text-dim);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: all .15s;
+  }
+  .era-nav button:hover { color: var(--text); border-color: var(--line-strong); }
+  .era-nav button.active { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+
+  /* Grid of players */
+  .p-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 32px;
+  }
+  @media (max-width: 1000px) { .p-grid { grid-template-columns: repeat(2, 1fr); } .featured { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .p-grid { grid-template-columns: 1fr; } }
+  .p-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .p-card:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+  .p-media {
+    position: relative;
+    height: 260px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 300px 200px at 50% 60%, color-mix(in oklch, var(--p-c1, var(--accent)) 55%, black), transparent 70%),
+      linear-gradient(135deg, color-mix(in oklch, var(--p-c1, var(--accent)) 20%, #0a0a12), #0a0a12);
+  }
+  .p-media::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 50px);
+  }
+  .p-number {
+    position: absolute;
+    bottom: -32px; right: 10px;
+    font-family: var(--f-display);
+    font-size: 280px;
+    line-height: 0.8;
+    color: rgba(255,255,255,0.07);
+    letter-spacing: -0.05em;
+    font-variation-settings: "opsz" 144;
+  }
+  .p-silhouette {
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    height: 85%;
+    opacity: 0.93;
+  }
+  .p-flag {
+    position: absolute;
+    top: 16px; left: 16px;
+    width: 44px; height: 30px;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  .p-trophies {
+    position: absolute;
+    top: 16px; right: 16px;
+    display: flex;
+    gap: 3px;
+  }
+  .p-trophies .t {
+    width: 14px; height: 18px;
+    background: var(--accent);
+    clip-path: polygon(20% 0, 80% 0, 85% 55%, 50% 85%, 15% 55%);
+    box-shadow: 0 0 8px var(--accent);
+  }
+  .p-body { padding: 22px 22px 24px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .p-position {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .p-name {
+    font-family: var(--f-display);
+    font-size: 30px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    margin: 0;
+    font-variation-settings: "opsz" 144;
+  }
+  .p-meta {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+  .p-tag {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--text-dim);
+    letter-spacing: -0.015em;
+    margin: 8px 0 12px;
+    line-height: 1.3;
+  }
+  .p-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+  }
+  .p-stats .s .v { font-family: var(--f-display); font-size: 18px; letter-spacing: -0.015em; }
+  .p-stats .s .v em { color: var(--accent); font-style: italic; }
+  .p-stats .s .k { font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); margin-top: 4px; }
+
+  /* Comparison section */
+  .compare {
+    margin-top: 80px;
+    padding: 48px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .compare h3 { font-family: var(--f-display); font-size: 42px; letter-spacing: -0.03em; margin: 0 0 8px; font-variation-settings: "opsz" 144; }
+  .compare h3 em { color: var(--accent); font-style: italic; }
+  .compare .sub { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 36px; }
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 80px 1.2fr;
+    gap: 20px;
+    align-items: stretch;
+  }
+  .compare-col {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface-2);
+    position: relative;
+  }
+  .compare-col.hl { border-color: var(--accent-soft); background: color-mix(in oklch, var(--accent) 6%, var(--surface-2)); }
+  .compare-col .pn { font-family: var(--f-display); font-size: 32px; letter-spacing: -0.02em; font-variation-settings: "opsz" 144; }
+  .compare-col .pn em { color: var(--accent); font-style: italic; }
+  .compare-col .flag { width: 40px; height: 28px; border-radius: 4px; }
+  .compare-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--line); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; }
+  .compare-row .k { color: var(--text-dim); text-transform: uppercase; }
+  .compare-row .v { color: var(--text); font-family: var(--f-display); font-size: 16px; font-style: italic; }
+  .vs {
+    display: grid; place-items: center;
+    font-family: var(--f-display); font-style: italic;
+    font-size: 48px; letter-spacing: -0.03em;
+    color: var(--accent);
+  }
+  @media (max-width: 800px) { .compare-grid { grid-template-columns: 1fr; } .vs { font-size: 32px; } }
+</style>
+</head>
+<body>
+<div id="m26-nav-slot"></div>
+
+<section class="ins-hero">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n-es="● Los rostros del Mundial" data-i18n-en="● Faces of the World Cup">● Los rostros del Mundial</span>
+    <h1 data-i18n-es="Los que <em>cambiaron</em><br>el juego." data-i18n-en="Those who <em>changed</em><br>the game.">Los que <em>cambiaron</em><br>el juego.</h1>
+    <p class="lead" data-i18n-es="Diez leyendas que no solo hicieron goles: inventaron formas de entender el fútbol. Desde el rey brasileño que metió 12 goles en tres Mundiales hasta el 10 argentino que hizo llorar al Lusail." data-i18n-en="Ten legends who didn't just score: they invented new ways of understanding football. From the Brazilian king with 12 goals across three Cups to the Argentine 10 who made Lusail weep.">
+      Diez leyendas que no solo hicieron goles: inventaron formas de entender el fútbol. Desde el rey brasileño que metió 12 goles en tres Mundiales hasta el 10 argentino que hizo llorar al Lusail.
+    </p>
+  </div>
+</section>
+
+<main class="wrap" style="padding-bottom:80px;">
+  <!-- Featured player: Messi -->
+  <div class="featured" id="featured">
+    <div class="featured-media" style="--accent: oklch(0.62 0.18 240);">
+      <div class="chip-row">
+        <span class="chip accent">2022</span>
+        <span class="chip">GOAT</span>
+      </div>
+      <span class="featured-number">10</span>
+      <!-- Stylized player silhouette -->
+      <svg class="featured-silhouette" viewBox="0 0 300 500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="figGrad1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="oklch(0.95 0.02 240)"/>
+            <stop offset="40%" stop-color="oklch(0.75 0.15 240)"/>
+            <stop offset="100%" stop-color="oklch(0.4 0.15 240)"/>
+          </linearGradient>
+        </defs>
+        <!-- head -->
+        <ellipse cx="150" cy="70" rx="38" ry="44" fill="#f0c9a0"/>
+        <path d="M 112 60 Q 150 20 188 60 Q 188 45 150 35 Q 112 45 112 60 Z" fill="#3a2418"/>
+        <!-- body/jersey -->
+        <path d="M 95 120 Q 150 110 205 120 L 220 300 L 180 320 L 180 460 L 170 470 L 150 330 L 130 470 L 120 460 L 120 320 L 80 300 Z" fill="url(#figGrad1)"/>
+        <!-- 10 on jersey -->
+        <text x="150" y="220" font-family="Inter" font-size="54" font-weight="700" fill="#fff" text-anchor="middle">10</text>
+        <!-- arms raised -->
+        <path d="M 95 130 Q 60 100 50 40 L 65 35 Q 80 95 110 140 Z" fill="url(#figGrad1)"/>
+        <path d="M 205 130 Q 240 100 250 40 L 235 35 Q 220 95 190 140 Z" fill="url(#figGrad1)"/>
+        <!-- trophy in hand -->
+        <g transform="translate(220,10)">
+          <ellipse cx="15" cy="20" rx="15" ry="12" fill="#f5c842"/>
+          <rect x="10" y="28" width="10" height="20" fill="#f5c842"/>
+          <rect x="2" y="46" width="26" height="6" fill="#c99628"/>
+        </g>
+      </svg>
+      <span class="era-badge" data-i18n-es="CARA DESTACADA · QATAR 2022" data-i18n-en="FEATURED · QATAR 2022">CARA DESTACADA · QATAR 2022</span>
+    </div>
+    <div class="featured-body">
+      <div>
+        <span class="eyebrow-g" data-i18n-es="ARGENTINA · 1987" data-i18n-en="ARGENTINA · 1987">ARGENTINA · 1987</span>
+        <h2 data-i18n-es="Lionel <em>Messi</em>" data-i18n-en="Lionel <em>Messi</em>">Lionel <em>Messi</em></h2>
+        <p class="tagline" data-i18n-es="Cinco Mundiales, un destino. Levantó la copa que le faltaba." data-i18n-en="Five World Cups, one destiny. He lifted the cup he was missing.">
+          Cinco Mundiales, un destino. Levantó la copa que le faltaba.
+        </p>
+        <p class="bio" data-i18n-es="Debutó en 2006, perdió en 2014, calló al Maracanã, lloró en 2018 y conquistó Lusail en 2022 con dos goles en la final y un penal decisivo en la tanda. Dribla sin tocar a nadie. Ve el pase que nadie ve. Hace que el 10 vuelva a significar algo." data-i18n-en="Debuted in 2006, lost in 2014, silenced the Maracanã, wept in 2018 and conquered Lusail in 2022 with two goals in the final and a decisive spot kick. He dribbles without touching anyone. Sees the pass no one else sees. Makes the number 10 mean something again.">
+          Debutó en 2006, perdió en 2014, calló al Maracanã, lloró en 2018 y conquistó Lusail en 2022 con dos goles en la final y un penal decisivo en la tanda. Dribla sin tocar a nadie. Ve el pase que nadie ve. Hace que el 10 vuelva a significar algo.
+        </p>
+      </div>
+      <div class="biglines">
+        <div class="bl"><div class="n"><em>5</em></div><div class="k" data-i18n-es="Mundiales" data-i18n-en="World Cups">Mundiales</div></div>
+        <div class="bl"><div class="n">13</div><div class="k" data-i18n-es="Goles" data-i18n-en="Goals">Goles</div></div>
+        <div class="bl"><div class="n">26</div><div class="k" data-i18n-es="Partidos" data-i18n-en="Matches">Partidos</div></div>
+        <div class="bl"><div class="n"><em>1</em></div><div class="k" data-i18n-es="Título" data-i18n-en="Trophy">Título</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Era filter -->
+  <div class="era-nav" id="era-nav">
+    <button data-era="all" class="active" data-i18n-es="Todas las eras" data-i18n-en="All eras">Todas las eras</button>
+    <button data-era="pioneer" data-i18n-es="Pioneros" data-i18n-en="Pioneers">Pioneros</button>
+    <button data-era="golden" data-i18n-es="Era dorada" data-i18n-en="Golden era">Era dorada</button>
+    <button data-era="modern" data-i18n-es="Era moderna" data-i18n-en="Modern era">Era moderna</button>
+    <button data-era="contemporary" data-i18n-es="Contemporáneos" data-i18n-en="Contemporary">Contemporáneos</button>
+  </div>
+
+  <div class="p-grid" id="p-grid"></div>
+
+  <!-- Comparison -->
+  <div class="compare">
+    <h3 data-i18n-es="El <em>debate</em> eterno" data-i18n-en="The <em>eternal</em> debate">El <em>debate</em> eterno</h3>
+    <div class="sub" data-i18n-es="Pelé vs Maradona vs Messi · ¿Quién marcó más al Mundial?" data-i18n-en="Pelé vs Maradona vs Messi · Who defined the World Cup?">
+      Pelé vs Maradona vs Messi · ¿Quién marcó más al Mundial?
+    </div>
+    <div class="compare-grid">
+      <div class="compare-col">
+        <div style="display:flex; gap:12px; align-items:center;">
+          <div class="ph flag flag-br" style="width:42px;height:28px;border-radius:4px;"></div>
+          <div class="pn"><em>Pelé</em></div>
+        </div>
+        <div class="compare-row"><span class="k" data-i18n-es="Mundiales" data-i18n-en="World Cups">Mundiales</span><span class="v">4 (58, 62, 66, 70)</span></div>
+        <div class="compare-row"><span class="k" data-i18n-es="Títulos" data-i18n-en="Titles">Títulos</span><span class="v">3</span></div>
+        <div class="compare-row"><span class="k" data-i18n-es="Goles" data-i18n-en="Goals">Goles</span><span class="v">12</span></div>
+        <div class="compare-row"><span class="k" data-i18n-es="Debut a los" data-i18n-en="Debut age">Debut a los</span><span class="v">17</span></div>
+        <div class="compare-row"><span class="k" data-i18n-es="Balón de Oro WC" data-i18n-en="Golden Ball">Balón de Oro WC</span><span class="v">—</span></div>
+      </div>
+      <div class="vs">vs</div>
+      <div class="compare-col hl">
+        <div style="display:flex; gap:12px; align-items:center;">
+          <div class="ph flag flag-ar" style="width:42px;height:28px;border-radius:4px;"></div>
+          <div class="pn"><em>Maradona</em></div>
+        </div>
+        <div class="compare-row"><span class="k" data-i18n-es="Mundiales" data-i18n-en="World Cups">Mundiales</span><span class="v">4 (82, 86, 90, 94)</span></div>
+        <div class="compare-row"><span class="k" data-i18n-es="Títulos" data-i18n-en="Titles">Títulos</span><span class="v">1</span></div>
+        <div class="compare-row"><span class="k" data-i18n-es="Goles" data-i18n-en="Goals">Goles</span><span class="v">8</span></div>
+        <div class="compare-row"><span class="k" data-i18n-es="Asistencias" data-i18n-en="Assists">Asistencias</span><span class="v">8</span></div>
+        <div class="compare-row"><span class="k" data-i18n-es="Balón de Oro WC" data-i18n-en="Golden Ball">Balón de Oro WC</span><span class="v">1986</span></div>
+      </div>
+      <div class="vs">vs</div>
+      <div class="compare-col" style="grid-column: 1 / -1; display:grid; grid-template-columns: 1fr; margin-top: 0;">
+        <div style="display:flex; gap:12px; align-items:center;">
+          <div class="ph flag flag-ar" style="width:42px;height:28px;border-radius:4px;"></div>
+          <div class="pn"><em>Messi</em></div>
+        </div>
+        <div class="compare-row"><span class="k" data-i18n-es="Mundiales" data-i18n-en="World Cups">Mundiales</span><span class="v">5 (06, 10, 14, 18, 22)</span></div>
+        <div class="compare-row"><span class="k" data-i18n-es="Títulos" data-i18n-en="Titles">Títulos</span><span class="v">1</span></div>
+        <div class="compare-row"><span class="k" data-i18n-es="Goles" data-i18n-en="Goals">Goles</span><span class="v">13</span></div>
+        <div class="compare-row"><span class="k" data-i18n-es="Asistencias" data-i18n-en="Assists">Asistencias</span><span class="v">8</span></div>
+        <div class="compare-row"><span class="k" data-i18n-es="Balón de Oro WC" data-i18n-en="Golden Ball">Balón de Oro WC</span><span class="v">2014, 2022</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="m26-footer-slot"></div>
+
+<script src="assets/shared.js"></script>
+<script>M26.init({ active: "insignia" });</script>
+<script>
+const PLAYERS = [
+  { name:"Pelé",          country:"br", en:"Brazil",         years:"1958–1970", pos:{es:"Delantero",en:"Forward"}, num:10, cups:4, goals:12, trophies:3, era:"pioneer", c1:"oklch(0.72 0.17 155)",
+    tag:{es:"O Rei. El que hizo del Mundial un reino.", en:"The King. He made the World Cup a kingdom."} },
+  { name:"Garrincha",     country:"br", en:"Brazil",         years:"1958–1966", pos:{es:"Extremo",  en:"Winger"},  num:7,  cups:3, goals:5,  trophies:2, era:"pioneer", c1:"oklch(0.72 0.17 155)",
+    tag:{es:"Piernas torcidas, fútbol divino.", en:"Crooked legs, divine football."} },
+  { name:"Johan Cruyff",  country:"nl", en:"Netherlands",    years:"1974",      pos:{es:"Mediapunta",en:"Att Mid"}, num:14, cups:1, goals:3,  trophies:0, era:"golden", c1:"oklch(0.7 0.17 35)",
+    tag:{es:"Inventó el fútbol total. Nunca levantó la copa.", en:"He invented total football. Never lifted the cup."} },
+  { name:"Franz Beckenbauer", country:"de", en:"Germany",    years:"1966–1974", pos:{es:"Líbero",  en:"Libero"},  num:5,  cups:3, goals:5,  trophies:1, era:"golden", c1:"oklch(0.3 0.05 60)",
+    tag:{es:"Der Kaiser. Defender era también crear.", en:"Der Kaiser. Defending was also creating."} },
+  { name:"Diego Maradona", country:"ar", en:"Argentina",     years:"1982–1994", pos:{es:"Enganche",en:"Playmaker"}, num:10, cups:4, goals:8, trophies:1, era:"golden", c1:"oklch(0.62 0.18 240)",
+    tag:{es:"1986. Solo. Contra Inglaterra. Para siempre.", en:"1986. Alone. Against England. Forever."} },
+  { name:"Paolo Rossi",   country:"it", en:"Italy",          years:"1978–1986", pos:{es:"Delantero",en:"Forward"}, num:20, cups:2, goals:9,  trophies:1, era:"golden", c1:"oklch(0.58 0.18 140)",
+    tag:{es:"Volvió de la suspensión. Hizo historia.", en:"Returned from suspension. Made history."} },
+  { name:"Zinédine Zidane", country:"fr", en:"France",       years:"1998–2006", pos:{es:"Mediapunta",en:"Att Mid"}, num:10, cups:3, goals:5, trophies:1, era:"modern", c1:"oklch(0.55 0.22 270)",
+    tag:{es:"Dos cabezazos en el 98. Un cabezazo en el 2006.", en:"Two headers in '98. One headbutt in 2006."} },
+  { name:"Ronaldo Nazário", country:"br", en:"Brazil",       years:"1994–2006", pos:{es:"Delantero",en:"Striker"}, num:9,  cups:4, goals:15, trophies:2, era:"modern", c1:"oklch(0.72 0.17 155)",
+    tag:{es:"El fenómeno. El 9 hecho carne y velocidad.", en:"The phenomenon. The 9 made of flesh and speed."} },
+  { name:"Andrés Iniesta", country:"es", en:"Spain",         years:"2006–2014", pos:{es:"Medio",   en:"Midfielder"}, num:6, cups:3, goals:2, trophies:1, era:"modern", c1:"oklch(0.63 0.22 20)",
+    tag:{es:"Gol en el 116. Dedicado a Jarque.", en:"Goal at 116'. Dedicated to Jarque."} },
+  { name:"Kylian Mbappé", country:"fr", en:"France",         years:"2018–26",   pos:{es:"Delantero",en:"Forward"}, num:10, cups:2, goals:12, trophies:1, era:"contemporary", c1:"oklch(0.55 0.22 270)",
+    tag:{es:"Hat-trick en la final del 22. Aún no cumple 30.", en:"Hat-trick in the 2022 final. Not yet 30."} },
+];
+
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+
+// Silhouette SVG factory - stylized standing player
+function silhouette(num, jerseyColor) {
+  return `
+    <svg viewBox="0 0 240 380" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fg${num}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${jerseyColor}" stop-opacity="0.95"/>
+          <stop offset="100%" stop-color="${jerseyColor}" stop-opacity="0.3"/>
+        </linearGradient>
+      </defs>
+      <ellipse cx="120" cy="56" rx="28" ry="32" fill="#f0c9a0"/>
+      <path d="M 92 48 Q 120 18 148 48 Q 148 34 120 26 Q 92 34 92 48 Z" fill="#2a1a12"/>
+      <path d="M 82 96 Q 120 88 158 96 L 172 220 L 144 232 L 144 340 L 136 346 L 120 242 L 104 346 L 96 340 L 96 232 L 68 220 Z" fill="url(#fg${num})"/>
+      <text x="120" y="170" font-family="Inter" font-size="42" font-weight="700" fill="#fff" text-anchor="middle">${num}</text>
+      <path d="M 82 104 Q 60 140 50 220 L 64 222 Q 70 150 92 116 Z" fill="url(#fg${num})"/>
+      <path d="M 158 104 Q 180 140 190 220 L 176 222 Q 170 150 148 116 Z" fill="url(#fg${num})"/>
+    </svg>
+  `;
+}
+
+function renderGrid() {
+  const lang = M26.getLang();
+  const era = $("#era-nav button.active")?.dataset.era || "all";
+  const list = PLAYERS.filter(p => era === "all" || p.era === era);
+  $("#p-grid").innerHTML = list.map(p => `
+    <article class="p-card" style="--p-c1:${p.c1}">
+      <div class="p-media">
+        <span class="p-number">${p.num}</span>
+        <div class="p-silhouette">${silhouette(p.num, p.c1)}</div>
+        <div class="p-flag ph flag flag-${p.country}"></div>
+        <div class="p-trophies" aria-label="trophies">
+          ${Array.from({length: p.trophies}, () => `<span class="t"></span>`).join("")}
+        </div>
+      </div>
+      <div class="p-body">
+        <div class="p-position">${p.pos[lang]} · ${p.years}</div>
+        <h3 class="p-name">${p.name}</h3>
+        <div class="p-meta">${lang==="en"?p.en:p.en} · #${p.num}</div>
+        <div class="p-tag">"${p.tag[lang]}"</div>
+        <div class="p-stats">
+          <div class="s"><div class="v"><em>${p.cups}</em></div><div class="k">${lang==="en"?"Cups":"Mundiales"}</div></div>
+          <div class="s"><div class="v">${p.goals}</div><div class="k">${lang==="en"?"Goals":"Goles"}</div></div>
+          <div class="s"><div class="v">${p.trophies}</div><div class="k">${lang==="en"?"Titles":"Títulos"}</div></div>
+        </div>
+      </div>
+    </article>
+  `).join("");
+}
+
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("#era-nav button");
+  if (b) {
+    $$("#era-nav button").forEach(x => x.classList.toggle("active", x === b));
+    renderGrid();
+  }
+});
+
+const orig = M26.applyI18n;
+M26.applyI18n = function() { orig(); renderGrid(); };
+renderGrid();
+</script>
+</body>
+</html>

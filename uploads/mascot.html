@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>World Cup Mascots Gallery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#e5e2e1",
+                        "outline-variant": "#4d4354",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-bright": "#393939",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-surface": "#e2e2e2",
+                        "on-background": "#e2e2e2",
+                        "background": "#131313",
+                        "on-primary": "#490080",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-tint": "#ddb7ff",
+                        "on-primary-container": "#400071",
+                        "primary": "#ddb7ff",
+                        "surface-container": "#1f1f1f",
+                        "on-tertiary-fixed": "#1c1b1b",
+                        "surface": "#131313",
+                        "surface-variant": "#353535",
+                        "primary-container": "#b76dff",
+                        "on-surface-variant": "#cfc2d6",
+                        "on-error": "#690005",
+                        "tertiary-container": "#929090",
+                        "inverse-on-surface": "#303030",
+                        "on-secondary-container": "#b4b5b5",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "secondary-container": "#454747",
+                        "inverse-primary": "#842bd2",
+                        "surface-container-high": "#2a2a2a",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed-variant": "#6900b3",
+                        "on-primary-fixed": "#2c0051",
+                        "tertiary": "#c8c6c5",
+                        "surface-container-low": "#1b1b1b",
+                        "primary-fixed": "#f0dbff",
+                        "on-tertiary": "#313030",
+                        "on-tertiary-container": "#2a2a2a",
+                        "surface-container-highest": "#353535",
+                        "primary-fixed-dim": "#ddb7ff",
+                        "secondary": "#c6c6c7",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "secondary-fixed": "#e2e2e2",
+                        "outline": "#988d9f",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "inverse-surface": "#e2e2e2",
+                        "on-secondary": "#2f3131",
+                        "surface-dim": "#131313",
+                        "on-secondary-fixed": "#1a1c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "margin-mobile": "16px",
+                        "unit": "8px",
+                        "container-max": "1440px",
+                        "section-gap": "120px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Epilogue"],
+                        "headline-lg": ["Epilogue"],
+                        "body-lg": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "display-xl": ["Epilogue"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-xl": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #000000;
+            color: #e2e2e2;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: #A855F7;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+            transform: translateY(-8px);
+        }
+        .play-overlay {
+            background: rgba(168, 85, 247, 0.2);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .glass-card:hover .play-overlay {
+            opacity: 1;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="bg-black/80 backdrop-blur-md border-b border-white/10 docked full-width top-0 z-50 fixed w-full">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-[1440px] mx-auto">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform text-zinc-400 hover:text-purple-400 transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-sans uppercase tracking-[0.2em] font-black text-xl tracking-tighter text-white">WORLD CUP MASCOTS</h1>
+</div>
+<div class="hidden md:flex gap-8">
+<a class="font-label-bold text-label-bold text-zinc-400 hover:text-purple-400 transition-colors duration-300" href="#">HOME</a>
+<a class="font-label-bold text-label-bold text-purple-500 hover:text-purple-400 transition-colors duration-300" href="#">MASCOTS</a>
+<a class="font-label-bold text-label-bold text-zinc-400 hover:text-purple-400 transition-colors duration-300" href="#">MATCHES</a>
+<a class="font-label-bold text-label-bold text-zinc-400 hover:text-purple-400 transition-colors duration-300" href="#">STATS</a>
+</div>
+<div class="active:scale-95 transition-transform">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border border-white/10 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a modern user avatar with clean lighting and neutral grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBi-K4G7kEeHlo35k-8UYBy1WktXuJWwONv4Znt2GHmE9jidKtc9UykG5BXM6sBliVB6k1-bw_CQNc4NcztLLZXLgAkVNJ3fQ5kVW7pKU9PaX4qjGNYQVER3NbsAxaZl5WO1neM20Nu4yknrG8ImMU88U0-zzf5eVoQFTClfJ-hAVYL5gAp_mUDupIS9Eft7AfBDqDlPLYDHW2QDPkVvPy-Y-iJR-PDSyFiY_xTm5r3EvUVpRMNGMcWbpZk1aCEMVoal924ZWVk4XY"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-40 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+<!-- Hero Section -->
+<section class="mb-stack-lg">
+<h2 class="font-display-xl text-display-xl text-white mb-4 uppercase">LEGENDARY MASCOTS</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                Explore the icons that defined generations. From the first lion in 1966 to the ethereal spirit of 2022, journey through the creative history of the world's greatest tournament.
+            </p>
+</section>
+<!-- Bento Grid / Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<!-- La'eeb 2022 -->
+<div class="glass-card rounded-xl overflow-hidden group">
+<div class="relative aspect-[4/5] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Stunning 3D render of La'eeb mascot floating in a modern desert stadium with cinematic purple lighting and particle effects" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_6B9i_FTNxnuPa7FgqZBBTL0JvXHFLrIBPPGo8ZCgi_9TSdaScG2wmYrGRSdkE3ewdKmxFcuhqXv77NgNz62uEA28NSez7fp_9wZFltVYy3KO5enkcyGtFy3iHLGxNycypczUScVc0lYXS7GpccyF_V1gZ58Cdi26dv861x1HnFQXpuYx8wlDc9dww1FbgverK1_bv2hbdFQuhEfICHuEXgr_9hB2z5Ov_2tYPxTUWCNigrK-b-JeTzINsBlVFVc7kGFu38jsY-Y"/>
+<div class="play-overlay absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-lg">
+<span class="material-symbols-outlined text-4xl" data-icon="play_arrow">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-white">La'eeb</h3>
+<span class="font-label-bold text-label-bold bg-primary/20 text-primary px-3 py-1 rounded-full border border-primary/30">2022</span>
+</div>
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">QATAR</p>
+</div>
+</div>
+<!-- Zabivaka 2018 -->
+<div class="glass-card rounded-xl overflow-hidden group">
+<div class="relative aspect-[4/5] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Stylized artistic representation of a wolf mascot in sports attire against a vibrant neon sunset background with motion blur" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCbvRh7aER1jRVglWjdH-o_-TrN9favrtXLDr4xEwrz5yO81e2QDeEVrpaRRPVM9rBMpQWtjwEnxHwwlMUPY4I-PCLJjoME9D-d8olAUPaRw7ZYAZGnGjd8vSewI1BbbQ5Fkkjd5GBV_yWPBxVzKHoMV9F-6Kl55bqdAhKhdbsAfMMdEBd6CpFYM4nnI7FGGABIbpJhDdCqh1Jgi2IJAIOxzShfCKTxe2zGzM0vCOMcvaGp0rX-6yTR9sWWUGgBNpMsZhatXKMaTE"/>
+<div class="play-overlay absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-lg">
+<span class="material-symbols-outlined text-4xl" data-icon="play_arrow">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-white">Zabivaka</h3>
+<span class="font-label-bold text-label-bold bg-primary/20 text-primary px-3 py-1 rounded-full border border-primary/30">2018</span>
+</div>
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">RUSSIA</p>
+</div>
+</div>
+<!-- Fuleco 2014 -->
+<div class="glass-card rounded-xl overflow-hidden group">
+<div class="relative aspect-[4/5] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Digital illustration of a blue-armored armadillo mascot character in a lush tropical Brazilian jungle with golden hour lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEqxDRKLf8rODFpPgLQE7akWZYqE78NN8x7RFaY7rNlrG61flBD8aiqVh2OEAe2zZf542Dazq-MtqP6JFQN8bQi_nkfW7XZPVSEaw-SDYzdZZ-UnwMx5J7CXPSNAce7gLsNJHIC00V4w4g-70T_ucPizVBcaHmXn90bTjua5KVkhfnrWBCxlffQYRnxpqZUICLkgHc4bdQ830lSCTjjGbIul5BcWZt6VG-dQl7QhZ3JNQI94r_RM7Y0vor05eoALAUALT7yTlhcAo"/>
+<div class="play-overlay absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-lg">
+<span class="material-symbols-outlined text-4xl" data-icon="play_arrow">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-white">Fuleco</h3>
+<span class="font-label-bold text-label-bold bg-primary/20 text-primary px-3 py-1 rounded-full border border-primary/30">2014</span>
+</div>
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">BRAZIL</p>
+</div>
+</div>
+<!-- Zakumi 2010 -->
+<div class="glass-card rounded-xl overflow-hidden group">
+<div class="relative aspect-[4/5] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Leopard mascot with green hair in a vibrant African savannah setting with sharp focus and deep bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIX26ZJOAs3znzc55vgiXpDDjXnsXXVPuKognUcNCMaWs1w1FIjxWFh-BrURGAnTku46sTbbUH247GbMVpnz5kTPD1WH7y8qROZMuWkGtqZV_a0UPZ9SMa84ovYBs0ARYy8mn6u_crUXQCvK2qlx5L5OWR8_GBbGVZMB2hX5y4TQCsZTAGDJbus_fIXuoNJSvtcAYSRptf3jQ54lUJTrtzbh6Y9lcx2C9ty78r46Y_SDkXr-BaiW-KLmBqzOXbF-h-hBiaSw_qRyk"/>
+<div class="play-overlay absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-lg">
+<span class="material-symbols-outlined text-4xl" data-icon="play_arrow">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-white">Zakumi</h3>
+<span class="font-label-bold text-label-bold bg-primary/20 text-primary px-3 py-1 rounded-full border border-primary/30">2010</span>
+</div>
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">SOUTH AFRICA</p>
+</div>
+</div>
+<!-- Footix 1998 -->
+<div class="glass-card rounded-xl overflow-hidden group">
+<div class="relative aspect-[4/5] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Retro stylized rooster mascot in primary colors against a dark blue Parisian night sky with soft city lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgT0sQJEjR73Q546TK-L16tzmcW2YwikVVC6qkQtQHm3M_uU76rfExPhPGFdJWvtdAIjeLgEfRk4o6moyJD1I3Q5pcm-kx7gSQ0BuhROlCcgh9pz1xfyzWakoH7oHs0R7TMDdtAtpG0RpnTvjwcH48_lUdxdy7BiUREODIJohun0OB_ufq-NL1B1SsuCPFTH0o_Bu2WkpgzOquF74qN14zuX12ECMbWVT8UzlOp0RGWe4uG1Y9quiSl8cfwJ9LdQ_pfco1ZBZAL6U"/>
+<div class="play-overlay absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-lg">
+<span class="material-symbols-outlined text-4xl" data-icon="play_arrow">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-white">Footix</h3>
+<span class="font-label-bold text-label-bold bg-primary/20 text-primary px-3 py-1 rounded-full border border-primary/30">1998</span>
+</div>
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">FRANCE</p>
+</div>
+</div>
+<!-- Ciao 1990 -->
+<div class="glass-card rounded-xl overflow-hidden group">
+<div class="relative aspect-[4/5] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Abstract geometric stick figure mascot in Italian tricolor colors floating over a dark marble floor with dramatic spotlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbpUByDnPDdfk8dy5PuBIgXKsrHZIBxZBy3kDOKXK6l2fgb5xxms-aYzgeu4pQ8jRP7sS64yqgvwxt9lIF-Dz5En7iXBqFcNnSD5ItFQ0J4orA3yKp0e9umuwkiCM5B7T2SRxBfZvPKPlZQg8ek1DI0VtYCfLo9loc6K0zax1L2zQ8_4BTDAt0mLWEwx1owdv6Wfiv8rcIspHFs2X8LFFtVosV_8No9phbdlSffw1q-9IfBJOGg4wIFgmBvaUKwMRdXxDiSLctb6Y"/>
+<div class="play-overlay absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-lg">
+<span class="material-symbols-outlined text-4xl" data-icon="play_arrow">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-white">Ciao</h3>
+<span class="font-label-bold text-label-bold bg-primary/20 text-primary px-3 py-1 rounded-full border border-primary/30">1990</span>
+</div>
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">ITALY</p>
+</div>
+</div>
+<!-- Pique 1986 -->
+<div class="glass-card rounded-xl overflow-hidden group">
+<div class="relative aspect-[4/5] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Jalapeno pepper mascot with sombrero and mustache in a warm dusty Mexican hacienda courtyard with sun-drenched lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKDlxW6EWxnS82VGpWIbu165r9eyUqsAESw8lwkjJhrFaZ5OLdb5hvkwe35w_T3HaIbFqrsQzTmQx6SXhUUTbDT6DnqWCdnHKO7GFdS8VZaxeCegVij8qVbXNNLvIjgjbBxHhjK4cLrrXvRMSaI2zlMsUGgv0KRU1RdLVktJlLdHwqJYvkvLs2rL3RhES7U4VNa0c0Ih0gJEGOEGhqo9gLXuPJqV6ZvVBLKsth69zzzhi6_XiLdr7RydMhF8FV0E9CTz8zI3L_aBs"/>
+<div class="play-overlay absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-lg">
+<span class="material-symbols-outlined text-4xl" data-icon="play_arrow">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-white">Pique</h3>
+<span class="font-label-bold text-label-bold bg-primary/20 text-primary px-3 py-1 rounded-full border border-primary/30">1986</span>
+</div>
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">MEXICO</p>
+</div>
+</div>
+<!-- Juanito 1970 -->
+<div class="glass-card rounded-xl overflow-hidden group">
+<div class="relative aspect-[4/5] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Vintage 70s style boy mascot wearing a giant sombrero in a grainy film aesthetic with warm sepia tones and lens flares" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhLF87znNuuaKN4nIDawmv2fTL2Q9bvPxHF-i2Q-b0RR3CqjpNLezr8KfcNjgDlQ6pnviFps-Ig1m4ojD_MFnskHAzWzCtVS7GtROc878AkUrkuLu50nz2GdUYomnJN98knoji22cnVK4zkz6pRn7ZXqZUJ-JRIuN262E3U6oLFwcMdmizl7lcmvoBsJKfejjdZQxDyoonif6cU5nJzEKCMnFfqVT6v4-_GFLUfoy0oFPVBFnjTXqbBe3OQ5vnt_LE1rWtynZmMsU"/>
+<div class="play-overlay absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-lg">
+<span class="material-symbols-outlined text-4xl" data-icon="play_arrow">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-white">Juanito</h3>
+<span class="font-label-bold text-label-bold bg-primary/20 text-primary px-3 py-1 rounded-full border border-primary/30">1970</span>
+</div>
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">MEXICO</p>
+</div>
+</div>
+<!-- Willie 1966 -->
+<div class="glass-card rounded-xl overflow-hidden group">
+<div class="relative aspect-[4/5] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Dignified lion mascot wearing a Union Jack jersey in a classic moody London street setting with misty atmosphere and streetlamps" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO5y29TMrZEaTchc79CZ1JTPP8CsRux2_NwNZsley4NhNSqmM1Bp0UBjoGqrlqVkaP_wji8te1UEWUTCncFHusIJpJpQCdJlh0O7LNav65EkDJgcJsX6Uv07TPRvu2f5ANrlX-YOhdZjHO0V3Nsvn5DZMVNADHBJuipswv_SRtWAG5Ec4fvsjFcoK_SZrRspJeMTEbxOPIwrLH1MHIWr2FE-z85hYKRPaXq_JO7LBJN8jmLnwbCAYQBHegfA0R5lHwMGtKUom2jls"/>
+<div class="play-overlay absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-lg">
+<span class="material-symbols-outlined text-4xl" data-icon="play_arrow">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-white">Willie</h3>
+<span class="font-label-bold text-label-bold bg-primary/20 text-primary px-3 py-1 rounded-full border border-primary/30">1966</span>
+</div>
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">ENGLAND</p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-black/90 backdrop-blur-2xl border-t border-white/10 rounded-t-2xl shadow-[0_-10px_40px_rgba(168,85,247,0.15)]">
+<a class="flex flex-col items-center justify-center text-zinc-500 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-bold uppercase tracking-widest text-[10px] mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-purple-500 bg-purple-500/10 rounded-xl px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="emoji_events">emoji_events</span>
+<span class="font-bold uppercase tracking-widest text-[10px] mt-1">Mascots</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="sports_soccer">sports_soccer</span>
+<span class="font-bold uppercase tracking-widest text-[10px] mt-1">Matches</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-bold uppercase tracking-widest text-[10px] mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+<span class="font-bold uppercase tracking-widest text-[10px] mt-1">More</span>
+</a>
+</nav>
+</body></html>
