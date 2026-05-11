@@ -395,6 +395,37 @@
     max-width: 100%;
   }
   .disclaimer span { color: var(--accent); }
+
+  /* ── Oracle banner ── */
+  .oracle-banner {
+    width: 100%;
+    height: 580px;
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    background: #0a0a12;
+  }
+  .oracle-banner img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    filter: saturate(1.08) contrast(1.04) brightness(0.96);
+    display: block;
+  }
+  .oracle-banner-ov {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg,
+        var(--bg) 0%,
+        transparent 15%,
+        transparent 75%,
+        var(--bg) 100%);
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
@@ -428,6 +459,11 @@
     </div>
   </div>
 </section>
+
+<div class="oracle-banner">
+  <img src="assets/oraculo.webp" alt="Oráculo IA — Mundial 26" loading="eager">
+  <div class="oracle-banner-ov"></div>
+</div>
 
 <main class="wrap" style="padding-bottom:80px;">
   <!-- Tools -->

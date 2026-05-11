@@ -8,27 +8,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   .ins-hero {
-    padding: 100px 0 60px;
-    position: relative;
-    overflow: hidden;
+    --hero-pt-bottom: 60px;
+    --hero-grad-x: 70%; --hero-grad-y: 30%;
+    --hero-h1-max: 164px;
   }
-  .ins-hero::before {
-    content: "";
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 900px 400px at 70% 30%, color-mix(in oklch, var(--accent) 18%, transparent), transparent 70%);
-    pointer-events: none;
-  }
-  .ins-hero .wrap { position: relative; }
-  .ins-hero h1 {
-    font-family: var(--f-display);
-    font-size: clamp(64px, 9vw, 164px);
-    line-height: 0.84;
-    letter-spacing: -0.045em;
-    margin: 28px 0 0;
-    font-variation-settings: "SOFT" 30, "opsz" 144;
-  }
-  .ins-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .ins-hero h1 { max-width: none; }
   .ins-hero p.lead { margin-top: 32px; max-width: 62ch; }
 
   /* Featured card (big editorial) */
@@ -226,6 +210,121 @@
     height: 85%;
     opacity: 0.93;
   }
+  .p-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0.88;
+  }
+  .p-card { cursor: pointer; }
+  .p-card:hover .p-photo { opacity: 1; transform: scale(1.03); transition: opacity .3s, transform .4s; }
+
+  /* ── Player lightbox ── */
+  .plb-scrim {
+    position: fixed; inset: 0;
+    background: rgba(5,5,10,0.88);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 400; padding: 24px 20px;
+  }
+  .plb-scrim.open { display: flex; }
+  .plb {
+    position: relative; width: 100%;
+    max-width: 880px; max-height: 90vh;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 22px; overflow: hidden;
+    display: grid; grid-template-columns: 360px 1fr;
+  }
+  @media (max-width: 680px) {
+    .plb { grid-template-columns: 1fr; }
+    .plb-photo-col { min-height: 260px; }
+  }
+  .plb-photo-col {
+    position: relative; min-height: 520px;
+    background: linear-gradient(160deg, color-mix(in oklch, var(--plb-c1, var(--accent)) 45%, #000) 0%, #050508 100%);
+    overflow: hidden;
+  }
+  .plb-photo-col img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    opacity: 0.9;
+  }
+  .plb-photo-ov {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to right, transparent 55%, var(--surface) 100%),
+      linear-gradient(to bottom, transparent 65%, rgba(0,0,0,0.55) 100%);
+  }
+  .plb-num-bg {
+    position: absolute; bottom: -20px; left: 8px;
+    font-family: var(--f-display); font-size: 210px; line-height: 1;
+    color: rgba(255,255,255,0.07); letter-spacing: -0.05em;
+    font-variation-settings: "opsz" 144; pointer-events: none;
+  }
+  .plb-close {
+    position: absolute; top: 16px; right: 16px; z-index: 5;
+    width: 38px; height: 38px; border-radius: 50%;
+    background: rgba(0,0,0,0.55); color: var(--text);
+    border: 1px solid var(--line-strong); font-size: 20px;
+    display: grid; place-items: center; backdrop-filter: blur(6px); cursor: pointer;
+  }
+  .plb-close:hover { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .plb-info {
+    padding: 40px 36px 40px; overflow-y: auto; max-height: 90vh;
+  }
+  .plb-eyebrow {
+    font-family: var(--f-mono); font-size: 10px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 10px;
+  }
+  .plb-name {
+    font-family: var(--f-display); font-size: 46px; line-height: 0.94;
+    letter-spacing: -0.03em; margin: 0 0 8px;
+    font-variation-settings: "opsz" 144;
+  }
+  .plb-name em { color: var(--accent); font-style: italic; }
+  .plb-tag {
+    font-family: var(--f-display); font-style: italic;
+    font-size: 15px; color: var(--text-dim); margin: 8px 0 22px; line-height: 1.35;
+  }
+  .plb-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+  .plb-chip {
+    padding: 5px 12px; border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    font-family: var(--f-mono); font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim);
+  }
+  .plb-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    margin-bottom: 22px;
+  }
+  .plb-stat .v { font-family: var(--f-display); font-size: 26px; letter-spacing: -0.02em; line-height: 1; }
+  .plb-stat .v em { color: var(--accent); font-style: italic; }
+  .plb-stat .k { font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); margin-top: 5px; }
+  .plb-section-title {
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 10px;
+  }
+  .plb-clubs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+  .plb-club {
+    padding: 5px 13px; border-radius: 8px;
+    background: var(--surface-2); border: 1px solid var(--line);
+    font-family: var(--f-mono); font-size: 11px; color: var(--text-dim);
+  }
+  .plb-facts { display: flex; flex-direction: column; gap: 8px; }
+  .plb-fact {
+    padding: 11px 14px; border-radius: 10px;
+    background: color-mix(in oklch, var(--plb-c1, var(--accent)) 6%, var(--surface-2));
+    border: 1px solid color-mix(in oklch, var(--plb-c1, var(--accent)) 20%, var(--line));
+    border-left: 3px solid var(--accent);
+    font-size: 13px; line-height: 1.62; color: var(--text-dim);
+  }
   .p-flag {
     position: absolute;
     top: 16px; left: 16px;
@@ -335,7 +434,7 @@
 <body>
 <div id="m26-nav-slot"></div>
 
-<section class="ins-hero">
+<section class="ins-hero page-hero">
   <div class="wrap">
     <span class="eyebrow" data-i18n-es="● Los rostros del Mundial" data-i18n-en="● Faces of the World Cup">● Los rostros del Mundial</span>
     <h1 data-i18n-es="Los que <em>cambiaron</em><br>el juego." data-i18n-en="Those who <em>changed</em><br>the game.">Los que <em>cambiaron</em><br>el juego.</h1>
@@ -354,32 +453,7 @@
         <span class="chip">GOAT</span>
       </div>
       <span class="featured-number">10</span>
-      <!-- Stylized player silhouette -->
-      <svg class="featured-silhouette" viewBox="0 0 300 500" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="figGrad1" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="oklch(0.95 0.02 240)"/>
-            <stop offset="40%" stop-color="oklch(0.75 0.15 240)"/>
-            <stop offset="100%" stop-color="oklch(0.4 0.15 240)"/>
-          </linearGradient>
-        </defs>
-        <!-- head -->
-        <ellipse cx="150" cy="70" rx="38" ry="44" fill="#f0c9a0"/>
-        <path d="M 112 60 Q 150 20 188 60 Q 188 45 150 35 Q 112 45 112 60 Z" fill="#3a2418"/>
-        <!-- body/jersey -->
-        <path d="M 95 120 Q 150 110 205 120 L 220 300 L 180 320 L 180 460 L 170 470 L 150 330 L 130 470 L 120 460 L 120 320 L 80 300 Z" fill="url(#figGrad1)"/>
-        <!-- 10 on jersey -->
-        <text x="150" y="220" font-family="Inter" font-size="54" font-weight="700" fill="#fff" text-anchor="middle">10</text>
-        <!-- arms raised -->
-        <path d="M 95 130 Q 60 100 50 40 L 65 35 Q 80 95 110 140 Z" fill="url(#figGrad1)"/>
-        <path d="M 205 130 Q 240 100 250 40 L 235 35 Q 220 95 190 140 Z" fill="url(#figGrad1)"/>
-        <!-- trophy in hand -->
-        <g transform="translate(220,10)">
-          <ellipse cx="15" cy="20" rx="15" ry="12" fill="#f5c842"/>
-          <rect x="10" y="28" width="10" height="20" fill="#f5c842"/>
-          <rect x="2" y="46" width="26" height="6" fill="#c99628"/>
-        </g>
-      </svg>
+      <img class="featured-silhouette" src="assets/goleador-messi.webp" alt="Lionel Messi" loading="lazy" onerror="this.style.display='none'">
       <span class="era-badge" data-i18n-es="CARA DESTACADA · QATAR 2022" data-i18n-en="FEATURED · QATAR 2022">CARA DESTACADA · QATAR 2022</span>
     </div>
     <div class="featured-body">
@@ -487,6 +561,92 @@ const PLAYERS = [
     tag:{es:"Hat-trick en la final del 22. Aún no cumple 30.", en:"Hat-trick in the 2022 final. Not yet 30."} },
 ];
 
+const PLAYER_IMGS = {
+  "Pelé":              "assets/goleador-pele.webp",
+  "Garrincha":         "assets/insignia-garrincha.webp",
+  "Johan Cruyff":      "assets/insignia-cruyff.webp",
+  "Franz Beckenbauer": "assets/insignia-beckenbauer.webp",
+  "Diego Maradona":    "assets/goleador-maradona.webp",
+  "Paolo Rossi":       "assets/goleador-rossi.webp",
+  "Zinédine Zidane":   "assets/insignia-zidane.webp",
+  "Ronaldo Nazário":   "assets/goleador-ronaldo.webp",
+  "Andrés Iniesta":    "assets/insignia-iniesta.webp",
+  "Kylian Mbappé":     "assets/goleador-mbappe.webp",
+};
+
+const PLAYER_EXTRA = {
+  "Pelé": {
+    born:"23 oct 1940", died:"29 dic 2022",
+    clubs:{es:["Santos FC","New York Cosmos"],en:["Santos FC","New York Cosmos"]},
+    facts:{
+      es:["Único jugador en ganar 3 Copas del Mundo (1958, 1962, 1970).","Marcó más de 1 000 goles a lo largo de su carrera profesional.","Fue nombrado Ministro Extraordinario de Deportes de Brasil en 1995.","A los 17 años se convirtió en el goleador más joven de una final mundialista."],
+      en:["Only player to win 3 World Cups (1958, 1962, 1970).","Scored over 1,000 goals throughout his professional career.","Was appointed Brazil's Extraordinary Minister of Sport in 1995.","At 17, became the youngest top scorer in a World Cup final."]}
+  },
+  "Garrincha": {
+    born:"28 oct 1933", died:"20 ene 1983",
+    clubs:{es:["Botafogo","Corinthians","Flamengo"],en:["Botafogo","Corinthians","Flamengo"]},
+    facts:{
+      es:["Nació con ambas piernas curvadas hacia adentro, condición que no le impidió dominar el fútbol mundial.","Brasil nunca perdió un partido en el que tanto Pelé como Garrincha jugaron juntos.","Ganó dos Mundiales (1958 y 1962) sin haber perdido jamás un encuentro con la selección.","Su dribbling era tan peculiar que los rivales sabían lo que haría y aún así no podían detenerlo."],
+      en:["Born with both legs curved inward — a condition that did not prevent him from dominating world football.","Brazil never lost a match in which both Pelé and Garrincha played together.","Won two World Cups (1958 and 1962) without ever losing a game with the national team.","His dribbling was so peculiar opponents knew what he'd do and still couldn't stop him."]}
+  },
+  "Johan Cruyff": {
+    born:"25 abr 1947", died:"24 mar 2016",
+    clubs:{es:["Ajax","FC Barcelona","LA Aztecs","Feyenoord"],en:["Ajax","FC Barcelona","LA Aztecs","Feyenoord"]},
+    facts:{
+      es:["Inventó el 'Giro de Cruyff', una finta que lleva su nombre y sigue usándose hoy.","Se negó a participar en el Mundial 1978 de Argentina por razones políticas contra la dictadura.","Ganó tres Balones de Oro (1971, 1973, 1974), récord que tardó décadas en igualarse.","Como entrenador del Barcelona construyó el 'Dream Team' que dominó Europa en los 90."],
+      en:["Invented the 'Cruyff Turn', a feint that bears his name and is still used today.","Refused to participate in the 1978 Argentina World Cup for political reasons against the dictatorship.","Won three Ballon d'Or awards (1971, 1973, 1974), a record that took decades to match.","As Barcelona manager, built the 'Dream Team' that dominated Europe in the 1990s."]}
+  },
+  "Franz Beckenbauer": {
+    born:"11 sep 1945", died:"7 ene 2024",
+    clubs:{es:["Bayern Múnich","New York Cosmos","Hamburgo SV"],en:["Bayern Munich","New York Cosmos","Hamburg SV"]},
+    facts:{
+      es:["Único en ganar el Mundial como jugador (1974) y como entrenador (1990).","Redefinió el rol del defensor central creando el 'líbero' atacante moderno.","Apodado 'Der Kaiser' por su porte, liderazgo y elegancia dentro y fuera del campo.","Jugó la final del Mundial 1966 con el hombro dislocado sin solicitar ser sustituido."],
+      en:["Only person to win the World Cup as a player (1974) and as a coach (1990).","Redefined the central defender role, creating the modern attacking 'sweeper'.","Nicknamed 'Der Kaiser' for his bearing, leadership and elegance on and off the pitch.","Played the 1966 World Cup final with a dislocated shoulder without asking to be substituted."]}
+  },
+  "Diego Maradona": {
+    born:"30 oct 1960", died:"25 nov 2020",
+    clubs:{es:["Argentinos Juniors","Boca Juniors","FC Barcelona","Nápoles","Sevilla"],en:["Argentinos Juniors","Boca Juniors","FC Barcelona","Napoli","Sevilla"]},
+    facts:{
+      es:["Marcó 'La mano de Dios' y 'El gol del siglo' en el mismo partido contra Inglaterra, 1986.","Lideró a Nápoles a sus únicos dos Scudetti (1987 y 1990), convirtiéndose en ídolo de la ciudad.","Fue votado Jugador del Siglo XX por la FIFA junto a Pelé en el año 2000.","Debutó en primera división con Argentinos Juniors a los 15 años, 11 meses y 22 días."],
+      en:["Scored 'The Hand of God' and 'The Goal of the Century' in the same match against England, 1986.","Led Napoli to their only two Serie A titles (1987 and 1990), becoming a god in the city.","Was voted FIFA Player of the 20th Century alongside Pelé in 2000.","Made his first-division debut with Argentinos Juniors at 15 years, 11 months and 22 days."]}
+  },
+  "Paolo Rossi": {
+    born:"23 sep 1956", died:"9 dic 2020",
+    clubs:{es:["Vicenza","Perugia","Juventus","AC Milan","Hellas Verona"],en:["Vicenza","Perugia","Juventus","AC Milan","Hellas Verona"]},
+    facts:{
+      es:["Volvió de una suspensión de dos años por amaño de partidos y en tres semanas cambió la historia del fútbol.","Marcó seis goles en tres partidos consecutivos (vs. Brasil, Polonia y la final vs. Alemania) en el 82.","Ganó el Balón de Oro, la Bota de Oro y el Mundial en el mismo año, 1982.","Su hat-trick al Brasil de Zico, Falcão y Sócrates es uno de los momentos más icónicos de los Mundiales."],
+      en:["Returned from a two-year match-fixing ban and in three weeks changed football history.","Scored six goals in three consecutive matches (Brazil, Poland and the final vs. Germany) at the 1982 World Cup.","Won the Ballon d'Or, the Golden Boot and the World Cup all in the same year, 1982.","His hat-trick against Zico, Falcão and Sócrates's Brazil is one of the most iconic World Cup moments."]}
+  },
+  "Zinédine Zidane": {
+    born:"23 jun 1972", died:null,
+    clubs:{es:["Cannes","Girondins de Burdeos","Juventus","Real Madrid"],en:["Cannes","Girondins de Bordeaux","Juventus","Real Madrid"]},
+    facts:{
+      es:["Hijo de inmigrantes argelinos de Kabylie; su historia es símbolo de la integración en Francia.","Marcó dos cabezazos en la primera mitad de la final del Mundial 1998 ante Brasil (3–0).","Ganó la Champions League como entrenador del Real Madrid tres veces consecutivas (2016, 2017, 2018).","Se retiró del fútbol profesional minutos después del cabezazo a Materazzi en la final del 2006."],
+      en:["Son of Algerian Kabyle immigrants; his story is a symbol of integration in France.","Scored two headers in the first half of the 1998 World Cup final against Brazil (3–0).","Won the Champions League as Real Madrid coach three consecutive times (2016, 2017, 2018).","Retired from professional football minutes after headbutting Materazzi in the 2006 final."]}
+  },
+  "Ronaldo Nazário": {
+    born:"18 sep 1976", died:null,
+    clubs:{es:["Cruzeiro","PSV","FC Barcelona","Inter de Milán","Real Madrid","AC Milan","Corinthians"],en:["Cruzeiro","PSV","FC Barcelona","Inter Milan","Real Madrid","AC Milan","Corinthians"]},
+    facts:{
+      es:["Sufrió convulsiones la noche antes de la final del Mundial 1998 en Francia; aun así jugó el partido.","Marcó ambos goles en la final del 2002 contra Alemania, redimiendo el trauma de cuatro años antes.","Ganó el Balón de Oro en 1997 y 2002 y fue considerado el mejor del mundo tres veces.","Actualmente es dueño del Club Valladolid y del Cruzeiro, sus dos clubes del corazón."],
+      en:["Suffered convulsions the night before the 1998 World Cup final; he played anyway.","Scored both goals in the 2002 final against Germany, redeeming the trauma of four years earlier.","Won the Ballon d'Or in 1997 and 2002 and was named world's best player three times.","Currently owns Club Valladolid and Cruzeiro, the two clubs closest to his heart."]}
+  },
+  "Andrés Iniesta": {
+    born:"11 may 1984", died:null,
+    clubs:{es:["FC Barcelona","Vissel Kobe","Emirates Club"],en:["FC Barcelona","Vissel Kobe","Emirates Club"]},
+    facts:{
+      es:["Marcó el gol de la victoria en el minuto 116 de la final del Mundial 2010, dedicándoselo a Daniel Jarque.","Ganó 9 Ligas y 4 Champions League con el FC Barcelona, más dos Eurocopas (2008 y 2012).","Fue elegido Mejor Jugador del partido en la final del Mundial y la Champions en el mismo año.","Guardiola describió su fútbol como 'ver el juego en cámara lenta cuando todos lo ven rápido'."],
+      en:["Scored the winning goal in the 116th minute of the 2010 World Cup final, dedicating it to Daniel Jarque.","Won 9 La Liga titles and 4 Champions Leagues with FC Barcelona, plus two Euros (2008 and 2012).","Named Player of the Match in both the World Cup final and the Champions League in the same year.","Guardiola described his football as 'seeing the game in slow motion when everyone else sees it fast'."]}
+  },
+  "Kylian Mbappé": {
+    born:"20 dic 1998", died:null,
+    clubs:{es:["AS Monaco","Paris Saint-Germain","Real Madrid"],en:["AS Monaco","Paris Saint-Germain","Real Madrid"]},
+    facts:{
+      es:["Primer jugador menor de 20 años en marcar en una final de la Copa del Mundo desde Pelé en 1958.","Marcó un hat-trick en la final del 2022 ante Argentina (3–3), aunque Francia perdió en penaltis.","Fue campeón mundial a los 19 años, uno de los jugadores más jóvenes en lograrlo.","Donó íntegramente su prima del Mundial 2018 a una asociación benéfica de niños con discapacidad."],
+      en:["First player under 20 to score in a World Cup final since Pelé in 1958.","Scored a hat-trick in the 2022 final against Argentina (3–3), though France lost on penalties.","Became world champion at 19, one of the youngest players to achieve it.","Donated his entire 2018 World Cup bonus to a charity for children with disabilities."]}
+  }
+};
+
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 
@@ -515,10 +675,10 @@ function renderGrid() {
   const era = $("#era-nav button.active")?.dataset.era || "all";
   const list = PLAYERS.filter(p => era === "all" || p.era === era);
   $("#p-grid").innerHTML = list.map(p => `
-    <article class="p-card" style="--p-c1:${p.c1}">
+    <article class="p-card" style="--p-c1:${p.c1}" data-pname="${p.name}">
       <div class="p-media">
         <span class="p-number">${p.num}</span>
-        <div class="p-silhouette">${silhouette(p.num, p.c1)}</div>
+        ${PLAYER_IMGS[p.name] ? '<img class="p-photo" src="' + PLAYER_IMGS[p.name] + '" alt="' + p.name + '" loading="lazy" onerror="this.style.display=\'none\'">' : '<div class="p-silhouette">' + silhouette(p.num, p.c1) + '</div>'}
         <div class="p-flag ph flag flag-${p.country}"></div>
         <div class="p-trophies" aria-label="trophies">
           ${Array.from({length: p.trophies}, () => `<span class="t"></span>`).join("")}
@@ -539,7 +699,64 @@ function renderGrid() {
   `).join("");
 }
 
+/* ── Player lightbox ── */
+function openPlayerLB(name) {
+  const p = PLAYERS.find(x => x.name === name);
+  const extra = PLAYER_EXTRA[name];
+  if (!p) return;
+  const lang = M26.getLang();
+  const img = PLAYER_IMGS[p.name];
+  const el = $("#plb-content");
+  el.style.setProperty("--plb-c1", p.c1);
+
+  const clubs = extra ? extra.clubs[lang].map(c => '<span class="plb-club">' + c + '</span>').join("") : "";
+  const facts = extra ? extra.facts[lang].map(f => '<div class="plb-fact">' + f + '</div>').join("") : "";
+  const born  = extra ? extra.born : "—";
+  const died  = extra && extra.died ? ' · †' + extra.died : "";
+  const parts = p.name.split(" ");
+  const last  = parts[parts.length - 1];
+  const first = parts.slice(0, -1).join(" ");
+
+  el.innerHTML =
+    '<div class="plb-photo-col">' +
+      (img ? '<img src="' + img + '" alt="' + p.name + '">' : '') +
+      '<div class="plb-photo-ov"></div>' +
+      '<div class="plb-num-bg">' + p.num + '</div>' +
+    '</div>' +
+    '<div class="plb-info">' +
+      '<button class="plb-close" id="plb-close">×</button>' +
+      '<div class="plb-eyebrow">' + p.pos[lang] + ' · ' + (lang==="en"?p.en:p.country.toUpperCase()) + ' · ' + born + died + '</div>' +
+      '<h2 class="plb-name">' + (first ? first + ' ' : '') + '<em>' + last + '</em></h2>' +
+      '<p class="plb-tag">"' + p.tag[lang] + '"</p>' +
+      '<div class="plb-chips">' +
+        '<span class="plb-chip">#' + p.num + '</span>' +
+        '<span class="plb-chip">' + p.years + '</span>' +
+        '<span class="plb-chip">' + (lang==="en"?p.era:p.era) + '</span>' +
+        '<span class="plb-chip">' + p.trophies + ' ' + (lang==="en"?(p.trophies!==1?"titles":"title"):(p.trophies!==1?"títulos":"título")) + '</span>' +
+      '</div>' +
+      '<div class="plb-stats">' +
+        '<div class="plb-stat"><div class="v"><em>' + p.cups + '</em></div><div class="k">' + (lang==="en"?"World Cups":"Mundiales") + '</div></div>' +
+        '<div class="plb-stat"><div class="v">' + p.goals + '</div><div class="k">' + (lang==="en"?"Goals":"Goles") + '</div></div>' +
+        '<div class="plb-stat"><div class="v">' + p.trophies + '</div><div class="k">' + (lang==="en"?"Titles":"Títulos") + '</div></div>' +
+      '</div>' +
+      (clubs ? '<div class="plb-section-title">' + (lang==="en"?"Clubs":"Clubes") + '</div><div class="plb-clubs">' + clubs + '</div>' : '') +
+      (facts ? '<div class="plb-section-title">' + (lang==="en"?"Curiosities":"Curiosidades") + '</div><div class="plb-facts">' + facts + '</div>' : '') +
+    '</div>';
+
+  $("#player-lb").classList.add("open");
+  document.body.style.overflow = "hidden";
+  $("#plb-close").addEventListener("click", closePlayerLB);
+}
+
+function closePlayerLB() {
+  $("#player-lb").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
 document.addEventListener("click", (e) => {
+  const card = e.target.closest(".p-card[data-pname]");
+  if (card) { openPlayerLB(card.dataset.pname); return; }
+  if (e.target.id === "player-lb") { closePlayerLB(); return; }
   const b = e.target.closest("#era-nav button");
   if (b) {
     $$("#era-nav button").forEach(x => x.classList.toggle("active", x === b));
@@ -547,9 +764,16 @@ document.addEventListener("click", (e) => {
   }
 });
 
+document.addEventListener("keydown", e => { if (e.key === "Escape") closePlayerLB(); });
+
 const orig = M26.applyI18n;
 M26.applyI18n = function() { orig(); renderGrid(); };
 renderGrid();
 </script>
+
+<!-- Player lightbox -->
+<div class="plb-scrim" id="player-lb">
+  <div class="plb" id="plb-content"></div>
+</div>
 </body>
 </html>

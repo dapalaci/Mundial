@@ -7,29 +7,7 @@
 <link rel="stylesheet" href="assets/shared.css">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  .hist-hero {
-    padding: 100px 0 40px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hist-hero::before {
-    content: "";
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 900px 400px at 30% 40%, color-mix(in oklch, var(--accent) 16%, transparent), transparent 70%);
-    pointer-events: none;
-  }
-  .hist-hero .wrap { position: relative; }
-  .hist-hero h1 {
-    font-family: var(--f-display);
-    font-size: clamp(64px, 9vw, 152px);
-    line-height: 0.86;
-    letter-spacing: -0.045em;
-    margin: 28px 0 0;
-    font-variation-settings: "SOFT" 30, "opsz" 144;
-    max-width: 14ch;
-  }
-  .hist-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .hist-hero { --hero-grad-opacity: 16%; }
   .hist-hero .sub {
     margin-top: 32px;
     display: grid;
@@ -131,6 +109,15 @@
     background:
       repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 22px),
       radial-gradient(ellipse 300px 200px at 80% 80%, rgba(0,0,0,0.45), transparent);
+  }
+  .t-art-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.38;
+    mix-blend-mode: luminosity;
   }
   .t-art-era {
     position: absolute;
@@ -312,7 +299,7 @@
 <body>
 <div id="m26-nav-slot"></div>
 
-<section class="hist-hero">
+<section class="hist-hero page-hero">
   <div class="wrap">
     <span class="eyebrow" data-i18n-es="● 1930 — 2026 · 96 años de historia" data-i18n-en="● 1930 — 2026 · 96 years of history">● 1930 — 2026 · 96 años de historia</span>
     <h1 data-i18n-es="Un siglo de <em>gloria</em> sobre el césped."
@@ -481,6 +468,21 @@ const EDITIONS = [
   }, { es: "La historia sigue en blanco. Alguien la va a escribir.", en: "History is still blank. Someone will write it." }, "?", "contemporary", "oklch(0.80 0.14 85)"),
 ];
 
+const HISTORIA_IMGS = {
+  1930:"assets/historia-1930.webp", 1934:"assets/historia-1934.webp",
+  1938:"assets/historia-1938.webp", 1950:"assets/historia-1950.webp",
+  1954:"assets/historia-1954.webp", 1958:"assets/historia-1958.webp",
+  1962:"assets/historia-1962.webp", 1966:"assets/historia-1966.webp",
+  1970:"assets/historia-1970.webp", 1974:"assets/historia-1974.webp",
+  1978:"assets/historia-1978.webp", 1982:"assets/historia-1982.webp",
+  1986:"assets/historia-1986.webp", 1990:"assets/historia-1990.webp",
+  1994:"assets/historia-1994.webp", 1998:"assets/historia-1998.webp",
+  2002:"assets/historia-2002.webp", 2006:"assets/historia-2006.webp",
+  2010:"assets/historia-2010.webp", 2014:"assets/historia-2014.webp",
+  2018:"assets/historia-2018.webp", 2022:"assets/historia-2022.webp",
+  2026:"assets/historia-2026.webp",
+};
+
 /* ── Render ── */
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
@@ -525,6 +527,7 @@ function renderTimeline() {
       <div class="t-row ${side}">
         <div class="t-card" style="--t-c1:${e.color}">
           <div class="t-art">
+            ${HISTORIA_IMGS[e.y] ? '<img class="t-art-photo" src="' + HISTORIA_IMGS[e.y] + '" alt="' + e.y + '" loading="lazy" onerror="this.style.display=\'none\'">' : ''}
             <span class="t-art-era">${e.host}</span>
             <div class="t-art-big">${String(e.y).slice(-2)}</div>
             <div class="t-art-flag ph flag flag-${e.hflag}"></div>

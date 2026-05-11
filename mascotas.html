@@ -7,24 +7,13 @@
 <link rel="stylesheet" href="assets/shared.css">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  .ms-hero { padding: 100px 0 24px; position: relative; overflow: hidden; }
-  .ms-hero::before {
-    content: "";
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 900px 420px at 20% 30%, color-mix(in oklch, var(--accent) 20%, transparent), transparent 70%);
-    pointer-events: none;
+  .ms-hero {
+    --hero-pt-bottom: 24px;
+    --hero-grad-x: 20%; --hero-grad-y: 30%;
+    --hero-grad-opacity: 20%; --hero-grad-h: 420px;
+    --hero-h1-max: 160px;
   }
-  .ms-hero .wrap { position: relative; }
-  .ms-hero h1 {
-    font-family: var(--f-display);
-    font-size: clamp(64px, 9vw, 160px);
-    line-height: 0.86;
-    letter-spacing: -0.045em;
-    margin: 24px 0 0;
-    font-variation-settings: "SOFT" 30, "opsz" 144;
-    max-width: 14ch;
-  }
-  .ms-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .ms-hero h1 { margin: 24px 0 0; }
   .ms-hero .lead { margin-top: 28px; max-width: 62ch; }
 
   /* Collector grid */
@@ -81,6 +70,15 @@
     filter: drop-shadow(0 16px 32px rgba(0,0,0,0.5));
     position: relative;
     z-index: 1;
+  }
+  .ms-card .art-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 12px 28px rgba(0,0,0,0.45));
   }
   .ms-card .holo {
     position: absolute;
@@ -219,6 +217,14 @@
   .lb-art .emoji {
     font-size: 220px;
     filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+  }
+  .lb-art .art-img {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 16px 40px rgba(0,0,0,0.55));
   }
   .lb-art .yr-big {
     position: absolute;
@@ -360,7 +366,7 @@
 <body>
 <div id="m26-nav-slot"></div>
 
-<section class="ms-hero">
+<section class="ms-hero page-hero">
   <div class="wrap">
     <span class="eyebrow" data-i18n-es="● 56 años de mascotas · 16 amuletos · un mundo de símbolos" data-i18n-en="● 56 years of mascots · 16 amulets · a world of symbols">● 56 años de mascotas · 16 amuletos · un mundo de símbolos</span>
     <h1 data-i18n-es="Los <em>amuletos</em> de<br>cada Mundial." data-i18n-en="The <em>charms</em> of<br>every World Cup.">Los <em>amuletos</em> de<br>cada Mundial.</h1>
@@ -405,82 +411,82 @@
 <script>
 /* Datos reales de mascotas históricas del Mundial */
 const MASCOTS = [
-  { y:1966, name:"World Cup Willie", host:"Inglaterra", type:"animal", emoji:"🦁", bg:"#b71c2b",
+  { y:1966, name:"World Cup Willie", host:"Inglaterra", type:"animal", emoji:"🦁", bg:"#b71c2b", img:"assets/mascota-1966.jpg",
     tag:{es:"El primer amuleto: un león con camiseta Union Jack.", en:"The first mascot: a lion in a Union Jack jersey."},
     body:{es:"World Cup Willie inauguró la tradición. Un león antropomórfico ilustrado por Reg Hoye, vestido con la bandera británica. Marcó el inicio del merchandising moderno del fútbol.", en:"World Cup Willie started the tradition. An anthropomorphic lion drawn by Reg Hoye, wearing the British flag. He marked the dawn of modern football merchandising."},
     stats:{animal:"León", designer:"R. Hoye", rarity:"Histórica"}
   },
-  { y:1970, name:"Juanito", host:"México", type:"human", emoji:"🧒", bg:"#006847",
+  { y:1970, name:"Juanito", host:"México", type:"human", emoji:"🧒", bg:"#006847", img:"assets/mascota-1970.jpg",
     tag:{es:"Un niño con sombrero de ala ancha en pleno Azteca.", en:"A boy with a wide-brim hat at the Azteca."},
     body:{es:"Juanito fue un niño caricaturesco con sombrero de charro que encarnó el Mundial de Carlos Alberto y Pelé. Puso cara al primer Mundial a color y televisado globalmente.", en:"Juanito was a cartoon boy with a charro hat who embodied the Cup of Carlos Alberto and Pelé. He was the face of the first World Cup broadcast globally in color."},
     stats:{animal:"Humano", designer:"—", rarity:"Histórica"}
   },
-  { y:1974, name:"Tip y Tap", host:"Alemania O.", type:"human", emoji:"👬", bg:"#000",
+  { y:1974, name:"Tip y Tap", host:"Alemania O.", type:"human", emoji:"👬", bg:"#000", img:null,
     tag:{es:"Dos niños, dos Alemanias, un solo fútbol.", en:"Two boys, two Germanies, one football."},
     body:{es:"Dos figuras infantiles rubias en uniformes similares representaban las dos Alemanias de la época. El Mundial de Müller y Beckenbauer tuvo un dúo como amuleto.", en:"Two blond child figures in similar uniforms represented the era's two Germanies. Müller and Beckenbauer's World Cup had a duo as its mascot."},
     stats:{animal:"Humanos", designer:"—", rarity:"Pareja"}
   },
-  { y:1978, name:"Gauchito", host:"Argentina", type:"human", emoji:"🤠", bg:"#6ca4da",
+  { y:1978, name:"Gauchito", host:"Argentina", type:"human", emoji:"🤠", bg:"#6ca4da", img:null,
     tag:{es:"Un pequeño gaucho con pañuelo y boina.", en:"A little gaucho with scarf and beret."},
     body:{es:"Gauchito encarnaba al futbolista argentino arquetípico. Camiseta albiceleste, sombrero con ala ancha y pañuelo al cuello. El torneo fue ganado por Kempes.", en:"Gauchito embodied the archetypal Argentine footballer. Sky-blue-and-white jersey, wide-brim hat and neck scarf. The tournament was won by Kempes."},
     stats:{animal:"Humano", designer:"—", rarity:"Clásica"}
   },
-  { y:1982, name:"Naranjito", host:"España", type:"object", emoji:"🍊", bg:"#f57f17",
+  { y:1982, name:"Naranjito", host:"España", type:"object", emoji:"🍊", bg:"#f57f17", img:"assets/mascota-1982.jpg",
     tag:{es:"Una naranja valenciana con uniforme rojo.", en:"A Valencian orange in a red strip."},
     body:{es:"Naranjito fue la primera mascota no-humana sin ser un animal: una naranja sonriente con camiseta de La Roja. Icono absoluto del diseño español de los 80.", en:"Naranjito was the first non-human, non-animal mascot: a smiling orange in a La Roja jersey. An absolute icon of 1980s Spanish design."},
     stats:{animal:"Fruta", designer:"Dibujos y Diseño", rarity:"Pop"}
   },
-  { y:1986, name:"Pique", host:"México", type:"object", emoji:"🌶️", bg:"#006847",
+  { y:1986, name:"Pique", host:"México", type:"object", emoji:"🌶️", bg:"#006847", img:"assets/mascota-1986.png",
     tag:{es:"Un jalapeño con bigote gigante.", en:"A jalapeño with a giant mustache."},
     body:{es:"Pique, un chile jalapeño con sombrero mexicano y bigote, vistió el segundo Mundial organizado por México. Fue el telón de fondo del Mundial de Maradona.", en:"Pique, a jalapeño pepper with a mexican hat and mustache, dressed Mexico's second World Cup. Backdrop to Maradona's Cup."},
     stats:{animal:"Chile", designer:"—", rarity:"Pop"}
   },
-  { y:1990, name:"Ciao", host:"Italia", type:"object", emoji:"🧊", bg:"#008c45",
+  { y:1990, name:"Ciao", host:"Italia", type:"object", emoji:"🧊", bg:"#008c45", img:"assets/mascota-1990.jpg",
     tag:{es:"Un jugador hecho de cubos verdes, blancos y rojos.", en:"A player made of green, white and red cubes."},
     body:{es:"Ciao rompió moldes: una figura completamente abstracta, compuesta por bloques tricolor con una cabeza esférica. El Mundial de la genialidad de Schillaci y la derrota de Maradona.", en:"Ciao broke molds: a fully abstract figure made of tricolor blocks with a spherical head. The Cup of Schillaci's magic and Maradona's defeat."},
     stats:{animal:"Abstracto", designer:"L. Benevelli", rarity:"Vanguardia"}
   },
-  { y:1994, name:"Striker", host:"EE. UU.", type:"animal", emoji:"🐕", bg:"#b22234",
+  { y:1994, name:"Striker", host:"EE. UU.", type:"animal", emoji:"🐕", bg:"#b22234", img:"assets/mascota-1994.jpg",
     tag:{es:"El 'World Cup Pup' norteamericano.", en:"The North American World Cup Pup."},
     body:{es:"Un perro futbolístico con uniforme rojo, blanco y azul. El Mundial que trajo el fútbol a territorio estadounidense y marcó récords de asistencia imposibles.", en:"A football-playing dog in red, white and blue. The World Cup that brought football to U.S. soil and set record attendance figures."},
     stats:{animal:"Perro", designer:"Warner Bros.", rarity:"Comercial"}
   },
-  { y:1998, name:"Footix", host:"Francia", type:"animal", emoji:"🐓", bg:"#0055a4",
+  { y:1998, name:"Footix", host:"Francia", type:"animal", emoji:"🐓", bg:"#0055a4", img:"assets/mascota-1998.jpg",
     tag:{es:"El gallo galo que llegó con el tricolor.", en:"The Gallic rooster that arrived with the tricolor."},
     body:{es:"Footix, un gallo azul que proclamaba 'allez la France', acompañó el primer Mundial ganado por los anfitriones desde 1978. El cabezazo de Zidane tuvo testigo emplumado.", en:"Footix, a blue rooster proclaiming 'allez la France', accompanied the first World Cup won by the hosts since 1978. Zidane's header had a feathered witness."},
     stats:{animal:"Gallo", designer:"F. Pichon", rarity:"Clásica"}
   },
-  { y:2002, name:"Ato, Kaz y Nik", host:"Japón · Corea", type:"animal", emoji:"👾", bg:"#7b1fa2",
+  { y:2002, name:"Ato, Kaz y Nik", host:"Japón · Corea", type:"animal", emoji:"👾", bg:"#7b1fa2", img:"assets/mascota-2002.png",
     tag:{es:"Tres 'Sphericals' futuristas del 'Atmoball'.", en:"Three futuristic 'Sphericals' of 'Atmoball'."},
     body:{es:"El primer Mundial asiático estrenó mascotas generadas por ordenador. Tres criaturas esféricas con colores amarillo, morado y azul — una ruptura total con la tradición ilustrada.", en:"The first Asian World Cup debuted fully computer-generated mascots. Three spherical creatures in yellow, purple and blue — a total break with illustrated tradition."},
     stats:{animal:"CGI", designer:"Interbrand", rarity:"Rareza"}
   },
-  { y:2006, name:"Goleo VI", host:"Alemania", type:"animal", emoji:"🦁", bg:"#000",
+  { y:2006, name:"Goleo VI", host:"Alemania", type:"animal", emoji:"🦁", bg:"#000", img:"assets/mascota-2006.png",
     tag:{es:"Un león con los pantalones de Alemania y nada más.", en:"A lion in Germany's shorts and nothing else."},
     body:{es:"Goleo, un león antropomórfico diseñado por Jim Henson Company, acompañó al Mundial del 'verano de cuento'. Su peculiaridad: ningún zapato. Un león cómodo.", en:"Goleo, an anthropomorphic lion designed by The Jim Henson Company, accompanied the 'fairy-tale summer' Cup. His peculiarity: no shoes. A comfortable lion."},
     stats:{animal:"León", designer:"Jim Henson Co.", rarity:"Polémica"}
   },
-  { y:2010, name:"Zakumi", host:"Sudáfrica", type:"animal", emoji:"🐆", bg:"#007a3d",
+  { y:2010, name:"Zakumi", host:"Sudáfrica", type:"animal", emoji:"🐆", bg:"#007a3d", img:"assets/mascota-2010.png",
     tag:{es:"Leopardo verde y amarillo: 'ZA' + 'kumi'.", en:"Green-and-yellow leopard: 'ZA' + 'kumi'."},
     body:{es:"Zakumi, cuyo nombre une el código ISO de Sudáfrica con 'kumi' (10), fue el primer amuleto del continente africano. La final entre España y Países Bajos tuvo ojo felino.", en:"Zakumi, whose name combines South Africa's ISO code with 'kumi' (10), was Africa's first World Cup mascot. The Spain–Netherlands final had a feline witness."},
     stats:{animal:"Leopardo", designer:"A. Msibi", rarity:"Icónica"}
   },
-  { y:2014, name:"Fuleco", host:"Brasil", type:"animal", emoji:"🦔", bg:"#009b3a",
+  { y:2014, name:"Fuleco", host:"Brasil", type:"animal", emoji:"🦔", bg:"#009b3a", img:"assets/mascota-2014.png",
     tag:{es:"Un armadillo de tres bandas en peligro de extinción.", en:"An endangered three-banded armadillo."},
     body:{es:"Fuleco fusionó 'futebol' y 'ecologia'. Representó al tatu-bola, especie brasileña en peligro. El Mundial del Mineirazo tuvo mascota con mensaje conservacionista.", en:"Fuleco fused 'futebol' and 'ecologia'. Represented the Brazilian three-banded armadillo, an endangered species. The Mineirazo Cup had a conservationist mascot."},
     stats:{animal:"Armadillo", designer:"100% Design", rarity:"Icónica"}
   },
-  { y:2018, name:"Zabivaka", host:"Rusia", type:"animal", emoji:"🐺", bg:"#0044a5",
+  { y:2018, name:"Zabivaka", host:"Rusia", type:"animal", emoji:"🐺", bg:"#0044a5", img:"assets/mascota-2018.jpg",
     tag:{es:"Un lobo con gafas deportivas amarillas.", en:"A wolf in yellow sports goggles."},
     body:{es:"Zabivaka ('el que anota' en ruso) fue elegido por voto público ruso. Un lobo siberiano con gafas naranjas que presidió el Mundial del hat-trick de Mbappé en cuartos.", en:"Zabivaka ('the one who scores' in Russian) was elected by Russian public vote. A Siberian wolf in orange goggles who presided over the Cup of Mbappé's quarterfinal hat-trick."},
     stats:{animal:"Lobo", designer:"E. Bochkova", rarity:"Rareza"}
   },
-  { y:2022, name:"La'eeb", host:"Catar", type:"object", emoji:"🕊️", bg:"#7a003c",
+  { y:2022, name:"La'eeb", host:"Catar", type:"object", emoji:"🕊️", bg:"#7a003c", img:"assets/mascota-2022.jpg",
     tag:{es:"Una keffiyeh ghutra que flota en el aire.", en:"A floating keffiyeh ghutra."},
     body:{es:"La'eeb ('jugador experto' en árabe) es una tela tradicional árabe que flota, sin rostro definido. Presidió el torneo del 3–3 entre Argentina y Francia.", en:"La'eeb ('skilled player' in Arabic) is a traditional Arabic fabric that floats, without a defined face. It presided over the 3–3 between Argentina and France."},
     stats:{animal:"Tela", designer:"FIFA", rarity:"Abstracta"}
   },
-  { y:2026, name:"Maple, Zayu & Clutch", host:"CAN · MEX · USA", type:"mx", emoji:"🍁🐆🦅", bg:"#1a1a24",
+  { y:2026, name:"Maple, Zayu & Clutch", host:"CAN · MEX · USA", type:"mx", emoji:"🍁🐆🦅", bg:"#1a1a24", img:"assets/mascota-2026.jpg",
     tag:{es:"Un alce, un jaguar y un águila calva. Por primera vez: tres países, tres amuletos.", en:"A moose, a jaguar and a bald eagle. For the first time: three countries, three mascots."},
     body:{es:"Maple (alce, Canadá), Zayu (jaguar, México) y Clutch (águila calva, EE. UU.) forman el primer trío oficial norteamericano. Cada uno representa el espíritu de su país anfitrión y juntos encarnan el primer Mundial compartido entre tres naciones.", en:"Maple (moose, Canada), Zayu (jaguar, Mexico) and Clutch (bald eagle, USA) form the first official North American trio. Each represents its host country's spirit — together, they embody the first World Cup shared by three nations."},
     stats:{animal:"Trío", designer:"FIFA 2026", rarity:"Estreno"}
@@ -491,6 +497,13 @@ const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 let currentFilter = "all";
 
+function artHtml(m, emojiSize) {
+  if (!m.img) return `<div class="emoji" style="font-size:${emojiSize}">${m.emoji}</div>`;
+  return `<img class="art-img" src="${m.img}" alt="${m.name}" loading="lazy"
+    onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')">
+    <div class="emoji" style="display:none;font-size:${emojiSize}">${m.emoji}</div>`;
+}
+
 function renderGrid() {
   const lang = M26.getLang();
   const list = MASCOTS.filter(m => currentFilter === "all" || m.type === currentFilter);
@@ -499,7 +512,7 @@ function renderGrid() {
       <div class="art">
         <div class="yr-big">${m.y}</div>
         <div class="holo">#${String(MASCOTS.indexOf(m)+1).padStart(2,"0")} · ${m.stats.rarity.toUpperCase()}</div>
-        <div class="emoji">${m.emoji}</div>
+        ${artHtml(m, "140px")}
       </div>
       <div class="info">
         <div class="name">${m.name}</div>
@@ -532,7 +545,7 @@ function openLightbox(idx) {
   $("#lb-inner").innerHTML = `
     <div class="lb-art" style="background:${m.bg}">
       <div class="yr-big">${m.y}</div>
-      <div class="emoji">${m.emoji}</div>
+      ${artHtml(m, "220px")}
     </div>
     <div class="lb-info">
       <h3><em>${m.name}</em></h3>

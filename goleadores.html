@@ -7,24 +7,13 @@
 <link rel="stylesheet" href="assets/shared.css">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  .gl-hero { padding: 100px 0 30px; position: relative; overflow: hidden; }
-  .gl-hero::before {
-    content: "";
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 900px 420px at 80% 30%, color-mix(in oklch, var(--accent) 18%, transparent), transparent 70%);
-    pointer-events: none;
+  .gl-hero {
+    --hero-pt-bottom: 30px;
+    --hero-grad-x: 80%; --hero-grad-y: 30%;
+    --hero-grad-h: 420px;
+    --hero-h1-max: 160px;
   }
-  .gl-hero .wrap { position: relative; }
-  .gl-hero h1 {
-    font-family: var(--f-display);
-    font-size: clamp(64px, 9vw, 160px);
-    line-height: 0.86;
-    letter-spacing: -0.045em;
-    margin: 24px 0 0;
-    font-variation-settings: "SOFT" 30, "opsz" 144;
-    max-width: 14ch;
-  }
-  .gl-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .gl-hero h1 { margin: 24px 0 0; }
   .gl-hero .lead { margin-top: 28px; max-width: 64ch; }
 
   /* Podium */
@@ -438,12 +427,50 @@
     .gl-table .nation, .gl-table .ratio { display: none; }
     .expand-inner { grid-template-columns: 1fr; }
   }
+
+  /* ── Player photos ── */
+  .pod-photo-wrap {
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: 56%; overflow: hidden; pointer-events: none;
+  }
+  .pod-photo-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: top center;
+    opacity: 0.5; filter: saturate(0.7) contrast(1.1);
+  }
+  .pod-photo-fade {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to right, var(--surface) 0%, transparent 55%),
+      linear-gradient(to top, var(--surface) 0%, transparent 40%);
+  }
+  .pod-card.first .pod-photo-wrap img { opacity: 0.65; filter: saturate(0.85); }
+  .pod-card.first .pod-photo-fade {
+    background:
+      linear-gradient(to right, color-mix(in oklch, var(--accent) 14%, var(--surface)) 0%, transparent 55%),
+      linear-gradient(to top, var(--surface) 0%, transparent 40%);
+  }
+  .pod-card h4, .pod-card .nation, .pod-card .goals,
+  .pod-card .editions, .pod-card .rank { position: relative; z-index: 1; }
+
+  .name-cell { display: flex; align-items: center; gap: 10px; }
+  .player-av {
+    width: 34px; height: 34px; border-radius: 50%;
+    object-fit: cover; object-position: top center;
+    border: 1.5px solid var(--line); flex-shrink: 0; display: block;
+  }
+  .expand-photo {
+    width: 100%; max-width: 180px; aspect-ratio: 3/4;
+    object-fit: cover; object-position: top center;
+    border-radius: 10px; display: block; margin-bottom: 18px;
+    border: 1px solid var(--line); filter: saturate(0.85);
+  }
 </style>
 </head>
 <body>
 <div id="m26-nav-slot"></div>
 
-<section class="gl-hero">
+<section class="gl-hero page-hero">
   <div class="wrap">
     <span class="eyebrow" data-i18n-es="● El número que importa es el del tablero" data-i18n-en="● The only number that matters is on the board">● El número que importa es el del tablero</span>
     <h1 data-i18n-es="Las botas que<br><em>hicieron</em> historia." data-i18n-en="The boots that<br><em>made</em> history.">Las botas que<br><em>hicieron</em> historia.</h1>
@@ -585,6 +612,29 @@ const BOOTS = [
   { y:2022, name:"Kylian Mbappé", fl:"fr", goals:8 },
 ];
 
+const PLAYER_IMGS = {
+  "Miroslav Klose":    "assets/goleador-klose.webp",
+  "Ronaldo":           "assets/goleador-ronaldo.webp",
+  "Gerd Müller":       "assets/goleador-gerd-muller.webp",
+  "Lionel Messi":      "assets/goleador-messi.webp",
+  "Just Fontaine":     "assets/goleador-fontaine.webp",
+  "Pelé":              "assets/goleador-pele.webp",
+  "Sándor Kocsis":     "assets/goleador-kocsis.webp",
+  "Jürgen Klinsmann":  "assets/goleador-klinsmann.webp",
+  "Helmut Rahn":       "assets/goleador-rahn.webp",
+  "Gary Lineker":      "assets/goleador-lineker.webp",
+  "Gabriel Batistuta": "assets/goleador-batistuta.webp",
+  "Teófilo Cubillas":  "assets/goleador-cubillas.webp",
+  "Grzegorz Lato":     "assets/goleador-lato.webp",
+  "Thomas Müller":     "assets/goleador-thomas-muller.webp",
+  "Kylian Mbappé":     "assets/goleador-mbappe.webp",
+  "Eusébio":           "assets/goleador-eusebio.webp",
+  "Paolo Rossi":       "assets/goleador-rossi.webp",
+  "Oleg Salenko":      "assets/goleador-salenko.webp",
+  "Harry Kane":        "assets/goleador-kane.webp",
+  "Diego Maradona":    "assets/goleador-maradona.webp",
+};
+
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 let sortKey = "goals";
@@ -620,9 +670,11 @@ function renderPodium() {
   $("#podium").innerHTML = order.map((p, i) => {
     const realRank = PLAYERS.sort((a,b) => b.goals - a.goals).indexOf(p) + 1;
     const first = realRank === 1;
+    const pImg = PLAYER_IMGS[p.name];
     return `
       <div class="pod-card ${first?'first':''}">
         <div class="medal"></div>
+        ${pImg ? '<div class="pod-photo-wrap"><img src="' + pImg + '" alt="' + p.name + '" loading="lazy" onerror="this.parentElement.style.display=\'none\'"><div class="pod-photo-fade"></div></div>' : ''}
         <div class="rank">${first?'#1 · ALL-TIME':'#'+realRank}</div>
         <h4>${first?'<em>'+p.name+'</em>':p.name}</h4>
         <div class="nation"><div class="fl ph flag flag-${p.fl}"></div>${p.nat}</div>
@@ -648,7 +700,7 @@ function renderTable() {
     const rows = [`
       <tr data-idx="${idx}" class="${openIdx===idx?'open':''}">
         <td class="rank">${String(rank).padStart(2,"0")}</td>
-        <td><div class="name">${rank<=3?'<em>'+p.name+'</em>':p.name}</div></td>
+        <td><div class="name-cell">${PLAYER_IMGS[p.name] ? '<img class="player-av" src="' + PLAYER_IMGS[p.name] + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">' : ''}<div class="name">${rank<=3?'<em>'+p.name+'</em>':p.name}</div></div></td>
         <td><div class="nation"><div class="fl ph flag flag-${p.fl}"></div>${p.nat}</div></td>
         <td class="wc">${p.wcs.join(" · ")}</td>
         <td class="goals">${rank<=3?'<em>'+p.goals+'</em>':p.goals}</td>
@@ -662,6 +714,7 @@ function renderTable() {
           <td colspan="6">
             <div class="expand-inner">
               <div>
+                ${PLAYER_IMGS[p.name] ? '<img class="expand-photo" src="' + PLAYER_IMGS[p.name] + '" alt="' + p.name + '" loading="lazy" onerror="this.style.display=\'none\'">' : ''}
                 <h5>${lang==="en"?"WHY HE MATTERS":"POR QUÉ IMPORTA"}</h5>
                 <p class="tag-q">"${p.tag[lang]}"</p>
                 <p class="body">${p.note[lang]}</p>

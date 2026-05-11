@@ -8,26 +8,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   /* ——— Hero ——— */
-  .bl-hero { padding: 100px 0 48px; position: relative; overflow: hidden; }
-  .bl-hero::before {
+  .bl-hero {
+    --hero-pt-bottom: 48px;
+    --hero-grad-y: 30%;
+    --hero-grad-opacity: 22%; --hero-grad-w: 800px; --hero-grad-h: 380px;
+    --hero-h1-max: 176px; --hero-h1-maxw: 16ch;
+  }
+  .bl-hero::after {
     content: "";
     position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 800px 380px at 30% 30%, color-mix(in oklch, var(--accent) 22%, transparent), transparent 70%),
-      radial-gradient(ellipse 500px 300px at 80% 60%, color-mix(in oklch, var(--accent) 12%, transparent), transparent 70%);
+    background: radial-gradient(ellipse 500px 300px at 80% 60%, color-mix(in oklch, var(--accent) 12%, transparent), transparent 70%);
     pointer-events: none;
   }
-  .bl-hero .wrap { position: relative; z-index: 1; }
-  .bl-hero h1 {
-    font-family: var(--f-display);
-    font-size: clamp(64px, 10vw, 176px);
-    line-height: 0.86;
-    letter-spacing: -0.045em;
-    margin: 24px 0 0;
-    font-variation-settings: "SOFT" 30, "opsz" 144;
-    max-width: 16ch;
-  }
-  .bl-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .bl-hero h1 { font-size: clamp(64px, 10vw, var(--hero-h1-max)); margin: 24px 0 0; }
   .bl-hero .lead { margin-top: 28px; max-width: 66ch; }
   .bl-meta {
     display: grid;
@@ -330,7 +323,7 @@
 
 <main>
   <!-- HERO -->
-  <section class="bl-hero">
+  <section class="bl-hero page-hero">
     <div class="wrap">
       <span class="eyebrow"
         data-i18n-es="⚽ Catálogo oficial · 1930 → 2026"
@@ -363,7 +356,7 @@
         data-i18n-es="★ BALÓN OFICIAL 2026"
         data-i18n-en="★ OFFICIAL BALL 2026">★ BALÓN OFICIAL 2026</span>
       <img src="assets/balon 2026.png" alt="Adidas Trionda 2026" class="ball-svg"
-        style="object-fit:contain;width:100%;height:100%;border-radius:50%;box-shadow:0 0 80px oklch(0.65 0.18 145 / 0.35), 0 0 140px oklch(0.62 0.22 25 / 0.20);"
+        style="object-fit:cover;width:100%;height:100%;border-radius:16px;box-shadow:0 0 80px rgba(20,140,60,0.35), 0 0 140px rgba(180,30,20,0.20);"
         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
       <svg class="ball-svg" viewBox="0 0 200 200" style="display:none;">
         <defs>
@@ -824,13 +817,28 @@
     const node = document.createElement("a");
     node.className = "tl-node";
     node.href = `#ball-${b.yr}`;
-    node.innerHTML = `
-      <div class="dot" style="background:#1a1a1a; overflow:hidden;">
-        <img src="assets/balon ${b.yr}.png" alt="${b.name}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.outerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;width:100%;height:100%;\\'>'+\`${ball(b.render, b.colors).replace(/`/g,'\\`')}\`+'</div>'"/>
-      </div>
-      <div class="yr">${b.yr}</div>
-      <div class="nm">${b.name.split("/")[0].split("—")[0].trim().slice(0,12)}</div>
-    `;
+    const dot = document.createElement("div");
+    dot.className = "dot";
+    dot.style.cssText = "background:#0d0d12;overflow:hidden;";
+    const img = document.createElement("img");
+    img.src = `assets/balon ${b.yr}.png`;
+    img.alt = b.name;
+    img.style.cssText = "width:100%;height:100%;object-fit:cover;display:block;";
+    const fallback = document.createElement("div");
+    fallback.style.cssText = "display:none;width:100%;height:100%;align-items:center;justify-content:center;";
+    fallback.innerHTML = ball(b.render, b.colors);
+    img.addEventListener("error", () => { img.style.display = "none"; fallback.style.display = "flex"; });
+    dot.appendChild(img);
+    dot.appendChild(fallback);
+    const yr = document.createElement("div");
+    yr.className = "yr";
+    yr.textContent = b.yr;
+    const nm = document.createElement("div");
+    nm.className = "nm";
+    nm.textContent = b.name.split("/")[0].split("—")[0].trim().slice(0, 12);
+    node.appendChild(dot);
+    node.appendChild(yr);
+    node.appendChild(nm);
     tlTrack.appendChild(node);
   });
 

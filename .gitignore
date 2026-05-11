@@ -1,0 +1,19 @@
+# Binarios grandes
+*.aab
+*.zip
+*.apk
+
+# Scripts de descarga (solo útiles en local)
+download_images.py
+download_more.py
+
+# Archivos temporales / generados
+Generated Image*
+PATHFINDER-*/
+uploads/
+landing-handoff/
+_placeholder.html
+
+# Sistema
+.DS_Store
+Thumbs.db

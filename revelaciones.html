@@ -9,29 +9,16 @@
 <style>
   /* ───── Hero ───── */
   .rev-hero {
-    position: relative;
-    padding: 100px 0 40px;
-    overflow: hidden;
+    --hero-h1-max: 140px; --hero-h1-maxw: 16ch;
+    --hero-h1-min: 56px;
   }
-  .rev-hero::before {
+  .rev-hero::after {
     content: "";
     position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 900px 400px at 30% 40%, color-mix(in oklch, var(--accent) 18%, transparent), transparent 70%),
-      radial-gradient(ellipse 600px 300px at 80% 20%, color-mix(in oklch, var(--accent) 10%, transparent), transparent 70%);
+    background: radial-gradient(ellipse 600px 300px at 80% 20%, color-mix(in oklch, var(--accent) 10%, transparent), transparent 70%);
     pointer-events: none;
   }
-  .rev-hero .wrap { position: relative; }
-  .rev-hero h1 {
-    font-family: var(--f-display);
-    font-size: clamp(56px, 9vw, 140px);
-    line-height: 0.88;
-    letter-spacing: -0.045em;
-    margin: 28px 0 0;
-    font-variation-settings: "SOFT" 30, "opsz" 144;
-    max-width: 16ch;
-  }
-  .rev-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .rev-hero h1 { line-height: 0.88; }
   .rev-hero .sub {
     margin-top: 32px;
     display: grid;
@@ -324,6 +311,8 @@
   }
   .video-card:hover { border-color: var(--accent-soft); }
   .video-card iframe {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     border: none;
@@ -341,6 +330,28 @@
     pointer-events: none;
   }
 
+  /* ───── Revelation card team image ───── */
+  .rev-card-img {
+    position: relative;
+    height: 140px;
+    overflow: hidden;
+    background: color-mix(in oklch, var(--accent) 18%, #0a0a12);
+    flex-shrink: 0;
+  }
+  .rev-card-img img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 8px 22px;
+    filter: saturate(1.05);
+  }
+  .rev-card-img-ov {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 35%, var(--surface) 100%);
+  }
+
   @media (max-width: 900px) {
     .rev-hero .sub { grid-template-columns: 1fr; }
     .rev-grid { grid-template-columns: 1fr; }
@@ -356,7 +367,7 @@
 
 <main>
   <!-- Hero -->
-  <section class="rev-hero">
+  <section class="rev-hero page-hero">
     <div class="wrap">
       <span class="eyebrow" data-i18n-es="● Las sorpresas del balón" data-i18n-en="● The ball's surprises">● Las sorpresas del balón</span>
       <h1 data-i18n-es="Las selecciones<br>que nadie<br><em>esperaba.</em>" data-i18n-en="The teams<br>nobody<br><em>expected.</em>">Las selecciones<br>que nadie<br><em>esperaba.</em></h1>
@@ -434,12 +445,15 @@
     <div class="video-grid">
       <div class="video-card">
         <iframe src="https://www.youtube.com/embed/0WVXngp6bJQ" title="Camerún vs Argentina 1990" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-label">🦁 Camerún vs Argentina · Italia 1990</div>
       </div>
       <div class="video-card">
         <iframe src="https://www.youtube.com/embed/kePH0m7JMiQ" title="Senegal vs Francia 2002" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-label">🦁 Senegal vs Francia · Corea-Japón 2002</div>
       </div>
       <div class="video-card">
         <iframe src="https://www.youtube.com/embed/LJsKbf0yMeo" title="Marruecos en Qatar 2022" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-label">🌟 Marruecos · La gesta africana · Qatar 2022</div>
       </div>
     </div>
   </section>
@@ -597,8 +611,12 @@ function renderGrid(filter) {
       return filter === `${decade}s`;
     });
 
-  grid.innerHTML = filtered.map(r => `
+  grid.innerHTML = filtered.map(r => {
+    const fc = r.flag.replace("flag-", "");
+    const imgHtml = '<div class="rev-card-img"><img src="assets/seleccion-' + fc + '.webp" alt="' + r.team + '" loading="lazy" onerror="this.parentElement.style.display=\'none\'"><div class="rev-card-img-ov"></div></div>';
+    return `
     <div class="rev-card" data-year="${r.year}">
+      ${imgHtml}
       <div class="rev-card-header">
         <div class="year-badge">${r.year}</div>
         <div class="host-line">${r.host} ${r.year}</div>
@@ -617,7 +635,8 @@ function renderGrid(filter) {
         <div class="curiosity">${r.curiosity}</div>
       </div>
     </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 // Events

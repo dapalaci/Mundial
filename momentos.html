@@ -9,29 +9,18 @@
 <style>
   /* ───── Hero ───── */
   .mom-hero {
-    position: relative;
-    padding: 100px 0 40px;
-    overflow: hidden;
+    --hero-grad-x: 25%; --hero-grad-y: 30%;
+    --hero-grad-opacity: 20%; --hero-grad-h: 500px;
+    --hero-h1-max: 140px; --hero-h1-maxw: 16ch;
+    --hero-h1-min: 56px;
   }
-  .mom-hero::before {
+  .mom-hero::after {
     content: "";
     position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 900px 500px at 25% 30%, color-mix(in oklch, var(--accent) 20%, transparent), transparent 70%),
-      radial-gradient(ellipse 600px 300px at 80% 60%, oklch(0.68 0.22 350 / 0.08), transparent 70%);
+    background: radial-gradient(ellipse 600px 300px at 80% 60%, oklch(0.68 0.22 350 / 0.08), transparent 70%);
     pointer-events: none;
   }
-  .mom-hero .wrap { position: relative; }
-  .mom-hero h1 {
-    font-family: var(--f-display);
-    font-size: clamp(56px, 9vw, 140px);
-    line-height: 0.88;
-    letter-spacing: -0.045em;
-    margin: 28px 0 0;
-    font-variation-settings: "SOFT" 30, "opsz" 144;
-    max-width: 16ch;
-  }
-  .mom-hero h1 em { font-style: italic; color: var(--accent); font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144; }
+  .mom-hero h1 { line-height: 0.88; }
   .mom-hero .sub {
     margin-top: 32px;
     display: grid;
@@ -330,7 +319,7 @@
 
 <main>
   <!-- Hero -->
-  <section class="mom-hero">
+  <section class="mom-hero page-hero">
     <div class="wrap">
       <span class="eyebrow" data-i18n-es="● Los instantes eternos" data-i18n-en="● The eternal instants">● Los instantes eternos</span>
       <h1 data-i18n-es="Los momentos<br>que el mundo<br><em>no olvida.</em>" data-i18n-en="The moments<br>the world<br><em>never forgets.</em>">Los momentos<br>que el mundo<br><em>no olvida.</em></h1>

@@ -9,38 +9,24 @@
 <style>
   /* ───── Page hero ───── */
   .sel-hero {
-    position: relative;
-    padding: 80px 0 40px;
-    overflow: hidden;
+    --hero-pb: 80px;
+    --hero-grad-x: 20%; --hero-grad-y: 30%;
+    --hero-grad-opacity: 16%; --hero-grad-w: 800px;
+    --hero-h1-max: 148px;
   }
-  .sel-hero::before {
+  .sel-hero::after {
     content: "";
     position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 800px 400px at 20% 30%, color-mix(in oklch, var(--accent) 16%, transparent), transparent 70%),
-      radial-gradient(ellipse 600px 300px at 85% 70%, color-mix(in oklch, var(--accent) 10%, transparent), transparent 70%);
+    background: radial-gradient(ellipse 600px 300px at 85% 70%, color-mix(in oklch, var(--accent) 10%, transparent), transparent 70%);
     pointer-events: none;
   }
-  .sel-hero .wrap { position: relative; }
   .sel-hero-grid {
     display: grid;
     grid-template-columns: 1.4fr 1fr;
     gap: 80px;
     align-items: end;
   }
-  .sel-hero h1 {
-    font-family: var(--f-display);
-    font-size: clamp(64px, 9vw, 148px);
-    line-height: 0.86;
-    letter-spacing: -0.045em;
-    margin: 24px 0 0;
-    font-variation-settings: "SOFT" 30, "opsz" 144;
-  }
-  .sel-hero h1 em {
-    font-style: italic;
-    color: var(--accent);
-    font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144;
-  }
+  .sel-hero h1 { max-width: none; margin: 24px 0 0; }
   .sel-hero .stats {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -549,13 +535,54 @@
     .lb-content { grid-template-columns: 1fr; }
     .lb-head-row { flex-direction: column; align-items: flex-start; }
   }
+
+  /* ── Team cinematic banner ── */
+  .team-banner {
+    position: relative;
+    height: 130px;
+    margin: -20px -20px 0;
+    overflow: hidden;
+    flex-shrink: 0;
+    border-radius: var(--radius) var(--radius) 0 0;
+    background: color-mix(in oklch, var(--team-c1, var(--accent)) 22%, #0a0a12);
+  }
+  .team-banner img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 8px 18px;
+    filter: saturate(1.05);
+  }
+  .team-banner-ov {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom,
+      color-mix(in oklch, var(--team-c1, var(--accent)) 55%, transparent) 0%,
+      var(--surface) 100%);
+  }
+  /* Lightbox team image */
+  .lb-team-banner {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: color-mix(in oklch, var(--lb-c1, var(--accent)) 22%, #0a0a12);
+  }
+  .lb-team-banner img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 12px 28px;
+    filter: saturate(1.05);
+  }
+  .lb-team-banner-ov {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 30%, var(--surface) 100%);
+  }
 </style>
 </head>
 <body>
 <div id="m26-nav-slot"></div>
 
 <!-- Hero -->
-<section class="sel-hero">
+<section class="sel-hero page-hero">
   <div class="wrap">
     <span class="eyebrow"
       data-i18n-es="● 48 selecciones · 6 confederaciones · 12 grupos"
@@ -704,6 +731,33 @@ const TEAMS = [
 /* ── Normalize fallbacks ── */
 TEAMS.forEach(t => { if (!t.flag) t.flag = "xx"; });
 
+const TEAM_IMGS = {
+  "fr":"assets/seleccion-fr.webp","es":"assets/seleccion-es.webp",
+  "en":"assets/seleccion-en.webp","de":"assets/seleccion-de.webp",
+  "it":"assets/seleccion-it.webp","pt":"assets/seleccion-pt.webp",
+  "nl":"assets/seleccion-nl.webp","be":"assets/seleccion-be.webp",
+  "hr":"assets/seleccion-hr.webp","ch":"assets/seleccion-ch.webp",
+  "dk":"assets/seleccion-dk.webp","pl":"assets/seleccion-pl.webp",
+  "ar":"assets/seleccion-ar.webp","br":"assets/seleccion-br.webp",
+  "ur":"assets/seleccion-ur.webp","co":"assets/seleccion-co.webp",
+  "ec":"assets/seleccion-ec.webp","py":"assets/seleccion-py.webp",
+  "us":"assets/seleccion-us.webp","mx":"assets/seleccion-mx.webp",
+  "ca":"assets/seleccion-ca.webp","cr":"assets/seleccion-cr.webp",
+  "jp":"assets/seleccion-jp.webp","kr":"assets/seleccion-kr.webp",
+  "au":"assets/seleccion-au.webp","sa":"assets/seleccion-sa.webp",
+  "ma":"assets/seleccion-ma.webp","sn":"assets/seleccion-sn.webp",
+  "no":"assets/seleccion-no.webp","se":"assets/seleccion-se.webp",
+  "tr":"assets/seleccion-tr.webp","gr":"assets/seleccion-gr.webp",
+  "sc":"assets/seleccion-sc.webp","ws":"assets/seleccion-ws.webp",
+  "mx2":"assets/seleccion-mx2.webp","ng":"assets/seleccion-ng.webp",
+  "ci":"assets/seleccion-ci.webp","gh":"assets/seleccion-gh.webp",
+  "cm":"assets/seleccion-cm.webp","iq":"assets/seleccion-iq.webp",
+  "qa":"assets/seleccion-qa.webp","uz":"assets/seleccion-uz.webp",
+  "jo":"assets/seleccion-jo.webp","zl":"assets/seleccion-zl.webp",
+  "cl":"assets/seleccion-cl.webp","ve":"assets/seleccion-ve.webp",
+  "pn":"assets/seleccion-pn.webp","ja":"assets/seleccion-ja.webp",
+};
+
 /* ── State ── */
 let filter = { conf: "all", status: "all", group: "all", sort: "rank", q: "" };
 
@@ -739,8 +793,11 @@ function applyFilters() {
   if (filter.sort === "cups")  list.sort((a,b) => b.cups - a.cups || a.rank - b.rank);
 
   const grid = $("#team-grid");
-  grid.innerHTML = list.map((t, i) => `
+  grid.innerHTML = list.map((t, i) => {
+    const tImg = TEAM_IMGS[t.flag];
+    return `
     <article class="team-card qualified-${t.st==="p"?"no":"yes"}" data-idx="${TEAMS.indexOf(t)}" style="--team-c1:${t.c1}">
+      ${tImg ? '<div class="team-banner"><img src="' + tImg + '" alt="" loading="lazy" onerror="this.parentElement.style.display=\'none\'"><div class="team-banner-ov"></div></div>' : ''}
       <div class="team-rank">#${t.rank}</div>
       <div class="team-top">
         <div class="team-flag ph flag flag-${t.flag}"></div>
@@ -756,7 +813,8 @@ function applyFilters() {
         <div class="s"><span class="v">${t.wc}</span><span class="k">${lang==="en"?"WC played":"Mundiales"}</span></div>
       </div>
     </article>
-  `).join("");
+  `;
+  }).join("");
 
   $("#result-n").textContent = list.length;
   const tag = $("#result-tag");
@@ -786,8 +844,10 @@ function openLightbox(idx) {
   const el = $("#lb-content");
   const teamName = lang==="en"?t.en:t.name;
   el.style.setProperty("--lb-c1", t.c1);
+  const lbImg = TEAM_IMGS[t.flag];
   el.innerHTML = `
     <button class="lb-close" id="lb-close">×</button>
+    ${lbImg ? '<div class="lb-team-banner"><img src="' + lbImg + '" alt="' + teamName + '" loading="lazy" onerror="this.parentElement.style.display=\'none\'"><div class="lb-team-banner-ov"></div></div>' : ''}
     <div class="lb-header">
       <div class="lb-head-row">
         <div class="lb-flag ph flag flag-${t.flag}"></div>

@@ -119,6 +119,41 @@ button { font-family: inherit; cursor: pointer; }
 .gap-6 { gap: 24px; } .gap-8 { gap: 32px; } .gap-12 { gap: 48px; }
 
 /* ==========================================================
+   Hero base — compartido por todas las páginas de contenido
+   ========================================================== */
+.page-hero {
+  padding: var(--hero-pb, 100px) 0 var(--hero-pt-bottom, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.page-hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(
+    ellipse var(--hero-grad-w, 900px) var(--hero-grad-h, 400px)
+    at var(--hero-grad-x, 30%) var(--hero-grad-y, 40%),
+    color-mix(in oklch, var(--accent) var(--hero-grad-opacity, 18%), transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+.page-hero .wrap { position: relative; z-index: 1; }
+.page-hero h1 {
+  font-family: var(--f-display);
+  font-size: clamp(var(--hero-h1-min, 64px), 9vw, var(--hero-h1-max, 152px));
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  margin: 28px 0 0;
+  font-variation-settings: "SOFT" 30, "opsz" 144;
+  max-width: var(--hero-h1-maxw, 14ch);
+}
+.page-hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+  font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144;
+}
+
+/* ==========================================================
    Global nav (shared top bar)
    ========================================================== */
 .m26-nav {
