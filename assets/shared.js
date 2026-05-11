@@ -369,6 +369,7 @@
     el.innerHTML = fabHist.map(m => `
       <div class="m26-fab-msg ${m.role === 'user' ? 'user' : 'bot'}">
         <div class="bbl">${m.content
+          .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
           .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
           .replace(/\n/g, '<br>')}</div>
       </div>

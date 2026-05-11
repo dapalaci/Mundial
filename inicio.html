@@ -859,6 +859,7 @@ function chatRender() {
   el.innerHTML = chatHistory.map(m => `
     <div class="chat-msg ${m.role === 'user' ? 'user' : 'bot'}">
       <div class="bubble">${m.content
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\n/g, '<br>')}</div>
     </div>
