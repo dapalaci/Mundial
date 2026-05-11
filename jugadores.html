@@ -429,6 +429,91 @@
     color: var(--accent);
   }
   @media (max-width: 800px) { .compare-grid { grid-template-columns: 1fr; } .vs { font-size: 32px; } }
+
+/* ── Mbappé comparison widget ── */
+.cmp-tabs {
+  display: flex; gap: 0; margin: 28px 0 0;
+  border-bottom: 1px solid var(--line);
+}
+.cmp-tab {
+  padding: 8px 16px; font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint);
+  background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: all .15s;
+}
+.cmp-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.cmp-panels { margin-top: 20px; }
+.cmp-panel { display: none; }
+.cmp-panel.active { display: block; }
+
+/* Horizontal bars (Carrera al récord) */
+.cmp-bar-row {
+  display: grid; grid-template-columns: 110px 1fr 28px;
+  align-items: center; gap: 10px; margin-bottom: 10px;
+}
+.cmp-bar-label {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em;
+  color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cmp-bar-label.highlight { color: var(--accent); font-weight: 600; }
+.cmp-bar-track {
+  height: 10px; background: var(--surface-3); border-radius: 5px; overflow: visible;
+  position: relative;
+}
+.cmp-bar-fill {
+  height: 100%; background: var(--surface-2); border-radius: 5px;
+  transition: width .5s ease;
+}
+.cmp-bar-fill.highlight { background: var(--accent); }
+.cmp-bar-dashed {
+  position: absolute; top: 0; height: 100%;
+  background: repeating-linear-gradient(
+    90deg, color-mix(in oklch, var(--accent) 50%, transparent) 0,
+    color-mix(in oklch, var(--accent) 50%, transparent) 4px, transparent 4px, transparent 8px
+  );
+  border-radius: 0 5px 5px 0; opacity: 0.7;
+}
+.cmp-bar-val {
+  font-family: var(--f-display); font-size: 14px; letter-spacing: -0.02em;
+  color: var(--text-dim); text-align: right;
+  font-variation-settings: "opsz" 144;
+}
+.cmp-bar-val.highlight { color: var(--accent); }
+.cmp-note {
+  font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.1em;
+  color: var(--accent); margin-top: 14px; padding: 10px 12px;
+  background: color-mix(in oklch, var(--accent) 8%, var(--surface));
+  border-radius: 8px; border-left: 2px solid var(--accent); line-height: 1.5;
+}
+
+/* Vertical bars (Por edad) — heights are fixed px, grid just aligns bottoms */
+.cmp-age-grid {
+  display: flex; align-items: flex-end; gap: 10px; padding-bottom: 4px;
+}
+.cmp-age-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.cmp-age-bar {
+  width: 100%; background: var(--surface-3); border-radius: 4px 4px 0 0;
+  transition: height .5s ease; min-height: 4px;
+}
+.cmp-age-bar.highlight { background: var(--accent); }
+.cmp-age-bar.projected {
+  background: repeating-linear-gradient(
+    180deg, color-mix(in oklch, var(--accent) 45%, transparent) 0,
+    color-mix(in oklch, var(--accent) 45%, transparent) 4px, transparent 4px, transparent 8px
+  );
+  border: 1px dashed color-mix(in oklch, var(--accent) 60%, transparent);
+  border-bottom: none;
+}
+.cmp-age-name {
+  font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.06em;
+  color: var(--text-faint); text-align: center; line-height: 1.3;
+}
+.cmp-age-name.highlight { color: var(--accent); }
+.cmp-age-val {
+  font-family: var(--f-display); font-size: 18px; letter-spacing: -0.02em;
+  color: var(--text-dim); font-variation-settings: "opsz" 144;
+}
+.cmp-age-val.highlight { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -649,6 +734,29 @@ const PLAYER_EXTRA = {
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
+
+/* ── Mbappé comparison data ── */
+const RECORD_DATA = [
+  { name: "Klose",   goals: 16, highlight: false },
+  { name: "Ronaldo", goals: 15, highlight: false },
+  { name: "G. Müller", goals: 14, highlight: false },
+  { name: "Messi",   goals: 13, highlight: false },
+  { name: "Fontaine",goals: 13, highlight: false },
+  { name: "Pelé",    goals: 12, highlight: false },
+  { name: "Mbappé",  goals: 12, highlight: true  },
+];
+const RECORD_MAX = 16;
+
+// Goals accumulated by each player by age 27
+const AGE27_DATA = [
+  { name: "Mbappé",  age: 27, goals: 12, highlight: true,  projected: false },
+  { name: "Ronaldo", age: 26, goals: 12, highlight: false, projected: false },
+  { name: "Pelé",    age: 25, goals:  8, highlight: false, projected: false },
+  { name: "Maradona",age: 26, goals:  7, highlight: false, projected: false },
+  { name: "Messi",   age: 27, goals:  5, highlight: false, projected: false },
+  { name: "Klose",   age: 24, goals:  5, highlight: false, projected: false },
+];
+const MBAPPE_PROJ_MIN = 16; // goals needed to beat Klose's record
 
 // Silhouette SVG factory - stylized standing player
 function silhouette(num, jerseyColor) {
