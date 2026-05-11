@@ -17,3 +17,9 @@ _placeholder.html
 # Sistema
 .DS_Store
 Thumbs.db
+
+.vercel
+
+# Environment variables — never commit
+.env.local
+.env*.local
