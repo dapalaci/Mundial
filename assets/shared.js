@@ -288,3 +288,127 @@
     setLang, getLang, applyI18n,
   };
 })();
+
+// ── Floating chatbot bubble (all pages except inicio.html) ──
+(function injectChatBubble() {
+  const path = window.location.pathname;
+  if (path.endsWith('inicio.html') || path === '/' || path.endsWith('/index.html')) return;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .m26-fab{position:fixed;bottom:24px;right:24px;z-index:300;width:52px;height:52px;border-radius:50%;
+      background:var(--accent);border:none;font-size:22px;cursor:pointer;
+      box-shadow:0 4px 24px color-mix(in oklch,var(--accent) 55%,transparent);
+      transition:transform .15s;}
+    .m26-fab:hover{transform:scale(1.08);}
+    .m26-fab-panel{position:fixed;bottom:88px;right:24px;z-index:300;width:340px;
+      background:var(--surface);border:1px solid var(--line-strong);border-radius:16px;
+      overflow:hidden;display:none;flex-direction:column;
+      box-shadow:0 12px 40px rgba(0,0,0,0.28);}
+    .m26-fab-panel.open{display:flex;}
+    .m26-fab-hdr{display:flex;justify-content:space-between;align-items:center;
+      padding:12px 16px;border-bottom:1px solid var(--line);
+      font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;
+      color:var(--text-dim);text-transform:uppercase;}
+    .m26-fab-hdr button{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:18px;line-height:1;padding:0;}
+    .m26-fab-msgs{flex:1;overflow-y:auto;padding:14px 14px 8px;
+      display:flex;flex-direction:column;gap:10px;min-height:60px;max-height:260px;}
+    .m26-fab-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line);}
+    .m26-fab-input{flex:1;background:var(--surface-2);border:1px solid var(--line);
+      border-radius:8px;padding:8px 12px;font-size:13px;color:var(--text);
+      font-family:var(--f-body);outline:none;}
+    .m26-fab-input:focus{border-color:var(--accent);}
+    .m26-fab-send{background:var(--accent);color:var(--accent-ink);border:none;
+      border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer;}
+    .m26-fab-msg{display:flex;gap:8px;align-items:flex-start;}
+    .m26-fab-msg.user{flex-direction:row-reverse;}
+    .m26-fab-msg .bbl{max-width:82%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.55;}
+    .m26-fab-msg.user .bbl{background:var(--accent);color:var(--accent-ink);border-radius:12px 12px 4px 12px;}
+    .m26-fab-msg.bot .bbl{background:var(--surface-2);border:1px solid var(--line);border-radius:12px 12px 12px 4px;}
+    .m26-fab-msg .bbl strong{font-weight:600;}
+    .m26-fab-dots{display:flex;gap:4px;padding:8px 12px;background:var(--surface-2);
+      border:1px solid var(--line);border-radius:12px;width:fit-content;}
+    .m26-fab-dots span{width:5px;height:5px;background:var(--text-faint);border-radius:50%;
+      animation:m26-bounce .9s infinite;}
+    .m26-fab-dots span:nth-child(2){animation-delay:.15s;}
+    .m26-fab-dots span:nth-child(3){animation-delay:.3s;}
+    @keyframes m26-bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+  `;
+  document.head.appendChild(style);
+
+  const panel = document.createElement('div');
+  panel.className = 'm26-fab-panel';
+  panel.id = 'm26-fab-panel';
+  panel.innerHTML = `
+    <div class="m26-fab-hdr">
+      <span>⚽ Asistente Mundial 26</span>
+      <button onclick="document.getElementById('m26-fab-panel').classList.remove('open')">✕</button>
+    </div>
+    <div class="m26-fab-msgs" id="m26-fab-msgs"></div>
+    <div class="m26-fab-input-row">
+      <input class="m26-fab-input" id="m26-fab-input" type="text"
+        placeholder="Pregunta sobre el Mundial..." autocomplete="off" />
+      <button class="m26-fab-send" id="m26-fab-send">↑</button>
+    </div>
+  `;
+
+  const fab = document.createElement('button');
+  fab.className = 'm26-fab';
+  fab.title = 'Asistente Mundial 26';
+  fab.textContent = '⚽';
+  fab.onclick = () => panel.classList.toggle('open');
+
+  document.body.appendChild(panel);
+  document.body.appendChild(fab);
+
+  const fabHist = JSON.parse(sessionStorage.getItem('fabHistory') || '[]');
+
+  function fabRender() {
+    const el = document.getElementById('m26-fab-msgs');
+    if (!el) return;
+    el.innerHTML = fabHist.map(m => `
+      <div class="m26-fab-msg ${m.role === 'user' ? 'user' : 'bot'}">
+        <div class="bbl">${m.content
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\n/g, '<br>')}</div>
+      </div>
+    `).join('');
+    el.scrollTop = el.scrollHeight;
+  }
+
+  async function fabSend() {
+    const input = document.getElementById('m26-fab-input');
+    const btn = document.getElementById('m26-fab-send');
+    const msgs = document.getElementById('m26-fab-msgs');
+    if (!input) return;
+    const q = input.value.trim();
+    if (!q) return;
+    input.value = '';
+    btn.disabled = true;
+    fabHist.push({ role: 'user', content: q });
+    fabRender();
+    const loader = document.createElement('div');
+    loader.className = 'm26-fab-msg bot';
+    loader.innerHTML = '<div class="m26-fab-dots"><span></span><span></span><span></span></div>';
+    msgs.appendChild(loader);
+    msgs.scrollTop = msgs.scrollHeight;
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: fabHist.slice(-6) })
+      });
+      const data = await res.json();
+      fabHist.push({ role: 'assistant', content: data.reply || data.error || 'Sin respuesta.' });
+      sessionStorage.setItem('fabHistory', JSON.stringify(fabHist.slice(-20)));
+    } catch {
+      fabHist.push({ role: 'assistant', content: 'Error de conexión.' });
+    }
+    fabRender();
+    btn.disabled = false;
+  }
+
+  document.getElementById('m26-fab-send').onclick = fabSend;
+  document.getElementById('m26-fab-input').onkeydown = e => { if (e.key === 'Enter') fabSend(); };
+  fabRender();
+})();
