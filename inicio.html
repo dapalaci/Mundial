@@ -848,5 +848,68 @@
   }
   tick(); setInterval(tick, 1000);
 </script>
+
+<script>
+// ── Chatbot Asistente ──
+const chatHistory = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
+
+function chatRender() {
+  const el = document.getElementById('chat-messages');
+  if (!el) return;
+  el.innerHTML = chatHistory.map(m => `
+    <div class="chat-msg ${m.role === 'user' ? 'user' : 'bot'}">
+      <div class="bubble">${m.content
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br>')}</div>
+    </div>
+  `).join('');
+  el.scrollTop = el.scrollHeight;
+}
+
+function chatAsk(q) {
+  const input = document.getElementById('chat-input');
+  if (input) input.value = q;
+  chatSend();
+}
+
+async function chatSend() {
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
+  const msgsEl = document.getElementById('chat-messages');
+  if (!input || !sendBtn || !msgsEl) return;
+  const q = input.value.trim();
+  if (!q) return;
+
+  input.value = '';
+  sendBtn.disabled = true;
+
+  chatHistory.push({ role: 'user', content: q });
+  chatRender();
+
+  const loader = document.createElement('div');
+  loader.className = 'chat-msg bot';
+  loader.innerHTML = '<div class="chat-loading"><span></span><span></span><span></span></div>';
+  msgsEl.appendChild(loader);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: chatHistory.slice(-6) })
+    });
+    const data = await res.json();
+    chatHistory.push({ role: 'assistant', content: data.reply || data.error || 'Sin respuesta.' });
+    sessionStorage.setItem('chatHistory', JSON.stringify(chatHistory.slice(-20)));
+  } catch {
+    chatHistory.push({ role: 'assistant', content: 'Error de conexión. Inténtalo de nuevo.' });
+  }
+
+  chatRender();
+  sendBtn.disabled = false;
+}
+
+chatRender();
+</script>
 </body>
 </html>
