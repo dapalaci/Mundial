@@ -828,7 +828,7 @@ function _mbappeCmpHTML(lang) {
       </div>`;
   }).join('');
 
-  const goalsNeeded = RECORD_MAX - RECORD_DATA.find(d => d.highlight).goals;
+  const goalsNeeded = RECORD_MAX - (RECORD_DATA.find(d => d.highlight)?.goals ?? 0);
   const noteText = lang === 'en'
     ? `Le faltan <strong>${goalsNeeded} goals</strong> to surpass Klose's record · Up to 3 World Cups remaining (2026, 2030, 2034)`
     : `Le faltan <strong>${goalsNeeded} goles</strong> para superar el récord de Klose · Tiene hasta 3 Mundiales disponibles (2026, 2030, 2034)`;
