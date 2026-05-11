@@ -495,6 +495,10 @@
     border-radius: 10px; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; cursor: pointer; transition: opacity .15s;
   }
   .chat-send:disabled { opacity: 0.5; cursor: default; }
+
+/* ── En Vivo ── */
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+.envivo-live-dot { animation: pulse 1.5s ease-in-out infinite; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -603,35 +607,27 @@
           data-i18n-en="↗ ALL MASCOTS">↗ TODAS LAS MASCOTAS</a>
       </div>
 
-      <!-- Live matches ticker -->
-      <div class="b b-half" data-host="us">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
-          <span class="eyebrow"
-            data-i18n-es="Últimos amistosos" data-i18n-en="Recent friendlies">Últimos amistosos</span>
-          <span class="mono" style="color:var(--text-faint);">QUALIFIERS</span>
+      <!-- En Vivo module -->
+      <div class="b b-half" data-host="us" id="envivo-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <span class="eyebrow" id="envivo-label"
+            data-i18n-es="Próximos partidos" data-i18n-en="Upcoming matches">Próximos partidos</span>
+          <span id="envivo-badge" class="mono" style="color:var(--text-faint);">MUNDIAL 2026</span>
         </div>
-        <div class="match">
-          <div class="flag-side"><div class="ph flag flag-ar mini-flag"></div><span class="team">Argentina</span></div>
-          <div><div class="score">3 – 1</div><div class="date">12 MAY</div></div>
-          <div class="flag-side away"><span class="team">Brasil</span><div class="ph flag flag-br mini-flag"></div></div>
+        <div id="envivo-matches">
+          <div class="match" style="opacity:.35;">
+            <div class="flag-side">
+              <div class="ph" style="width:24px;height:16px;background:var(--surface-3);border-radius:3px;"></div>
+              <span class="team" style="width:60px;height:14px;background:var(--surface-3);display:block;border-radius:4px;"></span>
+            </div>
+            <div><div class="score">– : –</div><div class="date">···</div></div>
+            <div class="flag-side away">
+              <span class="team" style="width:60px;height:14px;background:var(--surface-3);display:block;border-radius:4px;"></span>
+              <div class="ph" style="width:24px;height:16px;background:var(--surface-3);border-radius:3px;"></div>
+            </div>
+          </div>
         </div>
-        <div class="match">
-          <div class="flag-side"><div class="ph flag flag-fr mini-flag"></div><span class="team">Francia</span></div>
-          <div><div class="score">2 – 2</div><div class="date">10 MAY</div></div>
-          <div class="flag-side away"><span class="team"
-            data-i18n-es="Alemania" data-i18n-en="Germany">Alemania</span><div class="ph flag flag-de mini-flag"></div></div>
-        </div>
-        <div class="match">
-          <div class="flag-side"><div class="ph flag flag-es mini-flag"></div><span class="team">España</span></div>
-          <div><div class="score live">LIVE 1–0</div><div class="date">HOY · 85'</div></div>
-          <div class="flag-side away"><span class="team">Italia</span><div class="ph flag flag-it mini-flag"></div></div>
-        </div>
-        <div class="match">
-          <div class="flag-side"><div class="ph flag flag-mx mini-flag"></div><span class="team">México</span></div>
-          <div><div class="score">1 – 0</div><div class="date">08 MAY</div></div>
-          <div class="flag-side away"><span class="team"
-            data-i18n-es="Estados Unidos" data-i18n-en="United States">Estados Unidos</span><div class="ph flag flag-us mini-flag"></div></div>
-        </div>
+        <div id="envivo-updated" class="mono" style="margin-top:14px;font-size:9px;color:var(--text-faint);"></div>
       </div>
 
       <!-- Featured player -->
@@ -911,6 +907,96 @@ async function chatSend() {
 }
 
 chatRender();
+</script>
+<script>
+// ── En Vivo ──
+let _enVivoPolling = null;
+
+function _enVivoFmt(utcStr) {
+  const d = new Date(utcStr);
+  const now = new Date();
+  if (Math.abs(d - now) < 90000) return 'AHORA';
+  return d.toLocaleDateString('es-MX', {
+    day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit',
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+  }).toUpperCase();
+}
+
+function _enVivoRender(matches) {
+  const el = document.getElementById('envivo-matches');
+  const label = document.getElementById('envivo-label');
+  const badge = document.getElementById('envivo-badge');
+  if (!el) return;
+
+  const live     = matches.filter(m => m.status === 'IN_PLAY' || m.status === 'PAUSED');
+  const upcoming = matches.filter(m => m.status === 'SCHEDULED').slice(0, 3);
+  const finished = matches.filter(m => m.status === 'FINISHED').slice(-3);
+
+  if (live.length) {
+    badge.innerHTML = '<span class="envivo-live-dot">●</span> EN VIVO';
+    label.textContent = 'En curso';
+  } else if (upcoming.length) {
+    badge.textContent = 'MUNDIAL 2026';
+    label.textContent = 'Próximos partidos';
+  } else {
+    badge.textContent = 'MUNDIAL 2026';
+    label.textContent = 'Últimos resultados';
+  }
+
+  const toShow = live.length ? live.slice(0,3) : upcoming.length ? upcoming : finished;
+
+  if (!toShow.length) {
+    el.innerHTML = '<p style="font-size:13px;color:var(--text-faint);padding:8px 0;">Partidos no disponibles aún.</p>';
+    return;
+  }
+
+  el.innerHTML = toShow.map(m => {
+    const isLive = m.status === 'IN_PLAY' || m.status === 'PAUSED';
+    const isDone = m.status === 'FINISHED';
+    const scoreBlock = isLive
+      ? `<div class="score live">${m.score.home ?? 0}–${m.score.away ?? 0}</div><div class="date">${m.minute ? m.minute+"'" : 'EN VIVO'}</div>`
+      : isDone
+      ? `<div class="score">${m.score.home ?? '?'}–${m.score.away ?? '?'}</div><div class="date">${_enVivoFmt(m.date)}</div>`
+      : `<div class="score" style="font-size:14px;color:var(--text-faint)">VS</div><div class="date">${_enVivoFmt(m.date)}</div>`;
+
+    const flagH = m.homeTeam.crest
+      ? `<img src="${m.homeTeam.crest}" style="width:24px;height:16px;object-fit:contain;" alt="">`
+      : `<div class="ph flag flag-${m.homeTeam.tla.toLowerCase()} mini-flag"></div>`;
+    const flagA = m.awayTeam.crest
+      ? `<img src="${m.awayTeam.crest}" style="width:24px;height:16px;object-fit:contain;" alt="">`
+      : `<div class="ph flag flag-${m.awayTeam.tla.toLowerCase()} mini-flag"></div>`;
+
+    return `<div class="match">
+      <div class="flag-side">${flagH}<span class="team">${m.homeTeam.name}</span></div>
+      <div>${scoreBlock}</div>
+      <div class="flag-side away"><span class="team">${m.awayTeam.name}</span>${flagA}</div>
+    </div>`;
+  }).join('');
+}
+
+async function _enVivoFetch() {
+  try {
+    const res = await fetch('/api/fixtures');
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data.matches) return;
+    _enVivoRender(data.matches);
+    const upd = document.getElementById('envivo-updated');
+    if (upd && data.updated)
+      upd.textContent = 'Act. ' + new Date(data.updated).toLocaleTimeString('es-MX');
+    const hasLive = data.matches.some(m => m.status === 'IN_PLAY' || m.status === 'PAUSED');
+    if (hasLive && !_enVivoPolling)
+      _enVivoPolling = setInterval(_enVivoFetch, 60000);
+    else if (!hasLive && _enVivoPolling) {
+      clearInterval(_enVivoPolling);
+      _enVivoPolling = null;
+    }
+  } catch (e) {
+    console.warn('envivo fetch error:', e);
+  }
+}
+
+_enVivoFetch();
 </script>
 </body>
 </html>
