@@ -807,6 +807,76 @@ function renderGrid() {
   `).join("");
 }
 
+function _mbappeCmpHTML(lang) {
+  const t1 = lang === 'en' ? 'Race to the record' : 'Carrera al récord';
+  const t2 = lang === 'en' ? 'By age vs. legends' : 'Por edad vs. leyendas';
+
+  // --- Tab 1: Horizontal bars (race to record) ---
+  const barRows = RECORD_DATA.map(d => {
+    const solidW = Math.round((d.goals / RECORD_MAX) * 100);
+    const hl = d.highlight;
+    const dashedLeft = hl ? solidW : null;
+    const dashedW    = hl ? Math.round(((RECORD_MAX - d.goals) / RECORD_MAX) * 100) : null;
+    return `
+      <div class="cmp-bar-row">
+        <div class="cmp-bar-label${hl ? ' highlight' : ''}">${d.name}</div>
+        <div class="cmp-bar-track">
+          <div class="cmp-bar-fill${hl ? ' highlight' : ''}" style="width:${solidW}%"></div>
+          ${hl ? `<div class="cmp-bar-dashed" style="left:${dashedLeft}%;width:${dashedW}%"></div>` : ''}
+        </div>
+        <div class="cmp-bar-val${hl ? ' highlight' : ''}">${d.goals}</div>
+      </div>`;
+  }).join('');
+
+  const goalsNeeded = RECORD_MAX - RECORD_DATA.find(d => d.highlight).goals;
+  const noteText = lang === 'en'
+    ? `Le faltan <strong>${goalsNeeded} goals</strong> to surpass Klose's record · Up to 3 World Cups remaining (2026, 2030, 2034)`
+    : `Le faltan <strong>${goalsNeeded} goles</strong> para superar el récord de Klose · Tiene hasta 3 Mundiales disponibles (2026, 2030, 2034)`;
+
+  // --- Tab 2: Vertical bars (age 27 comparison) ---
+  const BAR_H = 80;
+  const maxGoals = Math.max(...AGE27_DATA.map(d => d.goals), MBAPPE_PROJ_MIN);
+  const ageCols = AGE27_DATA.map(d => {
+    const barPx  = Math.round((d.goals / maxGoals) * BAR_H);
+    const hl = d.highlight;
+    const projPx = hl ? Math.round(((MBAPPE_PROJ_MIN - d.goals) / maxGoals) * BAR_H) : 0;
+    return `
+      <div class="cmp-age-col">
+        <div class="cmp-age-val${hl ? ' highlight' : ''}">${d.goals}${hl ? '+' : ''}</div>
+        <div style="display:flex;flex-direction:column;align-items:stretch;">
+          ${hl && projPx > 0 ? `<div class="cmp-age-bar projected" style="height:${projPx}px"></div>` : ''}
+          <div class="cmp-age-bar${hl ? ' highlight' : ''}" style="height:${barPx}px"></div>
+        </div>
+        <div class="cmp-age-name${hl ? ' highlight' : ''}">${d.name}<br><span style="opacity:.6">${d.age}a</span></div>
+      </div>`;
+  }).join('');
+
+  const projNote = lang === 'en'
+    ? `Dashed bar = projection if Mbappé scores ≥${MBAPPE_PROJ_MIN - 12} goals at 2026 → <strong>new all-time record</strong>`
+    : `Barra punteada = proyección si Mbappé marca ≥${MBAPPE_PROJ_MIN - 12} goles en 2026 → <strong>nuevo récord absoluto</strong>`;
+
+  return `
+    <div class="cmp-tabs" id="cmp-tabs">
+      <button class="cmp-tab active" onclick="_cmpTab(0)">${t1}</button>
+      <button class="cmp-tab" onclick="_cmpTab(1)">${t2}</button>
+    </div>
+    <div class="cmp-panels">
+      <div class="cmp-panel active" id="cmp-panel-0">
+        ${barRows}
+        <div class="cmp-note">${noteText}</div>
+      </div>
+      <div class="cmp-panel" id="cmp-panel-1">
+        <div class="cmp-age-grid">${ageCols}</div>
+        <div class="cmp-note">${projNote}</div>
+      </div>
+    </div>`;
+}
+
+function _cmpTab(idx) {
+  document.querySelectorAll('.cmp-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+  document.querySelectorAll('.cmp-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+}
+
 /* ── Player lightbox ── */
 function openPlayerLB(name) {
   const p = PLAYERS.find(x => x.name === name);
@@ -849,6 +919,7 @@ function openPlayerLB(name) {
       '</div>' +
       (clubs ? '<div class="plb-section-title">' + (lang==="en"?"Clubs":"Clubes") + '</div><div class="plb-clubs">' + clubs + '</div>' : '') +
       (facts ? '<div class="plb-section-title">' + (lang==="en"?"Curiosities":"Curiosidades") + '</div><div class="plb-facts">' + facts + '</div>' : '') +
+      (p.name === 'Kylian Mbappé' ? _mbappeCmpHTML(lang) : '') +
     '</div>';
 
   $("#player-lb").classList.add("open");
