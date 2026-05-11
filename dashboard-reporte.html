@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mundial 26 — Reporte Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:         #08080f;
+    --surface:    #0f0f1a;
+    --surface-2:  #161624;
+    --surface-3:  #1e1e30;
+    --line:       rgba(255,255,255,0.07);
+    --line-strong:rgba(255,255,255,0.13);
+    --text:       #f0f0fa;
+    --text-dim:   #9090b0;
+    --text-faint: #55557a;
+    --accent:     #10b981;
+    --accent-soft:rgba(16,185,129,0.2);
+    --accent-dim: rgba(16,185,129,0.08);
+    --gold:       #f59e0b;
+    --blue:       #3b82f6;
+    --purple:     #8b5cf6;
+    --red:        #ef4444;
+    --radius:     12px;
+    --radius-lg:  18px;
+    --f-body:     'Inter', sans-serif;
+    --f-mono:     'JetBrains Mono', monospace;
+    --f-display:  'Fraunces', serif;
+  }
+
+  body {
+    font-family: var(--f-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Layout ── */
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  /* ── Header ── */
+  .report-header {
+    background: linear-gradient(135deg, #0d1a12 0%, #08080f 60%);
+    border-bottom: 1px solid var(--line);
+    padding: 60px 0 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .report-header::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 800px 400px at 80% 50%, rgba(16,185,129,0.07), transparent 70%);
+  }
+  .report-header .meta {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .report-header h1 {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 5vw, 64px);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .report-header h1 em { color: var(--accent); font-style: italic; }
+  .report-header .subtitle {
+    color: var(--text-dim);
+    font-size: 16px;
+    max-width: 60ch;
+  }
+  .report-header .header-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+  .hs { display: flex; flex-direction: column; gap: 4px; }
+  .hs .n {
+    font-family: var(--f-display);
+    font-size: 36px;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .hs .l {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(16,185,129,0.12);
+    border: 1px solid var(--accent-soft);
+    border-radius: 999px;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-top: 20px;
+  }
+  .live-badge::before {
+    content: "";
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* ── Section titles ── */
+  .section { padding: 64px 0; }
+  .section + .section { border-top: 1px solid var(--line); }
+  .section-label {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: var(--f-display);
+    font-size: clamp(24px, 3vw, 38px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 36px;
+  }
+  .section-title em { color: var(--accent); font-style: italic; }
+
+  /* ── Stat cards ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--card-accent, var(--accent));
+  }
+  .stat-card .num {
+    font-family: var(--f-display);
+    font-size: 42px;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--card-accent, var(--accent));
+    margin-bottom: 6px;
+  }
+  .stat-card .lbl {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .stat-card .sublbl {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+
+  /* ── Pages table ── */
+  .pages-grid {
+    display: grid;
+    gap: 12px;
+  }
+  .page-row {
+    display: grid;
+    grid-template-columns: 32px 1fr 100px 90px 90px auto;
+    gap: 16px;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    transition: border-color .2s;
+  }
+  .page-row:hover { border-color: var(--line-strong); }
+  .page-num {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    color: var(--text-faint);
+    text-align: right;
+  }
+  .page-name {
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .page-name a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  .page-name a:hover { color: var(--accent); }
+  .page-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .page-lines {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: right;
+  }
+  .page-kb {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: right;
+  }
+  .bar-wrap {
+    width: 80px;
+    height: 4px;
+    background: var(--surface-3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tag {
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+  .tag-green { background: rgba(16,185,129,.1); border-color: rgba(16,185,129,.25); color: #10b981; }
+  .tag-blue  { background: rgba(59,130,246,.1); border-color: rgba(59,130,246,.25); color: #60a5fa; }
+  .tag-gold  { background: rgba(245,158,11,.1); border-color: rgba(245,158,11,.25); color: #fbbf24; }
+  .tag-purple{ background: rgba(139,92,246,.1); border-color: rgba(139,92,246,.25); color: #a78bfa; }
+  .tag-red   { background: rgba(239,68,68,.1);  border-color: rgba(239,68,68,.25);  color: #f87171; }
+
+  /* ── Architecture ── */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .arch-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+  }
+  .arch-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .arch-card h3 .icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .arch-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .arch-card li {
+    font-size: 13px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .arch-card li::before {
+    content: "—";
+    color: var(--accent);
+    font-family: var(--f-mono);
+    flex-shrink: 0;
+  }
+  .arch-card code {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    background: var(--surface-3);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+
+  /* ── Assets breakdown ── */
+  .assets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .asset-category {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+  }
+  .asset-category .cat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .asset-category .cat-name {
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .asset-category .cat-count {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+  .asset-bar {
+    height: 4px;
+    background: var(--surface-3);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .asset-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+  }
+  .asset-detail {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: var(--f-mono);
+  }
+
+  /* ── Features list ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+  .feature-group {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .feature-group h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--f-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .feature-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .feature-list li {
+    font-size: 13px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .feature-list li .check {
+    color: var(--accent);
+    font-size: 12px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── Deployment card ── */
+  .deploy-card {
+    background: linear-gradient(135deg, color-mix(in oklch, #10b981 10%, var(--surface)), var(--surface) 60%);
+    border: 1px solid color-mix(in oklch, #10b981 25%, var(--line));
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: center;
+  }
+  .deploy-url {
+    font-family: var(--f-mono);
+    font-size: 18px;
+    color: var(--accent);
+    margin: 12px 0;
+    word-break: break-all;
+  }
+  .deploy-url a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-soft);
+    padding-bottom: 2px;
+  }
+  .deploy-url a:hover { border-color: var(--accent); }
+  .deploy-meta {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .deploy-meta strong { color: var(--text); }
+  .deploy-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+  .ds-n {
+    font-family: var(--f-display);
+    font-size: 48px;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--accent);
+  }
+  .ds-l {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  /* ── Tech stack ── */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .tech-pill {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .tech-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .tech-name {
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .tech-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* ── Footer ── */
+  .report-footer {
+    border-top: 1px solid var(--line);
+    padding: 32px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .report-footer .copy {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+
+  @media (max-width: 768px) {
+    .page-row { grid-template-columns: 1fr auto; }
+    .page-num, .page-lines, .page-kb, .bar-wrap { display: none; }
+    .deploy-card { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════ HEADER ══════════════════════════════════════ -->
+<header class="report-header">
+  <div class="wrap">
+    <div class="meta">● Reporte de arquitectura — Generado 10 mayo 2026</div>
+    <h1>Mundial 26<br><em>Dashboard</em></h1>
+    <p class="subtitle">Sitio web estático sobre la Copa del Mundo 2026. Doce páginas interactivas con imágenes WebP, videos embebidos, lightboxes y soporte bilingüe ES/EN.</p>
+
+    <div class="header-stats">
+      <div class="hs"><div class="n">12</div><div class="l">Páginas HTML</div></div>
+      <div class="hs"><div class="n">146</div><div class="l">Assets</div></div>
+      <div class="hs"><div class="n">70.4</div><div class="l">MB assets</div></div>
+      <div class="hs"><div class="n">8,756</div><div class="l">Líneas HTML</div></div>
+      <div class="hs"><div class="n">2</div><div class="l">Commits</div></div>
+    </div>
+
+    <div class="live-badge">En producción — mundial-mu.vercel.app</div>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════════════════════════════════ KPIs ══════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-label">● Resumen general</div>
+    <h2 class="section-title">Métricas del <em>proyecto</em></h2>
+
+    <div class="stat-grid">
+      <div class="stat-card" style="--card-accent:#10b981">
+        <div class="num">12</div>
+        <div class="lbl">Páginas HTML</div>
+        <div class="sublbl">Inicio, Historia, Selecciones, Goleadores, Mascotas, Balones, Jugadores, Momentos, Revelaciones, Finales, FanFest, Oráculo</div>
+      </div>
+      <div class="stat-card" style="--card-accent:#f59e0b">
+        <div class="num">146</div>
+        <div class="lbl">Archivos de assets</div>
+        <div class="sublbl">WebP, JPG, PNG, CSS, JS</div>
+      </div>
+      <div class="stat-card" style="--card-accent:#3b82f6">
+        <div class="num">8.7k</div>
+        <div class="lbl">Líneas de código</div>
+        <div class="sublbl">HTML + CSS inline + JS inline</div>
+      </div>
+      <div class="stat-card" style="--card-accent:#8b5cf6">
+        <div class="num">48</div>
+        <div class="lbl">Selecciones</div>
+        <div class="sublbl">Con imagen WebP, colores y filtros interactivos</div>
+      </div>
+      <div class="stat-card" style="--card-accent:#10b981">
+        <div class="num">23</div>
+        <div class="lbl">Ediciones del Mundial</div>
+        <div class="sublbl">1930–2026 con fotos históricas</div>
+      </div>
+      <div class="stat-card" style="--card-accent:#ef4444">
+        <div class="num">20+</div>
+        <div class="lbl">Videos embebidos</div>
+        <div class="sublbl">YouTube lazy-loaded con aspect-ratio 16:9</div>
+      </div>
+      <div class="stat-card" style="--card-accent:#f59e0b">
+        <div class="num">10</div>
+        <div class="lbl">Jugadores legendarios</div>
+        <div class="sublbl">Con lightbox modal + bio + curiosidades</div>
+      </div>
+      <div class="stat-card" style="--card-accent:#3b82f6">
+        <div class="num">2</div>
+        <div class="lbl">Idiomas</div>
+        <div class="sublbl">Español / English — toggle en toda la app</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ PÁGINAS ══════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-label">● Inventario de páginas</div>
+    <h2 class="section-title">Las <em>12 páginas</em> del sitio</h2>
+
+    <div class="pages-grid">
+
+      <div class="page-row">
+        <div class="page-num">01</div>
+        <div>
+          <div class="page-name"><a href="https://mundial-mu.vercel.app/inicio.html" target="_blank">inicio.html</a></div>
+          <div class="page-desc">Home — hero con trofeo y balón, cards de navegación a secciones, stats destacados</div>
+          <div style="margin-top:8px"><div class="tags"><span class="tag tag-green">Hero</span><span class="tag tag-blue">Nav cards</span><span class="tag tag-gold">Stats</span></div></div>
+        </div>
+        <div class="page-lines">778 líneas</div>
+        <div class="page-kb">39.8 KB</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:85%"></div></div>
+        <div></div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-num">02</div>
+        <div>
+          <div class="page-name"><a href="https://mundial-mu.vercel.app/historia.html" target="_blank">historia.html</a></div>
+          <div class="page-desc">Timeline 1930–2026 — 23 ediciones con fotos históricas, agrupadas por décadas con alternancia izquierda/derecha</div>
+          <div style="margin-top:8px"><div class="tags"><span class="tag tag-green">Timeline</span><span class="tag tag-blue">Fotos WebP</span><span class="tag tag-purple">Décadas</span></div></div>
+        </div>
+        <div class="page-lines">568 líneas</div>
+        <div class="page-kb">28.8 KB</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:62%"></div></div>
+        <div></div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-num">03</div>
+        <div>
+          <div class="page-name"><a href="https://mundial-mu.vercel.app/selecciones.html" target="_blank">selecciones.html</a></div>
+          <div class="page-desc">48 selecciones clasificadas — filtros por confederación (UEFA, CONMEBOL, CONCACAF, CAF, AFC, OFC), lightbox con plantilla e imagen de kit/badge</div>
+          <div style="margin-top:8px"><div class="tags"><span class="tag tag-green">Filtros</span><span class="tag tag-blue">Lightbox</span><span class="tag tag-gold">48 equipos</span><span class="tag tag-purple">WebP contain</span></div></div>
+        </div>
+        <div class="page-lines">959 líneas</div>
+        <div class="page-kb">40.6 KB</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:100%"></div></div>
+        <div></div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-num">04</div>
+        <div>
+          <div class="page-name"><a href="https://mundial-mu.vercel.app/goleadores.html" target="_blank">goleadores.html</a></div>
+          <div class="page-desc">Máximos goleadores históricos — podio top-3 con fotos, tabla completa con fotos de jugador, detalles expandibles por edición</div>
+          <div style="margin-top:8px"><div class="tags"><span class="tag tag-green">Podio</span><span class="tag tag-blue">Tabla</span><span class="tag tag-gold">Fotos</span><span class="tag tag-purple">Expandible</span></div></div>
+        </div>
+        <div class="page-lines">795 líneas</div>
+        <div class="page-kb">35.5 KB</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:87%"></div></div>
+        <div></div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-num">05</div>
+        <div>
+          <div class="page-name"><a href="https://mundial-mu.vercel.app/mascotas.html" target="_blank">mascotas.html</a></div>
+          <div class="page-desc">Mascotas 1966–2026 — galería con foto real de cada mascota, datos del torneo y curiosidades</div>
+          <div style="margin-top:8px"><div class="tags"><span class="tag tag-green">Galería</span><span class="tag tag-blue">14 mascotas</span><span class="tag tag-gold">JPG/PNG</span></div></div>
+        </div>
+        <div class="page-lines">587 líneas</div>
+        <div class="page-kb">25.8 KB</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:64%"></div></div>
+        <div></div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-num">06</div>
+        <div>
+          <div class="page-name"><a href="https://mundial-mu.vercel.app/balones.html" target="_blank">balones.html</a></div>
+          <div class="page-desc">Balones oficiales 1930–2026 — 23 balones PNG con hover effects, galería de alta fidelidad</div>
+          <div style="margin-top:8px"><div class="tags"><span class="tag tag-green">Galería</span><span class="tag tag-blue">23 balones</span><span class="tag tag-gold">PNG HQ</span><span class="tag tag-red">Hover</span></div></div>
+        </div>
+        <div class="page-lines">878 líneas</div>
+        <div class="page-kb">43.5 KB</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:96%"></div></div>
+        <div></div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-num">07</div>
+        <div>
+          <div class="page-name"><a href="https://mundial-mu.vercel.app/jugadores.html" target="_blank">jugadores.html</a></div>
+          <div class="page-desc">10 jugadores legendarios — fotos reales WebP, lightbox modal con nombre, nacimiento/muerte, clubes y 4 curiosidades bilingües. Filtro por era</div>
+          <div style="margin-top:8px"><div class="tags"><span class="tag tag-green">Lightbox modal</span><span class="tag tag-blue">Fotos</span><span class="tag tag-gold">Bilingüe</span><span class="tag tag-purple">Filtro era</span></div></div>
+        </div>
+        <div class="page-lines">779 líneas</div>
+        <div class="page-kb">41.3 KB</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:85%"></div></div>
+        <div></div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-num">08</div>
+        <div>
+          <div class="page-name"><a href="https://mundial-mu.vercel.app/momentos.html" target="_blank">momentos.html</a></div>
+          <div class="page-desc">20+ momentos icónicos — videos YouTube embebidos con lazy loading, iframes 16:9 aspect-ratio, tarjetas con contexto histórico</div>
+          <div style="margin-top:8px"><div class="tags"><span class="tag tag-green">Videos</span><span class="tag tag-blue">YouTube embed</span><span class="tag tag-gold">Lazy load</span></div></div>
+        </div>
+        <div class="page-lines">645 líneas</div>
+        <div class="page-kb">26.8 KB</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:71%"></div></div>
+        <div></div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-num">09</div>
+        <div>
+          <div class="page-name"><a href="https://mundial-mu.vercel.app/revelaciones.html" target="_blank">revelaciones.html</a></div>
+          <div class="page-desc">17 revelaciones históricas — filtro por década, imagen de selección por tarjeta, sección de 3 videos embebidos con etiqueta, top-4 destacadas</div>
+          <div style="margin-top:8px"><div class="tags"><span class="tag tag-green">Filtro décadas</span><span class="tag tag-blue">Videos</span><span class="tag tag-gold">17 sorpresas</span><span class="tag tag-purple">Imágenes</span></div></div>
+        </div>
+        <div class="page-lines">656 líneas</div>
+        <div class="page-kb">30.2 KB</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:72%"></div></div>
+        <div></div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-num">10</div>
+        <div>
+          <div class="page-name"><a href="https://mundial-mu.vercel.app/finales.html" target="_blank">finales.html</a></div>
+          <div class="page-desc">Historial de finales 1930–2022 — tabla con resultado, sede, goleador y datos de cada final</div>
+          <div style="margin-top:8px"><div class="tags"><span class="tag tag-green">Tabla</span><span class="tag tag-blue">22 finales</span></div></div>
+        </div>
+        <div class="page-lines">571 líneas</div>
+        <div class="page-kb">34.0 KB</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:63%"></div></div>
+        <div></div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-num">11</div>
+        <div>
+          <div class="page-name"><a href="https://mundial-mu.vercel.app/fanfest.html" target="_blank">fanfest.html</a></div>
+          <div class="page-desc">Guía FanFest — sedes, horarios, experiencias y tips para fans asistentes al Mundial 26</div>
+          <div style="margin-top:8px"><div class="tags"><span class="tag tag-green">Guía</span><span class="tag tag-blue">Sedes</span></div></div>
+        </div>
+        <div class="page-lines">636 líneas</div>
+        <div class="page-kb">26.9 KB</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:70%"></div></div>
+        <div></div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-num">12</div>
+        <div>
+          <div class="page-name"><a href="https://mundial-mu.vercel.app/oraculo.html" target="_blank">oraculo.html</a></div>
+          <div class="page-desc">Oráculo IA — predicciones con banner full-width oraculo.webp (1537×1023px, 2 MB), gradiente overlay, sección interactiva</div>
+          <div style="margin-top:8px"><div class="tags"><span class="tag tag-green">Banner HQ</span><span class="tag tag-blue">IA</span><span class="tag tag-gold">2 MB WebP</span></div></div>
+        </div>
+        <div class="page-lines">712 líneas</div>
+        <div class="page-kb">34.0 KB</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:78%"></div></div>
+        <div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ ASSETS ══════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-label">● Pipeline de assets</div>
+    <h2 class="section-title">146 archivos · <em>70.4 MB</em></h2>
+
+    <div class="assets-grid">
+
+      <div class="asset-category">
+        <div class="cat-header">
+          <div class="cat-name">🏅 Balones históricos</div>
+          <div class="cat-count">23 archivos</div>
+        </div>
+        <div class="asset-bar"><div class="asset-bar-fill" style="width:100%;background:#f59e0b"></div></div>
+        <div class="asset-detail">PNG · ~48 MB total<br>Formato: <code>balon [año].png</code></div>
+      </div>
+
+      <div class="asset-category">
+        <div class="cat-header">
+          <div class="cat-name">🌍 Selecciones (kits/badges)</div>
+          <div class="cat-count">48 archivos</div>
+        </div>
+        <div class="asset-bar"><div class="asset-bar-fill" style="width:75%;background:#3b82f6"></div></div>
+        <div class="asset-detail">WebP · ~1.1 MB total<br>Formato: <code>seleccion-{código}.webp</code></div>
+      </div>
+
+      <div class="asset-category">
+        <div class="cat-header">
+          <div class="cat-name">⚽ Fotos ediciones historia</div>
+          <div class="cat-count">23 archivos</div>
+        </div>
+        <div class="asset-bar"><div class="asset-bar-fill" style="width:55%;background:#10b981"></div></div>
+        <div class="asset-detail">WebP · ~1.5 MB total<br>Formato: <code>historia-{año}.webp</code></div>
+      </div>
+
+      <div class="asset-category">
+        <div class="cat-header">
+          <div class="cat-name">🥇 Goleadores históricos</div>
+          <div class="cat-count">21 archivos</div>
+        </div>
+        <div class="asset-bar"><div class="asset-bar-fill" style="width:45%;background:#8b5cf6"></div></div>
+        <div class="asset-detail">WebP · ~2.1 MB total<br>Formato: <code>goleador-{nombre}.webp</code></div>
+      </div>
+
+      <div class="asset-category">
+        <div class="cat-header">
+          <div class="cat-name">🦁 Mascotas oficiales</div>
+          <div class="cat-count">14 archivos</div>
+        </div>
+        <div class="asset-bar"><div class="asset-bar-fill" style="width:40%;background:#ef4444"></div></div>
+        <div class="asset-detail">JPG + PNG · ~4.4 MB total<br>Formato: <code>mascota-{año}.jpg/png</code></div>
+      </div>
+
+      <div class="asset-category">
+        <div class="cat-header">
+          <div class="cat-name">⭐ Jugadores insignia</div>
+          <div class="cat-count">5 archivos</div>
+        </div>
+        <div class="asset-bar"><div class="asset-bar-fill" style="width:20%;background:#f59e0b"></div></div>
+        <div class="asset-detail">WebP · ~592 KB total<br>Formato: <code>insignia-{nombre}.webp</code></div>
+      </div>
+
+      <div class="asset-category">
+        <div class="cat-header">
+          <div class="cat-name">🎨 Sección screenshots</div>
+          <div class="cat-count">6 archivos</div>
+        </div>
+        <div class="asset-bar"><div class="asset-bar-fill" style="width:50%;background:#3b82f6"></div></div>
+        <div class="asset-detail">PNG · ~7.7 MB total<br>Mockups de secciones del sitio</div>
+      </div>
+
+      <div class="asset-category">
+        <div class="cat-header">
+          <div class="cat-name">🔮 Oráculo banner</div>
+          <div class="cat-count">1 archivo</div>
+        </div>
+        <div class="asset-bar"><div class="asset-bar-fill" style="width:15%;background:#10b981"></div></div>
+        <div class="asset-detail">WebP · 2.0 MB · 1537×1023 px<br><code>oraculo.webp</code></div>
+      </div>
+
+      <div class="asset-category">
+        <div class="cat-header">
+          <div class="cat-name">⚙️ Shared CSS + JS</div>
+          <div class="cat-count">2 archivos</div>
+        </div>
+        <div class="asset-bar"><div class="asset-bar-fill" style="width:5%;background:#8b5cf6"></div></div>
+        <div class="asset-detail">CSS 17.9 KB · JS 12.8 KB<br>Navegación, i18n, tema compartido</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ ARQUITECTURA ══════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-label">● Diseño técnico</div>
+    <h2 class="section-title">Arquitectura del <em>sistema</em></h2>
+
+    <div class="arch-grid">
+
+      <div class="arch-card">
+        <h3><div class="icon" style="background:rgba(16,185,129,.15)">🏗️</div> Estructura general</h3>
+        <ul>
+          <li>Sitio estático puro — sin framework, sin build step</li>
+          <li>12 HTML independientes + <code>assets/shared.css</code> + <code>assets/shared.js</code></li>
+          <li>Cada página incluye su CSS scope en <code>&lt;style&gt;</code> inline</li>
+          <li>JavaScript embebido en cada página para data y lógica local</li>
+          <li><code>index.html</code> redirige automáticamente a <code>inicio.html</code></li>
+        </ul>
+      </div>
+
+      <div class="arch-card">
+        <h3><div class="icon" style="background:rgba(59,130,246,.15)">🎨 </div> Sistema de diseño (shared.css)</h3>
+        <ul>
+          <li>CSS custom properties en <code>:root</code> para tema oscuro</li>
+          <li>8 colores de acento configurables vía <code>data-accent</code></li>
+          <li><code>--accent</code>, <code>--bg</code>, <code>--surface</code>, <code>--line</code>, <code>--text-dim</code></li>
+          <li>Grid y Flexbox nativos — sin Bootstrap ni utilidades externas</li>
+          <li>Backdrop-filter para efectos glass en nav y filtros sticky</li>
+          <li>Google Fonts: Fraunces, Inter, JetBrains Mono, Anton, Instrument Serif</li>
+        </ul>
+      </div>
+
+      <div class="arch-card">
+        <h3><div class="icon" style="background:rgba(245,158,11,.15)">🌐</div> Internacionalización (i18n)</h3>
+        <ul>
+          <li>Bilingüe ES/EN sin librería externa</li>
+          <li>Atributos <code>data-i18n-es</code> y <code>data-i18n-en</code> en cada nodo de texto</li>
+          <li><code>M26.getLang()</code> y <code>M26.setLang()</code> en <code>shared.js</code></li>
+          <li>Toggle en navbar — persiste en <code>localStorage</code></li>
+          <li>Datos de jugadores y curiosidades: objetos <code>{ es, en }</code></li>
+        </ul>
+      </div>
+
+      <div class="arch-card">
+        <h3><div class="icon" style="background:rgba(139,92,246,.15)">🖼️</div> Gestión de imágenes</h3>
+        <ul>
+          <li><code>loading="lazy"</code> en todas las imágenes y videos</li>
+          <li>Patrón <code>position:absolute; inset:0</code> para cobertura total</li>
+          <li><code>object-fit:contain</code> + padding para kits/badges de equipos</li>
+          <li><code>object-fit:cover</code> + luminosity blend para fotos históricas</li>
+          <li><code>onerror</code> silencia assets faltantes sin romper la UI</li>
+          <li>WebP preferido para fotos (goleadores, insignias, selecciones, historia)</li>
+        </ul>
+      </div>
+
+      <div class="arch-card">
+        <h3><div class="icon" style="background:rgba(239,68,68,.15)">🎬</div> Videos embebidos</h3>
+        <ul>
+          <li>Iframes YouTube con <code>loading="lazy"</code></li>
+          <li>Contenedor <code>aspect-ratio:16/9</code> + iframe <code>position:absolute;inset:0</code></li>
+          <li>20+ momentos en momentos.html con lazy rendering</li>
+          <li>3 goles históricos en revelaciones.html con etiquetas overlay</li>
+          <li><code>allow="autoplay; fullscreen"</code> habilitado</li>
+        </ul>
+      </div>
+
+      <div class="arch-card">
+        <h3><div class="icon" style="background:rgba(16,185,129,.15)">⚡</div> Interactividad JS</h3>
+        <ul>
+          <li>Filtros sticky por confederación, década, era — sin recarga de página</li>
+          <li>Lightbox modal para selecciones y jugadores (ESC para cerrar)</li>
+          <li>Renderizado dinámico con arrays de datos en cada página</li>
+          <li>Delegación de eventos en <code>document.addEventListener("click")</code></li>
+          <li>Template literals con string concatenation para evitar XSS en anidación</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ FEATURES ══════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-label">● Funcionalidades implementadas</div>
+    <h2 class="section-title">Todo lo que <em>hace</em> el sitio</h2>
+
+    <div class="features-grid">
+
+      <div class="feature-group">
+        <h4>Navegación y UX</h4>
+        <ul class="feature-list">
+          <li><span class="check">✓</span> Navbar sticky con backdrop blur y logo animado</li>
+          <li><span class="check">✓</span> Toggle ES/EN con persistencia en localStorage</li>
+          <li><span class="check">✓</span> Menú responsive con hamburger en mobile</li>
+          <li><span class="check">✓</span> Scroll suave entre secciones</li>
+          <li><span class="check">✓</span> Active state en página actual del nav</li>
+        </ul>
+      </div>
+
+      <div class="feature-group">
+        <h4>Selecciones</h4>
+        <ul class="feature-list">
+          <li><span class="check">✓</span> Grid de 48 equipos con imagen WebP de kit/badge</li>
+          <li><span class="check">✓</span> Filtros por confederación (UEFA, CONMEBOL, etc.)</li>
+          <li><span class="check">✓</span> Colores de equipo como CSS custom properties</li>
+          <li><span class="check">✓</span> Lightbox con plantilla, ciudad sede y estadística</li>
+          <li><span class="check">✓</span> Banner de equipo con object-fit:contain + fondo coloreado</li>
+        </ul>
+      </div>
+
+      <div class="feature-group">
+        <h4>Historia</h4>
+        <ul class="feature-list">
+          <li><span class="check">✓</span> Timeline visual 1930–2026 agrupado por décadas</li>
+          <li><span class="check">✓</span> Fotos históricas WebP en cada tarjeta de edición</li>
+          <li><span class="check">✓</span> Blend mode luminosity para preservar colores del tema</li>
+          <li><span class="check">✓</span> Tarjetas alternadas izquierda/derecha</li>
+          <li><span class="check">✓</span> Host, campeón, sede e información completa</li>
+        </ul>
+      </div>
+
+      <div class="feature-group">
+        <h4>Jugadores</h4>
+        <ul class="feature-list">
+          <li><span class="check">✓</span> Foto real WebP reemplaza SVG silhouette en cada tarjeta</li>
+          <li><span class="check">✓</span> Messi featured con foto WebP en lugar de SVG grande</li>
+          <li><span class="check">✓</span> Click abre lightbox con foto completa + bio</li>
+          <li><span class="check">✓</span> Datos: nacimiento, muerte, clubes, 4 curiosidades bilingües</li>
+          <li><span class="check">✓</span> Filtro por era (Clásicos, Dorados, Modernos)</li>
+          <li><span class="check">✓</span> Cierre con ESC o click fuera del modal</li>
+        </ul>
+      </div>
+
+      <div class="feature-group">
+        <h4>Goleadores</h4>
+        <ul class="feature-list">
+          <li><span class="check">✓</span> Podio top-3 con fotos de jugador en fondo</li>
+          <li><span class="check">✓</span> Tabla completa con foto en miniatura</li>
+          <li><span class="check">✓</span> Detalles expandibles con partidos y goles por edición</li>
+          <li><span class="check">✓</span> Cintas de color de equipo en fondo de tarjeta</li>
+        </ul>
+      </div>
+
+      <div class="feature-group">
+        <h4>Revelaciones</h4>
+        <ul class="feature-list">
+          <li><span class="check">✓</span> 17 sorpresas históricas con imagen de selección</li>
+          <li><span class="check">✓</span> Filtro por década con botones sticky</li>
+          <li><span class="check">✓</span> 3 videos YouTube embebidos con etiqueta overlay</li>
+          <li><span class="check">✓</span> Top-4 greatest revelations con tarjetas destacadas</li>
+          <li><span class="check">✓</span> Strip de stats (38 upsets, 5 campeones eliminados)</li>
+        </ul>
+      </div>
+
+      <div class="feature-group">
+        <h4>Oráculo</h4>
+        <ul class="feature-list">
+          <li><span class="check">✓</span> Banner full-width 2MB WebP entre hero y contenido</li>
+          <li><span class="check">✓</span> position:absolute + inset:0 para cobertura perfecta</li>
+          <li><span class="check">✓</span> Gradiente overlay para blend con el tema oscuro</li>
+          <li><span class="check">✓</span> Sección interactiva de predicciones IA</li>
+        </ul>
+      </div>
+
+      <div class="feature-group">
+        <h4>Momentos</h4>
+        <ul class="feature-list">
+          <li><span class="check">✓</span> 20+ momentos icónicos del fútbol mundial</li>
+          <li><span class="check">✓</span> Videos YouTube embebidos con lazy loading</li>
+          <li><span class="check">✓</span> Iframes con aspect-ratio 16:9 garantizado</li>
+          <li><span class="check">✓</span> Contexto histórico en cada tarjeta</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ TECH STACK ══════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-label">● Stack tecnológico</div>
+    <h2 class="section-title">Herramientas y <em>tecnologías</em></h2>
+
+    <div class="tech-grid">
+      <div class="tech-pill">
+        <div class="tech-icon">📄</div>
+        <div>
+          <div class="tech-name">HTML5 semántico</div>
+          <div class="tech-desc">Sin framework, máximo rendimiento</div>
+        </div>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-icon">🎨</div>
+        <div>
+          <div class="tech-name">CSS3 puro</div>
+          <div class="tech-desc">Custom properties, Grid, Flexbox, backdrop-filter</div>
+        </div>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-icon">⚡</div>
+        <div>
+          <div class="tech-name">Vanilla JS</div>
+          <div class="tech-desc">Sin dependencias, event delegation</div>
+        </div>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-icon">🖼️</div>
+        <div>
+          <div class="tech-name">WebP / PNG / JPG</div>
+          <div class="tech-desc">Assets optimizados con lazy loading</div>
+        </div>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-icon">🔤</div>
+        <div>
+          <div class="tech-name">Google Fonts</div>
+          <div class="tech-desc">Fraunces, Inter, JetBrains Mono, Anton</div>
+        </div>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-icon">▲</div>
+        <div>
+          <div class="tech-name">Vercel</div>
+          <div class="tech-desc">Hosting estático, CDN global, HTTPS</div>
+        </div>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-icon">🎬</div>
+        <div>
+          <div class="tech-name">YouTube Embeds</div>
+          <div class="tech-desc">Lazy iframes, 16:9 aspect-ratio CSS</div>
+        </div>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-icon">🌐</div>
+        <div>
+          <div class="tech-name">i18n custom</div>
+          <div class="tech-desc">ES/EN sin librería, data-attributes</div>
+        </div>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-icon">🐙</div>
+        <div>
+          <div class="tech-name">Git + GitHub</div>
+          <div class="tech-desc">Control de versiones, origen remoto</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ DEPLOYMENT ══════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-label">● Despliegue en producción</div>
+    <h2 class="section-title">Sitio en <em>vivo</em></h2>
+
+    <div class="deploy-card">
+      <div>
+        <div style="font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:8px">● PRODUCCIÓN · VERCEL</div>
+        <div class="deploy-url"><a href="https://mundial-mu.vercel.app" target="_blank">https://mundial-mu.vercel.app</a></div>
+        <div class="deploy-meta" style="margin-top:16px;display:flex;flex-direction:column;gap:6px">
+          <div><strong>Plataforma:</strong> Vercel (CDN global)</div>
+          <div><strong>Tipo:</strong> Static site — sin servidor, sin build step</div>
+          <div><strong>Commit:</strong> <code style="font-family:var(--f-mono);font-size:11px;background:var(--surface-3);padding:2px 6px;border-radius:3px">d3722ff</code> — 125 archivos</div>
+          <div><strong>Tiempo de build:</strong> 646 ms</div>
+          <div><strong>Región:</strong> Washington D.C. (iad1)</div>
+          <div><strong>HTTPS:</strong> Automático con TLS</div>
+        </div>
+        <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
+          <a href="https://mundial-mu.vercel.app/inicio.html" target="_blank" style="padding:10px 20px;background:var(--accent);color:#000;font-weight:600;font-size:13px;border-radius:8px;text-decoration:none">Abrir sitio →</a>
+          <a href="https://vercel.com/dapalacis-projects/mundial" target="_blank" style="padding:10px 20px;background:var(--surface-3);color:var(--text);font-size:13px;border-radius:8px;text-decoration:none;border:1px solid var(--line-strong)">Dashboard Vercel</a>
+        </div>
+      </div>
+      <div class="deploy-stats">
+        <div>
+          <div class="ds-n">646</div>
+          <div class="ds-l">ms build</div>
+        </div>
+        <div>
+          <div class="ds-n">125</div>
+          <div class="ds-l">archivos</div>
+        </div>
+        <div>
+          <div class="ds-n">CDN</div>
+          <div class="ds-l">global</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════════════════════════ FOOTER ══════════════════════════════════════ -->
+<footer class="wrap">
+  <div class="report-footer">
+    <div class="copy">Mundial 26 Dashboard Report · Generado 10 mayo 2026 · dapalaci@gmail.com</div>
+    <div class="copy">12 páginas · 146 assets · 70.4 MB · <a href="https://mundial-mu.vercel.app" target="_blank" style="color:var(--accent);text-decoration:none">mundial-mu.vercel.app</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
