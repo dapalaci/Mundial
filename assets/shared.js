@@ -397,13 +397,15 @@
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: fabHist.slice(-6) })
+        body: JSON.stringify({ messages: fabHist.slice(-6) }),
+        signal: AbortSignal.timeout(12000)
       });
-      const data = await res.json();
+      let data;
+      try { data = await res.json(); } catch { data = {}; }
       fabHist.push({ role: 'assistant', content: data.reply || data.error || 'Sin respuesta.' });
       sessionStorage.setItem('fabHistory', JSON.stringify(fabHist.slice(-20)));
     } catch {
-      fabHist.push({ role: 'assistant', content: 'Error de conexión.' });
+      fabHist.push({ role: 'assistant', content: 'Sin conexión. Inténtalo de nuevo.' });
     }
     fabRender();
     btn.disabled = false;

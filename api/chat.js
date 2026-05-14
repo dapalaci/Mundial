@@ -55,6 +55,51 @@ Canadá (2): BMO Field Toronto, BC Place Vancouver
 Argentina 22.4%, Francia 18.1%, Brasil 14.2%, España 11.3%, Inglaterra 9.0%
 `;
 
+const MODELS = [
+  'gemini-2.0-flash',
+  'gemini-1.5-flash',
+];
+
+async function callGemini(apiKey, contents, system) {
+  for (let i = 0; i < MODELS.length; i++) {
+    const model = MODELS[i];
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    try {
+      const r = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: system }] },
+          contents,
+          generationConfig: { maxOutputTokens: 600, temperature: 0.7 }
+        }),
+        signal: AbortSignal.timeout(9000),
+      });
+
+      if (r.status === 429) return { status: 429 };
+      if (r.status === 503 && i < MODELS.length - 1) {
+        console.warn(`${model} devolvió 503, intentando con ${MODELS[i + 1]}`);
+        continue;
+      }
+      if (!r.ok) {
+        const body = await r.text();
+        console.error(`Gemini error ${model}`, r.status, body);
+        if (i < MODELS.length - 1) continue;
+        return { status: r.status };
+      }
+
+      const data = await r.json();
+      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text ?? null;
+      return { reply };
+    } catch (e) {
+      console.error(`Gemini fetch error ${model}:`, e.message);
+      if (i < MODELS.length - 1) continue;
+      return { timeout: true };
+    }
+  }
+  return { status: 503 };
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
@@ -72,29 +117,19 @@ export default async function handler(req, res) {
     parts: [{ text: m.content }]
   }));
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
   try {
-    const r = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system_instruction: { parts: [{ text: SYSTEM }] },
-        contents,
-        generationConfig: { maxOutputTokens: 600, temperature: 0.7 }
-      })
-    });
+    const result = await callGemini(apiKey, contents, SYSTEM);
 
-    if (r.status === 429)
+    if (result.status === 429)
       return res.status(429).json({ error: 'Demasiadas consultas, espera unos segundos.' });
-    if (!r.ok) {
-      console.error('Gemini error', r.status, await r.text());
-      return res.status(502).json({ error: 'Error del asistente.' });
-    }
+    if (result.timeout)
+      return res.status(504).json({ error: 'El asistente tardó demasiado. Inténtalo de nuevo.' });
+    if (result.status)
+      return res.status(502).json({ error: 'El asistente no está disponible ahora. Inténtalo en unos segundos.' });
+    if (!result.reply)
+      return res.status(200).json({ reply: 'Sin respuesta del asistente.' });
 
-    const data = await r.json();
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text ?? 'Sin respuesta.';
-    res.status(200).json({ reply });
+    res.status(200).json({ reply: result.reply });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Error interno.' });
