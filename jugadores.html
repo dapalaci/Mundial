@@ -178,7 +178,14 @@
     cursor: pointer;
     transition: all .2s;
   }
-  .p-card:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+  .p-card:hover {
+    border-color: color-mix(in oklch, var(--accent) 55%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, var(--accent) 22%, transparent),
+      0 0 32px color-mix(in oklch, var(--accent) 18%, transparent),
+      0 16px 48px rgba(0, 0, 0, 0.55);
+    /* transform handled by magnetic tilt JS */
+  }
   .p-media {
     position: relative;
     height: 260px;
@@ -948,6 +955,63 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closePlayerL
 const orig = M26.applyI18n;
 M26.applyI18n = function() { orig(); renderGrid(); };
 renderGrid();
+</script>
+
+<script>
+// ── H: Magnetic 3D card tilt ──
+(function () {
+  const TILT = 12; // max degrees
+  let raf;
+
+  function onEnter(e) {
+    const card = e.currentTarget;
+    card.style.transition = 'transform 0.1s ease, border-color 0.25s, box-shadow 0.35s';
+    card.style.willChange = 'transform';
+  }
+
+  function onMove(e) {
+    const card = e.currentTarget;
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(function () {
+      card.style.transform =
+        'perspective(700px) ' +
+        'rotateY(' + (x * TILT) + 'deg) ' +
+        'rotateX(' + (-y * TILT) + 'deg) ' +
+        'translateZ(8px) ' +
+        'translateY(-4px)';
+    });
+  }
+
+  function onLeave(e) {
+    const card = e.currentTarget;
+    cancelAnimationFrame(raf);
+    card.style.transition = 'transform 0.5s cubic-bezier(0.22,1,0.36,1), border-color 0.25s, box-shadow 0.35s';
+    card.style.transform = '';
+    setTimeout(function () { card.style.willChange = ''; }, 500);
+  }
+
+  function attachTilt() {
+    document.querySelectorAll('.p-card').forEach(function (card) {
+      if (card.dataset.tilt) return;
+      card.dataset.tilt = '1';
+      card.addEventListener('mouseenter', onEnter);
+      card.addEventListener('mousemove',  onMove);
+      card.addEventListener('mouseleave', onLeave);
+    });
+  }
+
+  // Initial + watch for dynamic renders
+  setTimeout(attachTilt, 300);
+  if (window.MutationObserver) {
+    var t;
+    new MutationObserver(function () {
+      clearTimeout(t); t = setTimeout(attachTilt, 80);
+    }).observe(document.getElementById('p-grid') || document.body, { childList: true, subtree: true });
+  }
+})();
 </script>
 
 <!-- Player lightbox -->

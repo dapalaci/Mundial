@@ -41,6 +41,36 @@
     padding: 60px 0 40px;
     overflow: hidden;
   }
+  /* A: Film grain overlay */
+  .hero::after {
+    content: "";
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    mix-blend-mode: multiply;
+    opacity: 0.22;
+  }
+  /* D: Gradient text clip on hero title */
+  .hero-title {
+    background: linear-gradient(
+      135deg,
+      oklch(0.25 0.06 145) 0%,
+      oklch(0.15 0.04 85) 40%,
+      oklch(0.25 0.06 250) 70%,
+      oklch(0.22 0.06 25) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: none; /* override global glow — not needed on gradient text */
+    text-shadow: none;
+  }
+  .hero-title em {
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(135deg, oklch(0.38 0.18 145), oklch(0.28 0.14 155));
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
   .hero-inner { position: relative; z-index: 2; }
   .hero-meta {
     display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px;
@@ -307,6 +337,12 @@
     opacity: 0.7;
   }
 
+  /* G: Parallax hero-title-wrap */
+  .hero-title-wrap {
+    will-change: transform;
+    transition: transform 0.05s linear;
+  }
+
   /* Ticker */
   .ticker {
     overflow: hidden;
@@ -323,10 +359,14 @@
   }
   @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none !important; } }
+  /* N: Neon ticker glow */
   .ticker-item {
     font-family: var(--f-display);
     font-size: 40px;
     font-style: italic;
+    text-shadow:
+      0 0 20px color-mix(in oklch, var(--accent) 55%, transparent),
+      0 0 48px color-mix(in oklch, var(--accent) 25%, transparent);
     letter-spacing: -0.02em;
     font-variation-settings: "WONK" 1;
     color: var(--text-dim);
@@ -794,6 +834,16 @@
           El cabezazo de Zidane, el penal de Baggio, el hat-trick de Mbappé y más.
         </p>
       </a>
+      <a class="ed-card" href="fanfest.html" data-host="us">
+        <div class="ph"><img src="assets/seccion-mascotas.png" alt="Fan Fest Mundial 2026"/></div>
+        <span class="chip">09 · <span data-i18n-es="Fan Fest" data-i18n-en="Fan Fest">Fan Fest</span></span>
+        <h4 data-i18n-es="La fiesta más grande" data-i18n-en="The biggest party">La fiesta más grande</h4>
+        <p class="body"
+          data-i18n-es="16 ciudades, 3 países, una sola fiesta. Vive el Mundial fuera del estadio."
+          data-i18n-en="16 cities, 3 countries, one single party. Experience the World Cup outside the stadium.">
+          16 ciudades, 3 países, una sola fiesta. Vive el Mundial fuera del estadio.
+        </p>
+      </a>
     </div>
   </section>
 
@@ -909,6 +959,18 @@ async function chatSend() {
 chatRender();
 </script>
 <script>
+// ── G: Parallax on hero title ──
+(function () {
+  const titleWrap = document.querySelector('.hero-title-wrap');
+  const stamp = document.querySelector('.hero-stamp');
+  if (!titleWrap) return;
+  window.addEventListener('scroll', function () {
+    const y = window.scrollY;
+    titleWrap.style.transform = 'translateY(' + (y * 0.12) + 'px)';
+    if (stamp) stamp.style.transform = 'translateY(' + (-y * 0.18) + 'px) rotate(' + (-y * 0.012) + 'deg)';
+  }, { passive: true });
+})();
+
 // ── En Vivo ──
 let _enVivoPolling = null;
 

@@ -413,3 +413,55 @@
   document.getElementById('m26-fab-input').onkeydown = e => { if (e.key === 'Enter') fabSend(); };
   fabRender();
 })();
+
+// ── J: Scroll-reveal via IntersectionObserver ──
+(function () {
+  if (!window.IntersectionObserver) return;
+  const SELECTORS = '.b, .ed-card, .p-card, .tile, .card, .t-card, .map-card, .feat-card';
+  const io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('revealed');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+  function watchEl(el) {
+    if (!el.classList.contains('reveal-item')) {
+      el.classList.add('reveal-item');
+      io.observe(el);
+    }
+  }
+  function scanDOM() {
+    document.querySelectorAll(SELECTORS).forEach(watchEl);
+  }
+
+  var scanTimer;
+  if (window.MutationObserver) {
+    new MutationObserver(function () {
+      clearTimeout(scanTimer);
+      scanTimer = setTimeout(scanDOM, 60);
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { setTimeout(scanDOM, 150); });
+  } else {
+    setTimeout(scanDOM, 150);
+  }
+})();
+
+// ── I: Cursor spotlight ──
+(function () {
+  document.documentElement.style.setProperty('--mx', '-999px');
+  document.documentElement.style.setProperty('--my', '-999px');
+  document.addEventListener('mousemove', function (e) {
+    document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+    document.documentElement.style.setProperty('--my', e.clientY + 'px');
+  }, { passive: true });
+  document.addEventListener('mouseleave', function () {
+    document.documentElement.style.setProperty('--mx', '-999px');
+    document.documentElement.style.setProperty('--my', '-999px');
+  });
+})();

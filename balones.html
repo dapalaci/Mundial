@@ -316,6 +316,26 @@
     .featured, .evo, .section-head { grid-template-columns: 1fr; }
     .featured .specs { grid-template-columns: 1fr; }
   }
+
+  /* A: Grain on hero */
+  .page-hero::after {
+    content: "";
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    mix-blend-mode: overlay;
+    opacity: 0.18;
+  }
+
+  /* C: Enhanced b-card hover glow */
+  .b-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in oklch, var(--accent) 55%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, var(--accent) 22%, transparent),
+      0 0 32px color-mix(in oklch, var(--accent) 18%, transparent),
+      0 16px 40px rgba(0, 0, 0, 0.5);
+  }
 </style>
 </head>
 <body>
@@ -873,6 +893,51 @@
 
   /* Re-run i18n for newly-injected content */
   if (window.M26 && M26.applyI18n) setTimeout(M26.applyI18n, 10);
+</script>
+
+<script>
+// ── G: Parallax on hero ──
+(function () {
+  var h1 = document.querySelector('.page-hero h1');
+  if (!h1) return;
+  window.addEventListener('scroll', function () {
+    h1.style.transform = 'translateY(' + window.scrollY * 0.10 + 'px)';
+  }, { passive: true });
+})();
+
+// ── H: Magnetic tilt on ball cards ──
+(function () {
+  var TILT = 10, raf;
+  function onEnter(e) { e.currentTarget.style.transition = 'transform 0.1s ease, border-color 0.25s, box-shadow 0.35s'; e.currentTarget.style.willChange = 'transform'; }
+  function onMove(e) {
+    var card = e.currentTarget, r = card.getBoundingClientRect();
+    var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(function () {
+      card.style.transform = 'perspective(650px) rotateY(' + (x*TILT) + 'deg) rotateX(' + (-y*TILT) + 'deg) translateZ(6px) translateY(-4px)';
+    });
+  }
+  function onLeave(e) {
+    cancelAnimationFrame(raf);
+    var card = e.currentTarget;
+    card.style.transition = 'transform 0.5s cubic-bezier(0.22,1,0.36,1), border-color 0.25s, box-shadow 0.35s';
+    card.style.transform = '';
+    setTimeout(function () { card.style.willChange = ''; }, 500);
+  }
+  function attachTilt() {
+    document.querySelectorAll('.b-card').forEach(function (c) {
+      if (c.dataset.tilt) return; c.dataset.tilt = '1';
+      c.addEventListener('mouseenter', onEnter);
+      c.addEventListener('mousemove',  onMove);
+      c.addEventListener('mouseleave', onLeave);
+    });
+  }
+  setTimeout(attachTilt, 400);
+  if (window.MutationObserver) {
+    var t; new MutationObserver(function () { clearTimeout(t); t = setTimeout(attachTilt, 80); })
+      .observe(document.getElementById('ball-grid') || document.body, { childList: true, subtree: true });
+  }
+})();
 </script>
 </body>
 </html>

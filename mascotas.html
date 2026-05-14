@@ -7,6 +7,26 @@
 <link rel="stylesheet" href="assets/shared.css">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  /* A: Grain overlay on hero */
+  .page-hero::after {
+    content: "";
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    mix-blend-mode: overlay;
+    opacity: 0.18;
+  }
+
+  /* C: Enhanced mascot card hover glow */
+  .ms-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in oklch, var(--accent) 60%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, var(--accent) 24%, transparent),
+      0 0 32px color-mix(in oklch, var(--accent) 20%, transparent),
+      0 22px 48px -16px color-mix(in oklch, var(--accent) 35%, transparent);
+  }
+
   .ms-hero {
     --hero-pt-bottom: 24px;
     --hero-grad-x: 20%; --hero-grad-y: 30%;
@@ -582,6 +602,56 @@ const orig = M26.applyI18n;
 M26.applyI18n = function() { orig(); renderGrid(); };
 renderGrid();
 renderEvo();
+</script>
+
+<script>
+// ── G: Parallax on hero ──
+(function () {
+  var h1 = document.querySelector('.page-hero h1');
+  if (!h1) return;
+  window.addEventListener('scroll', function () {
+    h1.style.transform = 'translateY(' + window.scrollY * 0.10 + 'px)';
+  }, { passive: true });
+})();
+
+// ── H: Magnetic 3D tilt on mascot cards ──
+(function () {
+  var TILT = 11, raf;
+  function onEnter(e) {
+    e.currentTarget.style.transition = 'transform 0.1s ease, border-color 0.25s, box-shadow 0.35s';
+    e.currentTarget.style.willChange = 'transform';
+  }
+  function onMove(e) {
+    var card = e.currentTarget, r = card.getBoundingClientRect();
+    var x = (e.clientX - r.left) / r.width - 0.5;
+    var y = (e.clientY - r.top)  / r.height - 0.5;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(function () {
+      card.style.transform = 'perspective(650px) rotateY(' + (x*TILT) + 'deg) rotateX(' + (-y*TILT) + 'deg) translateZ(8px) translateY(-4px)';
+    });
+  }
+  function onLeave(e) {
+    cancelAnimationFrame(raf);
+    var card = e.currentTarget;
+    card.style.transition = 'transform 0.5s cubic-bezier(0.22,1,0.36,1), border-color 0.25s, box-shadow 0.35s';
+    card.style.transform = '';
+    setTimeout(function () { card.style.willChange = ''; }, 500);
+  }
+  function attachTilt() {
+    document.querySelectorAll('.ms-card').forEach(function (c) {
+      if (c.dataset.tilt) return;
+      c.dataset.tilt = '1';
+      c.addEventListener('mouseenter', onEnter);
+      c.addEventListener('mousemove',  onMove);
+      c.addEventListener('mouseleave', onLeave);
+    });
+  }
+  setTimeout(attachTilt, 300);
+  if (window.MutationObserver) {
+    var t; new MutationObserver(function () { clearTimeout(t); t = setTimeout(attachTilt, 80); })
+      .observe(document.getElementById('grid') || document.body, { childList: true, subtree: true });
+  }
+})();
 </script>
 </body>
 </html>

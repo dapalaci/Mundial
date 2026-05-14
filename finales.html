@@ -293,6 +293,14 @@
     color: var(--text-faint);
     white-space: nowrap;
   }
+
+  /* M: Confetti */
+  .fin-confetti { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; }
+  @keyframes confetti-fall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    85%  { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
 </style>
 </head>
 <body>
@@ -403,8 +411,48 @@
 
 <div id="m26-footer-slot"></div>
 
+<div class="fin-confetti" id="fin-confetti" aria-hidden="true"></div>
 <script src="assets/shared.js"></script>
 <script>M26.init({ active: "finales" });</script>
+<script>
+// ── M: Confetti burst (finales celebration) ──
+(function () {
+  var container = document.getElementById('fin-confetti');
+  if (!container) return;
+  var COLORS = [
+    'oklch(0.63 0.22 20)',  // carmine
+    'oklch(0.82 0.18 85)',  // gold
+    '#ffffff',
+    'oklch(0.80 0.18 60)',  // amber
+    'oklch(0.78 0.14 210)', // cyan
+  ];
+  var count = 70;
+  for (var i = 0; i < count; i++) {
+    (function (idx) {
+      var p = document.createElement('div');
+      var color = COLORS[idx % COLORS.length];
+      var w = 4 + Math.random() * 7;
+      var h = 8 + Math.random() * 12;
+      var delay = Math.random() * 3;
+      var dur   = 2 + Math.random() * 2.5;
+      p.style.cssText = [
+        'position:absolute',
+        'left:' + Math.random() * 100 + '%',
+        'top:-20px',
+        'width:' + w + 'px',
+        'height:' + h + 'px',
+        'background:' + color,
+        'border-radius:' + (Math.random() > 0.4 ? '50%' : '2px'),
+        'opacity:0',
+        'animation:confetti-fall ' + dur + 's ' + delay + 's linear forwards',
+        'transform:rotate(' + Math.random() * 360 + 'deg)',
+      ].join(';');
+      container.appendChild(p);
+      setTimeout(function () { if (p.parentNode) p.parentNode.removeChild(p); }, (delay + dur + 0.3) * 1000);
+    })(i);
+  }
+})();
+</script>
 <script>
 const FINALS = [
   { y:1930, w:"Uruguay",  wfl:"ur", l:"Argentina", lfl:"ar", score:"4–2", venue:"Centenario · Montevideo", highlight:{es:"El gol que inauguró el Mundial", en:"The goal that opened the World Cup"}, min:"89'", scorer:"H. Castro", assist:"P. Dorado", tags:["dram"],

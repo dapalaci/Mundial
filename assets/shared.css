@@ -456,3 +456,78 @@ html[data-density="spacious"] { --density: 1.3; }
 html[data-fontmode="editorial"] { --f-display: "Fraunces", serif; }
 html[data-fontmode="sport"]     { --f-display: "Anton", "Archivo Black", sans-serif; }
 html[data-fontmode="modern"]    { --f-display: "Instrument Serif", "Fraunces", serif; }
+
+/* ==========================================================
+   CREATIVE EFFECTS — Global
+   ========================================================== */
+
+/* ── F: Shimmer skeleton ── */
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position:  200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--surface-2) 25%, var(--surface-3) 50%, var(--surface-2) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ── C: Glowing card borders on hover ── */
+.card:hover {
+  border-color: color-mix(in oklch, var(--accent) 55%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in oklch, var(--accent) 22%, transparent),
+    0 0 28px color-mix(in oklch, var(--accent) 16%, transparent),
+    0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+/* ── J: Scroll-reveal ── */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity  0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-item:nth-child(2) { transition-delay: 0.08s; }
+.reveal-item:nth-child(3) { transition-delay: 0.16s; }
+.reveal-item:nth-child(4) { transition-delay: 0.24s; }
+.reveal-item:nth-child(5) { transition-delay: 0.32s; }
+.reveal-item:nth-child(6) { transition-delay: 0.40s; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal-item { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── I: Cursor spotlight — CSS vars --mx/--my set by JS ── */
+body::before {
+  content: "";
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(
+    600px circle at var(--mx, -999px) var(--my, -999px),
+    color-mix(in oklch, var(--accent) 9%, transparent) 0%,
+    transparent 70%
+  );
+}
+
+/* ── K: Hero title chromatic aberration + accent glow ── */
+.hero-title {
+  text-shadow:
+    2px  0 0 color-mix(in oklch, oklch(0.63 0.22 20)  38%, transparent),
+    -2px 0 0 color-mix(in oklch, oklch(0.68 0.22 210) 38%, transparent);
+  filter:
+    drop-shadow(0 0 40px color-mix(in oklch, var(--accent) 32%, transparent))
+    drop-shadow(0 0 80px color-mix(in oklch, var(--accent) 14%, transparent));
+}
+.page-hero h1 {
+  filter: drop-shadow(0 0 30px color-mix(in oklch, var(--accent) 28%, transparent));
+}
+.page-hero h1 em {
+  filter: drop-shadow(0 0 20px color-mix(in oklch, var(--accent) 50%, transparent));
+}
