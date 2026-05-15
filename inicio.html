@@ -52,7 +52,7 @@
   }
   /* D: Gradient text clip on hero title */
   .hero-title {
-    font-size: clamp(36px, 6.5vw, 108px);
+    font-size: clamp(28px, 4.8vw, 76px);
     background: linear-gradient(
       135deg,
       oklch(0.25 0.06 145) 0%,
@@ -99,19 +99,19 @@
     border-radius: 4px;
   }
   .hero-ratings {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-top: 40px;
+    display: flex; flex-direction: column; align-items: center;
+    margin-top: 48px; gap: 28px;
   }
   .countdown {
-    display: flex; gap: 16px;
+    display: flex; gap: 28px;
   }
   .countdown .cell {
     text-align: center;
-    min-width: 72px;
+    min-width: 96px;
   }
   .countdown .num {
     font-family: var(--f-display);
-    font-size: 56px;
+    font-size: clamp(64px, 7vw, 96px);
     line-height: 1;
     letter-spacing: -0.04em;
     color: var(--text);
@@ -123,14 +123,14 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--text-faint);
-    margin-top: 6px;
+    margin-top: 8px;
   }
-  .hero-cta { display: flex; gap: 12px; margin-top: 32px; }
+  .hero-cta { display: flex; gap: 12px; margin-top: 0; }
 
   .hero-art {
     grid-column: 1 / -1;
-    margin-top: 60px;
-    height: 620px;
+    margin-top: 24px;
+    height: 760px;
     border-radius: var(--radius-lg);
     position: relative;
     overflow: hidden;
@@ -302,6 +302,7 @@
     background: #0d0d10;
     text-decoration: none;
     display: block;
+    border-radius: var(--radius);
   }
   .ed-card:first-child { grid-row: 1 / 3; }
   .ed-card img {
@@ -631,6 +632,19 @@
       </h1>
     </div>
 
+    <div class="hero-art">
+      <img src="assets/hero-trophy-ball.png" alt="Trofeo y balón oficial en el estadio" class="bg-photo"/>
+      <div class="photo-overlay"></div>
+      <div class="corner-tag">
+        <span class="dot"></span>
+        <span data-i18n-es="EN VIVO · 11 JUN 2026" data-i18n-en="LIVE · JUN 11, 2026">EN VIVO · 11 JUN 2026</span>
+      </div>
+      <div class="hero-caption">
+        <p data-i18n-es="EL TROFEO · BALÓN OFICIAL TRIONDA" data-i18n-en="THE TROPHY · OFFICIAL TRIONDA BALL">EL TROFEO · BALÓN OFICIAL TRIONDA</p>
+        <h3 data-i18n-es="Todo está <em>listo</em>." data-i18n-en="Everything is <em>ready</em>.">Todo está <em>listo</em>.</h3>
+      </div>
+    </div>
+
     <div class="hero-ratings">
       <div class="countdown" id="countdown" aria-label="Countdown">
         <div class="cell"><div class="num" data-d>—</div><div class="lbl" data-i18n-es="Días" data-i18n-en="Days">Días</div></div>
@@ -646,19 +660,6 @@
         <a href="oraculo.html" class="btn"
           data-i18n-es="Predicción IA"
           data-i18n-en="AI Oracle">Predicción IA</a>
-      </div>
-    </div>
-
-    <div class="hero-art">
-      <img src="assets/hero-trophy-ball.png" alt="Trofeo y balón oficial en el estadio" class="bg-photo"/>
-      <div class="photo-overlay"></div>
-      <div class="corner-tag">
-        <span class="dot"></span>
-        <span data-i18n-es="EN VIVO · 11 JUN 2026" data-i18n-en="LIVE · JUN 11, 2026">EN VIVO · 11 JUN 2026</span>
-      </div>
-      <div class="hero-caption">
-        <p data-i18n-es="EL TROFEO · BALÓN OFICIAL TRIONDA" data-i18n-en="THE TROPHY · OFFICIAL TRIONDA BALL">EL TROFEO · BALÓN OFICIAL TRIONDA</p>
-        <h3 data-i18n-es="Todo está <em>listo</em>." data-i18n-en="Everything is <em>ready</em>.">Todo está <em>listo</em>.</h3>
       </div>
     </div>
   </section>

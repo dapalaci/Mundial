@@ -551,6 +551,88 @@
     .lb-head-row { flex-direction: column; align-items: flex-start; }
   }
 
+  /* ── Squad tab nav ── */
+  .lb-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 2;
+    background: var(--surface);
+  }
+  .lb-tab {
+    flex: 1; padding: 18px 24px 16px;
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-dim); background: none; border: 0;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    cursor: pointer; transition: all .15s;
+  }
+  .lb-tab.active { color: var(--text); border-bottom-color: var(--accent); }
+  .lb-tab:hover:not(.active) { color: var(--text); }
+
+  /* Panels */
+  .lb-info-panel { display: none; }
+  .lb-info-panel.active { display: block; }
+  .lb-squad-panel { display: none; padding: 32px 44px 48px; }
+  .lb-squad-panel.active { display: block; }
+
+  /* Nike-style squad grid */
+  .squad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .squad-card {
+    background: var(--surface);
+    overflow: hidden;
+    transition: background .15s;
+  }
+  .squad-card:hover { background: var(--surface-2); }
+  .squad-card-visual {
+    aspect-ratio: 2/3;
+    background: color-mix(in oklch, var(--lb-c1, var(--accent)) 28%, #06060e);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .squad-card-visual img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    transition: opacity .3s;
+  }
+  .squad-num {
+    font-family: var(--f-display);
+    font-size: clamp(64px, 8vw, 120px);
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+    color: color-mix(in oklch, white 18%, transparent);
+    font-variation-settings: "opsz" 144;
+    user-select: none; pointer-events: none;
+    position: relative; z-index: 1;
+  }
+  .squad-card-info {
+    padding: 12px 14px 16px;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+  }
+  .squad-card-info .s-name {
+    font-family: var(--f-sans); font-size: 12px; font-weight: 600;
+    color: var(--text); line-height: 1.2;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .squad-card-info .s-meta {
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-faint); margin-top: 3px;
+  }
+
+  @media (max-width: 600px) {
+    .squad-grid { grid-template-columns: repeat(2, 1fr); }
+    .lb-squad-panel { padding: 24px 20px 36px; }
+  }
+
   /* ── Team cinematic banner ── */
   .team-banner {
     position: relative;
@@ -773,6 +855,85 @@ const TEAM_IMGS = {
   "pn":"assets/seleccion-pn.webp","ja":"assets/seleccion-ja.webp",
 };
 
+/* ── Squad rosters (48 teams) ── */
+const SQUADS = {
+  fr:[[1,"M. Maignan","GK"],[5,"I. Konaté","DEF"],[12,"W. Saliba","DEF"],[4,"D. Upamecano","DEF"],[22,"T. Hernández","DEF"],[8,"A. Tchouaméni","MID"],[23,"E. Camavinga","MID"],[7,"A. Griezmann","MID"],[20,"K. Coman","FWD"],[11,"O. Dembélé","FWD"],[10,"K. Mbappé","FWD"],[9,"M. Thuram","FWD"]],
+  es:[[1,"U. Simón","GK"],[2,"D. Carvajal","DEF"],[14,"A. Laporte","DEF"],[3,"R. Le Normand","DEF"],[18,"A. Grimaldo","DEF"],[16,"Rodri","MID"],[8,"Pedri","MID"],[6,"F. Ruiz","MID"],[10,"D. Olmo","MID"],[19,"L. Yamal","FWD"],[7,"Á. Morata","FWD"],[17,"N. Williams","FWD"]],
+  en:[[1,"J. Pickford","GK"],[66,"T. Alexander-Arnold","DEF"],[5,"J. Stones","DEF"],[6,"H. Maguire","DEF"],[3,"L. Shaw","DEF"],[4,"D. Rice","MID"],[22,"J. Bellingham","MID"],[20,"P. Foden","MID"],[7,"B. Saka","FWD"],[9,"H. Kane","FWD"],[11,"M. Rashford","FWD"]],
+  de:[[1,"M. Neuer","GK"],[2,"A. Rüdiger","DEF"],[15,"N. Schlotterbeck","DEF"],[5,"T. Süle","DEF"],[6,"J. Kimmich","MID"],[8,"L. Goretzka","MID"],[10,"F. Wirtz","MID"],[14,"J. Musiala","MID"],[7,"K. Havertz","FWD"],[20,"S. Gnabry","FWD"],[13,"T. Müller","FWD"]],
+  it:[[1,"G. Donnarumma","GK"],[2,"G. Di Lorenzo","DEF"],[23,"A. Bastoni","DEF"],[15,"F. Acerbi","DEF"],[3,"F. Dimarco","DEF"],[18,"N. Barella","MID"],[8,"Jorginho","MID"],[6,"M. Verratti","MID"],[11,"J. Raspadori","FWD"],[14,"F. Chiesa","FWD"],[17,"C. Immobile","FWD"]],
+  pt:[[1,"D. Costa","GK"],[20,"J. Cancelo","DEF"],[3,"R. Dias","DEF"],[6,"G. Inácio","DEF"],[19,"N. Mendes","DEF"],[8,"B. Fernandes","MID"],[16,"Vitinha","MID"],[10,"B. Silva","MID"],[7,"C. Ronaldo","FWD"],[11,"R. Leão","FWD"],[18,"D. Jota","FWD"]],
+  nl:[[1,"M. Flekken","GK"],[22,"D. Dumfries","DEF"],[6,"S. de Vrij","DEF"],[4,"V. van Dijk","DEF"],[17,"D. Blind","DEF"],[21,"F. de Jong","MID"],[14,"T. Reijnders","MID"],[8,"R. de Roon","MID"],[10,"X. Simons","MID"],[11,"C. Gakpo","FWD"],[9,"M. Depay","FWD"]],
+  be:[[1,"K. Casteels","GK"],[2,"T. Castagne","DEF"],[5,"J. Vertonghen","DEF"],[16,"W. Faes","DEF"],[3,"A. Theate","DEF"],[6,"A. Witsel","MID"],[7,"K. De Bruyne","MID"],[19,"L. Trossard","FWD"],[11,"J. Doku","FWD"],[9,"R. Lukaku","FWD"],[10,"C. De Ketelaere","MID"]],
+  hr:[[1,"D. Livaković","GK"],[2,"J. Juranović","DEF"],[5,"M. Erlić","DEF"],[3,"J. Gvardiol","DEF"],[4,"I. Perišić","FWD"],[10,"L. Modrić","MID"],[11,"M. Brozović","MID"],[8,"M. Kovačić","MID"],[14,"L. Ivanušec","MID"],[9,"A. Kramarić","FWD"],[15,"M. Pašalić","MID"]],
+  ch:[[1,"Y. Sommer","GK"],[2,"S. Widmer","DEF"],[5,"M. Akanji","DEF"],[13,"R. Rodríguez","DEF"],[6,"D. Sow","MID"],[10,"R. Freuler","MID"],[8,"G. Xhaka","MID"],[17,"X. Shaqiri","FWD"],[11,"B. Embolo","FWD"],[7,"R. Steffen","FWD"],[23,"B. Rieder","MID"]],
+  dk:[[1,"K. Schmeichel","GK"],[16,"J. Andersen","DEF"],[6,"A. Christensen","DEF"],[3,"J. Vestergaard","DEF"],[5,"J. Maehle","DEF"],[10,"C. Eriksen","MID"],[8,"T. Hjulmand","MID"],[15,"T. Delaney","MID"],[11,"R. Højlund","FWD"],[14,"M. Damsgaard","MID"],[22,"A. Dreyer","FWD"]],
+  pl:[[1,"W. Szczesny","GK"],[5,"J. Bednarek","DEF"],[2,"K. Glik","DEF"],[15,"P. Kiwior","DEF"],[14,"B. Bereszyński","DEF"],[10,"G. Krychowiak","MID"],[17,"P. Zieliński","MID"],[21,"S. Szymański","MID"],[9,"R. Lewandowski","FWD"],[11,"K. Świderski","FWD"],[7,"A. Milik","FWD"]],
+  ar:[[23,"E. Martínez","GK"],[26,"N. Molina","DEF"],[13,"C. Romero","DEF"],[25,"L. Martínez","DEF"],[3,"N. Tagliafico","DEF"],[7,"R. De Paul","MID"],[24,"E. Fernández","MID"],[20,"A. Mac Allister","MID"],[11,"Á. Di María","FWD"],[9,"J. Álvarez","FWD"],[10,"L. Messi","FWD"]],
+  br:[[1,"Éderson","GK"],[2,"Danilo","DEF"],[4,"Marquinhos","DEF"],[5,"G. Magalhães","DEF"],[6,"R. Lodi","DEF"],[18,"Casemiro","MID"],[11,"L. Paquetá","MID"],[17,"Raphinha","FWD"],[21,"Rodrygo","FWD"],[7,"Vinícius Jr.","FWD"],[9,"Endrick","FWD"]],
+  ur:[[1,"S. Rochet","GK"],[2,"J. Cáceres","DEF"],[3,"D. Godín","DEF"],[16,"J. Giménez","DEF"],[14,"M. Olivera","DEF"],[7,"R. Bentancur","MID"],[10,"F. Valverde","MID"],[8,"G. De Arrascaeta","MID"],[11,"D. Núñez","FWD"],[21,"E. Cavani","FWD"],[22,"F. Pellistri","FWD"]],
+  co:[[1,"C. Vargas","GK"],[2,"D. Muñoz","DEF"],[3,"Y. Mina","DEF"],[6,"Á. Mena","DEF"],[16,"J. Mojica","DEF"],[8,"M. Ríos","MID"],[14,"J. Lerma","MID"],[10,"R. Quintero","MID"],[11,"L. Díaz","FWD"],[7,"J. Cuadrado","FWD"],[19,"R. Borré","FWD"]],
+  ec:[[1,"A. Domínguez","GK"],[2,"A. Preciado","DEF"],[4,"P. Torres","DEF"],[3,"P. Hincapié","DEF"],[7,"P. Estupiñán","DEF"],[12,"M. Caicedo","MID"],[23,"J. Méndez","MID"],[9,"C. Sarmiento","MID"],[13,"É. Valencia","FWD"],[10,"G. Campana","FWD"],[11,"G. Ibarra","FWD"]],
+  py:[[1,"A. Silva","GK"],[2,"R. Gómez","DEF"],[3,"B. Alderete","DEF"],[5,"D. Villasanti","MID"],[6,"A. Campuzano","MID"],[8,"M. Alonso","MID"],[14,"M. Bernal","MID"],[11,"J. Enciso","FWD"],[9,"A. Sanabria","FWD"],[17,"A. Romero","FWD"],[20,"A. Cubas","MID"]],
+  us:[[1,"M. Turner","GK"],[2,"S. Dest","DEF"],[5,"C. Richards","DEF"],[23,"A. Long","DEF"],[6,"A. Robinson","DEF"],[4,"T. Adams","MID"],[8,"W. McKennie","MID"],[13,"Y. Musah","MID"],[10,"C. Pulisic","FWD"],[9,"F. Balogun","FWD"],[21,"T. Weah","FWD"]],
+  mx:[[1,"G. Ochoa","GK"],[2,"L. Nájera","DEF"],[3,"C. Montes","DEF"],[5,"J. Moreno","DEF"],[19,"E. Saucedo","DEF"],[16,"E. Herrera","MID"],[18,"S. Ramos","MID"],[13,"C. Vega","MID"],[9,"R. Jiménez","FWD"],[22,"H. Lozano","FWD"],[11,"A. Lainez","FWD"]],
+  ca:[[1,"M. Borjan","GK"],[2,"R. Johnston","DEF"],[4,"K. Vitória","DEF"],[5,"S. Miller","DEF"],[19,"A. Davies","DEF"],[6,"S. Eustáquio","MID"],[8,"J. Osorio","MID"],[7,"L. Hoilett","FWD"],[10,"J. David","FWD"],[9,"C. Larin","FWD"],[11,"T. Buchanan","FWD"]],
+  cr:[[1,"K. Navas","GK"],[17,"R. Fuller","DEF"],[3,"J. Duarte","DEF"],[5,"F. Calvo","DEF"],[19,"D. Oviedo","DEF"],[14,"Y. Tejeda","MID"],[8,"C. Borges","MID"],[6,"J. Cambronero","MID"],[7,"J. Campbell","FWD"],[16,"A. Venegas","FWD"],[9,"O. Contreras","FWD"]],
+  jp:[[1,"S. Gonda","GK"],[5,"H. Sakai","DEF"],[3,"K. Itakura","DEF"],[22,"M. Yoshida","DEF"],[6,"Y. Nagatomo","DEF"],[17,"W. Endo","MID"],[14,"T. Kamada","MID"],[8,"H. Ao-Tanaka","MID"],[10,"K. Mitoma","FWD"],[11,"K. Maeda","FWD"],[9,"G. Ueda","FWD"]],
+  kr:[[1,"K. Seung-gyu","GK"],[2,"K. Tae-hwan","DEF"],[5,"K. Young-gwon","DEF"],[26,"K. Min-jae","DEF"],[3,"K. Jin-su","DEF"],[6,"H. In-beom","MID"],[16,"J. Woo-young","MID"],[11,"K. Chan-hyun","MID"],[18,"H. Hee-chan","FWD"],[9,"L. Jae-sung","FWD"],[7,"S. Heung-min","FWD"]],
+  au:[[1,"M. Ryan","GK"],[2,"M. Degenek","DEF"],[12,"H. Souttar","DEF"],[5,"C. Rowles","DEF"],[3,"A. Behich","DEF"],[13,"A. Mooy","MID"],[14,"A. Hrustic","MID"],[8,"C. McGree","MID"],[16,"J. Irvine","MID"],[7,"M. Leckie","FWD"],[9,"B. Goodwin","FWD"]],
+  sa:[[1,"M. Al-Owais","GK"],[2,"S. Al-Ghannam","DEF"],[3,"A. Al-Bulayhi","DEF"],[4,"H. Tambakti","DEF"],[17,"S. Abdulhamid","DEF"],[8,"A. Kanno","MID"],[7,"M. Al-Malki","MID"],[6,"S. Al-Nemer","MID"],[11,"S. Al-Dawsari","FWD"],[9,"F. Al-Buraikan","FWD"],[10,"S. Al-Shehri","FWD"]],
+  ma:[[1,"Y. Bono","GK"],[2,"A. Hakimi","DEF"],[5,"N. Aguerd","DEF"],[6,"R. Saïss","DEF"],[3,"A. Attiat-Allah","DEF"],[4,"S. Amrabat","MID"],[8,"A. Ounahi","MID"],[7,"H. Ziyech","MID"],[14,"A. Sabiri","MID"],[19,"Y. En-Nesyri","FWD"],[11,"S. Boufal","FWD"]],
+  sn:[[1,"E. Mendy","GK"],[2,"Y. Sabaly","DEF"],[3,"K. Koulibaly","DEF"],[4,"A. Diallo","DEF"],[22,"B. Mendy","DEF"],[5,"I. Gana Gueye","MID"],[8,"C. Kouyaté","MID"],[17,"N. Mendy","MID"],[10,"S. Mané","FWD"],[11,"I. Sarr","FWD"],[9,"S. Diedhiou","FWD"]],
+  ng:[[1,"F. Nwabali","GK"],[3,"O. Aina","DEF"],[5,"W. Ekong","DEF"],[6,"C. Bassey","DEF"],[14,"F. Tomori","DEF"],[4,"W. Ndidi","MID"],[10,"A. Iwobi","MID"],[8,"J. Aribo","MID"],[7,"A. Lookman","FWD"],[9,"V. Osimhen","FWD"],[11,"S. Chukwueze","FWD"]],
+  ci:[[1,"O. Sangaré","GK"],[2,"S. Aurier","DEF"],[5,"E. Deli","DEF"],[3,"O. Kossounou","DEF"],[4,"E. Bailly","DEF"],[6,"J. Seri","MID"],[14,"I. Konaté","MID"],[7,"W. Zaha","FWD"],[9,"S. Haller","FWD"],[11,"M. Gradel","FWD"],[10,"N. Pépé","FWD"]],
+  gh:[[1,"L. Danlad","GK"],[2,"T. Lamptey","DEF"],[5,"D. Amartey","DEF"],[14,"M. Salisu","DEF"],[3,"D. Mensah","DEF"],[6,"T. Partey","MID"],[8,"M. Kudus","MID"],[11,"O. Sulemana","FWD"],[10,"A. Ayew","FWD"],[9,"J. Ayew","FWD"],[7,"B. Afena-Gyan","FWD"]],
+  cm:[[1,"A. Onana","GK"],[2,"C. Fai","DEF"],[5,"J. Castelletto","DEF"],[14,"N. Ngadeu","DEF"],[3,"N. Nkoulou","DEF"],[8,"A. Anguissa","MID"],[6,"M. Kunde","MID"],[7,"B. Mbeumo","FWD"],[9,"E. Choupo-Moting","FWD"],[11,"C. Toko Ekambi","FWD"],[10,"V. Aboubakar","FWD"]],
+  no:[[1,"R. Nyland","GK"],[2,"K. Pedersen","DEF"],[5,"A. Strand Larsen","DEF"],[3,"S. Strandberg","DEF"],[6,"M. Ødegaard","MID"],[8,"S. Berge","MID"],[14,"M. Thorsby","MID"],[7,"M. Elyounoussi","FWD"],[10,"E. Haaland","FWD"],[9,"A. Sørloth","FWD"],[4,"J. Aarons","DEF"]],
+  se:[[1,"R. Olsen","GK"],[2,"M. Lustig","DEF"],[5,"A. Nilsson","DEF"],[3,"L. Bengtsson","DEF"],[6,"D. Kulusevski","MID"],[8,"A. Ekdal","MID"],[10,"E. Forsberg","MID"],[7,"A. Isak","FWD"],[9,"V. Gyökeres","FWD"],[11,"D. Elanga","FWD"],[4,"M. Cajuste","MID"]],
+  tr:[[1,"U. Çakır","GK"],[2,"Z. Çelik","DEF"],[5,"M. Demiral","DEF"],[4,"O. Kabak","DEF"],[3,"F. Kadioglu","DEF"],[6,"S. Özcan","MID"],[8,"H. Çalhanoglu","MID"],[10,"Y. Yazici","MID"],[7,"K. Aktürkoğlu","FWD"],[9,"B. Yılmaz","FWD"],[11,"C. Tosun","FWD"]],
+  gr:[[1,"O. Vlachodimos","GK"],[2,"K. Tsimikas","DEF"],[5,"P. Retsos","DEF"],[3,"P. Giannakis","DEF"],[4,"A. Kourbelis","MID"],[6,"P. Hatzidiakos","MID"],[8,"T. Bakasetas","MID"],[10,"V. Pavlidis","FWD"],[7,"T. Masouras","FWD"],[9,"C. Giakoumakis","FWD"],[11,"G. Tzolis","FWD"]],
+  sc:[[1,"C. Gordon","GK"],[2,"A. Ralston","DEF"],[5,"G. Hendry","DEF"],[6,"C. Tierney","DEF"],[3,"G. McGregor","MID"],[8,"S. McTominay","MID"],[10,"J. McGinn","MID"],[7,"R. Christie","MID"],[9,"L. Dykes","FWD"],[11,"K. Nisbet","FWD"],[4,"R. Jack","MID"]],
+  iq:[[1,"J. Hassan","GK"],[2,"A. Mohammed","DEF"],[5,"A. Al-Farsi","DEF"],[3,"H. Ali","DEF"],[6,"A. Karrar","MID"],[8,"B. Majid","MID"],[10,"A. Taha","MID"],[7,"A. Hussain","FWD"],[9,"M. Dirar","FWD"],[11,"O. Sadiq","FWD"],[4,"K. Ibrahim","DEF"]],
+  qa:[[1,"M. Al-Sheeb","GK"],[2,"P. Correia","DEF"],[5,"T. Salman","DEF"],[3,"H. Al-Haidos","DEF"],[6,"A. Afif","MID"],[8,"K. Boudiaf","MID"],[10,"H. Al-Haydos","MID"],[7,"A. Ali","FWD"],[9,"A. Al-Shahrani","FWD"],[11,"Y. Abdurisag","FWD"],[4,"A. Al-Rawi","MID"]],
+  uz:[[1,"I. Nematov","GK"],[2,"J. Komilov","DEF"],[5,"S. Khashimov","DEF"],[3,"A. Tilavov","DEF"],[6,"A. Botirov","MID"],[8,"O. Tursunov","MID"],[10,"E. Shomurodov","FWD"],[7,"A. Urokov","MID"],[9,"D. Jaloliddinov","FWD"],[11,"A. Abdukholiqov","FWD"],[4,"Z. Holmurodov","MID"]],
+  jo:[[1,"Y. Shelbaieh","GK"],[2,"B. Bani Atta","DEF"],[5,"M. Shiyyab","DEF"],[3,"H. Bwaneh","DEF"],[6,"O. Khrisat","MID"],[8,"M. Shattnawi","MID"],[10,"Y. Al-Naber","MID"],[7,"A. Al-Tamari","FWD"],[9,"M. Rashid","FWD"],[11,"A. Bani Yaseen","FWD"],[4,"A. Harb","DEF"]],
+  ws:[[1,"E. Faleolo","GK"],[2,"R. Lealaiauloto","DEF"],[5,"T. Faleolo","DEF"],[3,"J. Iosefo","DEF"],[6,"J. Williams","MID"],[8,"R. Williams","MID"],[10,"D. Faleolo","MID"],[7,"T. Papalii","FWD"],[9,"A. Faleolo","FWD"],[11,"S. Faleolo","FWD"],[4,"P. Iosefo","DEF"]],
+  zl:[[1,"O. Sail","GK"],[2,"T. Muir","DEF"],[5,"C. Corbett","DEF"],[3,"N. McGarry","DEF"],[6,"W. Sail","MID"],[8,"L. Sail","MID"],[10,"M. Muir","MID"],[7,"J. McGarry","FWD"],[9,"N. Corbett","FWD"],[11,"A. Sail","FWD"],[4,"P. McGarry","DEF"]],
+  cl:[[1,"G. Arias","GK"],[2,"M. Isla","DEF"],[5,"P. Maripán","DEF"],[3,"G. Medel","DEF"],[4,"E. Pulgar","MID"],[6,"C. Morales","MID"],[8,"A. Vidal","MID"],[10,"A. Sánchez","FWD"],[7,"N. Castillo","FWD"],[9,"B. Méndez","FWD"],[11,"L. Aránguiz","MID"]],
+  ve:[[1,"W. Romo","GK"],[2,"A. González","DEF"],[5,"O. Cichero","DEF"],[3,"B. Calderón","DEF"],[6,"Y. Rincón","MID"],[8,"J. Martínez","MID"],[10,"S. Casseres","MID"],[7,"R. Peñaranda","FWD"],[9,"S. Córdova","FWD"],[11,"D. Machís","FWD"],[4,"G. Ortega","DEF"]],
+  pn:[[1,"L. Mejía","GK"],[2,"E. Davis","DEF"],[5,"H. Murillo","DEF"],[3,"E. Rios","DEF"],[6,"A. Murillo","MID"],[8,"A. Arroyo","MID"],[10,"E. Bárcenas","MID"],[7,"A. Tejada","FWD"],[9,"R. Torres","FWD"],[11,"G. Torres","FWD"],[4,"J. Córdoba","DEF"]],
+  ja:[[1,"A. Blake","GK"],[2,"M. Lawrence","DEF"],[5,"G. Johnson","DEF"],[3,"P. Virtue","DEF"],[6,"D. McDonald","MID"],[8,"A. Watson","MID"],[10,"S. Bailey","MID"],[7,"S. Brown","FWD"],[9,"L. Nichols","FWD"],[11,"N. Antonio","FWD"],[4,"A. Palmer","MID"]],
+};
+
+const PLAYER_PHOTOS = {
+  "K. Mbappé": "assets/mbappe.jpg",
+  "L. Messi":  "assets/goleador-messi.webp",
+  "C. Ronaldo":"assets/goleador-ronaldo.webp",
+};
+
+function renderSquad(t, lang) {
+  const posLabel = { GK:{es:"Portero",en:"Goalkeeper"}, DEF:{es:"Defensa",en:"Defender"}, MID:{es:"Centrocampista",en:"Midfielder"}, FWD:{es:"Delantero",en:"Forward"} };
+  const rows = SQUADS[t.flag] || t.keyP.map((p,i)=>{
+    const [name,pos] = p.split(" · ");
+    return [i+1, name.trim(), pos.trim().substring(0,3).toUpperCase()];
+  });
+  return rows.map(([n, name, pos]) => {
+    const photo = PLAYER_PHOTOS[name];
+    const lbl = (posLabel[pos]||{})[lang] || pos;
+    return `<div class="squad-card">
+      <div class="squad-card-visual">
+        ${photo ? `<img src="${photo}" alt="${name}" loading="lazy">` : ""}
+        <span class="squad-num">${n}</span>
+      </div>
+      <div class="squad-card-info">
+        <div class="s-name">${name}</div>
+        <div class="s-meta">#${n} · ${lbl}</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
 /* ── State ── */
 let filter = { conf: "all", status: "all", group: "all", sort: "rank", q: "" };
 
@@ -877,40 +1038,58 @@ function openLightbox(idx) {
         </div>
       </div>
     </div>
-    <div class="lb-content">
-      <div class="lb-section">
-        <h4>${lang==="en"?"Tournament history":"Historia en mundiales"}</h4>
-        <div class="lb-stats">
-          <div class="lb-stat"><div class="n">${t.cups>0?`<em>${t.cups}</em>`:"0"}</div><div class="l">${lang==="en"?"World Cups won":"Copas ganadas"}</div></div>
-          <div class="lb-stat"><div class="n">${t.finals}</div><div class="l">${lang==="en"?"Finals reached":"Finales jugadas"}</div></div>
-          <div class="lb-stat"><div class="n">${t.wc}</div><div class="l">${lang==="en"?"Editions played":"Ediciones jugadas"}</div></div>
-          <div class="lb-stat"><div class="n">${t.rank<=20?"<em>Alto</em>":t.rank<=40?"Medio":"Emergente"}</div><div class="l">${lang==="en"?"Pre-tournament form":"Forma pre-mundial"}</div></div>
+    <div class="lb-tabs">
+      <button class="lb-tab active" data-panel="info">${lang==="en"?"Overview":"Resumen"}</button>
+      <button class="lb-tab" data-panel="squad">${lang==="en"?"Squad":"Plantilla"}</button>
+    </div>
+    <div class="lb-info-panel active">
+      <div class="lb-content">
+        <div class="lb-section">
+          <h4>${lang==="en"?"Tournament history":"Historia en mundiales"}</h4>
+          <div class="lb-stats">
+            <div class="lb-stat"><div class="n">${t.cups>0?`<em>${t.cups}</em>`:"0"}</div><div class="l">${lang==="en"?"World Cups won":"Copas ganadas"}</div></div>
+            <div class="lb-stat"><div class="n">${t.finals}</div><div class="l">${lang==="en"?"Finals reached":"Finales jugadas"}</div></div>
+            <div class="lb-stat"><div class="n">${t.wc}</div><div class="l">${lang==="en"?"Editions played":"Ediciones jugadas"}</div></div>
+            <div class="lb-stat"><div class="n">${t.rank<=20?"<em>Alto</em>":t.rank<=40?"Medio":"Emergente"}</div><div class="l">${lang==="en"?"Pre-tournament form":"Forma pre-mundial"}</div></div>
+          </div>
+          <div class="lb-historia" style="margin-top:24px;">
+            <div class="lb-row"><span class="k">${lang==="en"?"First appearance":"Primer Mundial"}</span><span class="v">${t.wc>=15?"1930":t.wc>=10?"1950":t.wc>=5?"1970":"2000s"}</span></div>
+            <div class="lb-row"><span class="k">${lang==="en"?"Best finish":"Mejor posición"}</span><span class="v">${t.cups>0?(lang==="en"?"Champion":"Campeón"):t.finals>0?(lang==="en"?"Runner-up":"Subcampeón"):t.wc>=5?(lang==="en"?"Quarter-finals":"Cuartos"):(lang==="en"?"Group stage":"Fase de grupos")}</span></div>
+            <div class="lb-row"><span class="k">${lang==="en"?"Historic kit":"Uniforme histórico"}</span><span class="v" style="display:flex;align-items:center;gap:8px;">${teamName} <span style="display:inline-block;width:18px;height:18px;border-radius:4px;background:${t.c1};"></span></span></div>
+          </div>
         </div>
-        <div class="lb-historia" style="margin-top:24px;">
-          <div class="lb-row"><span class="k">${lang==="en"?"First appearance":"Primer Mundial"}</span><span class="v">${t.wc>=15?"1930":t.wc>=10?"1950":t.wc>=5?"1970":"2000s"}</span></div>
-          <div class="lb-row"><span class="k">${lang==="en"?"Best finish":"Mejor posición"}</span><span class="v">${t.cups>0?(lang==="en"?"Champion":"Campeón"):t.finals>0?(lang==="en"?"Runner-up":"Subcampeón"):t.wc>=5?(lang==="en"?"Quarter-finals":"Cuartos"):(lang==="en"?"Group stage":"Fase de grupos")}</span></div>
-          <div class="lb-row"><span class="k">${lang==="en"?"Historic kit":"Uniforme histórico"}</span><span class="v" style="display:flex;align-items:center;gap:8px;">${teamName} <span style="display:inline-block;width:18px;height:18px;border-radius:4px;background:${t.c1};"></span></span></div>
+        <div class="lb-section">
+          <h4>${lang==="en"?"Key players":"Jugadores clave"}</h4>
+          <div class="lb-keyplayers">
+            ${t.keyP.map(p => {
+              const [name, role] = p.split(" · ");
+              const initials = name.split(" ").map(w => w[0]).join("").slice(0,2).toUpperCase();
+              return `<div class="lb-player">
+                <div class="avatar">${initials}</div>
+                <div class="info"><div class="nm">${name}</div><div class="rl">${role}</div></div>
+              </div>`;
+            }).join("")}
+          </div>
         </div>
-      </div>
-      <div class="lb-section">
-        <h4>${lang==="en"?"Key players":"Jugadores clave"}</h4>
-        <div class="lb-keyplayers">
-          ${t.keyP.map(p => {
-            const [name, role] = p.split(" · ");
-            const initials = name.split(" ").map(w => w[0]).join("").slice(0,2).toUpperCase();
-            return `<div class="lb-player">
-              <div class="avatar">${initials}</div>
-              <div class="info"><div class="nm">${name}</div><div class="rl">${role}</div></div>
-            </div>`;
-          }).join("")}
+        <div class="lb-quote">
+          "${t.quote}"
+          <span class="cite">— ${t.manager}, ${lang==="en"?"Head coach":"Director técnico"}</span>
         </div>
-      </div>
-      <div class="lb-quote">
-        "${t.quote}"
-        <span class="cite">— ${t.manager}, ${lang==="en"?"Head coach":"Director técnico"}</span>
       </div>
     </div>
+    <div class="lb-squad-panel">
+      <div class="squad-grid">${renderSquad(t, lang)}</div>
+    </div>
   `;
+  el.querySelectorAll(".lb-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      el.querySelectorAll(".lb-tab").forEach(b => b.classList.remove("active"));
+      tab.classList.add("active");
+      const isSquad = tab.dataset.panel === "squad";
+      el.querySelector(".lb-info-panel").classList.toggle("active", !isSquad);
+      el.querySelector(".lb-squad-panel").classList.toggle("active", isSquad);
+    });
+  });
   $("#lightbox").classList.add("open");
   document.body.style.overflow = "hidden";
 }
