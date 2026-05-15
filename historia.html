@@ -7,38 +7,7 @@
 <link rel="stylesheet" href="assets/shared.css">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  .hist-hero { --hero-grad-opacity: 16%; min-height: 520px; }
-
-  /* Trophy image — decorative right side */
-  .hist-trophy {
-    position: absolute;
-    right: max(0px, calc(50% - 700px));
-    top: 0; bottom: 0;
-    width: 420px;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .hist-trophy img {
-    width: 100%; height: 100%;
-    object-fit: contain;
-    object-position: center bottom;
-    display: block;
-    filter: brightness(1.05) contrast(1.02);
-  }
-  .hist-trophy::before {
-    content: "";
-    position: absolute; inset: 0;
-    background: linear-gradient(
-      to right,
-      var(--bg) 0%,
-      transparent 35%,
-      transparent 75%,
-      var(--bg) 100%
-    );
-    z-index: 1;
-    pointer-events: none;
-  }
-  @media (max-width: 900px) { .hist-trophy { display: none; } }
+  .hist-hero { --hero-grad-opacity: 16%; }
 
   /* A: Grain overlay on hero */
   .page-hero::after {
@@ -350,9 +319,6 @@
 <div id="m26-nav-slot"></div>
 
 <section class="hist-hero page-hero">
-  <div class="hist-trophy">
-    <img src="assets/historia-2026.webp" alt="Copa del Mundo FIFA" loading="eager">
-  </div>
   <div class="wrap">
     <span class="eyebrow" data-i18n-es="● 1930 — 2026 · 96 años de historia" data-i18n-en="● 1930 — 2026 · 96 years of history">● 1930 — 2026 · 96 años de historia</span>
     <h1 data-i18n-es="Un siglo de <em>gloria</em> sobre el césped."
