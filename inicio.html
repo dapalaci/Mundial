@@ -1019,7 +1019,7 @@ function _enVivoRender(matches) {
       ? `<div class="score live">${m.score.home ?? 0}–${m.score.away ?? 0}</div><div class="date">${m.minute ? m.minute+"'" : 'EN VIVO'}</div>`
       : isDone
       ? `<div class="score">${m.score.home ?? '?'}–${m.score.away ?? '?'}</div><div class="date">${_enVivoFmt(m.date)}</div>`
-      : `<div class="score" style="font-size:14px;color:var(--text-faint)">VS</div><div class="date">${_enVivoFmt(m.date)}</div>`;
+      : `<div class="score" style="font-size:14px;color:var(--text-faint)">VS</div><div class="date">${_enVivoFmt(m.date)}</div>${m.venue ? `<div class="date" style="font-size:9px;margin-top:2px;opacity:.7">${m.venue}</div>` : ''}`;
 
     const flagH = m.homeTeam.crest
       ? `<img src="${m.homeTeam.crest}" style="width:24px;height:16px;object-fit:contain;" alt="">`
