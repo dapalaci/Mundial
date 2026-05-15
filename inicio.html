@@ -663,129 +663,113 @@
     </div>
   </section>
 
-  <!-- Bento grid -->
-  <section class="wrap section">
-    <div class="bento">
-      <!-- Probabilities -->
-      <div class="b b-hero" data-section="probs" data-host="mx">
-        <span class="eyebrow"
-          data-i18n-es="● Predicciones del oráculo"
-          data-i18n-en="● Oracle predictions">● Predicciones del oráculo</span>
-        <h3 class="h2"
-          data-i18n-es="Probabilidad de<br><em style='color:var(--accent);font-style:italic'>levantar la copa</em>"
-          data-i18n-en="Probability of<br><em style='color:var(--accent);font-style:italic'>lifting the cup</em>">
-          Probabilidad de<br><em style="color:var(--accent);font-style:italic">levantar la copa</em>
-        </h3>
-        <div style="margin-top:28px">
-          <div class="prob-row" data-team="ar"><div class="ph flag flag-ar prob-flag"></div><div><span class="prob-name">Argentina</span><div class="prob-bar"><span style="width:22%"></span></div></div><div class="prob-pct">22.4%</div></div>
-          <div class="prob-row" data-team="fr"><div class="ph flag flag-fr prob-flag"></div><div><span class="prob-name">Francia</span><div class="prob-bar"><span style="width:18%"></span></div></div><div class="prob-pct">18.1%</div></div>
-          <div class="prob-row" data-team="br"><div class="ph flag flag-br prob-flag"></div><div><span class="prob-name">Brasil</span><div class="prob-bar"><span style="width:14%"></span></div></div><div class="prob-pct">14.2%</div></div>
-          <div class="prob-row" data-team="es"><div class="ph flag flag-es prob-flag"></div><div><span class="prob-name">España</span><div class="prob-bar"><span style="width:11%"></span></div></div><div class="prob-pct">11.3%</div></div>
-          <div class="prob-row" data-team="en"><div class="ph flag flag-en prob-flag"></div><div><span class="prob-name"
-            data-i18n-es="Inglaterra" data-i18n-en="England">Inglaterra</span><div class="prob-bar"><span style="width:9%"></span></div></div><div class="prob-pct">9.0%</div></div>
+  <!-- Fila 1: Oracle + Mascota + Jugadores -->
+  <div class="editorial-grid" style="margin: 0;">
+    <a class="ed-card" href="oraculo.html">
+      <img src="assets/oraculo.webp" alt="Oráculo IA" style="object-position:center 20%;">
+      <div class="ov"></div>
+      <span class="tag" data-i18n-es="IA · 10 000 simulaciones" data-i18n-en="AI · 10,000 simulations">IA · 10 000 simulaciones</span>
+      <!-- Predicciones overlay -->
+      <div style="position:absolute;top:50%;left:26px;transform:translateY(-50%);z-index:2;">
+        <div style="font-family:var(--f-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:12px;" data-i18n-es="FAVORITOS" data-i18n-en="FAVORITES">FAVORITOS</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:10px;"><div class="ph flag flag-ar" style="width:22px;height:15px;border-radius:2px;flex-shrink:0;"></div><span style="font-family:var(--f-display);font-size:16px;color:#fff;letter-spacing:-.01em;">Argentina</span><span style="font-family:var(--f-mono);font-size:11px;color:var(--accent);margin-left:auto;padding-left:16px;">22.4%</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><div class="ph flag flag-fr" style="width:22px;height:15px;border-radius:2px;flex-shrink:0;"></div><span style="font-family:var(--f-display);font-size:16px;color:#fff;letter-spacing:-.01em;">Francia</span><span style="font-family:var(--f-mono);font-size:11px;color:var(--accent);margin-left:auto;padding-left:16px;">18.1%</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><div class="ph flag flag-br" style="width:22px;height:15px;border-radius:2px;flex-shrink:0;"></div><span style="font-family:var(--f-display);font-size:16px;color:#fff;letter-spacing:-.01em;">Brasil</span><span style="font-family:var(--f-mono);font-size:11px;color:var(--accent);margin-left:auto;padding-left:16px;">14.2%</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><div class="ph flag flag-es" style="width:22px;height:15px;border-radius:2px;flex-shrink:0;"></div><span style="font-family:var(--f-display);font-size:16px;color:#fff;letter-spacing:-.01em;">España</span><span style="font-family:var(--f-mono);font-size:11px;color:var(--accent);margin-left:auto;padding-left:16px;">11.3%</span></div>
         </div>
-        <a href="oraculo.html" class="mono" style="margin-top:24px; display:inline-block; color:var(--accent); text-decoration:underline;"
-          data-i18n-es="↗ VER TODOS LOS CÁLCULOS"
-          data-i18n-en="↗ VIEW ALL FORECASTS">↗ VER TODOS LOS CÁLCULOS</a>
       </div>
-
-      <!-- Featured mascot -->
-      <div class="b b-side" data-host="ca" style="">
-        <span class="chip soft b-label"
-          data-i18n-es="Mascota · 2026" data-i18n-en="Mascot · 2026">Mascota · 2026</span>
-        <div style="height:220px; margin: 24px -28px 24px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-          <img src="assets/mascots-2026.png" alt="Maple, Zayu &amp; Clutch" style="height: 100%; width: auto; object-fit: contain; object-position: center;" />
-        </div>
-        <h3 class="h3" style="margin:0 0 8px"
-          data-i18n-es="Zayu, Maple &amp; Clutch"
-          data-i18n-en="Zayu, Maple &amp; Clutch">Zayu, Maple &amp; Clutch</h3>
-        <p class="body" style="margin:0 0 16px; font-size:13px;"
-          data-i18n-es="Tres mascotas conceptuales — un jaguar, un alce y un águila calva — representan a los tres anfitriones."
-          data-i18n-en="Three conceptual mascots — a jaguar, a moose and a bald eagle — for the three hosts.">
-          Tres mascotas conceptuales — un jaguar, un alce y un águila calva — representan a los tres anfitriones.
-        </p>
-        <a href="mascotas.html" class="mono" style="color:var(--accent); text-decoration:underline;"
-          data-i18n-es="↗ TODAS LAS MASCOTAS"
-          data-i18n-en="↗ ALL MASCOTS">↗ TODAS LAS MASCOTAS</a>
+      <div class="label">
+        <div class="label-text" data-i18n-es="El <em>Oráculo</em> predice" data-i18n-en="The <em>Oracle</em> predicts">El <em>Oráculo</em> predice</div>
+        <div class="label-arrow">→</div>
       </div>
+    </a>
+    <a class="ed-card" href="mascotas.html">
+      <img src="assets/mascots-2026.png" alt="Mascotas 2026" style="object-fit:contain;object-position:center center;background:#0d0d10;padding:8% 5%;">
+      <div class="ov"></div>
+      <span class="tag" data-i18n-es="Mascota oficial · 2026" data-i18n-en="Official mascot · 2026">Mascota oficial · 2026</span>
+      <div class="label">
+        <div class="label-text" data-i18n-es="Zayu, Maple<br>&amp; <em>Clutch</em>" data-i18n-en="Zayu, Maple<br>&amp; <em>Clutch</em>">Zayu, Maple<br>&amp; <em>Clutch</em></div>
+        <div class="label-arrow">→</div>
+      </div>
+    </a>
+    <a class="ed-card" href="jugadores.html">
+      <img src="assets/mbappe.jpg" alt="Kylian Mbappé" style="object-position:25% center;">
+      <div class="ov"></div>
+      <span class="tag" data-i18n-es="Figura destacada · Francia" data-i18n-en="Featured star · France">Figura destacada · Francia</span>
+      <div class="label">
+        <div class="label-text">Kylian <em>Mbappé</em></div>
+        <div class="label-arrow">→</div>
+      </div>
+    </a>
+  </div>
 
-      <!-- En Vivo module -->
-      <div class="b b-half" data-host="us" id="envivo-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-          <span class="eyebrow" id="envivo-label"
-            data-i18n-es="Próximos partidos" data-i18n-en="Upcoming matches">Próximos partidos</span>
-          <span id="envivo-badge" class="mono" style="color:var(--text-faint);">MUNDIAL 2026</span>
-        </div>
-        <div id="envivo-matches">
-          <div class="match" style="opacity:.35;">
-            <div class="flag-side">
-              <div class="ph" style="width:24px;height:16px;background:var(--surface-3);border-radius:3px;"></div>
-              <span class="team" style="width:60px;height:14px;background:var(--surface-3);display:block;border-radius:4px;"></span>
-            </div>
-            <div><div class="score">– : –</div><div class="date">···</div></div>
-            <div class="flag-side away">
-              <span class="team" style="width:60px;height:14px;background:var(--surface-3);display:block;border-radius:4px;"></span>
-              <div class="ph" style="width:24px;height:16px;background:var(--surface-3);border-radius:3px;"></div>
-            </div>
+  <!-- Fila 2: Próximos partidos + Stats -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px;">
+    <!-- En Vivo module -->
+    <div style="background:var(--surface);padding:28px 28px 24px;position:relative;" id="envivo-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <span class="eyebrow" id="envivo-label"
+          data-i18n-es="Próximos partidos" data-i18n-en="Upcoming matches">Próximos partidos</span>
+        <span id="envivo-badge" class="mono" style="color:var(--text-faint);">MUNDIAL 2026</span>
+      </div>
+      <div id="envivo-matches">
+        <div class="match" style="opacity:.35;">
+          <div class="flag-side">
+            <div class="ph" style="width:24px;height:16px;background:var(--surface-3);border-radius:3px;"></div>
+            <span class="team" style="width:60px;height:14px;background:var(--surface-3);display:block;border-radius:4px;"></span>
+          </div>
+          <div><div class="score">– : –</div><div class="date">···</div></div>
+          <div class="flag-side away">
+            <span class="team" style="width:60px;height:14px;background:var(--surface-3);display:block;border-radius:4px;"></span>
+            <div class="ph" style="width:24px;height:16px;background:var(--surface-3);border-radius:3px;"></div>
           </div>
         </div>
-        <div id="envivo-updated" class="mono" style="margin-top:14px;font-size:9px;color:var(--text-faint);"></div>
       </div>
-
-      <!-- Featured player -->
-      <div class="b b-half" data-host="white" style="display:grid; grid-template-columns: 1fr 200px; gap: 28px; align-items: center;">
-        <div>
-          <span class="eyebrow"
-            data-i18n-es="Figura destacada · Goleadores"
-            data-i18n-en="Featured star · Scorers">Figura destacada · Goleadores</span>
-          <h3 class="h1" style="margin:14px 0 10px; font-size: clamp(32px, 4vw, 54px);">Kylian <em style="color:var(--accent); font-style:italic">Mbappé</em></h3>
-          <p class="body" style="margin-bottom: 18px;"
-            data-i18n-es="Capitán de Francia, 26 años. Máximo goleador de su selección en Qatar 2022 con 8 tantos, incluyendo hat-trick en la final."
-            data-i18n-en="Captain of France, age 26. Top scorer at Qatar 2022 with 8 goals, including a final hat-trick.">
-            Capitán de Francia, 26 años. Máximo goleador de su selección en Qatar 2022 con 8 tantos, incluyendo hat-trick en la final.
-          </p>
-          <div style="display: flex; gap: 28px; padding-top: 14px; border-top: 1px solid var(--line);">
-            <div><div class="mono" style="color:var(--text-faint)">GOLES · MUNDIALES</div><div style="font-family:var(--f-display); font-size:30px; color:var(--accent); margin-top:4px;">12</div></div>
-            <div><div class="mono" style="color:var(--text-faint)">PARTIDOS</div><div style="font-family:var(--f-display); font-size:30px; margin-top:4px;">14</div></div>
-            <div><div class="mono" style="color:var(--text-faint)">EDAD · USA26</div><div style="font-family:var(--f-display); font-size:30px; margin-top:4px;">27</div></div>
-          </div>
-        </div>
-        <div style="aspect-ratio: 3/4; height: 280px; width: auto; border-radius: 12px; overflow: hidden; position: relative; background: var(--surface-2);">
-          <img src="assets/mbappe.jpg" alt="Kylian Mbappé celebrando con Francia"
-               style="width: 100%; height: 100%; object-fit: cover; object-position: 25% center; filter: saturate(0.95) contrast(1.05);" />
-          <div style="position:absolute; inset:0; background: linear-gradient(180deg, transparent 50%, rgba(10,10,13,0.85) 100%); pointer-events:none;"></div>
-          <div style="position:absolute; left:14px; bottom:12px; font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.2em; color: rgba(255,255,255,0.85); text-transform: uppercase;">FRANCIA · No. 10</div>
-        </div>
-      </div>
-
-      <!-- Stats strip -->
-      <div class="b b-full" style="padding: 40px;">
-        <div class="stats-strip">
-          <div class="stat-cell"><div class="num"><em>48</em></div><span class="lbl" data-i18n-es="Selecciones" data-i18n-en="Teams">Selecciones</span></div>
-          <div class="stat-cell"><div class="num"><em>104</em></div><span class="lbl" data-i18n-es="Partidos" data-i18n-en="Matches">Partidos</span></div>
-          <div class="stat-cell"><div class="num"><em>16</em></div><span class="lbl" data-i18n-es="Ciudades sede" data-i18n-en="Host cities">Ciudades sede</span></div>
-          <div class="stat-cell"><div class="num"><em>39</em></div><span class="lbl" data-i18n-es="Días de torneo" data-i18n-en="Tournament days">Días de torneo</span></div>
-        </div>
-      </div>
-
-      <!-- Hosts -->
-      <div class="b b-full" style="padding: 28px 28px 0;">
-        <span class="eyebrow"
-          data-i18n-es="Tres países, un balón"
-          data-i18n-en="Three nations, one ball">Tres países, un balón</span>
-        <h3 class="h2" style="margin:12px 0 0;"
-          data-i18n-es="Por primera vez, un Mundial con <em style='color:var(--accent);font-style:italic'>tres anfitriones.</em>"
-          data-i18n-en="The first-ever World Cup with <em style='color:var(--accent);font-style:italic'>three host nations.</em>">
-          Por primera vez, un Mundial con <em style="color:var(--accent);font-style:italic">tres anfitriones.</em>
-        </h3>
-        <div class="hosts">
-          <div class="host" data-host="ca"><div class="ph flag flag-ca flag-bar"></div><div><div class="name">Canadá</div><div class="stat" data-i18n-es="2 sedes · Toronto, Vancouver" data-i18n-en="2 venues · Toronto, Vancouver">2 sedes · Toronto, Vancouver</div></div><div class="mono host-num" style="align-self:flex-end;">13 PARTIDOS</div></div>
-          <div class="host" data-host="us"><div class="ph flag flag-us flag-bar"></div><div><div class="name" data-i18n-es="Estados Unidos" data-i18n-en="United States">Estados Unidos</div><div class="stat" data-i18n-es="11 sedes · Final: MetLife NJ" data-i18n-en="11 venues · Final: MetLife NJ">11 sedes · Final: MetLife NJ</div></div><div class="mono host-num" style="align-self:flex-end;">78 PARTIDOS</div></div>
-          <div class="host" data-host="mx"><div class="ph flag flag-mx flag-bar"></div><div><div class="name">México</div><div class="stat" data-i18n-es="3 sedes · Azteca, Guadalajara, Monterrey" data-i18n-en="3 venues · Azteca, Guadalajara, Monterrey">3 sedes · Azteca, Guadalajara, Monterrey</div></div><div class="mono host-num" style="align-self:flex-end;">13 PARTIDOS</div></div>
-        </div>
+      <div id="envivo-updated" class="mono" style="margin-top:14px;font-size:9px;color:var(--text-faint);"></div>
+    </div>
+    <!-- Stats -->
+    <div style="background:var(--surface);padding:40px 48px;display:flex;flex-direction:column;justify-content:center;">
+      <div class="stats-strip">
+        <div class="stat-cell"><div class="num"><em>48</em></div><span class="lbl" data-i18n-es="Selecciones" data-i18n-en="Teams">Selecciones</span></div>
+        <div class="stat-cell"><div class="num"><em>104</em></div><span class="lbl" data-i18n-es="Partidos" data-i18n-en="Matches">Partidos</span></div>
+        <div class="stat-cell"><div class="num"><em>16</em></div><span class="lbl" data-i18n-es="Ciudades sede" data-i18n-en="Host cities">Ciudades sede</span></div>
+        <div class="stat-cell"><div class="num"><em>39</em></div><span class="lbl" data-i18n-es="Días de torneo" data-i18n-en="Tournament days">Días de torneo</span></div>
       </div>
     </div>
-  </section>
+  </div>
+
+  <!-- Fila 3: Tres anfitriones -->
+  <div class="ed-grid-secondary" style="margin-top:4px;">
+    <a class="ed-card" href="selecciones.html?group=G" style="height:300px;">
+      <img src="assets/seccion-final.png" alt="Estados Unidos" style="object-position:center center;">
+      <div class="ov"></div>
+      <div class="ov" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 60%),linear-gradient(to bottom,rgba(0,0,80,.25) 0%,transparent 40%);"></div>
+      <span class="tag">🇺🇸 11 sedes · 78 partidos</span>
+      <div class="label">
+        <div class="label-text" data-i18n-es="<em>Estados Unidos</em>" data-i18n-en="<em>United States</em>"><em>Estados Unidos</em></div>
+        <div class="label-arrow">→</div>
+      </div>
+    </a>
+    <a class="ed-card" href="selecciones.html?group=H" style="height:300px;">
+      <img src="assets/historia-1986.webp" alt="México" style="object-position:center center;">
+      <div class="ov"></div>
+      <span class="tag">🇲🇽 3 sedes · 13 partidos</span>
+      <div class="label">
+        <div class="label-text"><em>México</em></div>
+        <div class="label-arrow">→</div>
+      </div>
+    </a>
+    <a class="ed-card" href="selecciones.html?group=I" style="height:300px;">
+      <img src="assets/historia-1994.webp" alt="Canadá" style="object-position:center center;">
+      <div class="ov"></div>
+      <span class="tag">🇨🇦 2 sedes · 13 partidos</span>
+      <div class="label">
+        <div class="label-text"><em>Canadá</em></div>
+        <div class="label-arrow">→</div>
+      </div>
+    </a>
+  </div>
 
   <!-- Ticker -->
   <div class="ticker">
