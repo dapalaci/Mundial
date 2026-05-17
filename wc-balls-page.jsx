@@ -312,98 +312,81 @@ function BallCard({ ball, tweaks, index, isLast }) {
   const [expanded, setExpanded] = useState(false);
   const dark = tweaks.darkMode;
   const radius = tweaks.roundedCards ? 14 : 2;
-  const accent = tweaks.accentColor;
   const fg = dark ? '#fff' : '#111';
-  const fgM = dark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.45)';
+  const fgM = dark ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.45)';
+  const fgS = dark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.28)';
   const cardBg = dark ? 'rgba(255,255,255,0.03)' : '#fff';
-  const border = dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.07)';
+  const border = dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
+  const imgBg = dark ? '#141420' : '#F0F0F0';
+  const badgeBg = dark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.07)';
 
   return (
-    <div style={{ display: 'flex', gap: 'clamp(16px, 3vw, 28px)', marginBottom: isLast ? 0 : 32, position: 'relative' }}>
+    <div style={{ display: 'flex', gap: 'clamp(14px, 2.5vw, 24px)', marginBottom: isLast ? 0 : 28, position: 'relative' }}>
       {/* Timeline */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0, width: 40 }}>
-        <div style={{ width: 13, height: 13, borderRadius: '50%', background: ball.color, border: `3px solid ${dark ? '#0A0A12' : '#FAFAFA'}`, boxShadow: `0 0 0 3px ${ball.color}33`, zIndex: 2, marginTop: 28, flexShrink: 0 }} />
-        {!isLast && <div style={{ width: 2, flex: 1, background: dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)', marginTop: 4 }} />}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0, width: 36 }}>
+        <div style={{ width: 11, height: 11, borderRadius: '50%', background: dark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.25)', border: `2.5px solid ${dark ? '#0A0A12' : '#FAFAFA'}`, zIndex: 2, marginTop: 24, flexShrink: 0 }} />
+        {!isLast && <div style={{ width: 1, flex: 1, background: dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)', marginTop: 4 }} />}
       </div>
 
       {/* Card */}
-      <div style={{ flex: 1, borderRadius: radius, border: `1px solid ${border}`, background: cardBg, overflow: 'hidden', marginBottom: 0 }}>
-        <div style={{ display: 'flex', gap: 0, flexWrap: 'wrap' }}>
+      <div style={{ flex: 1, borderRadius: radius, border: `1px solid ${border}`, background: cardBg, overflow: 'hidden' }}>
 
-          {/* Ball image panel */}
-          <div style={{
-            position: 'relative', width: 'clamp(140px, 22%, 200px)', minHeight: 200,
-            background: `linear-gradient(145deg, ${ball.color}22, ${ball.color}08)`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0, padding: 20,
-          }}>
-            {/* Decorative circle behind ball */}
-            <div style={{ position: 'absolute', width: 130, height: 130, borderRadius: '50%', background: ball.color + '18', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
-            <img
-              src={ball.image}
-              alt={`Balón ${ball.name} ${ball.year}`}
-              loading="lazy"
-              style={{ position: 'relative', width: '100%', maxWidth: 150, height: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.35))', zIndex: 1 }}
-              onError={e => { e.currentTarget.style.display = 'none'; }}
-            />
-            {/* Year badge */}
-            <div style={{ position: 'absolute', bottom: 10, left: 10, background: ball.color, borderRadius: tweaks.roundedCards ? 6 : 2, padding: '3px 10px' }}>
-              <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 18, color: '#fff', lineHeight: 1 }}>{ball.year}</span>
-            </div>
+        {/* Image banner — full width, horizontal */}
+        <div style={{ position: 'relative', width: '100%', height: 'clamp(160px, 22vw, 220px)', background: imgBg, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+          <img
+            src={ball.image}
+            alt={`Balón ${ball.name} ${ball.year}`}
+            loading="lazy"
+            style={{ height: '92%', width: 'auto', maxWidth: '70%', objectFit: 'contain', filter: dark ? 'drop-shadow(0 6px 20px rgba(0,0,0,0.6))' : 'drop-shadow(0 6px 20px rgba(0,0,0,0.18))' }}
+            onError={e => { e.currentTarget.style.display = 'none'; }}
+          />
+          {/* Year + name overlay */}
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '28px 18px 12px', background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)' }}>
+            <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 900, fontSize: 'clamp(28px, 4vw, 38px)', color: '#fff', lineHeight: 1, letterSpacing: -0.5 }}>{ball.year}</span>
+            <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(16px, 2.5vw, 22px)', color: 'rgba(255,255,255,0.7)', marginLeft: 10, letterSpacing: 0.5, textTransform: 'uppercase' }}>{ball.name}</span>
+          </div>
+          {/* Host chip */}
+          <div style={{ position: 'absolute', top: 10, right: 10, background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(6px)', borderRadius: tweaks.roundedCards ? 999 : 2, padding: '4px 10px' }}>
+            <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, fontWeight: 600, color: '#fff', letterSpacing: 0.3 }}>{ball.host}</span>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div style={{ padding: 'clamp(14px, 2vw, 20px)' }}>
+          {/* Meta row */}
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 10 }}>
+            <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, fontWeight: 600, color: fgS, background: badgeBg, borderRadius: tweaks.roundedCards ? 999 : 2, padding: '3px 9px', textTransform: 'uppercase', letterSpacing: 0.5 }}>{ball.manufacturer}</span>
+            {ball.panels !== '—' && <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, fontWeight: 600, color: fgS, background: badgeBg, borderRadius: tweaks.roundedCards ? 999 : 2, padding: '3px 9px', textTransform: 'uppercase', letterSpacing: 0.5 }}>{ball.panels} paneles</span>}
+            {ball.material !== 'Por confirmar' && <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, color: fgS, background: badgeBg, borderRadius: tweaks.roundedCards ? 999 : 2, padding: '3px 9px' }}>{ball.material}</span>}
           </div>
 
-          {/* Content */}
-          <div style={{ flex: 1, padding: 'clamp(16px, 2vw, 24px)', minWidth: 0 }}>
-            {/* Header */}
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
-              <div>
-                <h3 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 'clamp(20px, 3vw, 26px)', color: fg, textTransform: 'uppercase', margin: 0, letterSpacing: 0.5, lineHeight: 1 }}>
-                  {ball.name}
-                </h3>
-                <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 12, color: fgM, marginTop: 4, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                  <span>📍 {ball.host}</span>
-                  <span>🏭 {ball.manufacturer}</span>
-                  {ball.panels !== '—' && <span>⬡ {ball.panels} paneles</span>}
-                </div>
-              </div>
-            </div>
+          {/* Description */}
+          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13.5, color: fgM, lineHeight: 1.65, margin: '0 0 12px' }}>{ball.desc}</p>
 
-            {/* Material badge */}
-            {ball.material !== 'Por confirmar' && (
-              <div style={{ display: 'inline-block', background: ball.color + '18', border: `1px solid ${ball.color}33`, borderRadius: tweaks.roundedCards ? 999 : 2, padding: '3px 10px', marginBottom: 10 }}>
-                <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, fontWeight: 600, color: ball.color }}>{ball.material}</span>
-              </div>
-            )}
+          {/* Curiosidades toggle */}
+          <button
+            onClick={() => setExpanded(v => !v)}
+            style={{
+              fontFamily: "'Barlow', sans-serif", fontSize: 11, fontWeight: 700,
+              color: fgM, background: 'none', border: `1px solid ${border}`,
+              borderRadius: tweaks.roundedCards ? 999 : 2, padding: '5px 14px',
+              cursor: 'pointer', letterSpacing: 1, textTransform: 'uppercase',
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+            }}
+          >
+            {expanded ? '▲ Ocultar' : '▼ Curiosidades'}
+          </button>
 
-            {/* Description */}
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13.5, color: fgM, lineHeight: 1.65, margin: '0 0 12px' }}>{ball.desc}</p>
-
-            {/* Expand curiosidades */}
-            <button
-              onClick={() => setExpanded(v => !v)}
-              style={{
-                fontFamily: "'Barlow', sans-serif", fontSize: 12, fontWeight: 600,
-                color: accent, background: 'none', border: `1px solid ${accent}44`,
-                borderRadius: tweaks.roundedCards ? 999 : 2, padding: '5px 14px',
-                cursor: 'pointer', letterSpacing: 0.5, textTransform: 'uppercase',
-                display: 'flex', alignItems: 'center', gap: 6, transition: 'all 0.2s',
-              }}
-            >
-              {expanded ? '▲ Ocultar' : '▼ Curiosidades'}
-            </button>
-
-            {/* Curiosidades */}
-            {expanded && (
-              <ul style={{ margin: '12px 0 0', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {ball.curiosities.map((c, i) => (
-                  <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                    <span style={{ color: ball.color, fontWeight: 700, fontSize: 14, lineHeight: 1.5, flexShrink: 0 }}>•</span>
-                    <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: fgM, lineHeight: 1.6 }}>{c}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          {expanded && (
+            <ul style={{ margin: '12px 0 0', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {ball.curiosities.map((c, i) => (
+                <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                  <span style={{ color: fgS, fontWeight: 700, fontSize: 14, lineHeight: 1.5, flexShrink: 0 }}>—</span>
+                  <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: fgM, lineHeight: 1.6 }}>{c}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>
