@@ -48,6 +48,12 @@ function WCHistorySections({ tweaks, onNavigate }) {
       image: 'https://images.unsplash.com/photo-1522778526097-ce0a22ceb253?w=800&h=400&fit=crop&q=80',
       icon: '🏆',
     },
+    {
+      id: 'uniformes', title: 'Uniformes', subtitle: 'Camisetas oficiales de las 48 selecciones',
+      gradient: 'linear-gradient(145deg, #0D1B2A, #1B2A3B, #2A3D52)',
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop&q=80',
+      icon: '👕',
+    },
   ];
 
   return (

@@ -5,6 +5,12 @@ const { useState, useEffect, useRef, useCallback } = React;
 // ============================================================
 const TEAM_ROSTERS = {
   argentina: {
+    culture: {
+      tradicion: 'El fútbol es una religión en Argentina. Boca Juniors vs. River Plate es el Superclásico más pasional del mundo, con fanáticos que llevan el azul y el rojo en la sangre.',
+      gastronomia: 'El asado es el ritual social por excelencia. Las empanadas, el chimichurri y el mate son iconos de la cultura rioplatense.',
+      musica: 'Cuna del tango, declarado Patrimonio de la Humanidad por la UNESCO. El rock nacional y el folklore norteño también definen su identidad.',
+      dato: 'Argentina ganó su tercera Copa del Mundo en Qatar 2022 tras 36 años de sequía. Messi convirtió 7 goles y se coronó como el mejor jugador del torneo.',
+    },
     coach: { name: 'Lionel Scaloni', role: 'Director Técnico', since: 2018 },
     staff: [
       { name: 'Pablo Aimar', role: 'Asistente Técnico' },
@@ -48,6 +54,12 @@ const TEAM_ROSTERS = {
     }
   },
   france: {
+    culture: {
+      tradicion: 'Francia es una potencia futbolística con una de las academias formativas más admiradas del mundo. El Institut National du Football de Clairefontaine ha dado al mundo a Zidane, Henry y Mbappé.',
+      gastronomia: 'La gastronomía francesa es Patrimonio Inmaterial de la Humanidad. Baguettes, quesos artesanales, croissants y el coq au vin son emblemas de su cocina de autor.',
+      musica: 'Paris es la capital del cabaret y el chanson. La ciudad luz también ha sido hogar del movimiento afrofrancés que dio origen al R&B europeo moderno.',
+      dato: 'Con la victoria en Qatar 2022 casi en el bolsillo, Francia cayó en la final ante Argentina. Mbappé marcó un hat-trick en la final, hazaña inédita en 60 años.',
+    },
     coach: { name: 'Didier Deschamps', role: 'Director Técnico', since: 2012 },
     staff: [
       { name: 'Guy Stéphan', role: 'Asistente Técnico' },
@@ -89,6 +101,12 @@ const TEAM_ROSTERS = {
     }
   },
   brazil: {
+    culture: {
+      tradicion: 'Brasil es el único pentacampeón del mundo. El "jogo bonito" —el juego bonito— es su filosofía: fútbol con alegría, creatividad y samba en los pies.',
+      gastronomia: 'El churrasco y la feijoada (guiso de frijoles con cerdo) son los platos más emblemáticos. El açaí, el brigadeiro y el pão de queijo son delicias imprescindibles.',
+      musica: 'Tierra del samba, la bossa nova y el axé. El Carnaval de Río es la fiesta más grande del planeta, con millones de personas bailando al ritmo del bombo y la cuíca.',
+      dato: 'Brasil es el único país que ha participado en todas las ediciones de la Copa del Mundo (22 torneos). Pelé sigue siendo el único jugador con tres títulos mundiales.',
+    },
     coach: { name: 'Dorival Júnior', role: 'Director Técnico', since: 2024 },
     staff: [
       { name: 'Lucas Silvestre', role: 'Asistente Técnico' },
@@ -128,7 +146,54 @@ const TEAM_ROSTERS = {
         { name: 'Savinho', num: 20, club: 'Manchester City', age: 21, initials: 'SA' },
       ],
     }
-  }
+  },
+  usa: {
+    culture: {
+      tradicion: 'La MLS ha crecido exponencialmente, pero el fútbol en EE.UU. vive su era dorada: el país será sede del Mundial 2026 junto a México y Canadá, y una generación brillante lidera la selección con hambre de gloria.',
+      gastronomia: 'La hamburguesa, el hot dog, el BBQ sureño y las alitas de búfalo son íconos de su cultura culinaria. Nueva York, Los Ángeles y Chicago ofrecen una fusión gastronómica sin igual en el mundo.',
+      musica: 'Cuna del jazz, el blues, el rock y el hip-hop. Artistas como Michael Jackson, Beyoncé y Taylor Swift han definido la cultura popular global del siglo XXI.',
+      dato: 'Estados Unidos albergará 11 estadios del Mundial 2026. MetLife Stadium en Nueva York será sede de la gran final, el partido más visto de la historia.',
+    },
+    coach: { name: 'Mauricio Pochettino', role: 'Director Técnico', since: 2023 },
+    staff: [
+      { name: 'Nico Estévez', role: 'Asistente Técnico' },
+      { name: 'Mikey Ambrose', role: 'Asistente Técnico' },
+      { name: 'Matt Besler', role: 'Analista Táctico' },
+      { name: 'Carlos Llamosa', role: 'Entrenador de Defensas' },
+    ],
+    description: 'La Selección de Estados Unidos llega al torneo más importante de su historia en casa. Con Christian Pulisic como estrella y una nueva generación de jugadores forjados en las mejores ligas de Europa, los estadounidenses aspiran a superar la cuarta ronda por primera vez.',
+    colors: { primary: '#002868', secondary: '#FFFFFF', accent: '#BF0A30' },
+    squad: {
+      'Porteros': [
+        { name: 'Matt Turner', num: 1, club: 'Nottingham Forest', age: 31, initials: 'MT' },
+        { name: 'Ethan Horvath', num: 18, club: 'Cardiff City', age: 29, initials: 'EH' },
+        { name: 'Patrick Schulte', num: 23, club: 'Columbus Crew', age: 24, initials: 'PS' },
+      ],
+      'Defensas': [
+        { name: 'Tim Ream', num: 5, club: 'Charlotte FC', age: 37, initials: 'TR' },
+        { name: 'Miles Robinson', num: 4, club: 'FC Cincinnati', age: 28, initials: 'MR' },
+        { name: 'Chris Richards', num: 3, club: 'Crystal Palace', age: 26, initials: 'CR' },
+        { name: 'Antonee Robinson', num: 5, club: 'Fulham', age: 28, initials: 'AR' },
+        { name: 'Sergiño Dest', num: 2, club: 'PSV Eindhoven', age: 24, initials: 'SD' },
+        { name: 'Joe Scally', num: 17, club: 'Borussia M\'gladbach', age: 23, initials: 'JS' },
+      ],
+      'Mediocampistas': [
+        { name: 'Tyler Adams', num: 4, club: 'Bournemouth', age: 26, initials: 'TA', star: true },
+        { name: 'Yunus Musah', num: 6, club: 'AC Milan', age: 23, initials: 'YM', star: true },
+        { name: 'Weston McKennie', num: 8, club: 'Juventus', age: 27, initials: 'WM' },
+        { name: 'Brenden Aaronson', num: 11, club: 'Leeds United', age: 25, initials: 'BA' },
+        { name: 'Luca de la Torre', num: 16, club: 'Celta Vigo', age: 27, initials: 'LD' },
+      ],
+      'Delanteros': [
+        { name: 'Christian Pulisic', num: 10, club: 'AC Milan', age: 27, initials: 'CP', star: true },
+        { name: 'Ricardo Pepi', num: 9, club: 'PSV Eindhoven', age: 23, initials: 'RP', star: true },
+        { name: 'Folarin Balogun', num: 14, club: 'Monaco', age: 24, initials: 'FB' },
+        { name: 'Josh Sargent', num: 19, club: 'Norwich City', age: 25, initials: 'JS' },
+        { name: 'Tim Weah', num: 21, club: 'Juventus', age: 25, initials: 'TW' },
+        { name: 'Gio Reyna', num: 7, club: 'Nottingham Forest', age: 23, initials: 'GR' },
+      ],
+    }
+  },
 };
 
 // ============================================================
@@ -273,11 +338,133 @@ function StaffCard({ person, teamColors, tweaks, isHead }) {
 }
 
 // ============================================================
+// USA BANNER — HoverExpand style (skiper52)
+// ============================================================
+function USABannerExpand({ tweaks }) {
+  const [active, setActive] = useState(1);
+  const radius = tweaks.roundedCards ? 24 : 6;
+
+  const panels = [
+    {
+      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/San_Francisco_skyline_from_Twin_Peaks_2021.jpg/1200px-San_Francisco_skyline_from_Twin_Peaks_2021.jpg',
+      label: 'San Francisco',
+      sub: 'Levi\'s Stadium · Sede',
+    },
+    {
+      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Dallas_Texas_skyline_from_Reunion_Tower_September_2025_%28cropped%29.png/1200px-Dallas_Texas_skyline_from_Reunion_Tower_September_2025_%28cropped%29.png',
+      label: 'Dallas',
+      sub: 'AT&T Stadium · Sede',
+    },
+    {
+      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Downtown_Seattle_skyline_from_Kerry_Park_-_October_2019.jpg/1200px-Downtown_Seattle_skyline_from_Kerry_Park_-_October_2019.jpg',
+      label: 'Seattle',
+      sub: 'Lumen Field · Sede',
+    },
+    {
+      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Los_Angeles_Skyline_08-2024.jpg/1200px-Los_Angeles_Skyline_08-2024.jpg',
+      label: 'Los Ángeles',
+      sub: 'SoFi Stadium · Sede',
+    },
+    {
+      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Miami_Sunset_%2845863661094%29.jpg/1200px-Miami_Sunset_%2845863661094%29.jpg',
+      label: 'Miami',
+      sub: 'Hard Rock Stadium · Sede',
+    },
+    {
+      src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg/1200px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg',
+      label: 'Nueva York',
+      sub: 'MetLife Stadium · Final',
+    },
+  ];
+
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'stretch',
+      width: '100%',
+      height: '100%',
+      gap: 6,
+    }}>
+      {panels.map((panel, i) => (
+        <div
+          key={i}
+          style={{
+            position: 'relative',
+            overflow: 'hidden',
+            borderRadius: radius,
+            cursor: 'pointer',
+            transition: 'flex 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+            flex: active === i ? 5 : 1,
+            minWidth: 0,
+          }}
+          onMouseEnter={() => setActive(i)}
+          onClick={() => setActive(i)}
+        >
+          <img
+            src={panel.src}
+            alt={panel.label}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+          {/* tint overlay */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: active === i
+              ? 'linear-gradient(to top, rgba(0,6,20,0.82) 0%, rgba(0,6,20,0.15) 55%, transparent 100%)'
+              : 'rgba(0,6,20,0.5)',
+            transition: 'background 0.4s ease',
+          }} />
+          {/* USA accent stripe top */}
+          <div style={{
+            position: 'absolute', top: 0, left: 0, right: 0, height: 3,
+            background: 'linear-gradient(to right, #002868 0%, #BF0A30 100%)',
+            opacity: active === i ? 1 : 0,
+            transition: 'opacity 0.3s ease',
+          }} />
+          {/* label when expanded */}
+          <div style={{
+            position: 'absolute', bottom: 18, left: 16, right: 16,
+            opacity: active === i ? 1 : 0,
+            transform: active === i ? 'translateY(0)' : 'translateY(8px)',
+            transition: 'opacity 0.3s ease 0.05s, transform 0.3s ease 0.05s',
+          }}>
+            <div style={{
+              fontFamily: "'Barlow', sans-serif", fontSize: 10, fontWeight: 600,
+              textTransform: 'uppercase', letterSpacing: 2.5,
+              color: 'rgba(255,255,255,0.45)', marginBottom: 5,
+            }}>
+              {panel.sub}
+            </div>
+            <div style={{
+              fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700,
+              fontSize: 22, color: '#fff', textTransform: 'uppercase', lineHeight: 1.1,
+            }}>
+              {panel.label}
+            </div>
+          </div>
+          {/* vertical label when collapsed */}
+          <div style={{
+            position: 'absolute', top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%) rotate(-90deg)',
+            whiteSpace: 'nowrap',
+            opacity: active !== i ? 0.35 : 0,
+            transition: 'opacity 0.25s ease',
+            fontFamily: "'Barlow Condensed', sans-serif",
+            fontWeight: 700, fontSize: 10, color: '#fff',
+            textTransform: 'uppercase', letterSpacing: 3,
+          }}>
+            {panel.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ============================================================
 // TEAM PAGE (full page detail)
 // ============================================================
 function WCTeamPage({ team, teamData, tweaks, onBack }) {
-  const roster = TEAM_ROSTERS[team.id];
-  if (!roster) return null;
+  const roster = TEAM_ROSTERS[team.id] || {};
 
   const dark = tweaks.darkMode;
   const bg = dark ? '#0A0A12' : '#FAFAFA';
@@ -285,6 +472,7 @@ function WCTeamPage({ team, teamData, tweaks, onBack }) {
   const fgMuted = dark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.45)';
   const radius = tweaks.roundedCards ? 12 : 0;
   const accent = tweaks.accentColor;
+  const colors = roster.colors || { primary: '#333', secondary: '#fff', accent: accent };
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -295,11 +483,25 @@ function WCTeamPage({ team, teamData, tweaks, onBack }) {
 
       {/* ===== HERO ===== */}
       <section style={{ position: 'relative', height: 'clamp(380px, 55vh, 520px)', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-        {/* BG image */}
-        {team.image && (
-          <img src={team.image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+        {/* BG: USA uses HoverExpand banner, others use image */}
+        {team.id === 'usa' ? (
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: '#060A14',
+            display: 'flex', alignItems: 'stretch',
+            padding: 'clamp(10px, 1.5vw, 16px)',
+            paddingBottom: 'clamp(72px, 10vw, 96px)',
+          }}>
+            <USABannerExpand tweaks={tweaks} />
+          </div>
+        ) : (
+          <>
+            {team.image && (
+              <img src={team.image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+            )}
+            <div style={{ position: 'absolute', inset: 0, background: team.gradient, mixBlendMode: 'multiply', opacity: 0.7 }}></div>
+          </>
         )}
-        <div style={{ position: 'absolute', inset: 0, background: team.gradient, mixBlendMode: 'multiply', opacity: 0.7 }}></div>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)' }}></div>
 
         {/* Back button */}
@@ -335,10 +537,10 @@ function WCTeamPage({ team, teamData, tweaks, onBack }) {
         borderBottom: `1px solid ${dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
       }}>
         {[
-          { value: `#${team.ranking}`, label: 'Ranking FIFA' },
-          { value: team.titles, label: 'Títulos Mundiales' },
+          { value: team.ranking ? `#${team.ranking}` : '—', label: 'Ranking FIFA' },
+          { value: team.titles ?? '—', label: 'Títulos Mundiales' },
           { value: team.group, label: 'Grupo' },
-          { value: Object.values(roster.squad).flat().length, label: 'Convocados' },
+          { value: roster.squad ? Object.values(roster.squad).flat().length : '—', label: 'Convocados' },
         ].map(stat => (
           <div key={stat.label} style={{ minWidth: 100 }}>
             <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 'clamp(28px, 4vw, 40px)', color: fg, lineHeight: 1 }}>{stat.value}</div>
@@ -348,14 +550,43 @@ function WCTeamPage({ team, teamData, tweaks, onBack }) {
       </section>
 
       {/* ===== DESCRIPTION ===== */}
-      <section style={{ padding: 'clamp(32px, 5vw, 56px) clamp(20px, 4vw, 48px)', maxWidth: 800 }}>
-        <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: dark ? 'rgba(255,255,255,0.65)' : 'rgba(0,0,0,0.6)', lineHeight: 1.7, margin: 0 }}>
-          {roster.description}
-        </p>
-      </section>
+      {roster.description && (
+        <section style={{ padding: 'clamp(32px, 5vw, 56px) clamp(20px, 4vw, 48px)', maxWidth: 800 }}>
+          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: dark ? 'rgba(255,255,255,0.65)' : 'rgba(0,0,0,0.6)', lineHeight: 1.7, margin: 0 }}>
+            {roster.description}
+          </p>
+        </section>
+      )}
+
+      {/* ===== CULTURA Y COSTUMBRES ===== */}
+      {roster.culture && (
+        <section style={{ padding: '0 clamp(20px, 4vw, 48px) clamp(40px, 5vw, 60px)' }}>
+          <h3 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(20px, 2.5vw, 28px)', color: fg, margin: '0 0 24px', textTransform: 'uppercase', letterSpacing: 1 }}>
+            Cultura &amp; Costumbres
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
+            {[
+              { icon: '⚽', label: 'Tradición futbolística', text: roster.culture.tradicion },
+              { icon: '🍽️', label: 'Gastronomía', text: roster.culture.gastronomia },
+              { icon: '🎵', label: 'Música y Cultura', text: roster.culture.musica },
+              { icon: '📌', label: 'Dato curioso', text: roster.culture.dato },
+            ].filter(item => item.text).map(item => (
+              <div key={item.label} style={{
+                background: dark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)',
+                border: `1px solid ${dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)'}`,
+                borderRadius: radius, padding: '20px 22px',
+              }}>
+                <div style={{ fontSize: 22, marginBottom: 8 }}>{item.icon}</div>
+                <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 13, color: fgMuted, textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 8 }}>{item.label}</div>
+                <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 14, color: fg, lineHeight: 1.6, margin: 0, opacity: 0.85 }}>{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ===== SQUAD GALLERY ===== */}
-      {Object.entries(roster.squad).map(([position, players]) => (
+      {roster.squad && Object.entries(roster.squad).map(([position, players]) => (
         <section key={position} style={{ padding: '0 clamp(20px, 4vw, 48px) clamp(32px, 4vw, 48px)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
             <h3 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(18px, 2.5vw, 24px)', color: fg, margin: 0, textTransform: 'uppercase', letterSpacing: 1 }}>
@@ -371,24 +602,26 @@ function WCTeamPage({ team, teamData, tweaks, onBack }) {
             gap: 'clamp(8px, 1.5vw, 14px)',
           }}>
             {players.map((player, i) => (
-              <PlayerPhotoCard key={player.name} player={player} teamColors={roster.colors} tweaks={tweaks} index={i} />
+              <PlayerPhotoCard key={player.name} player={player} teamColors={colors} tweaks={tweaks} index={i} />
             ))}
           </div>
         </section>
       ))}
 
       {/* ===== COACHING STAFF ===== */}
-      <section style={{ padding: 'clamp(40px, 5vw, 64px) clamp(20px, 4vw, 48px)' }}>
-        <h3 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(18px, 2.5vw, 24px)', color: fg, margin: '0 0 20px', textTransform: 'uppercase', letterSpacing: 1 }}>
-          Cuerpo Técnico
-        </h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-          <StaffCard person={roster.coach} teamColors={roster.colors} tweaks={tweaks} isHead={true} />
-          {roster.staff.map(s => (
-            <StaffCard key={s.name} person={s} teamColors={roster.colors} tweaks={tweaks} isHead={false} />
-          ))}
-        </div>
-      </section>
+      {roster.coach && (
+        <section style={{ padding: 'clamp(40px, 5vw, 64px) clamp(20px, 4vw, 48px)' }}>
+          <h3 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(18px, 2.5vw, 24px)', color: fg, margin: '0 0 20px', textTransform: 'uppercase', letterSpacing: 1 }}>
+            Cuerpo Técnico
+          </h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+            <StaffCard person={roster.coach} teamColors={colors} tweaks={tweaks} isHead={true} />
+            {(roster.staff || []).map(s => (
+              <StaffCard key={s.name} person={s} teamColors={colors} tweaks={tweaks} isHead={false} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ===== BOTTOM CTA ===== */}
       <section style={{ padding: '0 clamp(20px, 4vw, 48px) clamp(48px, 6vw, 80px)', textAlign: 'center' }}>

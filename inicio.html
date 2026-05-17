@@ -171,6 +171,7 @@
 <script type="text/babel" src="wc-history-page.jsx"></script>
 <script type="text/babel" src="wc-finals-page.jsx"></script>
 <script type="text/babel" src="wc-calendar-page.jsx"></script>
+<script type="text/babel" src="wc-uniforms-page.jsx"></script>
 <script type="text/babel" src="wc-chatbot.jsx"></script>
 
 <!-- App -->
@@ -194,10 +195,7 @@ function App() {
   const [activePage, setActivePage] = useState(null);
 
   const handleTeamClick = useCallback((item) => {
-    // Teams with full roster data get detail page
-    if (TEAM_ROSTERS && TEAM_ROSTERS[item.id]) {
-      setActiveTeam(item);
-    }
+    setActiveTeam(item);
   }, []);
   const handleVenueClick = useCallback((item) => {
     if (VENUE_DETAILS && VENUE_DETAILS[item.id]) {
@@ -230,6 +228,7 @@ function App() {
         {activePage === 'historia' && <WCHistoryPage tweaks={tweaks} onBack={goBackToLanding} />}
         {activePage === 'finales' && <WCFinalsPage tweaks={tweaks} onBack={goBackToLanding} />}
         {activePage === 'calendario' && <WCCalendarPage tweaks={tweaks} onBack={goBackToLanding} />}
+        {activePage === 'uniformes' && <WCUniformsPage tweaks={tweaks} onBack={goBackToLanding} />}
         <WCFooter tweaks={tweaks} />
         <WCSearchOverlay isOpen={searchOpen} onClose={closeSearch} />
         <WCChatbot tweaks={tweaks} />

@@ -8,7 +8,7 @@ const FLAG_IMG = (code) => `https://flagcdn.com/w640/${code}.png`;
 
 const ALL_TEAMS = [
   // Group A
-  { id: 'usa', name: 'Estados Unidos', code: 'USA', group: 'A', gradient: 'linear-gradient(145deg, #002868, #BF0A30)', flag: '🇺🇸', dark: true, flagCode: 'us', image: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f04?w=400&h=530&fit=crop&q=75' },
+  { id: 'usa', name: 'Estados Unidos', code: 'USA', group: 'A', gradient: 'linear-gradient(145deg, #002868, #BF0A30)', flag: '🇺🇸', dark: true, hasDetail: true, flagCode: 'us', image: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f04?w=400&h=530&fit=crop&q=75' },
   { id: 'mexico', name: 'México', code: 'MEX', group: 'A', gradient: 'linear-gradient(145deg, #006847, #CE1126)', flag: '🇲🇽', dark: true, flagCode: 'mx', image: 'https://images.unsplash.com/photo-1585464231875-d9ef1f5ad396?w=400&h=530&fit=crop&q=75' },
   { id: 'canada', name: 'Canadá', code: 'CAN', group: 'A', gradient: 'linear-gradient(145deg, #C8102E, #FF1834)', flag: '🇨🇦', dark: true, flagCode: 'ca', image: 'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=400&h=530&fit=crop&q=75' },
   { id: 'argentina', name: 'Argentina', code: 'ARG', group: 'A', gradient: 'linear-gradient(145deg, #75AADB, #4A8AC4)', flag: '🇦🇷', dark: true, hasDetail: true, flagCode: 'ar', image: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=400&h=530&fit=crop&q=75' },
