@@ -99,11 +99,6 @@ function HistorySectionCard({ section, tweaks, onClick }) {
       <div style={{ position: 'absolute', inset: 0, background: section.gradient, opacity: 0.6, mixBlendMode: 'multiply' }}></div>
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)' }}></div>
 
-      {/* Icon */}
-      <div style={{ position: 'absolute', top: '35%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: 56, opacity: 0.2, pointerEvents: 'none' }}>
-        {section.icon}
-      </div>
-
       {/* Content */}
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 24, zIndex: 2 }}>
         <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(24px, 3.5vw, 32px)', color: '#fff', textTransform: 'uppercase', letterSpacing: 1, lineHeight: 1.1 }}>
