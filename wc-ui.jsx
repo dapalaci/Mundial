@@ -37,21 +37,24 @@ const VENUES_DATA = [
     id: 'usa', name: 'Estados Unidos', verticalText: '11 Ciudades',
     gradient: 'linear-gradient(160deg, rgba(44,62,107,0.75) 0%, rgba(61,82,145,0.6) 50%, rgba(139,34,50,0.5) 100%)',
     overlayGrad: 'linear-gradient(to top, rgba(10,10,30,0.85) 0%, rgba(10,10,30,0.2) 50%, transparent 100%)',
-    image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=600&h=800&fit=crop&q=80',
+    image: 'assets/New-York-New-Jersey-3840-x-2160-2.jpeg',
+    bannerImage: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=1200&h=600&fit=crop&q=80',
     cta: 'Ver Sedes', cities: ['New York', 'Los Angeles', 'Miami', 'Dallas', 'Houston', 'Atlanta', 'Philadelphia', 'Seattle', 'San Francisco', 'Kansas City', 'Boston'], dark: true
   },
   {
     id: 'mexico', name: 'México', verticalText: '3 Ciudades',
     gradient: 'linear-gradient(160deg, rgba(0,92,58,0.75) 0%, rgba(45,138,94,0.6) 40%, rgba(180,42,55,0.5) 100%)',
     overlayGrad: 'linear-gradient(to top, rgba(0,30,15,0.85) 0%, rgba(0,30,15,0.2) 50%, transparent 100%)',
-    image: 'https://images.unsplash.com/photo-1585464231875-d9ef1f5ad396?w=600&h=800&fit=crop&q=80',
+    image: 'assets/Mexico-City-3840-x-2160-1.jpeg',
+    bannerImage: 'https://images.unsplash.com/photo-1585464231875-d9ef1f5ad396?w=1200&h=600&fit=crop&q=80',
     cta: 'Ver Sedes', cities: ['Ciudad de México', 'Guadalajara', 'Monterrey'], dark: true
   },
   {
     id: 'canada', name: 'Canadá', verticalText: '2 Ciudades',
     gradient: 'linear-gradient(160deg, rgba(196,30,58,0.7) 0%, rgba(224,74,94,0.5) 50%, rgba(196,30,58,0.6) 100%)',
     overlayGrad: 'linear-gradient(to top, rgba(40,5,10,0.85) 0%, rgba(40,5,10,0.2) 50%, transparent 100%)',
-    image: 'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=600&h=800&fit=crop&q=80',
+    image: 'assets/Toronto-3840-x-2160-2.jpeg',
+    bannerImage: 'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=1200&h=600&fit=crop&q=80',
     cta: 'Ver Sedes', cities: ['Toronto', 'Vancouver'], dark: true
   }
 ];
@@ -294,6 +297,9 @@ function WCCard({ item, tweaks, onClick }) {
             position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
             transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
             transform: hover ? 'scale(1.06)' : 'scale(1)',
+            willChange: 'transform',
+            backfaceVisibility: 'hidden',
+            imageRendering: 'high-quality',
           }} />
         )}
 
@@ -522,7 +528,7 @@ function WCPlayerCard({ player, tweaks, index, onClick }) {
         {/* Player photo */}
         {player.photo && (
           <img src={player.photo} alt={player.name} loading="lazy"
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)', transform: hover ? 'scale(1.06)' : 'scale(1)' }} />
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)', transform: hover ? 'scale(1.06)' : 'scale(1)', willChange: 'transform', backfaceVisibility: 'hidden', imageRendering: 'high-quality' }} />
         )}
         {/* Gradient overlay */}
         <div style={{ position: 'absolute', inset: 0, background: player.photo ? 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 55%, transparent 100%)' : player.grad, opacity: player.photo ? 1 : 0.9 }} />

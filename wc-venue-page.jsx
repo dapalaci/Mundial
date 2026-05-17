@@ -316,8 +316,8 @@ function WCVenuePage({ venue, tweaks, onBack }) {
 
       {/* ===== HERO ===== */}
       <section style={{ position: 'relative', height: 'clamp(380px, 55vh, 520px)', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-        {venue.image && (
-          <img src={venue.image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+        {(venue.bannerImage || venue.image) && (
+          <img src={venue.bannerImage || venue.image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
         )}
         <div style={{ position: 'absolute', inset: 0, background: venue.gradient, mixBlendMode: 'multiply', opacity: 0.7 }}></div>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)' }}></div>
