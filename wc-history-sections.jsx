@@ -3,6 +3,87 @@ const { useState, useRef, useCallback } = React;
 // ============================================================
 // SECTION CARDS for landing (3 wide cards like Nike categories)
 // ============================================================
+function UniformesHeroCard({ tweaks, onClick }) {
+  const [hover, setHover] = useState(false);
+  const radius = tweaks.roundedCards ? 16 : 0;
+
+  return (
+    <div
+      style={{
+        position: 'relative', borderRadius: radius, overflow: 'hidden', cursor: 'pointer',
+        marginTop: 'clamp(10px, 1.5vw, 16px)',
+        height: 'clamp(220px, 30vw, 380px)',
+        transform: hover ? 'scale(1.008)' : 'scale(1)',
+        boxShadow: hover ? '0 24px 60px rgba(0,0,0,0.35)' : '0 4px 20px rgba(0,0,0,0.15)',
+        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onClick={onClick}
+    >
+      {/* Background image */}
+      <img
+        src="images/uniformes-celebs.png"
+        alt="Uniformes oficiales"
+        style={{
+          position: 'absolute', inset: 0, width: '100%', height: '100%',
+          objectFit: 'cover', objectPosition: 'center top',
+          transform: hover ? 'scale(1.04)' : 'scale(1)',
+          transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+        }}
+      />
+      {/* Dark gradient overlays */}
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(145deg, rgba(13,27,42,0.72) 0%, rgba(13,27,42,0.1) 50%, rgba(13,27,42,0.55) 100%)' }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)' }} />
+
+      {/* Content */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0,
+        padding: 'clamp(20px, 3vw, 36px)',
+        display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
+        zIndex: 5,
+      }}>
+        <div>
+          <div style={{
+            fontFamily: "'Barlow', sans-serif", fontSize: 11, fontWeight: 600,
+            textTransform: 'uppercase', letterSpacing: 4,
+            color: 'rgba(255,255,255,0.45)', marginBottom: 8,
+          }}>
+            Catálogo Oficial · 48 Selecciones
+          </div>
+          <h3 style={{
+            fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 900,
+            fontSize: 'clamp(32px, 6vw, 64px)', color: '#fff', margin: 0,
+            textTransform: 'uppercase', lineHeight: 0.92, letterSpacing: -1,
+          }}>
+            Uniformes
+          </h3>
+          <div style={{
+            fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(12px, 1.5vw, 14px)',
+            color: 'rgba(255,255,255,0.5)', marginTop: 10,
+          }}>
+            Camisetas oficiales y las celebridades que las visten
+          </div>
+        </div>
+
+        {/* CTA pill */}
+        <div style={{
+          fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 600,
+          letterSpacing: 1, textTransform: 'uppercase',
+          background: '#fff', color: '#111',
+          padding: '12px 28px', borderRadius: tweaks.roundedCards ? 999 : 4,
+          flexShrink: 0, marginLeft: 24,
+          transform: hover ? 'translateY(-3px)' : 'translateY(0)',
+          transition: 'transform 0.25s ease',
+          display: 'flex', alignItems: 'center', gap: 8,
+        }}>
+          Ver colección →
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function WCHistorySections({ tweaks, onNavigate }) {
   const dark = tweaks.darkMode;
   const fg = dark ? '#fff' : '#111';
@@ -48,12 +129,6 @@ function WCHistorySections({ tweaks, onNavigate }) {
       image: 'https://images.unsplash.com/photo-1522778526097-ce0a22ceb253?w=800&h=400&fit=crop&q=80',
       icon: '🏆',
     },
-    {
-      id: 'uniformes', title: 'Uniformes', subtitle: 'Camisetas oficiales de las 48 selecciones',
-      gradient: 'linear-gradient(145deg, #0D1B2A, #1B2A3B, #2A3D52)',
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop&q=80',
-      icon: '👕',
-    },
   ];
 
   return (
@@ -71,6 +146,9 @@ function WCHistorySections({ tweaks, onNavigate }) {
           <HistorySectionCard key={sec.id} section={sec} tweaks={tweaks} onClick={() => onNavigate(sec.id)} />
         ))}
       </div>
+
+      {/* Uniformes — full width */}
+      <UniformesHeroCard tweaks={tweaks} onClick={() => onNavigate('uniformes')} />
     </section>
   );
 }
