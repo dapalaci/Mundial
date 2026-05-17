@@ -15,17 +15,17 @@ const VENUE_DETAILS = {
       { src: 'https://images.unsplash.com/photo-1575361204480-aadea25e6e68?w=700&h=460&fit=crop&q=80', caption: 'Seattle de noche' },
     ],
     stadiums: [
-      { name: 'MetLife Stadium', city: 'East Rutherford, NJ', capacity: '82,500', matches: 'Final, Semifinal', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: true },
-      { name: 'SoFi Stadium', city: 'Los Ángeles, CA', capacity: '70,240', matches: 'Semifinal, Cuartos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
-      { name: 'Hard Rock Stadium', city: 'Miami, FL', capacity: '64,767', matches: 'Tercero, Cuartos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
-      { name: 'AT&T Stadium', city: 'Dallas, TX', capacity: '80,000', matches: 'Cuartos, Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
-      { name: 'NRG Stadium', city: 'Houston, TX', capacity: '72,220', matches: 'Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
-      { name: 'Mercedes-Benz Stadium', city: 'Atlanta, GA', capacity: '71,000', matches: 'Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
-      { name: 'Lincoln Financial Field', city: 'Filadelfia, PA', capacity: '69,176', matches: 'Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
-      { name: 'Lumen Field', city: 'Seattle, WA', capacity: '69,000', matches: 'Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
-      { name: "Levi's Stadium", city: 'Santa Clara, CA', capacity: '68,500', matches: 'Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
-      { name: 'GEHA Field at Arrowhead', city: 'Kansas City, MO', capacity: '76,416', matches: 'Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
-      { name: 'Gillette Stadium', city: 'Foxborough, MA', capacity: '65,878', matches: 'Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
+      { name: 'MetLife Stadium', city: 'East Rutherford, NJ', capacity: '82,500', matches: 'Final, Semifinal', image: 'assets/NEW-JERSEY-UNITED-STATES-JULY-13-A-view-of-the-stadium-as-Ch (1).jpeg', highlight: true },
+      { name: 'SoFi Stadium', city: 'Los Ángeles, CA', capacity: '70,240', matches: 'Semifinal, Cuartos', image: null, highlight: false },
+      { name: 'Hard Rock Stadium', city: 'Miami, FL', capacity: '64,767', matches: 'Tercero, Cuartos', image: null, highlight: false },
+      { name: 'AT&T Stadium', city: 'Dallas, TX', capacity: '80,000', matches: 'Cuartos, Fase de Grupos', image: 'assets/FWC-26-Stadiums-AT-T-Dallas (1).jpeg', highlight: false },
+      { name: 'NRG Stadium', city: 'Houston, TX', capacity: '72,220', matches: 'Fase de Grupos', image: 'assets/FWC-2026-Stadium-Houston-NRG-stadium (1).jpeg', highlight: false },
+      { name: 'Mercedes-Benz Stadium', city: 'Atlanta, GA', capacity: '71,000', matches: 'Fase de Grupos', image: null, highlight: false },
+      { name: 'Lincoln Financial Field', city: 'Filadelfia, PA', capacity: '69,176', matches: 'Fase de Grupos', image: null, highlight: false },
+      { name: 'Lumen Field', city: 'Seattle, WA', capacity: '69,000', matches: 'Fase de Grupos', image: null, highlight: false },
+      { name: "Levi's Stadium", city: 'Santa Clara, CA', capacity: '68,500', matches: 'Fase de Grupos', image: null, highlight: false },
+      { name: 'GEHA Field at Arrowhead', city: 'Kansas City, MO', capacity: '76,416', matches: 'Fase de Grupos', image: 'assets/FWWC-2023-Arrowhead-Stadium (1).jpeg', highlight: false },
+      { name: 'Gillette Stadium', city: 'Foxborough, MA', capacity: '65,878', matches: 'Fase de Grupos', image: 'assets/FWC-stadiums-Boston-Gillette (1).jpeg', highlight: false },
     ],
   },
   mexico: {
@@ -39,9 +39,9 @@ const VENUE_DETAILS = {
       { src: 'https://images.unsplash.com/photo-1606567595334-d39972c85dbe?w=700&h=460&fit=crop&q=80', caption: 'Gastronomía mexicana' },
     ],
     stadiums: [
-      { name: 'Estadio Azteca', city: 'Ciudad de México', capacity: '87,523', matches: 'Partido Inaugural, Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: true },
-      { name: 'Estadio Akron', city: 'Guadalajara', capacity: '49,850', matches: 'Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
-      { name: 'Estadio BBVA', city: 'Monterrey', capacity: '53,500', matches: 'Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
+      { name: 'Estadio Azteca', city: 'Ciudad de México', capacity: '87,523', matches: 'Partido Inaugural, Fase de Grupos', image: 'assets/MEXICO-CITY-MEXICO-MAY-30-Aerial-view-of-Azteca-stadium-prio (1).jpeg', highlight: true },
+      { name: 'Estadio Akron', city: 'Guadalajara', capacity: '49,850', matches: 'Fase de Grupos', image: 'assets/FIFA-World-Cup-Stadium-Estadio-Akron (1).jpeg', highlight: false },
+      { name: 'Estadio BBVA', city: 'Monterrey', capacity: '53,500', matches: 'Fase de Grupos', image: 'assets/FIFA-World-Cup-Stadium-Estadio-BBVA (1).jpeg', highlight: false },
     ],
   },
   canada: {
@@ -55,8 +55,8 @@ const VENUE_DETAILS = {
       { src: 'https://images.unsplash.com/photo-1542704792-e30dac463c90?w=700&h=460&fit=crop&q=80', caption: 'Otoño en Canadá' },
     ],
     stadiums: [
-      { name: 'BMO Field', city: 'Toronto', capacity: '45,736', matches: 'Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: true },
-      { name: 'BC Place', city: 'Vancouver', capacity: '54,500', matches: 'Fase de Grupos', image: 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&h=400&fit=crop&q=80', highlight: false },
+      { name: 'BMO Field', city: 'Toronto', capacity: '45,736', matches: 'Fase de Grupos', image: 'assets/FIFA-2026-World-Cup-stadium-BMO-Field (1).jpeg', highlight: true },
+      { name: 'BC Place', city: 'Vancouver', capacity: '54,500', matches: 'Fase de Grupos', image: null, highlight: false },
     ],
   },
 };
@@ -157,19 +157,33 @@ function StadiumCard({ stadium, tweaks, venueGradient }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}>
 
-      {/* Stadium image placeholder */}
+      {/* Stadium image */}
       <div style={{ position: 'relative', height: 160, overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, background: venueGradient }}></div>
-        {/* Decorative stadium SVG */}
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.15 }}>
-          <svg width="80" height="80" viewBox="0 0 100 100" fill="none" stroke={dark ? '#fff' : '#fff'} strokeWidth="1.5">
-            <ellipse cx="50" cy="50" rx="45" ry="25"></ellipse>
-            <ellipse cx="50" cy="45" rx="45" ry="25"></ellipse>
-            <path d="M5 45 v5 M95 45 v5"></path>
-            <ellipse cx="50" cy="50" rx="30" ry="15" strokeDasharray="4 3"></ellipse>
-            <rect x="35" y="42" width="30" height="16" rx="2" strokeDasharray="3 2"></rect>
-          </svg>
-        </div>
+        {stadium.image ? (
+          <>
+            <img src={stadium.image} alt={stadium.name} loading="lazy" style={{
+              position: 'absolute', inset: 0, width: '100%', height: '100%',
+              objectFit: 'cover',
+              transform: hover ? 'scale(1.05)' : 'scale(1)',
+              transition: 'transform 0.5s ease',
+            }} />
+            <div style={{ position: 'absolute', inset: 0, background: venueGradient, opacity: 0.35, mixBlendMode: 'multiply' }}></div>
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)' }}></div>
+          </>
+        ) : (
+          <>
+            <div style={{ position: 'absolute', inset: 0, background: venueGradient }}></div>
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.15 }}>
+              <svg width="80" height="80" viewBox="0 0 100 100" fill="none" stroke="#fff" strokeWidth="1.5">
+                <ellipse cx="50" cy="50" rx="45" ry="25"></ellipse>
+                <ellipse cx="50" cy="45" rx="45" ry="25"></ellipse>
+                <path d="M5 45 v5 M95 45 v5"></path>
+                <ellipse cx="50" cy="50" rx="30" ry="15" strokeDasharray="4 3"></ellipse>
+                <rect x="35" y="42" width="30" height="16" rx="2" strokeDasharray="3 2"></rect>
+              </svg>
+            </div>
+          </>
+        )}
 
         {/* Capacity badge */}
         <div style={{

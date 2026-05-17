@@ -4,20 +4,20 @@ const { useState, useEffect } = React;
 // TOP SCORERS DATA
 // ============================================================
 const TOP_SCORERS = [
-  { rank: 1, name: 'Miroslav Klose', country: 'Alemania', goals: 16, tournaments: '2002, 2006, 2010, 2014', image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=500&h=340&fit=crop&q=75', flag: '🇩🇪', color: '#1A1A1A' },
-  { rank: 2, name: 'Ronaldo Nazário', country: 'Brasil', goals: 15, tournaments: '1998, 2002, 2006', image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=500&h=340&fit=crop&q=75', flag: '🇧🇷', color: '#006B2D' },
-  { rank: 3, name: 'Gerd Müller', country: 'Alemania', goals: 14, tournaments: '1970, 1974', image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=500&h=340&fit=crop&q=75', flag: '🇩🇪', color: '#DD0000' },
-  { rank: 4, name: 'Just Fontaine', country: 'Francia', goals: 13, tournaments: '1958', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=500&h=340&fit=crop&q=75', flag: '🇫🇷', color: '#002654' },
-  { rank: 5, name: 'Pelé', country: 'Brasil', goals: 12, tournaments: '1958, 1962, 1966, 1970', image: 'https://images.unsplash.com/photo-1518604666860-9ed391f76460?w=500&h=340&fit=crop&q=75', flag: '🇧🇷', color: '#D4AC0D' },
-  { rank: 6, name: 'Sándor Kocsis', country: 'Hungría', goals: 11, tournaments: '1954', image: 'https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=500&h=340&fit=crop&q=75', flag: '🇭🇺', color: '#436F4D' },
-  { rank: 7, name: 'Jürgen Klinsmann', country: 'Alemania', goals: 11, tournaments: '1990, 1994, 1998', image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=500&h=340&fit=crop&q=75', flag: '🇩🇪', color: '#1A1A1A' },
-  { rank: 8, name: 'Helmut Rahn', country: 'Alemania', goals: 10, tournaments: '1954, 1958', image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=500&h=340&fit=crop&q=75', flag: '🇩🇪', color: '#DD0000' },
-  { rank: 9, name: 'Gabriel Batistuta', country: 'Argentina', goals: 10, tournaments: '1994, 1998, 2002', image: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=500&h=340&fit=crop&q=75', flag: '🇦🇷', color: '#75AADB' },
-  { rank: 10, name: 'Gary Lineker', country: 'Inglaterra', goals: 10, tournaments: '1986, 1990', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=500&h=340&fit=crop&q=75', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', color: '#C8102E' },
-  { rank: 11, name: 'Teófilo Cubillas', country: 'Perú', goals: 10, tournaments: '1970, 1978', image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=500&h=340&fit=crop&q=75', flag: '🇵🇪', color: '#D91023' },
-  { rank: 12, name: 'Thomas Müller', country: 'Alemania', goals: 10, tournaments: '2010, 2014, 2018', image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=500&h=340&fit=crop&q=75', flag: '🇩🇪', color: '#1A1A1A' },
-  { rank: 13, name: 'Lionel Messi', country: 'Argentina', goals: 13, tournaments: '2006, 2010, 2014, 2018, 2022', image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500&h=340&fit=crop&q=75', flag: '🇦🇷', color: '#75AADB' },
-  { rank: 14, name: 'Kylian Mbappé', country: 'Francia', goals: 12, tournaments: '2018, 2022', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=500&h=340&fit=crop&q=75', flag: '🇫🇷', color: '#002654' },
+  { rank: 1, name: 'Miroslav Klose', country: 'Alemania', goals: 16, tournaments: '2002, 2006, 2010, 2014', image: 'assets/goleador-klose.webp', flag: '🇩🇪', color: '#1A1A1A' },
+  { rank: 2, name: 'Ronaldo Nazário', country: 'Brasil', goals: 15, tournaments: '1998, 2002, 2006', image: 'assets/goleador-ronaldo.webp', flag: '🇧🇷', color: '#006B2D' },
+  { rank: 3, name: 'Gerd Müller', country: 'Alemania', goals: 14, tournaments: '1970, 1974', image: 'assets/goleador-gerd-muller.webp', flag: '🇩🇪', color: '#DD0000' },
+  { rank: 4, name: 'Just Fontaine', country: 'Francia', goals: 13, tournaments: '1958', image: 'assets/goleador-fontaine.webp', flag: '🇫🇷', color: '#002654' },
+  { rank: 5, name: 'Pelé', country: 'Brasil', goals: 12, tournaments: '1958, 1962, 1966, 1970', image: 'assets/goleador-pele.webp', flag: '🇧🇷', color: '#D4AC0D' },
+  { rank: 6, name: 'Sándor Kocsis', country: 'Hungría', goals: 11, tournaments: '1954', image: 'assets/goleador-kocsis.webp', flag: '🇭🇺', color: '#436F4D' },
+  { rank: 7, name: 'Jürgen Klinsmann', country: 'Alemania', goals: 11, tournaments: '1990, 1994, 1998', image: 'assets/goleador-klinsmann.webp', flag: '🇩🇪', color: '#1A1A1A' },
+  { rank: 8, name: 'Helmut Rahn', country: 'Alemania', goals: 10, tournaments: '1954, 1958', image: 'assets/goleador-rahn.webp', flag: '🇩🇪', color: '#DD0000' },
+  { rank: 9, name: 'Gabriel Batistuta', country: 'Argentina', goals: 10, tournaments: '1994, 1998, 2002', image: 'assets/goleador-batistuta.webp', flag: '🇦🇷', color: '#75AADB' },
+  { rank: 10, name: 'Gary Lineker', country: 'Inglaterra', goals: 10, tournaments: '1986, 1990', image: 'assets/goleador-lineker.webp', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', color: '#C8102E' },
+  { rank: 11, name: 'Teófilo Cubillas', country: 'Perú', goals: 10, tournaments: '1970, 1978', image: 'assets/goleador-cubillas.webp', flag: '🇵🇪', color: '#D91023' },
+  { rank: 12, name: 'Thomas Müller', country: 'Alemania', goals: 10, tournaments: '2010, 2014, 2018', image: 'assets/goleador-thomas-muller.webp', flag: '🇩🇪', color: '#1A1A1A' },
+  { rank: 13, name: 'Lionel Messi', country: 'Argentina', goals: 13, tournaments: '2006, 2010, 2014, 2018, 2022', image: 'assets/goleador-messi.webp', flag: '🇦🇷', color: '#75AADB' },
+  { rank: 14, name: 'Kylian Mbappé', country: 'Francia', goals: 12, tournaments: '2018, 2022', image: 'assets/goleador-mbappe.webp', flag: '🇫🇷', color: '#002654' },
 ];
 
 // ============================================================
