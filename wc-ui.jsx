@@ -64,6 +64,7 @@ const PLAYERS_DATA = [
   { name: 'Erling Haaland', team: 'Noruega', pos: 'Delantero', num: 9, grad: 'linear-gradient(135deg, #BA0C2F, #00205B)', photo: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Erling_Haaland_June_2025.jpg' },
   { name: 'Pedri', team: 'España', pos: 'Mediocampista', num: 8, grad: 'linear-gradient(135deg, #AA151B, #F1BF00)', photo: 'https://upload.wikimedia.org/wikipedia/commons/1/13/Pedri.jpg' },
   { name: 'Lamine Yamal', team: 'España', pos: 'Extremo', num: 19, grad: 'linear-gradient(135deg, #AA151B, #003DA5)', photo: 'https://upload.wikimedia.org/wikipedia/commons/d/df/Lamine_Yamal_in_2025_%28cropped2%29.jpg' },
+  { name: 'Luis Díaz', team: 'Colombia', pos: 'Extremo', num: 7, grad: 'linear-gradient(135deg, #FCD116, #003087)', photo: 'https://upload.wikimedia.org/wikipedia/commons/c/c0/Luis_D%C3%ADaz_%28portrait%29.jpg' },
 ];
 
 const NAV_LINKS = ['Selecciones', 'Sedes', 'Estrellas', 'Calendario', 'Tienda'];

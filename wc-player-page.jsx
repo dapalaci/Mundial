@@ -274,6 +274,45 @@ const PLAYER_DETAILS = {
       { id: 'kbg3EVrN5EA', title: 'Mejor jugador Eurocopa 2024' },
     ],
   },
+  'Luis Díaz': {
+    fullName: 'Luis Fernando Díaz Marulanda',
+    birthDate: '13 de enero de 1997',
+    birthPlace: 'Barrancas, La Guajira, Colombia',
+    height: '1.80 m',
+    weight: '75 kg',
+    nationality: 'Colombiano',
+    position: 'Extremo izquierdo',
+    currentClub: 'Liverpool FC',
+    jerseyNum: 7,
+    preferredFoot: 'Derecho',
+    gradient: 'linear-gradient(145deg, #FCD116 0%, #CE1126 50%, #003087 100%)',
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Luis_D%C3%ADaz_%28portrait%29.jpg',
+    stats: { goals: 62, assists: 41, caps: 72, intGoals: 27, balonsOro: 0, worldCups: 0 },
+    career: [
+      { club: 'Barranquilla FC', years: '2016–2017', apps: 14, goals: 3 },
+      { club: 'Junior de Barranquilla', years: '2017–2019', apps: 80, goals: 21 },
+      { club: 'FC Porto', years: '2019–2022', apps: 125, goals: 41 },
+      { club: 'Liverpool FC', years: '2022–presente', apps: 115, goals: 35 },
+    ],
+    trophies: ['Copa América 2021 (subcampeón)', 'Liga Portuguesa 2021–22', 'FA Cup 2022', 'Carabao Cup 2022'],
+    curiosities: [
+      'Nació en Barrancas, La Guajira, en una familia wayuu. Su padre Luis Manuel "Manguito" Díaz también fue futbolista.',
+      'En enero de 2023 su padre fue secuestrado por el ELN en Colombia; fue liberado tras 12 días gracias a la presión mediática.',
+      'Es el primer colombiano en anotar en una final de la Copa del Mundo (si Colombia clasifica).',
+      'Fichado por Liverpool en enero de 2022 por €45 millones, llegó mientras se disputaba la Copa África.',
+      'Es conocido por su velocidad y su capacidad de desequilibrar en el uno contra uno por la banda izquierda.',
+      'Dedicó un gol en Liverpool levantando las manos esposadas para pedir la liberación de su padre secuestrado.',
+    ],
+    gallery: [
+      { src: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&h=400&fit=crop&q=80', caption: 'La velocidad de Colombia' },
+      { src: 'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&h=400&fit=crop&q=80', caption: 'Pasión cafetera' },
+      { src: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=600&h=400&fit=crop&q=80', caption: 'El crack de La Guajira' },
+    ],
+    videos: [
+      { id: 'aNxdeiLOkQE', title: 'Luis Díaz — Mejores jugadas' },
+      { id: 'nHv_5LbFe4o', title: 'Luis Díaz en la Copa América 2024' },
+    ],
+  },
 };
 
 // ============================================================

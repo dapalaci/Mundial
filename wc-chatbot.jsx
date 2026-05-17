@@ -70,6 +70,9 @@ const PLAYER_ALIASES = {
   'modrić': { n:'Luka Modrić', t:'Croacia', num:10, pos:'Mediocampista', bio:'Balón de Oro 2018 · La leyenda viviente de Croacia · Real Madrid · Finalista del Mundial 2018.' },
   ronaldo: { n:'Cristiano Ronaldo', t:'Portugal', num:7, pos:'Delantero', bio:'5 Balones de Oro · Al Nassr · Máximo goleador de la historia del fútbol · 5 Champions League · Ídolo de Madeira.' },
   valverde: { n:'Federico Valverde', t:'Uruguay', num:8, pos:'Mediocampista', bio:'Real Madrid · La figura emergente de Uruguay · Conocido como "El Pajarito" · Champions League 2022.' },
+  'luis díaz': { n:'Luis Díaz', t:'Colombia', num:7, pos:'Extremo', bio:'Liverpool FC · Nacido en Barrancas, La Guajira · Ex FC Porto · Su padre fue secuestrado y liberado en 2023 · Ídolo de la afición colombiana.' },
+  'luis diaz': { n:'Luis Díaz', t:'Colombia', num:7, pos:'Extremo', bio:'Liverpool FC · Velocidad devastadora por la banda izquierda · Copa América 2021 subcampeón · El mejor colombiano de su generación.' },
+  lucho: { n:'Luis Díaz', t:'Colombia', num:7, pos:'Extremo', bio:'Liverpool FC · Apodado "Lucho" · Ídolo de Colombia · Fichado por €45M desde FC Porto en enero 2022.' },
   wirtz: { n:'Florian Wirtz', t:'Alemania', num:10, pos:'Extremo', bio:'Bayer Leverkusen / Bayern · El gran talento alemán de su generación · Comparado con Müller y Özil.' },
   musiala: { n:'Jamal Musiala', t:'Alemania', num:10, pos:'Mediocampista', bio:'Bayern Munich · Nacido en Stuttgart, criado en Inglaterra · Elegido figura de la Eurocopa 2024 para Alemania.' },
 };
