@@ -338,6 +338,246 @@ const TEAM_ROSTERS = {
       ],
     }
   },
+  portugal: {
+    culture: {
+      tradicion: 'Portugal vivió su época dorada con Eusébio en los años 60 y ha renacido en el siglo XXI de la mano de Cristiano Ronaldo. La Liga portuguesa ha exportado talento al mundo entero desde los célebres campos de Benfica, Porto y Sporting.',
+      gastronomia: 'El bacalhau (bacalao) tiene más de mil recetas distintas y es el plato nacional por excelencia. Los pastéis de nata, el piri-piri y el vinho verde son embajadores de una cocina atlántica única.',
+      musica: 'El fado, declarado Patrimonio Inmaterial de la UNESCO, es el alma musical de Portugal. Sus melodías melancólicas hablan de saudade — un sentimiento de nostalgia intraducible que define al pueblo portugués.',
+      dato: 'Cristiano Ronaldo es el máximo goleador en la historia de los Mundiales con selecciones europeas. Portugal ganó su primer gran título en la Eurocopa 2016 y la Nations League 2019, abriendo una nueva era de éxitos.',
+    },
+    coach: { name: 'Roberto Martínez', role: 'Director Técnico', since: 2023 },
+    staff: [
+      { name: 'Emilio Álvarez', role: 'Asistente Técnico' },
+      { name: 'José Tavares', role: 'Asistente Técnico' },
+      { name: 'Rui Barbosa', role: 'Entrenador de Arqueros' },
+      { name: 'Rui Faria', role: 'Preparador Físico' },
+    ],
+    description: 'A Seleção das Quinas llega al Mundial 2026 con una generación de lujo liderada por Bruno Fernandes y Bernardo Silva. Cristiano Ronaldo, con 41 años, aspira a coronar su carrera con el título que le falta. Portugal es favorita para llegar lejos.',
+    colors: { primary: '#006600', secondary: '#FFFFFF', accent: '#C8102E' },
+    squad: {
+      'Porteros': [
+        { name: 'Diogo Costa', num: 1, club: 'Porto', age: 26, initials: 'DC' },
+        { name: 'José Sá', num: 12, club: 'Wolverhampton', age: 31, initials: 'JS' },
+        { name: 'Rui Patrício', num: 23, club: 'Roma', age: 37, initials: 'RP' },
+      ],
+      'Defensas': [
+        { name: 'Rúben Dias', num: 4, club: 'Manchester City', age: 28, initials: 'RD', star: true },
+        { name: 'João Cancelo', num: 2, club: 'Barcelona', age: 31, initials: 'JC' },
+        { name: 'Nuno Mendes', num: 19, club: 'PSG', age: 23, initials: 'NM' },
+        { name: 'Danilo Pereira', num: 14, club: 'PSG', age: 33, initials: 'DP' },
+        { name: 'António Silva', num: 6, club: 'Benfica', age: 22, initials: 'AS' },
+        { name: 'Diogo Dalot', num: 22, club: 'Manchester United', age: 26, initials: 'DD' },
+      ],
+      'Mediocampistas': [
+        { name: 'Bruno Fernandes', num: 8, club: 'Manchester United', age: 30, initials: 'BF', star: true },
+        { name: 'Bernardo Silva', num: 10, club: 'Manchester City', age: 30, initials: 'BS', star: true },
+        { name: 'Vitinha', num: 16, club: 'PSG', age: 25, initials: 'VI' },
+        { name: 'João Neves', num: 15, club: 'PSG', age: 21, initials: 'JN' },
+        { name: 'Rúben Neves', num: 15, club: 'Al-Hilal', age: 28, initials: 'RN' },
+        { name: 'Matheus Nunes', num: 17, club: 'Manchester City', age: 27, initials: 'MN' },
+      ],
+      'Delanteros': [
+        { name: 'Cristiano Ronaldo', num: 7, club: 'Al-Nassr', age: 41, initials: 'CR', star: true },
+        { name: 'Rafael Leão', num: 11, club: 'AC Milan', age: 26, initials: 'RL', star: true },
+        { name: 'Pedro Neto', num: 17, club: 'Chelsea', age: 25, initials: 'PN' },
+        { name: 'Gonçalo Ramos', num: 9, club: 'PSG', age: 24, initials: 'GR' },
+        { name: 'João Félix', num: 11, club: 'Chelsea', age: 26, initials: 'JF' },
+        { name: 'Diogo Jota', num: 20, club: 'Liverpool', age: 28, initials: 'DJ' },
+      ],
+    }
+  },
+  netherlands: {
+    culture: {
+      tradicion: 'Los Países Bajos inventaron el "fútbol total" de Johan Cruyff en los años 70, revolucionando para siempre la forma de entender el juego. Tres finales mundiales sin título (1974, 1978, 2010) hacen de la Naranja Mecánica una historia de grandeza y tragedia.',
+      gastronomia: 'El queso gouda y el edam son exportaciones culturales reconocidas globalmente. Los stroopwafels, el bitterballen y el arenque fresco con cebolla son delicias que forman parte del ADN holandés.',
+      musica: 'La escena dance holandesa es una de las más influyentes del mundo. DJ Tiësto, Martin Garrix y Armin van Buuren llevan la música electrónica holandesa a todos los rincones del planeta.',
+      dato: 'Los Países Bajos son el único país que ha llegado a tres finales mundiales sin ganar ninguna. La generación de Cruyff (1974) y Van Basten (1988, Eurocopa) representan las dos cimas más altas del fútbol neerlandés.',
+    },
+    coach: { name: 'Ronald Koeman', role: 'Director Técnico', since: 2023 },
+    staff: [
+      { name: 'Hedwiges Maduro', role: 'Asistente Técnico' },
+      { name: 'Danny Blind', role: 'Asistente Técnico' },
+      { name: 'Patrick Lodewijks', role: 'Entrenador de Arqueros' },
+      { name: 'Remy Vogel', role: 'Preparador Físico' },
+    ],
+    description: 'De Oranje llega al Mundial 2026 con Virgil van Dijk como líder defensivo y una generación de talentos ofensivos liderada por Xavi Simons, Tijjani Reijnders y Cody Gakpo. Los holandeses aspiran a romper el maleficio de las finales perdidas.',
+    colors: { primary: '#FF6600', secondary: '#FFFFFF', accent: '#21468B' },
+    squad: {
+      'Porteros': [
+        { name: 'Bart Verbruggen', num: 1, club: 'Brighton', age: 23, initials: 'BV' },
+        { name: 'Mark Flekken', num: 13, club: 'Brentford', age: 32, initials: 'MF' },
+        { name: 'Justin Bijlow', num: 22, club: 'Feyenoord', age: 27, initials: 'JB' },
+      ],
+      'Defensas': [
+        { name: 'Virgil van Dijk', num: 4, club: 'Liverpool', age: 34, initials: 'VD', star: true },
+        { name: 'Denzel Dumfries', num: 22, club: 'Inter Milan', age: 29, initials: 'DD' },
+        { name: 'Nathan Aké', num: 5, club: 'Manchester City', age: 30, initials: 'NA' },
+        { name: 'Stefan de Vrij', num: 6, club: 'Inter Milan', age: 33, initials: 'SV' },
+        { name: 'Daley Blind', num: 17, club: 'Girona', age: 34, initials: 'DB' },
+        { name: 'Lutsharel Geertruida', num: 2, club: 'RB Leipzig', age: 25, initials: 'LG' },
+      ],
+      'Mediocampistas': [
+        { name: 'Xavi Simons', num: 10, club: 'RB Leipzig', age: 22, initials: 'XS', star: true },
+        { name: 'Tijjani Reijnders', num: 8, club: 'AC Milan', age: 27, initials: 'TR', star: true },
+        { name: 'Frenkie de Jong', num: 21, club: 'Barcelona', age: 28, initials: 'FJ' },
+        { name: 'Ryan Gravenberch', num: 16, club: 'Liverpool', age: 23, initials: 'RG' },
+        { name: 'Teun Koopmeiners', num: 18, club: 'Juventus', age: 27, initials: 'TK' },
+        { name: 'Joey Veerman', num: 15, club: 'PSV Eindhoven', age: 26, initials: 'JV' },
+      ],
+      'Delanteros': [
+        { name: 'Cody Gakpo', num: 11, club: 'Liverpool', age: 26, initials: 'CG', star: true },
+        { name: 'Donyell Malen', num: 7, club: 'Aston Villa', age: 26, initials: 'DM' },
+        { name: 'Wout Weghorst', num: 9, club: 'Hoffenheim', age: 33, initials: 'WW' },
+        { name: 'Brian Brobbey', num: 19, club: 'Ajax', age: 23, initials: 'BB' },
+        { name: 'Noa Lang', num: 14, club: 'PSV Eindhoven', age: 26, initials: 'NL' },
+        { name: 'Joshua Zirkzee', num: 20, club: 'Manchester United', age: 24, initials: 'JZ' },
+      ],
+    }
+  },
+  colombia: {
+    culture: {
+      tradicion: 'Colombia vivió su época dorada en los 90 con Valderrama, Higuita y el recordado gol de Escobar que cambiaría la historia. Hoy resurgió con una nueva generación brillante liderada por Luis Díaz y alcanzó la final de la Copa América 2024.',
+      gastronomia: 'La bandeja paisa, el ajiaco santafereño, el sancocho y el chocolate con pandebono son platos que reflejan la diversidad geográfica y cultural del país. El café colombiano es considerado el mejor del mundo.',
+      musica: 'Colombia dio al mundo a Shakira y Carlos Vives. La cumbia, el vallenato, el champeta y el reggaeton colombiano definen una escena musical que mezcla raíces africanas, indígenas y españolas.',
+      dato: 'Colombia fue eliminada en octavos del Mundial 2014 con James Rodríguez como Bota de Oro y mejor jugador del torneo. En la Copa América 2024 llegó a la final invicta, perdiendo ante Argentina en tiempo extra.',
+    },
+    coach: { name: 'Néstor Lorenzo', role: 'Director Técnico', since: 2022 },
+    staff: [
+      { name: 'Diego Placente', role: 'Asistente Técnico' },
+      { name: 'Walter Silvani', role: 'Asistente Técnico' },
+      { name: 'José Ángel Gaspar', role: 'Entrenador de Arqueros' },
+      { name: 'Pablo Coll', role: 'Preparador Físico' },
+    ],
+    description: 'Los Cafeteros llegan al Mundial 2026 en uno de sus mejores momentos históricos. Con Luis Díaz como estrella global y James Rodríguez dando sus últimas batallas, Colombia mezcla experiencia y juventud en un proyecto ilusionante.',
+    colors: { primary: '#FCD116', secondary: '#FFFFFF', accent: '#003087' },
+    squad: {
+      'Porteros': [
+        { name: 'Camilo Vargas', num: 1, club: 'Atlas', age: 35, initials: 'CV' },
+        { name: 'David Ospina', num: 12, club: 'Al-Qadsiah', age: 36, initials: 'DO' },
+        { name: 'Álvaro Montero', num: 23, club: 'Millonarios', age: 28, initials: 'AM' },
+      ],
+      'Defensas': [
+        { name: 'Dávinson Sánchez', num: 2, club: 'Galatasaray', age: 29, initials: 'DS' },
+        { name: 'Jhon Lucumí', num: 4, club: 'Bologna', age: 26, initials: 'JL' },
+        { name: 'Carlos Cuesta', num: 3, club: 'Genk', age: 26, initials: 'CC' },
+        { name: 'Johan Mojica', num: 3, club: 'Rayo Vallecano', age: 33, initials: 'JM' },
+        { name: 'Daniel Muñoz', num: 22, club: 'Crystal Palace', age: 29, initials: 'DM' },
+        { name: 'Yairo Moreno', num: 17, club: 'Club León', age: 30, initials: 'YM' },
+      ],
+      'Mediocampistas': [
+        { name: 'James Rodríguez', num: 10, club: 'Rayo Vallecano', age: 34, initials: 'JR', star: true },
+        { name: 'Richard Ríos', num: 8, club: 'Palmeiras', age: 25, initials: 'RR', star: true },
+        { name: 'Mateus Uribe', num: 6, club: 'Porto', age: 34, initials: 'MU' },
+        { name: 'Jhon Arias', num: 11, club: 'Fluminense', age: 28, initials: 'JA' },
+        { name: 'Jefferson Lerma', num: 16, club: 'Crystal Palace', age: 30, initials: 'JL' },
+        { name: 'Sebastián Villa', num: 19, club: 'Boca Juniors', age: 29, initials: 'SV' },
+      ],
+      'Delanteros': [
+        { name: 'Luis Díaz', num: 7, club: 'Liverpool', age: 28, initials: 'LD', star: true },
+        { name: 'Radamel Falcao', num: 9, club: 'Millonarios', age: 40, initials: 'RF', star: true },
+        { name: 'Jhon Córdoba', num: 13, club: 'Krasnodar', age: 31, initials: 'JC' },
+        { name: 'Rafael Santos Borré', num: 20, club: 'Eintracht Frankfurt', age: 29, initials: 'RB' },
+        { name: 'Cucho Hernández', num: 21, club: 'Columbus Crew', age: 26, initials: 'CH' },
+        { name: 'Miguel Borja', num: 14, club: 'River Plate', age: 31, initials: 'MB' },
+      ],
+    }
+  },
+  mexico: {
+    culture: {
+      tradicion: 'México ha participado en 17 de los 22 Mundiales disputados y en 2026 será sede por tercera vez, récord absoluto. El "Quinto partido" es el techo histórico que los mexicanos buscan romper desde 1986.',
+      gastronomia: 'La cocina mexicana es Patrimonio Cultural Inmaterial de la Humanidad. Los tacos, el mole, el guacamole, el pozole y los chiles en nogada son sólo algunos ejemplos de una gastronomía milenaria de raíces aztecas.',
+      musica: 'El mariachi, declarado Patrimonio de la Humanidad, es el símbolo musical de México. El regional mexicano, el norteño y el banda han conquistado Latinoamérica y Estados Unidos en el siglo XXI.',
+      dato: 'México será sede del partido inaugural y de varios partidos del grupo A del Mundial 2026 en el Estadio Azteca, el único recinto en albergar dos finales mundialistas (1970 y 1986). El Azteca tiene capacidad para 87,000 personas.',
+    },
+    coach: { name: 'Javier Aguirre', role: 'Director Técnico', since: 2024 },
+    staff: [
+      { name: 'Rafael Márquez', role: 'Asistente Técnico' },
+      { name: 'Miguel Fuentes', role: 'Asistente Técnico' },
+      { name: 'Alfredo Talavera', role: 'Entrenador de Arqueros' },
+      { name: 'Alberto Ignacio Pérez', role: 'Preparador Físico' },
+    ],
+    description: 'El Tri juega en casa ante su afición en el Mundial 2026. Con Santiago Giménez como referencia ofensiva y una nueva generación de jugadores formados en Europa, México aspira a superar el quinto partido por primera vez en cuatro décadas.',
+    colors: { primary: '#006847', secondary: '#FFFFFF', accent: '#CE1126' },
+    squad: {
+      'Porteros': [
+        { name: 'Guillermo Ochoa', num: 1, club: 'América', age: 41, initials: 'GO' },
+        { name: 'Luis Malagón', num: 13, club: 'América', age: 28, initials: 'LM' },
+        { name: 'Julio González', num: 23, club: 'Chivas', age: 29, initials: 'JG' },
+      ],
+      'Defensas': [
+        { name: 'Jesús Gallardo', num: 23, club: 'Monterrey', age: 30, initials: 'JG' },
+        { name: 'Johan Vásquez', num: 3, club: 'Génova', age: 26, initials: 'JV' },
+        { name: 'César Montes', num: 15, club: 'Espanyol', age: 28, initials: 'CM' },
+        { name: 'Jorge Sánchez', num: 22, club: 'Ajax', age: 27, initials: 'JS' },
+        { name: 'Gerardo Arteaga', num: 17, club: 'Getafe', age: 26, initials: 'GA' },
+        { name: 'Néstor Araujo', num: 5, club: 'América', age: 34, initials: 'NA' },
+      ],
+      'Mediocampistas': [
+        { name: 'Edson Álvarez', num: 6, club: 'West Ham', age: 27, initials: 'EA', star: true },
+        { name: 'Hirving Lozano', num: 22, club: 'PSV Eindhoven', age: 30, initials: 'HL', star: true },
+        { name: 'Orbelin Pineda', num: 10, club: 'AEK Atenas', age: 29, initials: 'OP' },
+        { name: 'Carlos Rodríguez', num: 8, club: 'Cruz Azul', age: 27, initials: 'CR' },
+        { name: 'Luis Romo', num: 14, club: 'Monterrey', age: 30, initials: 'LR' },
+        { name: 'Erick Gutiérrez', num: 18, club: 'PSV Eindhoven', age: 30, initials: 'EG' },
+      ],
+      'Delanteros': [
+        { name: 'Santiago Giménez', num: 9, club: 'Feyenoord', age: 24, initials: 'SG', star: true },
+        { name: 'Raúl Jiménez', num: 7, club: 'Fulham', age: 34, initials: 'RJ', star: true },
+        { name: 'Henry Martín', num: 11, club: 'América', age: 32, initials: 'HM' },
+        { name: 'Roberto Alvarado', num: 16, club: 'Chivas', age: 26, initials: 'RA' },
+        { name: 'Alexis Vega', num: 19, club: 'Chivas', age: 28, initials: 'AV' },
+        { name: 'Julián Quiñones', num: 20, club: 'América', age: 28, initials: 'JQ' },
+      ],
+    }
+  },
+  morocco: {
+    culture: {
+      tradicion: 'Marruecos escribió la historia en Qatar 2022: primer equipo africano en llegar a una semifinal mundialista. Los Atlas Lions representan a más de 400 millones de árabes y africanos y han cambiado la narrativa del fútbol global.',
+      gastronomia: 'La cocina marroquí es una de las más sofisticadas del mundo árabe. El tajín, el cuscús, la pastilla y el té de menta con hierbabuena son experiencias gastronómicas declaradas Patrimonio de la Humanidad.',
+      musica: 'La música gnawa, el chaabi y el andalusí reflejan la riqueza de una cultura en la encrucijada de Africa, Arabia y Europa. Casablanca ha surgido como centro de música electrónica árabe contemporánea.',
+      dato: 'En Qatar 2022, Marruecos eliminó a Bélgica, España y Portugal antes de caer ante Francia en semifinales. Youssef En-Nesyri marcó el gol de la histórica victoria sobre Portugal. Fue la actuación más memorable de África en un Mundial.',
+    },
+    coach: { name: 'Walid Regragui', role: 'Director Técnico', since: 2022 },
+    staff: [
+      { name: 'Mustapha Hadji', role: 'Asistente Técnico' },
+      { name: 'Abdelilah Fahmi', role: 'Entrenador de Arqueros' },
+      { name: 'Éric Abidal', role: 'Director Deportivo' },
+      { name: 'Rachid Harmouch', role: 'Preparador Físico' },
+    ],
+    description: 'Los Atlas Lions regresan al Mundial 2026 con el mismo hambre que los llevó a semifinales en Qatar. Con Achraf Hakimi como su gran estrella y Hakim Ziyech como artillero, Marruecos aspira a ir todavía más lejos esta vez.',
+    colors: { primary: '#C1272D', secondary: '#FFFFFF', accent: '#006233' },
+    squad: {
+      'Porteros': [
+        { name: 'Yassine Bounou', num: 1, club: 'Al-Hilal', age: 34, initials: 'YB' },
+        { name: 'Munir Mohamedi', num: 13, club: 'Nantes', age: 34, initials: 'MM' },
+        { name: 'Ahmed Reda Tagnaouti', num: 23, club: 'Wydad', age: 30, initials: 'AT' },
+      ],
+      'Defensas': [
+        { name: 'Achraf Hakimi', num: 2, club: 'PSG', age: 27, initials: 'AH', star: true },
+        { name: 'Romain Saïss', num: 5, club: 'Beşiktaş', age: 35, initials: 'RS' },
+        { name: 'Nayef Aguerd', num: 6, club: 'West Ham', age: 29, initials: 'NA' },
+        { name: 'Jawad El Yamiq', num: 3, club: 'Real Valladolid', age: 33, initials: 'JE' },
+        { name: 'Noussair Mazraoui', num: 22, club: 'Manchester United', age: 27, initials: 'NM' },
+        { name: 'Adam Masina', num: 15, club: 'Watford', age: 30, initials: 'AM' },
+      ],
+      'Mediocampistas': [
+        { name: 'Hakim Ziyech', num: 7, club: 'Galatasaray', age: 33, initials: 'HZ', star: true },
+        { name: 'Sofyan Amrabat', num: 4, club: 'Fenerbahçe', age: 29, initials: 'SA', star: true },
+        { name: 'Azzedine Ounahi', num: 8, club: 'Marseille', age: 25, initials: 'AO' },
+        { name: 'Bilal El Khannous', num: 16, club: 'Genk', age: 21, initials: 'BE' },
+        { name: 'Selim Amallah', num: 18, club: 'Standard Lieja', age: 29, initials: 'SA' },
+        { name: 'Abde Ezzalzouli', num: 11, club: 'Osasuna', age: 24, initials: 'AE' },
+      ],
+      'Delanteros': [
+        { name: 'Youssef En-Nesyri', num: 9, club: 'Fenerbahçe', age: 28, initials: 'YE', star: true },
+        { name: 'Soufiane Boufal', num: 10, club: 'Angers', age: 32, initials: 'SB' },
+        { name: 'Munir El Haddadi', num: 14, club: 'Girona', age: 29, initials: 'ME' },
+        { name: 'Zakaria Aboukhlal', num: 19, club: 'Toulouse', age: 25, initials: 'ZA' },
+        { name: 'Ayoub El Kaabi', num: 20, club: 'Olympiacos', age: 29, initials: 'AK' },
+        { name: 'Ryan Mmaee', num: 21, club: 'Ferencváros', age: 28, initials: 'RM' },
+      ],
+    }
+  },
 };
 
 // ============================================================
