@@ -11,7 +11,7 @@ const TEAMS_DATA = [
     gradient: 'linear-gradient(160deg, rgba(117,170,219,0.85) 0%, rgba(154,196,232,0.7) 50%, rgba(214,234,248,0.6) 100%)',
     overlayGrad: 'linear-gradient(to top, rgba(10,20,60,0.8) 0%, rgba(10,20,60,0.2) 50%, transparent 100%)',
     image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&h=800&fit=crop&q=80',
-    pattern: '10', cta: 'Ver Selección', ranking: 1, titles: 3, group: 'A',
+    pattern: '10', cta: 'Ver Selección', ranking: 1, titles: 3, group: 'J',
     stars: ['Messi', 'Di María', 'Álvarez'], dark: true
   },
   {
@@ -19,7 +19,7 @@ const TEAMS_DATA = [
     gradient: 'linear-gradient(160deg, rgba(0,38,84,0.85) 0%, rgba(22,48,90,0.7) 50%, rgba(139,26,43,0.6) 100%)',
     overlayGrad: 'linear-gradient(to top, rgba(0,15,40,0.85) 0%, rgba(0,15,40,0.25) 50%, transparent 100%)',
     image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&h=800&fit=crop&q=80',
-    pattern: '10', cta: 'Ver Selección', ranking: 2, titles: 2, group: 'B',
+    pattern: '10', cta: 'Ver Selección', ranking: 2, titles: 2, group: 'I',
     stars: ['Mbappé', 'Griezmann', 'Tchouaméni'], dark: true
   },
   {
