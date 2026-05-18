@@ -154,44 +154,6 @@ function UniformCard({ team, uniformData, tweaks }) {
 
       {/* Bottom content */}
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '0 16px 16px', zIndex: 5 }}>
-        {/* Celebrity row */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-          {/* Celebrity photo or initials */}
-          <div style={{
-            width: 48, height: 48, borderRadius: '50%', flexShrink: 0, overflow: 'hidden',
-            border: '2px solid rgba(255,255,255,0.25)',
-            background: `linear-gradient(135deg, ${team?.gradient?.match(/#[0-9a-fA-F]{3,6}/g)?.[0] || '#333'}, ${team?.gradient?.match(/#[0-9a-fA-F]{3,6}/g)?.[1] || '#555'})`,
-          }}>
-            {ud.celebImg ? (
-              <img src={ud.celebImg} alt={ud.celebName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            ) : (
-              <div style={{
-                width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 16, color: '#fff',
-              }}>{initials}</div>
-            )}
-          </div>
-          <div style={{ minWidth: 0 }}>
-            <div style={{
-              fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 14,
-              color: '#fff', textTransform: 'uppercase', lineHeight: 1.1,
-              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-            }}>{ud.celebName}</div>
-            <div style={{
-              fontFamily: "'Barlow', sans-serif", fontSize: 10, fontWeight: 500,
-              color: 'rgba(255,255,255,0.45)', marginTop: 2, lineHeight: 1.2,
-              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-            }}>{ud.role}</div>
-          </div>
-        </div>
-
-        {/* Country name */}
-        <div style={{
-          fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 900,
-          fontSize: 'clamp(20px, 3vw, 26px)', color: '#fff',
-          textTransform: 'uppercase', lineHeight: 0.95, letterSpacing: -0.5,
-        }}>{team?.name || ud.id}</div>
-
         {/* Hover detail */}
         <div style={{
           fontFamily: "'Barlow', sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.4)',
