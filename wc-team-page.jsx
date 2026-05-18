@@ -194,6 +194,150 @@ const TEAM_ROSTERS = {
       ],
     }
   },
+  spain: {
+    culture: {
+      tradicion: 'España es la selección más dominante del siglo XXI: campeona del mundo en 2010 y ganadora de cuatro Eurocopas. La cantera del Barcelona y el Real Madrid ha producido generaciones irrepetibles de fútbol técnico.',
+      gastronomia: 'La paella valenciana, el jamón ibérico, las tapas y la tortilla española son embajadores culturales que conquistan mesas en todo el mundo. Cada región tiene su identidad gastronómica única.',
+      musica: 'Cuna del flamenco, declarado Patrimonio Inmaterial de la Humanidad. Artistas como Rosalía han fusionado las raíces del cante jondo con sonidos globales del siglo XXI.',
+      dato: 'La generación del tiki-taka ganó la Eurocopa 2008, el Mundial 2010 y la Eurocopa 2012 sin perder un solo partido. En 2024 ganaron su cuarta Eurocopa con la joven generación de Lamine Yamal.',
+    },
+    coach: { name: 'Luis de la Fuente', role: 'Director Técnico', since: 2023 },
+    staff: [
+      { name: 'Mikel Etxarri', role: 'Asistente Técnico' },
+      { name: 'Jon Ander Laka', role: 'Asistente Técnico' },
+      { name: 'Alberto Doval', role: 'Entrenador de Arqueros' },
+      { name: 'Rafael Pol', role: 'Preparador Físico' },
+    ],
+    description: 'La Roja llega al Mundial 2026 como campeona de Europa tras su victoria en la Eurocopa 2024. Con Lamine Yamal como la nueva gran estrella del fútbol mundial y un equipo repleto de talento, España es una de las grandes favoritas al título.',
+    colors: { primary: '#AA151B', secondary: '#FFFFFF', accent: '#F1BF00' },
+    squad: {
+      'Porteros': [
+        { name: 'Unai Simón', num: 1, club: 'Athletic Club', age: 28, initials: 'US' },
+        { name: 'David Raya', num: 13, club: 'Arsenal', age: 30, initials: 'DR' },
+        { name: 'Álex Remiro', num: 23, club: 'Real Sociedad', age: 30, initials: 'AR' },
+      ],
+      'Defensas': [
+        { name: 'Dani Carvajal', num: 2, club: 'Real Madrid', age: 33, initials: 'DC' },
+        { name: 'Aymeric Laporte', num: 14, club: 'Al-Nassr', age: 31, initials: 'AL' },
+        { name: 'Robin Le Normand', num: 3, club: 'Atlético Madrid', age: 29, initials: 'RL' },
+        { name: 'Alejandro Balde', num: 23, club: 'Barcelona', age: 22, initials: 'AB' },
+        { name: 'Dani Vivian', num: 15, club: 'Athletic Club', age: 26, initials: 'DV' },
+        { name: 'Pedro Porro', num: 22, club: 'Tottenham', age: 26, initials: 'PP' },
+      ],
+      'Mediocampistas': [
+        { name: 'Rodri', num: 16, club: 'Manchester City', age: 29, initials: 'RO', star: true },
+        { name: 'Pedri', num: 8, club: 'Barcelona', age: 23, initials: 'PE', star: true },
+        { name: 'Fabián Ruiz', num: 7, club: 'PSG', age: 29, initials: 'FR' },
+        { name: 'Mikel Merino', num: 18, club: 'Arsenal', age: 29, initials: 'MM' },
+        { name: 'Álex Baena', num: 21, club: 'Villarreal', age: 24, initials: 'AB' },
+        { name: 'Martín Zubimendi', num: 5, club: 'Arsenal', age: 26, initials: 'MZ' },
+      ],
+      'Delanteros': [
+        { name: 'Lamine Yamal', num: 19, club: 'Barcelona', age: 18, initials: 'LY', star: true },
+        { name: 'Nico Williams', num: 11, club: 'Athletic Club', age: 23, initials: 'NW', star: true },
+        { name: 'Álvaro Morata', num: 9, club: 'AC Milan', age: 33, initials: 'AM' },
+        { name: 'Dani Olmo', num: 10, club: 'Barcelona', age: 27, initials: 'DO' },
+        { name: 'Ferran Torres', num: 20, club: 'Barcelona', age: 26, initials: 'FT' },
+        { name: 'Mikel Oyarzabal', num: 17, club: 'Real Sociedad', age: 28, initials: 'MO' },
+      ],
+    }
+  },
+  germany: {
+    culture: {
+      tradicion: 'Alemania es la selección más consistente de la historia: cuatro títulos mundiales, cuatro finales más. La Mannschaft combina disciplina táctica, eficiencia y un fútbol físico y técnico que ha dominado el juego durante décadas.',
+      gastronomia: 'Las salchichas bratwurst, el pretzel, el chucrut y la cerveza bávara son iconos de la cultura alemana. La Oktoberfest de Múnich convoca a más de seis millones de visitantes cada año.',
+      musica: 'Beethoven, Bach y Brahms nacieron en tierra alemana. El techno moderno nació en Berlín, cuya escena electrónica es considerada la más influyente del mundo desde los años 90.',
+      dato: 'Alemania es el único equipo que ha ganado Mundiales en tres continentes diferentes: Europa (1954, 1974), América (2014) y Europa (1990). El "Mineirazo" (7-1 a Brasil en 2014) sigue siendo la goleada más grande en una semifinal mundialista.',
+    },
+    coach: { name: 'Julian Nagelsmann', role: 'Director Técnico', since: 2023 },
+    staff: [
+      { name: 'Sandro Wagner', role: 'Asistente Técnico' },
+      { name: 'Andreas Hinkel', role: 'Asistente Técnico' },
+      { name: 'Andreas Kronenberg', role: 'Entrenador de Arqueros' },
+      { name: 'Patrick Eibenberger', role: 'Preparador Físico' },
+    ],
+    description: 'Die Mannschaft llega al Mundial 2026 con una generación de talento excepcional liderada por Florian Wirtz y Jamal Musiala. Tras la decepción del Mundial 2022, Alemania busca recuperar su lugar entre las potencias mundiales.',
+    colors: { primary: '#1A1A1A', secondary: '#FFFFFF', accent: '#DD0000' },
+    squad: {
+      'Porteros': [
+        { name: 'Manuel Neuer', num: 1, club: 'Bayern Munich', age: 39, initials: 'MN' },
+        { name: 'Marc-André ter Stegen', num: 12, club: 'Barcelona', age: 33, initials: 'MT' },
+        { name: 'Oliver Baumann', num: 23, club: 'Hoffenheim', age: 35, initials: 'OB' },
+      ],
+      'Defensas': [
+        { name: 'Joshua Kimmich', num: 6, club: 'Bayern Munich', age: 30, initials: 'JK', star: true },
+        { name: 'Antonio Rüdiger', num: 2, club: 'Real Madrid', age: 32, initials: 'AR' },
+        { name: 'Jonathan Tah', num: 4, club: 'Bayern Munich', age: 29, initials: 'JT' },
+        { name: 'Nico Schlotterbeck', num: 5, club: 'Borussia Dortmund', age: 26, initials: 'NS' },
+        { name: 'Maximilian Mittelstädt', num: 15, club: 'Stuttgart', age: 28, initials: 'MM' },
+        { name: 'Benjamin Henrichs', num: 3, club: 'RB Leipzig', age: 28, initials: 'BH' },
+      ],
+      'Mediocampistas': [
+        { name: 'Jamal Musiala', num: 10, club: 'Bayern Munich', age: 23, initials: 'JM', star: true },
+        { name: 'Florian Wirtz', num: 10, club: 'Bayer Leverkusen', age: 22, initials: 'FW', star: true },
+        { name: 'İlkay Gündoğan', num: 21, club: 'Barcelona', age: 35, initials: 'IG' },
+        { name: 'Robert Andrich', num: 23, club: 'Bayer Leverkusen', age: 31, initials: 'RA' },
+        { name: 'Emre Can', num: 8, club: 'Borussia Dortmund', age: 32, initials: 'EC' },
+        { name: 'Pascal Groß', num: 14, club: 'Brighton', age: 34, initials: 'PG' },
+      ],
+      'Delanteros': [
+        { name: 'Kai Havertz', num: 7, club: 'Arsenal', age: 27, initials: 'KH', star: true },
+        { name: 'Leroy Sané', num: 19, club: 'Bayern Munich', age: 30, initials: 'LS' },
+        { name: 'Thomas Müller', num: 13, club: 'Bayern Munich', age: 36, initials: 'TM' },
+        { name: 'Deniz Undav', num: 9, club: 'Stuttgart', age: 29, initials: 'DU' },
+        { name: 'Niclas Füllkrug', num: 22, club: 'West Ham', age: 32, initials: 'NF' },
+        { name: 'Maximilian Beier', num: 17, club: 'Borussia Dortmund', age: 23, initials: 'MB' },
+      ],
+    }
+  },
+  england: {
+    culture: {
+      tradicion: 'Inglaterra inventó el fútbol moderno en el siglo XIX y lo exportó al mundo. El único título mundial de los ingleses llegó en casa en 1966, y desde entonces la nación aguarda con fervor una segunda conquista.',
+      gastronomia: 'El fish and chips, el English breakfast completo, el roast beef del domingo y el pub son pilares de la identidad británica. El té con leche es un ritual cotidiano que trasciende clases sociales.',
+      musica: 'Cuna de The Beatles, Rolling Stones, Queen, David Bowie y Adele. La escena musical inglesa ha definido el rock, el pop y el britpop que marcaron el siglo XX y sigue siendo referencia global.',
+      dato: 'Inglaterra llegó a la final de la Eurocopa 2021 y 2024, perdiendo ambas por penales. La selección lleva 60 años esperando su segundo título mayor, lo que la convierte en una de las historias más apasionantes del fútbol moderno.',
+    },
+    coach: { name: 'Thomas Tuchel', role: 'Director Técnico', since: 2025 },
+    staff: [
+      { name: 'Anthony Barry', role: 'Asistente Técnico' },
+      { name: 'Zsolt Löw', role: 'Asistente Técnico' },
+      { name: 'Dean Henderson', role: 'Entrenador de Arqueros' },
+      { name: 'Stuart Pearce', role: 'Asesor Técnico' },
+    ],
+    description: 'Los Leones llegan al Mundial 2026 con Jude Bellingham como su gran estrella y una plantilla repleta de talento de élite. Tras dos finales europeas perdidas, Inglaterra está más hambrienta que nunca de conquistar su segundo título mundial.',
+    colors: { primary: '#C8102E', secondary: '#FFFFFF', accent: '#012169' },
+    squad: {
+      'Porteros': [
+        { name: 'Jordan Pickford', num: 1, club: 'Everton', age: 32, initials: 'JP' },
+        { name: 'Aaron Ramsdale', num: 13, club: 'Southampton', age: 27, initials: 'AR' },
+        { name: 'Dean Henderson', num: 23, club: 'Crystal Palace', age: 28, initials: 'DH' },
+      ],
+      'Defensas': [
+        { name: 'Kyle Walker', num: 2, club: 'AC Milan', age: 35, initials: 'KW' },
+        { name: 'John Stones', num: 5, club: 'Manchester City', age: 31, initials: 'JS' },
+        { name: 'Harry Maguire', num: 6, club: 'Manchester United', age: 32, initials: 'HM' },
+        { name: 'Marc Guéhi', num: 15, club: 'Crystal Palace', age: 25, initials: 'MG' },
+        { name: 'Luke Shaw', num: 3, club: 'Manchester United', age: 30, initials: 'LS' },
+        { name: 'Trent Alexander-Arnold', num: 22, club: 'Real Madrid', age: 27, initials: 'TA' },
+      ],
+      'Mediocampistas': [
+        { name: 'Jude Bellingham', num: 10, club: 'Real Madrid', age: 22, initials: 'JB', star: true },
+        { name: 'Declan Rice', num: 4, club: 'Arsenal', age: 27, initials: 'DR', star: true },
+        { name: 'Phil Foden', num: 11, club: 'Manchester City', age: 26, initials: 'PF', star: true },
+        { name: 'Conor Gallagher', num: 13, club: 'Atlético Madrid', age: 26, initials: 'CG' },
+        { name: 'Kobbie Mainoo', num: 26, club: 'Manchester United', age: 21, initials: 'KM' },
+        { name: 'Adam Wharton', num: 16, club: 'Crystal Palace', age: 21, initials: 'AW' },
+      ],
+      'Delanteros': [
+        { name: 'Harry Kane', num: 9, club: 'Bayern Munich', age: 32, initials: 'HK', star: true },
+        { name: 'Bukayo Saka', num: 7, club: 'Arsenal', age: 24, initials: 'BS', star: true },
+        { name: 'Marcus Rashford', num: 19, club: 'Aston Villa', age: 28, initials: 'MR' },
+        { name: 'Cole Palmer', num: 20, club: 'Chelsea', age: 23, initials: 'CP' },
+        { name: 'Anthony Gordon', num: 24, club: 'Newcastle', age: 24, initials: 'AG' },
+        { name: 'Ollie Watkins', num: 21, club: 'Aston Villa', age: 30, initials: 'OW' },
+      ],
+    }
+  },
 };
 
 // ============================================================
