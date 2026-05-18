@@ -79,13 +79,8 @@ const BRAND_COLORS = {
 function UniformCard({ team, uniformData, tweaks }) {
   const [hover, setHover] = useState(false);
   const radius = tweaks.roundedCards ? 16 : 0;
-  const dark = tweaks.darkMode;
-
   const ud = uniformData || {};
-  const initials = (ud.celebName || '').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-
-  // Use team's gradient colors for background tint
-  const gradColors = BRAND_COLORS[ud.brand] || { a: '#111', b: '#222' };
+  const gradColors = BRAND_COLORS[ud.brand] || { a: '#1a1a2e', b: '#16213e' };
 
   return (
     <div
@@ -95,74 +90,37 @@ function UniformCard({ team, uniformData, tweaks }) {
         borderRadius: radius,
         overflow: 'hidden',
         cursor: 'pointer',
-        aspectRatio: '3/4',
-        transform: hover ? 'translateY(-6px) scale(1.02)' : 'translateY(0) scale(1)',
-        transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
-        boxShadow: hover ? '0 20px 48px rgba(0,0,0,0.4)' : '0 2px 16px rgba(0,0,0,0.18)',
+        height: 'clamp(220px, 26vw, 320px)',
+        background: `linear-gradient(145deg, ${gradColors.a}, ${gradColors.b})`,
+        transform: hover ? 'translateY(-4px) scale(1.02)' : 'translateY(0) scale(1)',
+        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+        boxShadow: hover ? '0 16px 40px rgba(0,0,0,0.35)' : '0 2px 12px rgba(0,0,0,0.15)',
       }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {/* Background: jersey image if available, else team image from carousel */}
-      {(ud.jerseyImg || team?.image) ? (
-        <img
-          src={ud.jerseyImg || team.image.replace('w=400&h=530', 'w=600&h=800')}
-          alt=""
-          style={{
-            position: 'absolute', inset: 0, width: '100%', height: '100%',
-            objectFit: ud.jerseyImg && ud.jerseyImg.endsWith('.webp') ? 'contain' : 'cover',
-            objectPosition: 'top center',
-            padding: ud.jerseyImg && ud.jerseyImg.endsWith('.webp') ? '8px' : 0,
-            willChange: 'transform', backfaceVisibility: 'hidden',
-          }}
-          loading="lazy"
-        />
-      ) : (
-        <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(145deg, ${gradColors.a}, ${gradColors.b})` }} />
-      )}
-
-      {/* Color overlay using team gradient */}
-      <div style={{ position: 'absolute', inset: 0, background: team?.gradient || 'linear-gradient(145deg, #111, #333)', mixBlendMode: 'multiply', opacity: 0.55 }} />
-
-      {/* Bottom dark gradient */}
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.2) 55%, transparent 100%)' }} />
-
-      {/* Top badges */}
-      <div style={{ position: 'absolute', top: 12, left: 0, right: 0, display: 'flex', justifyContent: 'space-between', padding: '0 14px', zIndex: 5 }}>
-        <span style={{
-          fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 10,
-          textTransform: 'uppercase', letterSpacing: 2, color: 'rgba(255,255,255,0.55)',
-          background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(6px)',
-          padding: '4px 10px', borderRadius: tweaks.roundedCards ? 999 : 2,
-        }}>Grupo {ud.group}</span>
-        <span style={{
-          fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 10,
-          textTransform: 'uppercase', letterSpacing: 1.5, color: 'rgba(255,255,255,0.7)',
-          background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(6px)',
-          padding: '4px 10px', borderRadius: tweaks.roundedCards ? 999 : 2,
-        }}>{ud.brand}</span>
-      </div>
-
-      {/* Flag emoji watermark */}
+      {/* Flag watermark */}
       <div style={{
-        position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%, -50%)',
-        fontSize: 80, opacity: hover ? 0.06 : 0.1, pointerEvents: 'none',
-        transition: 'opacity 0.3s ease', userSelect: 'none',
+        position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: 72, opacity: 0.08, pointerEvents: 'none', userSelect: 'none',
       }}>
         {team?.flag || '⚽'}
       </div>
 
-      {/* Bottom content */}
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '0 16px 16px', zIndex: 5 }}>
-        {/* Hover detail */}
-        <div style={{
-          fontFamily: "'Barlow', sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.4)',
-          marginTop: 4, opacity: hover ? 1 : 0, transform: hover ? 'translateY(0)' : 'translateY(4px)',
-          transition: 'all 0.25s ease', lineHeight: 1.4,
-        }}>
-          Uniforme oficial · Mundial 2026
-        </div>
-      </div>
+      {/* Jersey image */}
+      {(ud.jerseyImg || team?.image) && (
+        <img
+          src={ud.jerseyImg || team.image}
+          alt=""
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%',
+            objectFit: 'contain', objectPosition: 'center',
+            transition: 'transform 0.3s ease',
+            transform: hover ? 'scale(1.05)' : 'scale(1)',
+          }}
+          loading="lazy"
+        />
+      )}
     </div>
   );
 }
@@ -172,6 +130,7 @@ function UniformCard({ team, uniformData, tweaks }) {
 // ============================================================
 function WCUniformsPage({ tweaks, onBack }) {
   const [activeGroup, setActiveGroup] = useState('all');
+  const [activeBrand, setActiveBrand] = useState('all');
   const [search, setSearch] = useState('');
   const dark = tweaks.darkMode;
   const bg = dark ? '#0A0A12' : '#FAFAFA';
@@ -184,9 +143,11 @@ function WCUniformsPage({ tweaks, onBack }) {
   const teamById = Object.fromEntries(ALL_TEAMS.map(t => [t.id, t]));
 
   const groups = ['all', ...Array.from(new Set(UNIFORMS_DATA.map(u => u.group))).sort()];
+  const brands = ['all', ...Array.from(new Set(UNIFORMS_DATA.map(u => u.brand).filter(Boolean))).sort()];
 
   const filtered = UNIFORMS_DATA.filter(ud => {
     if (activeGroup !== 'all' && ud.group !== activeGroup) return false;
+    if (activeBrand !== 'all' && ud.brand !== activeBrand) return false;
     if (search) {
       const team = teamById[ud.id];
       const q = search.toLowerCase();
@@ -253,46 +214,69 @@ function WCUniformsPage({ tweaks, onBack }) {
         background: dark ? 'rgba(10,10,18,0.92)' : 'rgba(250,250,250,0.92)',
         backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
         borderBottom: `1px solid ${dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
-        padding: '12px clamp(20px, 4vw, 48px)',
-        display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap',
+        padding: '10px clamp(20px, 4vw, 48px)',
+        display: 'flex', flexDirection: 'column', gap: 8,
       }}>
-        {/* Group tabs */}
-        <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', flex: 1 }}>
-          {groups.map(g => (
+        {/* Row 1: Group tabs + search */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', flex: 1 }}>
+            {groups.map(g => (
+              <button
+                key={g}
+                onClick={() => setActiveGroup(g)}
+                style={{
+                  fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 13,
+                  textTransform: 'uppercase', letterSpacing: 1, cursor: 'pointer',
+                  padding: '6px 14px', border: 'none',
+                  borderRadius: tweaks.roundedCards ? 999 : 4,
+                  background: activeGroup === g
+                    ? (tweaks.accentColor || '#00C4B3')
+                    : (dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'),
+                  color: activeGroup === g ? '#fff' : fgMuted,
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                {g === 'all' ? 'Todos' : `Gr. ${g}`}
+              </button>
+            ))}
+          </div>
+          <input
+            type="text"
+            placeholder="Buscar país, marca o jugador..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            style={{
+              fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 500,
+              background: dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)',
+              border: `1px solid ${dark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`,
+              borderRadius: tweaks.roundedCards ? 999 : 4,
+              padding: '8px 16px', color: fg, outline: 'none',
+              width: 'clamp(160px, 20vw, 260px)',
+            }}
+          />
+        </div>
+        {/* Row 2: Brand filter */}
+        <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+          {brands.map(b => (
             <button
-              key={g}
-              onClick={() => setActiveGroup(g)}
+              key={b}
+              onClick={() => setActiveBrand(b)}
               style={{
-                fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 13,
-                textTransform: 'uppercase', letterSpacing: 1, cursor: 'pointer',
-                padding: '6px 14px', border: 'none',
+                fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 11,
+                textTransform: 'uppercase', letterSpacing: 0.8, cursor: 'pointer',
+                padding: '4px 12px', border: 'none',
                 borderRadius: tweaks.roundedCards ? 999 : 4,
-                background: activeGroup === g
+                background: activeBrand === b
                   ? (tweaks.accentColor || '#00C4B3')
                   : (dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'),
-                color: activeGroup === g ? '#fff' : fgMuted,
+                color: activeBrand === b ? '#fff' : fgMuted,
                 transition: 'all 0.2s ease',
               }}
             >
-              {g === 'all' ? 'Todos' : `Gr. ${g}`}
+              {b === 'all' ? 'Todas las marcas' : b}
             </button>
           ))}
         </div>
-        {/* Search */}
-        <input
-          type="text"
-          placeholder="Buscar país, marca o jugador..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          style={{
-            fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 500,
-            background: dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)',
-            border: `1px solid ${dark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`,
-            borderRadius: tweaks.roundedCards ? 999 : 4,
-            padding: '8px 16px', color: fg, outline: 'none',
-            width: 'clamp(160px, 20vw, 260px)',
-          }}
-        />
       </section>
 
       {/* ===== COUNT ===== */}
