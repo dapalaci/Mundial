@@ -2616,6 +2616,27 @@ function WCTeamPage({ team, teamData, tweaks, onBack }) {
         )}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)' }}></div>
 
+        {/* Shield emblem */}
+        {(() => {
+          const OVR = { 'gb-sct': 'sc', 'gb-eng': 'en', uy: 'ur', pa: 'pn', za: 'zl' };
+          const NO = new Set(['cz','ba','ht','cw','ir','nz','cv','tn','eg','dz','at','cd']);
+          const code = OVR[team.flagCode] || team.flagCode;
+          if (NO.has(code) || team.id === 'usa') return null;
+          return (
+            <img
+              src={`assets/seleccion-${code}.webp`}
+              alt=""
+              style={{
+                position: 'absolute', right: 'clamp(20px, 5vw, 64px)', bottom: 'clamp(20px, 3vw, 36px)',
+                height: 'clamp(80px, 14vh, 130px)', width: 'auto',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.5))',
+                zIndex: 6, opacity: 0.92,
+              }}
+            />
+          );
+        })()}
+
         {/* Back button */}
         <button onClick={onBack} className="wc-back-btn" style={{
           position: 'absolute', top: 80, left: 'clamp(20px, 4vw, 48px)', zIndex: 10,
