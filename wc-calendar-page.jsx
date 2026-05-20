@@ -293,6 +293,32 @@ const TIMEZONE_OPTIONS = [
   { label: 'Buenos Aires (ART)', offset: 1 },
 ];
 
+const TEAM_FLAG_CODES = {
+  'México': 'mx', 'Sudáfrica': 'za', 'Rep. de Corea': 'kr', 'Rep. Checa': 'cz',
+  'Canadá': 'ca', 'Bosnia y Herz.': 'ba', 'Catar': 'qa', 'Suiza': 'ch',
+  'Brasil': 'br', 'Marruecos': 'ma', 'Haití': 'ht', 'Escocia': 'gb-sct',
+  'Estados Unidos': 'us', 'Paraguay': 'py', 'Australia': 'au', 'Turquía': 'tr',
+  'Alemania': 'de', 'Curazao': 'cw', 'Costa de Marfil': 'ci', 'Ecuador': 'ec',
+  'Países Bajos': 'nl', 'Japón': 'jp', 'Suecia': 'se', 'Túnez': 'tn',
+  'Bélgica': 'be', 'Egipto': 'eg', 'Irán': 'ir', 'Nueva Zelanda': 'nz',
+  'España': 'es', 'Cabo Verde': 'cv', 'Arabia Saudí': 'sa', 'Uruguay': 'uy',
+  'Francia': 'fr', 'Senegal': 'sn', 'Irak': 'iq', 'Noruega': 'no',
+  'Argentina': 'ar', 'Argelia': 'dz', 'Austria': 'at', 'Jordania': 'jo',
+  'Portugal': 'pt', 'RD Congo': 'cd', 'Uzbekistán': 'uz', 'Colombia': 'co',
+  'Inglaterra': 'gb-eng', 'Croacia': 'hr', 'Ghana': 'gh', 'Panamá': 'pa',
+};
+
+function TeamFlag({ name, emoji }) {
+  const code = TEAM_FLAG_CODES[name];
+  if (!code) return React.createElement('span', { style: { fontSize: 20, lineHeight: 1 } }, emoji);
+  return React.createElement('img', {
+    src: `https://flagcdn.com/w40/${code}.png`,
+    alt: name,
+    style: { width: 28, height: 20, objectFit: 'cover', borderRadius: 2, flexShrink: 0 },
+    onError: (e) => { e.currentTarget.style.display = 'none'; },
+  });
+}
+
 function adjustTime(timeStr, offsetHours) {
   const [h, m] = timeStr.split(':').map(Number);
   let newH = h + offsetHours;
@@ -435,11 +461,11 @@ function MatchRow({ match, tweaks, tzOffset }) {
       {/* Match info */}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-          <span style={{ fontSize: 20, lineHeight: 1 }}>{match.homeFlag}</span>
+          <TeamFlag name={match.home} emoji={match.homeFlag} />
           <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 15, color: dark ? '#fff' : '#111', textTransform: 'uppercase', lineHeight: 1.2 }}>{match.home}</span>
           <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 12, fontWeight: 400, color: dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)' }}>vs</span>
+          <TeamFlag name={match.away} emoji={match.awayFlag} />
           <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 15, color: dark ? '#fff' : '#111', textTransform: 'uppercase', lineHeight: 1.2 }}>{match.away}</span>
-          <span style={{ fontSize: 20, lineHeight: 1 }}>{match.awayFlag}</span>
         </div>
         <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, color: dark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', marginTop: 3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{match.venue}</div>
       </div>
