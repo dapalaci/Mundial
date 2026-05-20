@@ -384,8 +384,9 @@ function WCCalendarPage({ tweaks, onBack }) {
           {/* Timezone selector */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={fgM} strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 12, fontWeight: 600, color: fgM, textTransform: 'uppercase', letterSpacing: 1 }}>Zona horaria</span>
             <select value={tz} onChange={e => setTz(Number(e.target.value))}
-              style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 500, padding: '6px 12px', borderRadius: tweaks.roundedCards ? 8 : 4, border: `1px solid ${dark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)'}`, background: dark ? 'rgba(255,255,255,0.05)' : '#fff', color: fg, outline: 'none', cursor: 'pointer' }}>
+              style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 16, fontWeight: 600, padding: '8px 16px', borderRadius: tweaks.roundedCards ? 8 : 4, border: `1px solid ${dark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.15)'}`, background: dark ? 'rgba(255,255,255,0.07)' : '#fff', color: fg, outline: 'none', cursor: 'pointer', minWidth: 200 }}>
               {TIMEZONE_OPTIONS.map((t, i) => (
                 <option key={i} value={t.offset}>{t.label}</option>
               ))}
@@ -451,8 +452,8 @@ function MatchRow({ match, tweaks, tzOffset }) {
 
       {/* Time */}
       <div style={{ flexShrink: 0, minWidth: 60, textAlign: 'center' }}>
-        <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 20, color: dark ? '#fff' : '#111', lineHeight: 1 }}>{adjustedTime}</div>
-        <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 9, color: dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)', textTransform: 'uppercase', letterSpacing: 1, marginTop: 2 }}>{TIMEZONE_OPTIONS.find(t => t.offset === tzOffset)?.label.split(' ')[0] || 'ET'}</div>
+        <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 26, color: dark ? '#fff' : '#111', lineHeight: 1 }}>{adjustedTime}</div>
+        <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, color: dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)', textTransform: 'uppercase', letterSpacing: 1, marginTop: 3 }}>{TIMEZONE_OPTIONS.find(t => t.offset === tzOffset)?.label.split(' ')[0] || 'ET'}</div>
       </div>
 
       {/* Divider */}
@@ -460,14 +461,14 @@ function MatchRow({ match, tweaks, tzOffset }) {
 
       {/* Match info */}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <TeamFlag name={match.home} emoji={match.homeFlag} />
-          <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 15, color: dark ? '#fff' : '#111', textTransform: 'uppercase', lineHeight: 1.2 }}>{match.home}</span>
-          <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 12, fontWeight: 400, color: dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)' }}>vs</span>
+          <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 20, color: dark ? '#fff' : '#111', textTransform: 'uppercase', lineHeight: 1.2 }}>{match.home}</span>
+          <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 400, color: dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)' }}>vs</span>
           <TeamFlag name={match.away} emoji={match.awayFlag} />
-          <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 15, color: dark ? '#fff' : '#111', textTransform: 'uppercase', lineHeight: 1.2 }}>{match.away}</span>
+          <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 20, color: dark ? '#fff' : '#111', textTransform: 'uppercase', lineHeight: 1.2 }}>{match.away}</span>
         </div>
-        <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, color: dark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', marginTop: 3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{match.venue}</div>
+        <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 12, color: dark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{match.venue}</div>
       </div>
 
       {/* Badges */}
