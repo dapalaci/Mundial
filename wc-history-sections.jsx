@@ -23,7 +23,7 @@ function UniformesHeroCard({ tweaks, onClick }) {
     >
       {/* Background image */}
       <img
-        src="images/uniformes-celebs.png"
+        src="assets/uniformes.webp"
         alt="Uniformes oficiales"
         style={{
           position: 'absolute', inset: 0, width: '100%', height: '100%',
