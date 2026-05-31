@@ -16,14 +16,14 @@ const VENUE_DETAILS = {
     ],
     stadiums: [
       { name: 'MetLife Stadium', city: 'East Rutherford, NJ', capacity: '82,500', matches: 'Final, Semifinal', image: 'assets/NEW-JERSEY-UNITED-STATES-JULY-13-A-view-of-the-stadium-as-Ch (1).jpeg', highlight: true },
-      { name: 'SoFi Stadium', city: 'Los Ángeles, CA', capacity: '70,240', matches: 'Semifinal, Cuartos', image: null, highlight: false },
-      { name: 'Hard Rock Stadium', city: 'Miami, FL', capacity: '64,767', matches: 'Tercero, Cuartos', image: null, highlight: false },
+      { name: 'SoFi Stadium', city: 'Los Ángeles, CA', capacity: '70,240', matches: 'Semifinal, Cuartos', image: 'assets/Los-Angeles-3840-x-2160-2.jpeg', highlight: false },
+      { name: 'Hard Rock Stadium', city: 'Miami, FL', capacity: '64,767', matches: 'Tercero, Cuartos', image: 'assets/Miami-3840-x-2160-2.jpeg', highlight: false },
       { name: 'AT&T Stadium', city: 'Dallas, TX', capacity: '80,000', matches: 'Cuartos, Fase de Grupos', image: 'assets/FWC-26-Stadiums-AT-T-Dallas (1).jpeg', highlight: false },
       { name: 'NRG Stadium', city: 'Houston, TX', capacity: '72,220', matches: 'Fase de Grupos', image: 'assets/FWC-2026-Stadium-Houston-NRG-stadium (1).jpeg', highlight: false },
       { name: 'Mercedes-Benz Stadium', city: 'Atlanta, GA', capacity: '71,000', matches: 'Fase de Grupos', image: null, highlight: false },
-      { name: 'Lincoln Financial Field', city: 'Filadelfia, PA', capacity: '69,176', matches: 'Fase de Grupos', image: null, highlight: false },
-      { name: 'Lumen Field', city: 'Seattle, WA', capacity: '69,000', matches: 'Fase de Grupos', image: null, highlight: false },
-      { name: "Levi's Stadium", city: 'Santa Clara, CA', capacity: '68,500', matches: 'Fase de Grupos', image: null, highlight: false },
+      { name: 'Lincoln Financial Field', city: 'Filadelfia, PA', capacity: '69,176', matches: 'Fase de Grupos', image: 'assets/Philadelphia-3840-x-2160-1.jpeg', highlight: false },
+      { name: 'Lumen Field', city: 'Seattle, WA', capacity: '69,000', matches: 'Fase de Grupos', image: 'assets/Seattle-3840-x-2160-1.jpeg', highlight: false },
+      { name: "Levi's Stadium", city: 'Santa Clara, CA', capacity: '68,500', matches: 'Fase de Grupos', image: "assets/FWWC-Stadiums (1).jpeg", highlight: false },
       { name: 'GEHA Field at Arrowhead', city: 'Kansas City, MO', capacity: '76,416', matches: 'Fase de Grupos', image: 'assets/FWWC-2023-Arrowhead-Stadium (1).jpeg', highlight: false },
       { name: 'Gillette Stadium', city: 'Foxborough, MA', capacity: '65,878', matches: 'Fase de Grupos', image: 'assets/FWC-stadiums-Boston-Gillette (1).jpeg', highlight: false },
     ],
@@ -56,7 +56,7 @@ const VENUE_DETAILS = {
     ],
     stadiums: [
       { name: 'BMO Field', city: 'Toronto', capacity: '45,736', matches: 'Fase de Grupos', image: 'assets/FIFA-2026-World-Cup-stadium-BMO-Field (1).jpeg', highlight: true },
-      { name: 'BC Place', city: 'Vancouver', capacity: '54,500', matches: 'Fase de Grupos', image: null, highlight: false },
+      { name: 'BC Place', city: 'Vancouver', capacity: '54,500', matches: 'Fase de Grupos', image: 'assets/Vancouver-3840-x-2160-2.jpeg', highlight: false },
     ],
   },
 };
