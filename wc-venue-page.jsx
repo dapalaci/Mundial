@@ -7,12 +7,12 @@ const VENUE_DETAILS = {
   usa: {
     description: 'Estados Unidos albergará la mayoría de los partidos del Mundial 2026, incluyendo la Final. Con 11 ciudades sede repartidas por todo el país, los aficionados podrán disfrutar de la diversidad cultural y geográfica americana.',
     galleryPhotos: [
-      { src: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f04?w=700&h=460&fit=crop&q=80', caption: 'Skyline de Nueva York' },
-      { src: 'https://images.unsplash.com/photo-1534190239940-9ba8944ea261?w=700&h=460&fit=crop&q=80', caption: 'Los Ángeles al atardecer' },
-      { src: 'https://images.unsplash.com/photo-1506966953602-c20cc11f75e3?w=700&h=460&fit=crop&q=80', caption: 'Miami Beach' },
-      { src: 'https://images.unsplash.com/photo-1531971589569-0d9370cbe1e5?w=700&h=460&fit=crop&q=80', caption: 'Golden Gate, San Francisco' },
-      { src: 'https://images.unsplash.com/photo-1470004914212-05527e49370b?w=700&h=460&fit=crop&q=80', caption: 'Dallas, Texas' },
-      { src: 'https://images.unsplash.com/photo-1575361204480-aadea25e6e68?w=700&h=460&fit=crop&q=80', caption: 'Seattle de noche' },
+      { src: 'assets/New-York-New-Jersey-3840-x-2160-2.jpeg', caption: 'Skyline de Nueva York' },
+      { src: 'assets/Los-Angeles-3840-x-2160-2.jpeg', caption: 'Los Ángeles al atardecer' },
+      { src: 'assets/Miami-3840-x-2160-2.jpeg', caption: 'Miami Beach' },
+      { src: 'assets/San-Francisco-Bay-Area-3840-x-2160-1.png', caption: 'Golden Gate, San Francisco' },
+      { src: 'assets/Kansas-City-3840-x-2160-2.jpeg', caption: 'Kansas City, Missouri' },
+      { src: 'assets/Seattle-3840-x-2160-1.jpeg', caption: 'Seattle de noche' },
     ],
     stadiums: [
       { name: 'MetLife Stadium', city: 'East Rutherford, NJ', capacity: '82,500', matches: 'Final, Semifinal', image: 'assets/NEW-JERSEY-UNITED-STATES-JULY-13-A-view-of-the-stadium-as-Ch (1).jpeg', highlight: true },
@@ -31,10 +31,10 @@ const VENUE_DETAILS = {
   mexico: {
     description: 'México será sede del Mundial por tercera vez en su historia, tras 1970 y 1986. Tres ciudades emblemáticas acogerán partidos, incluyendo el legendario Estadio Azteca — el único estadio que habrá albergado tres Copas del Mundo.',
     galleryPhotos: [
-      { src: 'https://images.unsplash.com/photo-1585464231875-d9ef1f5ad396?w=700&h=460&fit=crop&q=80', caption: 'Ángel de la Independencia, CDMX' },
-      { src: 'https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=700&h=460&fit=crop&q=80', caption: 'Palacio de Bellas Artes' },
-      { src: 'https://images.unsplash.com/photo-1512813195386-6cf811ad3542?w=700&h=460&fit=crop&q=80', caption: 'Guadalajara, Jalisco' },
-      { src: 'https://images.unsplash.com/photo-1570737543098-0c80a3fd4a2d?w=700&h=460&fit=crop&q=80', caption: 'Monterrey y el Cerro de la Silla' },
+      { src: 'assets/Mexico-City-3840-x-2160-1.jpeg', caption: 'Ciudad de México' },
+      { src: 'assets/MEXICO-CITY-MEXICO-MAY-30-Aerial-view-of-Azteca-stadium-prio (1).jpeg', caption: 'Estadio Azteca, CDMX' },
+      { src: 'assets/FIFA-World-Cup-Stadium-Estadio-Akron (1).jpeg', caption: 'Estadio Akron, Guadalajara' },
+      { src: 'assets/FIFA-World-Cup-Stadium-Estadio-BBVA (1).jpeg', caption: 'Estadio BBVA, Monterrey' },
       { src: 'https://images.unsplash.com/photo-1547995886-6dc09384c6e6?w=700&h=460&fit=crop&q=80', caption: 'Cultura y tradición mexicana' },
       { src: 'https://images.unsplash.com/photo-1606567595334-d39972c85dbe?w=700&h=460&fit=crop&q=80', caption: 'Gastronomía mexicana' },
     ],
@@ -47,10 +47,10 @@ const VENUE_DETAILS = {
   canada: {
     description: 'Canadá será sede de un Mundial de fútbol por primera vez en su historia. Toronto y Vancouver, dos de las ciudades más vibrantes del país, acogerán partidos de fase de grupos en estadios de primer nivel.',
     galleryPhotos: [
-      { src: 'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=700&h=460&fit=crop&q=80', caption: 'Montañas Rocosas canadienses' },
-      { src: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?w=700&h=460&fit=crop&q=80', caption: 'Toronto skyline' },
-      { src: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?w=700&h=460&fit=crop&q=80', caption: 'Vancouver y las montañas' },
-      { src: 'https://images.unsplash.com/photo-1551524559-8af4e6624178?w=700&h=460&fit=crop&q=80', caption: 'CN Tower, Toronto' },
+      { src: 'assets/Northern-Lights-FWC-26 (1).jpeg', caption: 'Luces del Norte, Canadá' },
+      { src: 'assets/Toronto-3840-x-2160-2.jpeg', caption: 'Toronto skyline' },
+      { src: 'assets/Vancouver-3840-x-2160-2.jpeg', caption: 'Vancouver y las montañas' },
+      { src: 'assets/FIFA-2026-World-Cup-stadium-BMO-Field (1).jpeg', caption: 'BMO Field, Toronto' },
       { src: 'https://images.unsplash.com/photo-1507992781348-310259076fe0?w=700&h=460&fit=crop&q=80', caption: 'Naturaleza canadiense' },
       { src: 'https://images.unsplash.com/photo-1542704792-e30dac463c90?w=700&h=460&fit=crop&q=80', caption: 'Otoño en Canadá' },
     ],
