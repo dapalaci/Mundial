@@ -5,102 +5,102 @@ const { useState, useEffect, useCallback } = React;
 // ============================================================
 const WC_HISTORY = [
   { year: 1930, host: 'Uruguay',      champion: 'Uruguay',   runnerUp: 'Argentina',      color: '#0038A8', logo: 'assets/world-cup-1930-footylogos.svg',
-    image: 'https://images.unsplash.com/photo-1615236490988-ec5970e3e78e?w=900&h=500&fit=crop&q=80',
+    image: 'assets/historia-1930.webp',
     desc: 'El primer Mundial de la historia se celebró en Uruguay, con solo 13 equipos participantes. Uruguay ganó la final 4-2 ante Argentina en el Estadio Centenario de Montevideo ante 93,000 espectadores.' },
 
   { year: 1934, host: 'Italia',        champion: 'Italia',    runnerUp: 'Checoslovaquia', color: '#009246', logo: 'assets/world-cup-1934-footylogos.svg',
-    image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=900&h=500&fit=crop&q=80',
+    image: 'assets/historia-1934.webp',
     desc: 'Italia organizó y ganó su primer título en un torneo marcado por la propaganda fascista de Mussolini. Fue el primer Mundial con fase clasificatoria y el primero transmitido por radio.' },
 
   { year: 1938, host: 'Francia',       champion: 'Italia',    runnerUp: 'Hungría',        color: '#002654', logo: 'assets/world-cup-1938-footylogos.svg',
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=900&h=500&fit=crop&q=80',
+    image: 'assets/historia-1938.webp',
     desc: 'Italia revalidó su título en Francia, convirtiéndose en el primer bicampeón. El torneo se jugó bajo la sombra de la inminente Segunda Guerra Mundial, que suspendería el Mundial hasta 1950.' },
 
   { year: 1950, host: 'Brasil',        champion: 'Uruguay',   runnerUp: 'Brasil',         color: '#006B2D', logo: 'assets/world-cup-1950-footylogos.svg',
-    image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=900&h=500&fit=crop&q=80',
+    image: 'assets/historia-1950.webp',
     desc: 'El "Maracanazo": Uruguay derrotó a Brasil 2-1 en la final disputada ante 200,000 personas en el Maracanã. Es considerada la mayor sorpresa en la historia del fútbol.' },
 
   { year: 1954, host: 'Suiza',         champion: 'Alemania',  runnerUp: 'Hungría',        color: '#D52B1E', logo: 'assets/world-cup-1954-footylogos.svg',
-    image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=900&h=500&fit=crop&q=80',
+    image: 'assets/historia-1954.webp',
     desc: 'El "Milagro de Berna": Alemania venció 3-2 a la favorita Hungría en la final. Hungría llegó invicta en 4 años y lideraba 2-0. Esta victoria fue clave para la reconstrucción moral de Alemania.' },
 
   { year: 1958, host: 'Suecia',        champion: 'Brasil',    runnerUp: 'Suecia',         color: '#006AA7', logo: 'assets/world-cup-1958-footylogos.svg',
-    image: 'assets/Pele-scores-the-3-1-goal-past-Swedens-Orvar-Bergmark-at-Swed (1).jpeg',
+    image: 'assets/historia-1958.webp',
     photo: 'Pelé marca el 3-1 ante el portero sueco Orvar Bergmark en la Final del Mundial de Suecia 1958',
     desc: 'Un joven Pelé de 17 años deslumbró al mundo. Brasil ganó su primer título con un fútbol revolucionario, venciendo 5-2 a Suecia en la final. Nació la leyenda del "jogo bonito".' },
 
   { year: 1962, host: 'Chile',         champion: 'Brasil',    runnerUp: 'Checoslovaquia', color: '#D52B1E', logo: 'assets/world-cup-1962-footylogos.svg',
-    image: 'assets/1962-World-Cup-Brazil-v-Czechoslovakia-Vava-of-Brazil-scores (1).jpeg',
+    image: 'assets/historia-1962.webp',
     photo: 'Vavá de Brasil marca ante Checoslovaquia en la Final del Mundial de Chile 1962',
     desc: 'Brasil revalidó su título sin Pelé, lesionado en la fase de grupos. Garrincha se convirtió en la estrella del torneo. El Mundial se celebró pese a un devastador terremoto en 1960.' },
 
   { year: 1966, host: 'Inglaterra',    champion: 'Inglaterra',runnerUp: 'Alemania',       color: '#C8102E', logo: 'assets/world-cup-1966-footylogos.svg',
-    image: 'assets/Sport-Football-pic-30th-July-1966-1966-World-Cup-Final-at-We (1).jpeg',
+    image: 'assets/historia-1966.webp',
     photo: 'La Final del Mundial de 1966 en Wembley entre Inglaterra y Alemania Occidental, 30 de julio de 1966',
     desc: 'Inglaterra ganó su único título con el polémico "gol fantasma" de Geoff Hurst en la prórroga. Hurst anotó un hat-trick en la final, hazaña única en una final mundialista.' },
 
   { year: 1970, host: 'México',        champion: 'Brasil',    runnerUp: 'Italia',         color: '#006847', logo: 'assets/world-cup-1970-footballlogos-org.svg',
-    image: 'https://images.unsplash.com/photo-1585464231875-d9ef1f5ad396?w=900&h=500&fit=crop&q=80',
+    image: 'assets/historia-1970.webp',
     desc: 'Considerado el mejor Mundial de la historia. Brasil de Pelé, Jairzinho, Rivelino y Tostão jugó el fútbol más bello jamás visto. Ganaron la final 4-1 ante Italia y se quedaron con la Copa Jules Rimet.' },
 
   { year: 1974, host: 'Alemania',      champion: 'Alemania',  runnerUp: 'Países Bajos',   color: '#1A1A1A', logo: 'assets/world-cup-1974-footballlogos-org.svg',
-    image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=900&h=500&fit=crop&q=80',
+    image: 'assets/historia-1974.webp',
     desc: 'La "Naranja Mecánica" de Johan Cruyff revolucionó el fútbol con el "fútbol total", pero Alemania ganó la final 2-1. Beckenbauer levantó la copa como capitán en Múnich.' },
 
   { year: 1978, host: 'Argentina',     champion: 'Argentina', runnerUp: 'Países Bajos',   color: '#75AADB', logo: 'assets/world-cup-1978-footballlogos-org.svg',
-    image: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=900&h=500&fit=crop&q=80',
+    image: 'assets/historia-1978.webp',
     desc: 'Argentina ganó su primer Mundial como local en medio de una dictadura militar. Mario Kempes fue la estrella con 6 goles. El confeti del Monumental se convirtió en imagen icónica.' },
 
   { year: 1982, host: 'España',        champion: 'Italia',    runnerUp: 'Alemania',       color: '#AA151B', logo: 'assets/world-cup-1982-footballlogos-org.svg',
-    image: 'assets/Marco-Tardeill-celebrates-scoring-for-Italy-against-West-Ger (1).jpeg',
+    image: 'assets/historia-1982.webp',
     photo: 'Marco Tardelli celebra con el famoso "grito Tardelli" su gol ante Alemania Occidental en la Final de España 1982',
     desc: 'Italia, liderada por Paolo Rossi (Bota de Oro con 6 goles), ganó su tercer título tras eliminar a Brasil y Alemania. El torneo amplió su formato a 24 equipos por primera vez.' },
 
   { year: 1986, host: 'México',        champion: 'Argentina', runnerUp: 'Alemania',       color: '#006847', logo: 'assets/world-cup-1986-footballlogos-org.svg',
-    image: 'assets/79647699 (1).jpeg',
+    image: 'assets/historia-1986.webp',
     photo: 'Diego Maradona lidera a Argentina en el Mundial de México 1986',
     desc: 'El Mundial de Maradona. La "Mano de Dios" y el "Gol del Siglo" contra Inglaterra son los momentos más memorables. Argentina ganó su segundo título con Diego como figura indiscutible.' },
 
   { year: 1990, host: 'Italia',        champion: 'Alemania',  runnerUp: 'Argentina',      color: '#009246', logo: 'assets/world-cup-1990-footballlogos-org.svg',
-    image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=900&h=500&fit=crop&q=80',
+    image: 'assets/historia-1990.webp',
     desc: 'Conocido como "Italia 90" y sus "Noches Mágicas". Alemania se vengó de Argentina en la final más aburrida (1-0 con penal). Camerún de Roger Milla fue la gran sorpresa del torneo.' },
 
   { year: 1994, host: 'Estados Unidos',champion: 'Brasil',    runnerUp: 'Italia',         color: '#002868', logo: 'assets/world-cup-1994-footballlogos-org.svg',
-    image: 'assets/Italy-s-Roberto-Baggio-hangs-his-head-as-Brazil-s-Taffarel-c (1).jpeg',
+    image: 'assets/historia-1994.webp',
     photo: 'Roberto Baggio cabizbajo tras fallar el penal decisivo ante Brasil en la Final de EE.UU. 1994',
     desc: 'La primera final decidida por penales: Brasil venció a Italia. La imagen de Roberto Baggio fallando el penal decisivo es icónica. Romário fue el mejor jugador del torneo.' },
 
   { year: 1998, host: 'Francia',       champion: 'Francia',   runnerUp: 'Brasil',         color: '#002654', logo: 'assets/world-cup-1998-footballlogos-org.svg',
-    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=900&h=500&fit=crop&q=80',
+    image: 'assets/historia-1998.webp',
     desc: 'Francia ganó su primer título como local con Zidane anotando dos cabezazos en la final (3-0 a Brasil). El misterio de la convulsión de Ronaldo antes de la final sigue sin resolverse.' },
 
   { year: 2002, host: 'Corea/Japón',   champion: 'Brasil',    runnerUp: 'Alemania',       color: '#C60C30', logo: 'assets/world-cup-2002-footballlogos-org.svg',
-    image: 'assets/Ronaldo-scored-in-the-2002-FIFA-World-Cup-final (1).jpeg',
+    image: 'assets/historia-2002.webp',
     photo: 'Ronaldo celebra su gol en la Final del Mundial de Corea/Japón 2002 ante Alemania',
     desc: 'El primer Mundial en Asia y coorganizado por dos países. Ronaldo se redimió con 8 goles y Brasil ganó su quinto título (2-0 a Alemania). Corea del Sur llegó a semifinales en una hazaña histórica.' },
 
   { year: 2006, host: 'Alemania',      champion: 'Italia',    runnerUp: 'Francia',        color: '#1A1A1A', logo: 'assets/world-cup-2006-footballlogos-org.svg',
-    image: 'assets/FIFAPLS_100EXTHL_2006ITAvFRA_TMB (1).jpeg',
+    image: 'assets/historia-2006.webp',
     photo: 'Italia vs Francia en la Final del Mundial de Alemania 2006',
     desc: 'La final recordada por el cabezazo de Zidane a Materazzi. Italia ganó por penales tras el 1-1. Fue el adiós de Zidane y el nacimiento de las Fan Fests oficiales.' },
 
   { year: 2010, host: 'Sudáfrica',     champion: 'España',    runnerUp: 'Países Bajos',   color: '#AA151B', logo: 'assets/world-cup-2010-footballlogos-org.svg',
-    image: 'assets/Andres-Iniesta-celebrates-scoring-for-Spain-in-the-South-Afr (1).jpeg',
+    image: 'assets/historia-2010.webp',
     photo: 'Andrés Iniesta celebra el gol de la victoria de España en la Final de Sudáfrica 2010 ante Países Bajos',
     desc: 'El primer Mundial africano. España ganó su primer título con el gol de Iniesta en la prórroga de la final. El tiki-taka español conquistó el mundo al son de las vuvuzelas.' },
 
   { year: 2014, host: 'Brasil',        champion: 'Alemania',  runnerUp: 'Argentina',      color: '#006B2D', logo: 'assets/world-cup-2014-footballlogos-org.svg',
-    image: 'assets/Mario-Gotze-of-Germany-scores-his-team-s-first-goal-past-Ser (1).jpeg',
+    image: 'assets/historia-2014.webp',
     photo: 'Mario Götze marca el gol de la victoria para Alemania ante Argentina en la Final de Brasil 2014',
     desc: 'El histórico 7-1 de Alemania a Brasil en semifinales, el "Mineirazo". Alemania ganó la final 1-0 con gol de Götze en la prórroga ante Argentina. James Rodríguez fue Bota de Oro.' },
 
   { year: 2018, host: 'Rusia',         champion: 'Francia',   runnerUp: 'Croacia',        color: '#002654', logo: 'assets/world-cup-2018-footballlogos-org.svg',
-    image: 'assets/France-v-Croatia-2018-FIFA-World-Cup-Russia-Final (1).jpeg',
+    image: 'assets/historia-2018.webp',
     photo: 'Francia vs Croacia en la Final del Mundial de Rusia 2018 — Francia campeón 4-2',
     desc: 'Francia ganó su segundo título con una generación dorada liderada por Mbappé. Croacia, con solo 4 millones de habitantes, llegó a su primera final. El VAR se usó por primera vez.' },
 
   { year: 2022, host: 'Catar',         champion: 'Argentina', runnerUp: 'Francia',        color: '#8D1B3D', logo: 'assets/world-cup-2022-footballlogos-org.svg',
-    image: 'assets/Argentina-v-France-Final-FIFA-World-Cup-Qatar-2022 (1).jpeg',
+    image: 'assets/historia-2022.webp',
     photo: 'Argentina vs Francia en la mejor Final de la historia del fútbol — Mundial de Catar 2022',
     desc: 'La mejor final de la historia: Argentina 3-3 Francia (4-2 en penales). Messi ganó su anhelado Mundial a los 35 años. Mbappé anotó un hat-trick en la final. El primer Mundial invernal.' },
 ];
