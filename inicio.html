@@ -159,6 +159,10 @@
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 <script type="text/babel" src="wc-ui.jsx"></script>
 <script type="text/babel" src="wc-teams-carousel.jsx"></script>
+<script src="wc-team-data.js"></script>
+<script type="text/babel" src="wc-player-photo-card.jsx"></script>
+<script type="text/babel" src="wc-staff-card.jsx"></script>
+<script type="text/babel" src="wc-usa-banner.jsx"></script>
 <script type="text/babel" src="wc-team-page.jsx"></script>
 <script type="text/babel" src="wc-venue-page.jsx"></script>
 <script type="text/babel" src="wc-player-page.jsx"></script>
@@ -172,6 +176,7 @@
 <script type="text/babel" src="wc-finals-page.jsx"></script>
 <script type="text/babel" src="wc-calendar-page.jsx"></script>
 <script type="text/babel" src="wc-uniforms-page.jsx"></script>
+<script type="text/babel" src="wc-selections-page.jsx"></script>
 <script type="text/babel" src="wc-chatbot.jsx"></script>
 
 <!-- App -->
@@ -228,7 +233,8 @@ function App() {
         {activePage === 'historia' && <WCHistoryPage tweaks={tweaks} onBack={goBackToLanding} />}
         {activePage === 'finales' && <WCFinalsPage tweaks={tweaks} onBack={goBackToLanding} />}
         {activePage === 'calendario' && <WCCalendarPage tweaks={tweaks} onBack={goBackToLanding} />}
-        {activePage === 'uniformes' && <WCUniformsPage tweaks={tweaks} onBack={goBackToLanding} />}
+        {activePage === 'uniformes' && <WCUniformsPage tweaks={tweaks} onBack={goBackToLanding} onNavigate={handleHistoryNav} />}
+        {activePage === 'selecciones' && <WCSelectionsPage tweaks={tweaks} onBack={goBackToLanding} onTeamClick={handleTeamClick} />}
         <WCFooter tweaks={tweaks} />
         <WCSearchOverlay isOpen={searchOpen} onClose={closeSearch} />
         <WCChatbot tweaks={tweaks} />
