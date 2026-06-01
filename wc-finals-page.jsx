@@ -73,10 +73,9 @@ function FinalCard({ data, tweaks }) {
 
   return (
     <div style={{ borderRadius: r, overflow: 'hidden', border: `1px solid ${dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`, background: dark ? 'rgba(255,255,255,0.03)' : '#fff', transform: hover ? 'translateY(-3px)' : 'translateY(0)', transition: 'all 0.3s ease', boxShadow: hover ? '0 10px 28px rgba(0,0,0,0.14)' : 'none' }} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-      <div style={{ position: 'relative', height: 150, overflow: 'hidden' }}>
+      <div style={{ position: 'relative', height: 240, overflow: 'hidden' }}>
         <img src={data.image} alt="" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', transform: hover ? 'scale(1.05)' : 'scale(1)', transition: 'transform 0.5s ease' }} />
-        <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(145deg, ${data.color}cc, ${data.color}55)`, mixBlendMode: 'multiply' }}></div>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 50%)' }}></div>
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 55%)' }}></div>
         <div style={{ position: 'absolute', bottom: 12, left: 14, right: 14, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
           <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 32, color: '#fff' }}>{data.year}</span>
           {data.extra && <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 10, fontWeight: 600, background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(4px)', borderRadius: tweaks.roundedCards ? 999 : 2, padding: '3px 10px', color: '#fff', textTransform: 'uppercase', letterSpacing: 1 }}>{data.extra}</span>}
