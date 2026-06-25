@@ -347,17 +347,57 @@ function WCCardSection({ id, title, items, tweaks, onCardClick }) {
 // ============================================================
 // BANNER / QUOTE
 // ============================================================
-const UPCOMING_MATCHES = [
-  { date: '12 JUN', home: 'CAN', away: 'BIH', time: '15:00 ET' },
-  { date: '12 JUN', home: 'USA', away: 'PAR', time: '18:00 PT' },
-  { date: '13 JUN', home: 'QAT', away: 'SUI', time: '12:00 PT' },
-  { date: '13 JUN', home: 'BRA', away: 'MAR', time: '18:00 ET' },
-];
+const MONTHS_ES = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+const STAGE_LABELS_ES = {
+  GROUP_STAGE: 'Fase de grupos',
+  LAST_32: 'Ronda de 32',
+  LAST_16: 'Octavos',
+  QUARTER_FINALS: 'Cuartos',
+  SEMI_FINALS: 'Semifinal',
+  THIRD_PLACE: 'Tercer puesto',
+  FINAL: 'Final',
+};
 
-const RECENT_RESULTS = [
-  { home: 'KOR', homeScore: 0, away: 'CZE', awayScore: 0, date: 'EN JUEGO' },
-  { home: 'MEX', homeScore: 2, away: 'RSA', awayScore: 0, date: '11 JUN' },
-];
+// Transforma la respuesta de /api/fixtures en las listas del banner.
+// Función pura para poder probarla de forma aislada.
+function deriveBannerData(matches, now) {
+  const norm = (matches || []).map(m => ({
+    home: (m.homeTeam?.tla || m.homeTeam?.name || '???').toUpperCase(),
+    away: (m.awayTeam?.tla || m.awayTeam?.name || '???').toUpperCase(),
+    homeScore: m.score?.home,
+    awayScore: m.score?.away,
+    status: m.status,
+    stage: m.stage,
+    minute: m.minute,
+    when: new Date(m.date),
+  })).filter(m => !isNaN(m.when));
+
+  const isLive = s => s === 'IN_PLAY' || s === 'PAUSED';
+  const isDone = s => s === 'FINISHED';
+  const isNext = s => s === 'SCHEDULED' || s === 'TIMED';
+
+  const dateLabel = d => `${d.getDate()} ${MONTHS_ES[d.getMonth()]}`;
+  const timeLabel = d => `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+
+  const live = norm.filter(m => isLive(m.status)).sort((a, b) => b.when - a.when);
+  const done = norm.filter(m => isDone(m.status)).sort((a, b) => b.when - a.when);
+  const results = [...live, ...done].slice(0, 4).map(m => ({
+    home: m.home, away: m.away, homeScore: m.homeScore, awayScore: m.awayScore,
+    live: isLive(m.status),
+    label: isLive(m.status) ? (m.minute ? `${m.minute}'` : 'EN VIVO') : dateLabel(m.when),
+  }));
+
+  const upcoming = norm
+    .filter(m => isNext(m.status) && m.when >= now)
+    .sort((a, b) => a.when - b.when)
+    .slice(0, 4)
+    .map(m => ({ home: m.home, away: m.away, date: dateLabel(m.when), time: timeLabel(m.when) }));
+
+  const anyLive = live.length > 0;
+  const upcomingStage = upcoming.length ? (STAGE_LABELS_ES[norm.find(m => isNext(m.status))?.stage] || 'Calendario') : 'Calendario';
+
+  return { results, upcoming, anyLive, upcomingStage };
+}
 
 function BannerCard({ title, badge, badgeColor, children, tweaks }) {
   return (
@@ -402,6 +442,25 @@ function WCBanner({ tweaks }) {
     return () => window.removeEventListener('resize', h);
   }, []);
 
+  // Datos reales desde /api/fixtures (football-data.org con fallback en el backend).
+  const [feed, setFeed] = useState({ status: 'loading', results: [], upcoming: [], anyLive: false, upcomingStage: 'Calendario' });
+  useEffect(() => {
+    let alive = true;
+    const load = () => {
+      fetch('/api/fixtures')
+        .then(r => r.ok ? r.json() : Promise.reject(new Error('http ' + r.status)))
+        .then(data => {
+          if (!alive) return;
+          const derived = deriveBannerData(data.matches, new Date());
+          setFeed({ status: 'ready', ...derived });
+        })
+        .catch(() => { if (alive) setFeed(f => ({ ...f, status: 'error' })); });
+    };
+    load();
+    const id = setInterval(load, 60000); // refresca cada 60s (CDN cachea 60s)
+    return () => { alive = false; clearInterval(id); };
+  }, []);
+
   const rowStyle = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 0', borderBottom: '1px solid rgba(255,255,255,0.07)' };
   const codeStyle = { fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 14, color: '#fff' };
   const tagStyle = { fontFamily: "'Barlow', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.4)', fontWeight: 600 };
@@ -413,11 +472,20 @@ function WCBanner({ tweaks }) {
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(16px, 3vw, 36px)', maxWidth: 1200, marginInline: 'auto', position: 'relative', zIndex: 1 }}>
 
-        {/* LEFT: Próximos amistosos */}
+        {/* LEFT: Próximos partidos (datos reales) */}
         {wide && (
-          <BannerCard title="Próximos partidos" badge="Fase de grupos" badgeColor="rgba(255,255,255,0.3)" tweaks={tweaks}>
-            {UPCOMING_MATCHES.map((m, i) => (
-              <div key={i} style={{ ...rowStyle, borderBottom: i < UPCOMING_MATCHES.length - 1 ? '1px solid rgba(0,0,0,0.08)' : 'none' }}>
+          <BannerCard title="Próximos partidos" badge={feed.upcomingStage} badgeColor="rgba(255,255,255,0.3)" tweaks={tweaks}>
+            {feed.status === 'loading' && (
+              <div style={{ ...tagStyle, padding: '9px 0' }}>Cargando…</div>
+            )}
+            {feed.status === 'error' && (
+              <div style={{ ...tagStyle, padding: '9px 0' }}>No disponible</div>
+            )}
+            {feed.status === 'ready' && feed.upcoming.length === 0 && (
+              <div style={{ ...tagStyle, padding: '9px 0' }}>Sin próximos partidos</div>
+            )}
+            {feed.upcoming.map((m, i) => (
+              <div key={i} style={{ ...rowStyle, borderBottom: i < feed.upcoming.length - 1 ? '1px solid rgba(0,0,0,0.08)' : 'none' }}>
                 <span style={tagStyle}>{m.date}</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                   <span style={codeStyle}>{m.home}</span>
@@ -435,20 +503,29 @@ function WCBanner({ tweaks }) {
           48 selecciones.<br />16 ciudades.<br />Un solo campeón.
         </p>
 
-        {/* RIGHT: Resultados en vivo */}
+        {/* RIGHT: Resultados (datos reales) */}
         {wide && (
-          <BannerCard title="Resultados" badge="live" tweaks={tweaks}>
+          <BannerCard title="Resultados" badge={feed.anyLive ? 'live' : null} tweaks={tweaks}>
             <div style={{ fontSize: 10, fontFamily: "'Barlow', sans-serif", color: 'rgba(255,255,255,0.4)', marginBottom: 8, fontWeight: 500 }}>
-              Mundial 2026 · Jornada 1 de la fase de grupos
+              {feed.anyLive ? 'Mundial 2026 · Partidos en directo' : 'Mundial 2026 · Últimos resultados'}
             </div>
-            {RECENT_RESULTS.map((r, i) => (
-              <div key={i} style={{ ...rowStyle, borderBottom: i < RECENT_RESULTS.length - 1 ? '1px solid rgba(0,0,0,0.08)' : 'none' }}>
+            {feed.status === 'loading' && (
+              <div style={{ ...tagStyle, padding: '9px 0' }}>Cargando…</div>
+            )}
+            {feed.status === 'error' && (
+              <div style={{ ...tagStyle, padding: '9px 0' }}>No disponible</div>
+            )}
+            {feed.status === 'ready' && feed.results.length === 0 && (
+              <div style={{ ...tagStyle, padding: '9px 0' }}>Sin resultados aún</div>
+            )}
+            {feed.results.map((r, i) => (
+              <div key={i} style={{ ...rowStyle, borderBottom: i < feed.results.length - 1 ? '1px solid rgba(0,0,0,0.08)' : 'none' }}>
                 <span style={{ ...codeStyle, flex: 1, textAlign: 'right' }}>{r.home}</span>
-                <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 15, color: '#fff', background: 'rgba(255,255,255,0.12)', padding: '3px 10px', borderRadius: tweaks.roundedCards ? 6 : 2, margin: '0 8px', letterSpacing: 1 }}>
-                  {r.homeScore}–{r.awayScore}
+                <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 15, color: '#fff', background: r.live ? 'rgba(232,52,78,0.85)' : 'rgba(255,255,255,0.12)', padding: '3px 10px', borderRadius: tweaks.roundedCards ? 6 : 2, margin: '0 8px', letterSpacing: 1 }}>
+                  {r.homeScore ?? 0}–{r.awayScore ?? 0}
                 </span>
                 <span style={{ ...codeStyle, flex: 1 }}>{r.away}</span>
-                <span style={{ ...tagStyle, marginLeft: 8 }}>{r.date}</span>
+                <span style={{ ...tagStyle, marginLeft: 8, color: r.live ? '#E8344E' : 'rgba(255,255,255,0.4)', fontWeight: r.live ? 700 : 600 }}>{r.label}</span>
               </div>
             ))}
           </BannerCard>
