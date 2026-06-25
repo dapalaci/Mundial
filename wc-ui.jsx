@@ -3,8 +3,6 @@ const { useState, useEffect, useRef, useCallback } = React;
 // ============================================================
 // DATA
 // ============================================================
-const WORLD_CUP_DATE = new Date('2026-06-11T17:00:00-05:00');
-
 const TEAMS_DATA = [
   {
     id: 'argentina', name: 'Argentina', verticalText: 'Lionel Messi',
@@ -75,26 +73,6 @@ const NAV_LINKS = ['Selecciones', 'Sedes', 'Estrellas', 'Calendario', 'Tienda'];
 // ============================================================
 // HOOKS
 // ============================================================
-function getTimeLeft(target) {
-  const diff = target - new Date();
-  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-  return {
-    days: Math.floor(diff / 86400000),
-    hours: Math.floor((diff / 3600000) % 24),
-    minutes: Math.floor((diff / 60000) % 60),
-    seconds: Math.floor((diff / 1000) % 60),
-  };
-}
-
-function useCountdown(target) {
-  const [t, setT] = useState(() => getTimeLeft(target));
-  useEffect(() => {
-    const id = setInterval(() => setT(getTimeLeft(target)), 1000);
-    return () => clearInterval(id);
-  }, [target]);
-  return t;
-}
-
 function useScrollReveal(threshold = 0.12) {
   const ref = useRef(null);
   const [vis, setVis] = useState(false);
@@ -194,16 +172,8 @@ function WCNav({ tweaks, onSearchClick }) {
 // HERO
 // ============================================================
 function WCHero({ tweaks, onCalendarClick }) {
-  const countdown = useCountdown(WORLD_CUP_DATE);
   const [heroRef, heroVis] = useScrollReveal(0.05);
   const accent = tweaks.accentColor;
-
-  const countdownItems = [
-    { val: countdown.days, label: 'Días' },
-    { val: countdown.hours, label: 'Horas' },
-    { val: countdown.minutes, label: 'Min' },
-    { val: countdown.seconds, label: 'Seg' },
-  ];
 
   return (
     <section ref={heroRef} id="hero" style={{ position: 'relative', minHeight: '55vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', textAlign: 'center', overflow: 'hidden', background: '#070714', paddingBottom: 'clamp(40px, 6vh, 80px)' }}>
@@ -237,20 +207,6 @@ function WCHero({ tweaks, onCalendarClick }) {
         <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 'clamp(14px, 2vw, 20px)', color: 'rgba(255,255,255,0.6)', marginTop: 20, fontWeight: 400, letterSpacing: 6, textTransform: 'uppercase' }}>
           USA&ensp;•&ensp;México&ensp;•&ensp;Canadá
         </p>
-
-        {/* Countdown */}
-        {tweaks.showCountdown && (
-          <div style={{ display: 'flex', gap: 'clamp(12px, 3vw, 24px)', justifyContent: 'center', marginTop: 48 }}>
-            {countdownItems.map(({ val, label }) => (
-              <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(32px, 6vw, 56px)', color: '#fff', lineHeight: 1, minWidth: 'clamp(50px, 10vw, 80px)', padding: '12px 0', background: 'rgba(255,255,255,0.06)', borderRadius: tweaks.roundedCards ? 12 : 4, border: '1px solid rgba(255,255,255,0.08)' }}>
-                  {String(val).padStart(2, '0')}
-                </div>
-                <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, fontWeight: 500, color: 'rgba(255,255,255,0.4)', marginTop: 8, textTransform: 'uppercase', letterSpacing: 2 }}>{label}</span>
-              </div>
-            ))}
-          </div>
-        )}
 
         {/* CTA */}
         <button className="wc-cta-hero" onClick={onCalendarClick} style={{ marginTop: 48, fontFamily: "'Barlow', sans-serif", fontSize: 14, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', color: '#0A0A14', background: accent, border: 'none', borderRadius: tweaks.roundedCards ? 999 : 4, padding: '16px 40px', cursor: 'pointer', transition: 'all 0.3s ease' }}>
@@ -391,18 +347,16 @@ function WCCardSection({ id, title, items, tweaks, onCardClick }) {
 // ============================================================
 // BANNER / QUOTE
 // ============================================================
-const UPCOMING_FRIENDLIES = [
-  { date: '27 MAY', home: 'ARG', away: 'ECU', time: '20:00' },
-  { date: '28 MAY', home: 'ESP', away: 'DIN', time: '18:00' },
-  { date: '29 MAY', home: 'BRA', away: 'MEX', time: '21:00' },
-  { date: '02 JUN', home: 'FRA', away: 'ITA', time: '20:45' },
+const UPCOMING_MATCHES = [
+  { date: '12 JUN', home: 'CAN', away: 'BIH', time: '15:00 ET' },
+  { date: '12 JUN', home: 'USA', away: 'PAR', time: '18:00 PT' },
+  { date: '13 JUN', home: 'QAT', away: 'SUI', time: '12:00 PT' },
+  { date: '13 JUN', home: 'BRA', away: 'MAR', time: '18:00 ET' },
 ];
 
 const RECENT_RESULTS = [
-  { home: 'MEX', homeScore: 1, away: 'USA', awayScore: 0, date: '15 MAY' },
-  { home: 'BRA', homeScore: 3, away: 'PAR', awayScore: 1, date: '14 MAY' },
-  { home: 'ARG', homeScore: 2, away: 'URU', awayScore: 0, date: '13 MAY' },
-  { home: 'ESP', homeScore: 1, away: 'ALE', awayScore: 1, date: '12 MAY' },
+  { home: 'KOR', homeScore: 0, away: 'CZE', awayScore: 0, date: 'EN JUEGO' },
+  { home: 'MEX', homeScore: 2, away: 'RSA', awayScore: 0, date: '11 JUN' },
 ];
 
 function BannerCard({ title, badge, badgeColor, children, tweaks }) {
@@ -461,9 +415,9 @@ function WCBanner({ tweaks }) {
 
         {/* LEFT: Próximos amistosos */}
         {wide && (
-          <BannerCard title="Próximos partidos" badge="Amistosos" badgeColor="rgba(255,255,255,0.3)" tweaks={tweaks}>
-            {UPCOMING_FRIENDLIES.map((m, i) => (
-              <div key={i} style={{ ...rowStyle, borderBottom: i < UPCOMING_FRIENDLIES.length - 1 ? '1px solid rgba(0,0,0,0.08)' : 'none' }}>
+          <BannerCard title="Próximos partidos" badge="Fase de grupos" badgeColor="rgba(255,255,255,0.3)" tweaks={tweaks}>
+            {UPCOMING_MATCHES.map((m, i) => (
+              <div key={i} style={{ ...rowStyle, borderBottom: i < UPCOMING_MATCHES.length - 1 ? '1px solid rgba(0,0,0,0.08)' : 'none' }}>
                 <span style={tagStyle}>{m.date}</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                   <span style={codeStyle}>{m.home}</span>
@@ -485,7 +439,7 @@ function WCBanner({ tweaks }) {
         {wide && (
           <BannerCard title="Resultados" badge="live" tweaks={tweaks}>
             <div style={{ fontSize: 10, fontFamily: "'Barlow', sans-serif", color: 'rgba(255,255,255,0.4)', marginBottom: 8, fontWeight: 500 }}>
-              No hay partidos en directo · Últimos amistosos
+              Mundial 2026 · Jornada 1 de la fase de grupos
             </div>
             {RECENT_RESULTS.map((r, i) => (
               <div key={i} style={{ ...rowStyle, borderBottom: i < RECENT_RESULTS.length - 1 ? '1px solid rgba(0,0,0,0.08)' : 'none' }}>

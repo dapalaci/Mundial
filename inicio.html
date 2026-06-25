@@ -186,8 +186,7 @@ const { useState, useCallback } = React;
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "accentColor": "#00C4B3",
   "darkMode": true,
-  "roundedCards": true,
-  "showCountdown": true
+  "roundedCards": true
 }/*EDITMODE-END*/;
 
 function App() {
@@ -282,7 +281,6 @@ function App() {
         </TweakSection>
         <TweakSection label="Estilo">
           <TweakToggle label="Bordes Redondeados" value={tweaks.roundedCards} onChange={v => setTweak('roundedCards', v)} />
-          <TweakToggle label="Mostrar Countdown" value={tweaks.showCountdown} onChange={v => setTweak('showCountdown', v)} />
         </TweakSection>
       </TweaksPanel>
     </div>

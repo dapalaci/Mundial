@@ -1,283 +1,290 @@
 const { useState, useEffect, useRef } = React;
 
 // ============================================================
-// MATCH SCHEDULE DATA (representative sample)
+// MATCH SCHEDULE DATA (fixture oficial — actualizado 11 Jun 2026)
+// Horas en hora local del estadio. `score` solo en partidos finalizados.
 // ============================================================
 const MATCH_DAYS = [
   // ===== JORNADA 1 =====
   {
     date: '11 Jun 2026', label: 'Día 1 — Inauguración',
     matches: [
-      { time: '17:00', local: 'CDMX', home: 'México', away: 'Rep. Checa', homeFlag: '🇲🇽', awayFlag: '🇨🇿', venue: 'Estadio Azteca, Ciudad de México', group: 'A', type: 'Inauguración' },
+      { time: '13:00', local: 'CDMX', home: 'México', away: 'Sudáfrica', homeFlag: '🇲🇽', awayFlag: '🇿🇦', venue: 'Estadio Azteca, Ciudad de México', group: 'A', type: 'Inauguración', score: '2 - 0', note: 'Goles: Quiñones, R. Jiménez' },
+      { time: '20:00', local: 'CDMX', home: 'Rep. de Corea', away: 'Rep. Checa', homeFlag: '🇰🇷', awayFlag: '🇨🇿', venue: 'Estadio Akron, Guadalajara', group: 'A', type: 'Grupos' },
     ]
   },
   {
     date: '12 Jun 2026', label: 'Día 2',
     matches: [
-      { time: '11:00', local: 'ET', home: 'Sudáfrica', away: 'Rep. de Corea', homeFlag: '🇿🇦', awayFlag: '🇰🇷', venue: 'AT&T Stadium, Dallas', group: 'A', type: 'Grupos' },
-      { time: '14:00', local: 'ET', home: 'Canadá', away: 'Bosnia y Herz.', homeFlag: '🇨🇦', awayFlag: '🇧🇦', venue: 'BMO Field, Toronto', group: 'B', type: 'Grupos' },
-      { time: '17:00', local: 'ET', home: 'Brasil', away: 'Escocia', homeFlag: '🇧🇷', awayFlag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', venue: 'MetLife Stadium, Nueva Jersey', group: 'C', type: 'Grupos' },
-      { time: '20:00', local: 'PT', home: 'Estados Unidos', away: 'Turquía', homeFlag: '🇺🇸', awayFlag: '🇹🇷', venue: 'SoFi Stadium, Los Ángeles', group: 'D', type: 'Grupos' },
+      { time: '15:00', local: 'ET', home: 'Canadá', away: 'Bosnia y Herz.', homeFlag: '🇨🇦', awayFlag: '🇧🇦', venue: 'BMO Field, Toronto', group: 'B', type: 'Grupos' },
+      { time: '18:00', local: 'PT', home: 'Estados Unidos', away: 'Paraguay', homeFlag: '🇺🇸', awayFlag: '🇵🇾', venue: 'SoFi Stadium, Los Ángeles', group: 'D', type: 'Grupos' },
     ]
   },
   {
     date: '13 Jun 2026', label: 'Día 3',
     matches: [
-      { time: '11:00', local: 'ET', home: 'Catar', away: 'Suiza', homeFlag: '🇶🇦', awayFlag: '🇨🇭', venue: 'NRG Stadium, Houston', group: 'B', type: 'Grupos' },
-      { time: '14:00', local: 'PT', home: 'Marruecos', away: 'Haití', homeFlag: '🇲🇦', awayFlag: '🇭🇹', venue: 'Rose Bowl, Los Ángeles', group: 'C', type: 'Grupos' },
-      { time: '17:00', local: 'ET', home: 'Paraguay', away: 'Australia', homeFlag: '🇵🇾', awayFlag: '🇦🇺', venue: 'Hard Rock Stadium, Miami', group: 'D', type: 'Grupos' },
-      { time: '20:00', local: 'ET', home: 'Alemania', away: 'Ecuador', homeFlag: '🇩🇪', awayFlag: '🇪🇨', venue: 'Mercedes-Benz Stadium, Atlanta', group: 'E', type: 'Grupos' },
+      { time: '12:00', local: 'PT', home: 'Catar', away: 'Suiza', homeFlag: '🇶🇦', awayFlag: '🇨🇭', venue: "Levi's Stadium, Santa Clara", group: 'B', type: 'Grupos' },
+      { time: '18:00', local: 'ET', home: 'Brasil', away: 'Marruecos', homeFlag: '🇧🇷', awayFlag: '🇲🇦', venue: 'MetLife Stadium, Nueva Jersey', group: 'C', type: 'Grupos' },
+      { time: '21:00', local: 'ET', home: 'Haití', away: 'Escocia', homeFlag: '🇭🇹', awayFlag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', venue: 'Gillette Stadium, Boston', group: 'C', type: 'Grupos' },
+      { time: '21:00', local: 'PT', home: 'Australia', away: 'Turquía', homeFlag: '🇦🇺', awayFlag: '🇹🇷', venue: 'BC Place, Vancouver', group: 'D', type: 'Grupos' },
     ]
   },
   {
     date: '14 Jun 2026', label: 'Día 4',
     matches: [
-      { time: '11:00', local: 'ET', home: 'Costa de Marfil', away: 'Curazao', homeFlag: '🇨🇮', awayFlag: '🇨🇼', venue: 'Gillette Stadium, Boston', group: 'E', type: 'Grupos' },
-      { time: '14:00', local: 'PT', home: 'Países Bajos', away: 'Suecia', homeFlag: '🇳🇱', awayFlag: '🇸🇪', venue: 'Lumen Field, Seattle', group: 'F', type: 'Grupos' },
-      { time: '17:00', local: 'ET', home: 'Bélgica', away: 'Irán', homeFlag: '🇧🇪', awayFlag: '🇮🇷', venue: 'Lincoln Financial, Filadelfia', group: 'G', type: 'Grupos' },
-      { time: '20:00', local: 'CT', home: 'España', away: 'Uruguay', homeFlag: '🇪🇸', awayFlag: '🇺🇾', venue: 'AT&T Stadium, Dallas', group: 'H', type: 'Grupos' },
+      { time: '12:00', local: 'CT', home: 'Alemania', away: 'Curazao', homeFlag: '🇩🇪', awayFlag: '🇨🇼', venue: 'NRG Stadium, Houston', group: 'E', type: 'Grupos' },
+      { time: '15:00', local: 'CT', home: 'Países Bajos', away: 'Japón', homeFlag: '🇳🇱', awayFlag: '🇯🇵', venue: 'AT&T Stadium, Dallas', group: 'F', type: 'Grupos' },
+      { time: '19:00', local: 'ET', home: 'Costa de Marfil', away: 'Ecuador', homeFlag: '🇨🇮', awayFlag: '🇪🇨', venue: 'Lincoln Financial, Filadelfia', group: 'E', type: 'Grupos' },
+      { time: '20:00', local: 'CDMX', home: 'Suecia', away: 'Túnez', homeFlag: '🇸🇪', awayFlag: '🇹🇳', venue: 'Estadio BBVA, Monterrey', group: 'F', type: 'Grupos' },
     ]
   },
   {
     date: '15 Jun 2026', label: 'Día 5',
     matches: [
-      { time: '11:00', local: 'PT', home: 'Japón', away: 'Túnez', homeFlag: '🇯🇵', awayFlag: '🇹🇳', venue: "Levi's Stadium, Santa Clara", group: 'F', type: 'Grupos' },
-      { time: '14:00', local: 'ET', home: 'Egipto', away: 'Nueva Zelanda', homeFlag: '🇪🇬', awayFlag: '🇳🇿', venue: 'Hard Rock Stadium, Miami', group: 'G', type: 'Grupos' },
-      { time: '17:00', local: 'ET', home: 'Cabo Verde', away: 'Arabia Saudí', homeFlag: '🇨🇻', awayFlag: '🇸🇦', venue: 'MetLife Stadium, Nueva Jersey', group: 'H', type: 'Grupos' },
-      { time: '20:00', local: 'PT', home: 'Francia', away: 'Noruega', homeFlag: '🇫🇷', awayFlag: '🇳🇴', venue: 'SoFi Stadium, Los Ángeles', group: 'I', type: 'Grupos' },
+      { time: '12:00', local: 'ET', home: 'España', away: 'Cabo Verde', homeFlag: '🇪🇸', awayFlag: '🇨🇻', venue: 'Mercedes-Benz Stadium, Atlanta', group: 'H', type: 'Grupos' },
+      { time: '12:00', local: 'PT', home: 'Bélgica', away: 'Egipto', homeFlag: '🇧🇪', awayFlag: '🇪🇬', venue: 'Lumen Field, Seattle', group: 'G', type: 'Grupos' },
+      { time: '18:00', local: 'ET', home: 'Arabia Saudí', away: 'Uruguay', homeFlag: '🇸🇦', awayFlag: '🇺🇾', venue: 'Hard Rock Stadium, Miami', group: 'H', type: 'Grupos' },
+      { time: '18:00', local: 'PT', home: 'Irán', away: 'Nueva Zelanda', homeFlag: '🇮🇷', awayFlag: '🇳🇿', venue: 'SoFi Stadium, Los Ángeles', group: 'G', type: 'Grupos' },
     ]
   },
   {
     date: '16 Jun 2026', label: 'Día 6',
     matches: [
-      { time: '11:00', local: 'ET', home: 'Senegal', away: 'Irak', homeFlag: '🇸🇳', awayFlag: '🇮🇶', venue: 'Mercedes-Benz Stadium, Atlanta', group: 'I', type: 'Grupos' },
-      { time: '14:00', local: 'ET', home: 'Argentina', away: 'Austria', homeFlag: '🇦🇷', awayFlag: '🇦🇹', venue: 'NRG Stadium, Houston', group: 'J', type: 'Grupos' },
-      { time: '17:00', local: 'PT', home: 'Portugal', away: 'Colombia', homeFlag: '🇵🇹', awayFlag: '🇨🇴', venue: 'Rose Bowl, Los Ángeles', group: 'K', type: 'Grupos' },
-      { time: '20:00', local: 'ET', home: 'Inglaterra', away: 'Panamá', homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', awayFlag: '🇵🇦', venue: 'Lincoln Financial, Filadelfia', group: 'L', type: 'Grupos' },
+      { time: '15:00', local: 'ET', home: 'Francia', away: 'Senegal', homeFlag: '🇫🇷', awayFlag: '🇸🇳', venue: 'MetLife Stadium, Nueva Jersey', group: 'I', type: 'Grupos' },
+      { time: '18:00', local: 'ET', home: 'Irak', away: 'Noruega', homeFlag: '🇮🇶', awayFlag: '🇳🇴', venue: 'Gillette Stadium, Boston', group: 'I', type: 'Grupos' },
+      { time: '20:00', local: 'CT', home: 'Argentina', away: 'Argelia', homeFlag: '🇦🇷', awayFlag: '🇩🇿', venue: 'Arrowhead Stadium, Kansas City', group: 'J', type: 'Grupos' },
+      { time: '21:00', local: 'PT', home: 'Austria', away: 'Jordania', homeFlag: '🇦🇹', awayFlag: '🇯🇴', venue: "Levi's Stadium, Santa Clara", group: 'J', type: 'Grupos' },
     ]
   },
   {
     date: '17 Jun 2026', label: 'Día 7',
     matches: [
-      { time: '11:00', local: 'CT', home: 'Argelia', away: 'Jordania', homeFlag: '🇩🇿', awayFlag: '🇯🇴', venue: 'AT&T Stadium, Dallas', group: 'J', type: 'Grupos' },
-      { time: '14:00', local: 'PT', home: 'RD Congo', away: 'Uzbekistán', homeFlag: '🇨🇩', awayFlag: '🇺🇿', venue: 'BC Place, Vancouver', group: 'K', type: 'Grupos' },
-      { time: '17:00', local: 'CT', home: 'Croacia', away: 'Ghana', homeFlag: '🇭🇷', awayFlag: '🇬🇭', venue: 'Arrowhead Stadium, Kansas City', group: 'L', type: 'Grupos' },
-      { time: '20:00', local: 'CDMX', home: 'México', away: 'Rep. de Corea', homeFlag: '🇲🇽', awayFlag: '🇰🇷', venue: 'Estadio Akron, Guadalajara', group: 'A', type: 'Grupos' },
+      { time: '12:00', local: 'CT', home: 'Portugal', away: 'RD Congo', homeFlag: '🇵🇹', awayFlag: '🇨🇩', venue: 'NRG Stadium, Houston', group: 'K', type: 'Grupos' },
+      { time: '15:00', local: 'CT', home: 'Inglaterra', away: 'Croacia', homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', awayFlag: '🇭🇷', venue: 'AT&T Stadium, Dallas', group: 'L', type: 'Grupos' },
+      { time: '19:00', local: 'ET', home: 'Ghana', away: 'Panamá', homeFlag: '🇬🇭', awayFlag: '🇵🇦', venue: 'BMO Field, Toronto', group: 'L', type: 'Grupos' },
+      { time: '20:00', local: 'CDMX', home: 'Uzbekistán', away: 'Colombia', homeFlag: '🇺🇿', awayFlag: '🇨🇴', venue: 'Estadio Azteca, Ciudad de México', group: 'K', type: 'Grupos' },
     ]
   },
   // ===== JORNADA 2 =====
   {
     date: '18 Jun 2026', label: 'Día 8',
     matches: [
-      { time: '11:00', local: 'ET', home: 'Rep. Checa', away: 'Sudáfrica', homeFlag: '🇨🇿', awayFlag: '🇿🇦', venue: 'BMO Field, Toronto', group: 'A', type: 'Grupos' },
-      { time: '14:00', local: 'ET', home: 'Canadá', away: 'Catar', homeFlag: '🇨🇦', awayFlag: '🇶🇦', venue: 'Gillette Stadium, Boston', group: 'B', type: 'Grupos' },
-      { time: '17:00', local: 'PT', home: 'Suiza', away: 'Bosnia y Herz.', homeFlag: '🇨🇭', awayFlag: '🇧🇦', venue: 'Lumen Field, Seattle', group: 'B', type: 'Grupos' },
-      { time: '20:00', local: 'ET', home: 'Brasil', away: 'Haití', homeFlag: '🇧🇷', awayFlag: '🇭🇹', venue: 'NRG Stadium, Houston', group: 'C', type: 'Grupos' },
+      { time: '12:00', local: 'ET', home: 'Rep. Checa', away: 'Sudáfrica', homeFlag: '🇨🇿', awayFlag: '🇿🇦', venue: 'Mercedes-Benz Stadium, Atlanta', group: 'A', type: 'Grupos' },
+      { time: '12:00', local: 'PT', home: 'Suiza', away: 'Bosnia y Herz.', homeFlag: '🇨🇭', awayFlag: '🇧🇦', venue: 'SoFi Stadium, Los Ángeles', group: 'B', type: 'Grupos' },
+      { time: '15:00', local: 'PT', home: 'Canadá', away: 'Catar', homeFlag: '🇨🇦', awayFlag: '🇶🇦', venue: 'BC Place, Vancouver', group: 'B', type: 'Grupos' },
+      { time: '19:00', local: 'CDMX', home: 'México', away: 'Rep. de Corea', homeFlag: '🇲🇽', awayFlag: '🇰🇷', venue: 'Estadio Akron, Guadalajara', group: 'A', type: 'Grupos' },
     ]
   },
   {
     date: '19 Jun 2026', label: 'Día 9',
     matches: [
-      { time: '11:00', local: 'PT', home: 'Escocia', away: 'Marruecos', homeFlag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', awayFlag: '🇲🇦', venue: 'SoFi Stadium, Los Ángeles', group: 'C', type: 'Grupos' },
-      { time: '14:00', local: 'ET', home: 'Estados Unidos', away: 'Australia', homeFlag: '🇺🇸', awayFlag: '🇦🇺', venue: 'MetLife Stadium, Nueva Jersey', group: 'D', type: 'Grupos' },
-      { time: '17:00', local: 'CT', home: 'Turquía', away: 'Paraguay', homeFlag: '🇹🇷', awayFlag: '🇵🇾', venue: 'AT&T Stadium, Dallas', group: 'D', type: 'Grupos' },
-      { time: '20:00', local: 'ET', home: 'Alemania', away: 'Costa de Marfil', homeFlag: '🇩🇪', awayFlag: '🇨🇮', venue: 'Hard Rock Stadium, Miami', group: 'E', type: 'Grupos' },
+      { time: '12:00', local: 'PT', home: 'Estados Unidos', away: 'Australia', homeFlag: '🇺🇸', awayFlag: '🇦🇺', venue: 'Lumen Field, Seattle', group: 'D', type: 'Grupos' },
+      { time: '18:00', local: 'ET', home: 'Escocia', away: 'Marruecos', homeFlag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', awayFlag: '🇲🇦', venue: 'Gillette Stadium, Boston', group: 'C', type: 'Grupos' },
+      { time: '20:30', local: 'ET', home: 'Brasil', away: 'Haití', homeFlag: '🇧🇷', awayFlag: '🇭🇹', venue: 'Lincoln Financial, Filadelfia', group: 'C', type: 'Grupos' },
+      { time: '20:00', local: 'PT', home: 'Turquía', away: 'Paraguay', homeFlag: '🇹🇷', awayFlag: '🇵🇾', venue: "Levi's Stadium, Santa Clara", group: 'D', type: 'Grupos' },
     ]
   },
   {
     date: '20 Jun 2026', label: 'Día 10',
     matches: [
-      { time: '11:00', local: 'PT', home: 'Ecuador', away: 'Curazao', homeFlag: '🇪🇨', awayFlag: '🇨🇼', venue: 'Rose Bowl, Los Ángeles', group: 'E', type: 'Grupos' },
-      { time: '14:00', local: 'CT', home: 'Países Bajos', away: 'Túnez', homeFlag: '🇳🇱', awayFlag: '🇹🇳', venue: 'Arrowhead Stadium, Kansas City', group: 'F', type: 'Grupos' },
-      { time: '17:00', local: 'ET', home: 'Suecia', away: 'Japón', homeFlag: '🇸🇪', awayFlag: '🇯🇵', venue: 'Mercedes-Benz Stadium, Atlanta', group: 'F', type: 'Grupos' },
-      { time: '20:00', local: 'ET', home: 'Bélgica', away: 'Nueva Zelanda', homeFlag: '🇧🇪', awayFlag: '🇳🇿', venue: 'Lincoln Financial, Filadelfia', group: 'G', type: 'Grupos' },
+      { time: '12:00', local: 'CT', home: 'Países Bajos', away: 'Suecia', homeFlag: '🇳🇱', awayFlag: '🇸🇪', venue: 'NRG Stadium, Houston', group: 'F', type: 'Grupos' },
+      { time: '16:00', local: 'ET', home: 'Alemania', away: 'Costa de Marfil', homeFlag: '🇩🇪', awayFlag: '🇨🇮', venue: 'BMO Field, Toronto', group: 'E', type: 'Grupos' },
+      { time: '19:00', local: 'CT', home: 'Ecuador', away: 'Curazao', homeFlag: '🇪🇨', awayFlag: '🇨🇼', venue: 'Arrowhead Stadium, Kansas City', group: 'E', type: 'Grupos' },
+      { time: '22:00', local: 'CDMX', home: 'Túnez', away: 'Japón', homeFlag: '🇹🇳', awayFlag: '🇯🇵', venue: 'Estadio BBVA, Monterrey', group: 'F', type: 'Grupos' },
     ]
   },
   {
     date: '21 Jun 2026', label: 'Día 11',
     matches: [
-      { time: '11:00', local: 'PT', home: 'Irán', away: 'Egipto', homeFlag: '🇮🇷', awayFlag: '🇪🇬', venue: "Levi's Stadium, Santa Clara", group: 'G', type: 'Grupos' },
-      { time: '14:00', local: 'ET', home: 'España', away: 'Arabia Saudí', homeFlag: '🇪🇸', awayFlag: '🇸🇦', venue: 'MetLife Stadium, Nueva Jersey', group: 'H', type: 'Grupos' },
-      { time: '17:00', local: 'ET', home: 'Uruguay', away: 'Cabo Verde', homeFlag: '🇺🇾', awayFlag: '🇨🇻', venue: 'Gillette Stadium, Boston', group: 'H', type: 'Grupos' },
-      { time: '20:00', local: 'PT', home: 'Francia', away: 'Irak', homeFlag: '🇫🇷', awayFlag: '🇮🇶', venue: 'SoFi Stadium, Los Ángeles', group: 'I', type: 'Grupos' },
+      { time: '12:00', local: 'ET', home: 'España', away: 'Arabia Saudí', homeFlag: '🇪🇸', awayFlag: '🇸🇦', venue: 'Mercedes-Benz Stadium, Atlanta', group: 'H', type: 'Grupos' },
+      { time: '12:00', local: 'PT', home: 'Bélgica', away: 'Irán', homeFlag: '🇧🇪', awayFlag: '🇮🇷', venue: 'SoFi Stadium, Los Ángeles', group: 'G', type: 'Grupos' },
+      { time: '18:00', local: 'ET', home: 'Uruguay', away: 'Cabo Verde', homeFlag: '🇺🇾', awayFlag: '🇨🇻', venue: 'Hard Rock Stadium, Miami', group: 'H', type: 'Grupos' },
+      { time: '18:00', local: 'PT', home: 'Nueva Zelanda', away: 'Egipto', homeFlag: '🇳🇿', awayFlag: '🇪🇬', venue: 'BC Place, Vancouver', group: 'G', type: 'Grupos' },
     ]
   },
   {
     date: '22 Jun 2026', label: 'Día 12',
     matches: [
-      { time: '11:00', local: 'CT', home: 'Noruega', away: 'Senegal', homeFlag: '🇳🇴', awayFlag: '🇸🇳', venue: 'AT&T Stadium, Dallas', group: 'I', type: 'Grupos' },
-      { time: '14:00', local: 'ET', home: 'Argentina', away: 'Jordania', homeFlag: '🇦🇷', awayFlag: '🇯🇴', venue: 'Hard Rock Stadium, Miami', group: 'J', type: 'Grupos' },
-      { time: '17:00', local: 'ET', home: 'Austria', away: 'Argelia', homeFlag: '🇦🇹', awayFlag: '🇩🇿', venue: 'NRG Stadium, Houston', group: 'J', type: 'Grupos' },
-      { time: '20:00', local: 'ET', home: 'Portugal', away: 'Uzbekistán', homeFlag: '🇵🇹', awayFlag: '🇺🇿', venue: 'BMO Field, Toronto', group: 'K', type: 'Grupos' },
+      { time: '12:00', local: 'CT', home: 'Argentina', away: 'Austria', homeFlag: '🇦🇷', awayFlag: '🇦🇹', venue: 'AT&T Stadium, Dallas', group: 'J', type: 'Grupos' },
+      { time: '17:00', local: 'ET', home: 'Francia', away: 'Irak', homeFlag: '🇫🇷', awayFlag: '🇮🇶', venue: 'Lincoln Financial, Filadelfia', group: 'I', type: 'Grupos' },
+      { time: '20:00', local: 'ET', home: 'Noruega', away: 'Senegal', homeFlag: '🇳🇴', awayFlag: '🇸🇳', venue: 'BMO Field, Toronto', group: 'I', type: 'Grupos' },
+      { time: '20:00', local: 'PT', home: 'Jordania', away: 'Argelia', homeFlag: '🇯🇴', awayFlag: '🇩🇿', venue: "Levi's Stadium, Santa Clara", group: 'J', type: 'Grupos' },
     ]
   },
   {
     date: '23 Jun 2026', label: 'Día 13',
     matches: [
-      { time: '11:00', local: 'PT', home: 'Colombia', away: 'RD Congo', homeFlag: '🇨🇴', awayFlag: '🇨🇩', venue: 'Rose Bowl, Los Ángeles', group: 'K', type: 'Grupos' },
-      { time: '14:00', local: 'ET', home: 'Inglaterra', away: 'Ghana', homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', awayFlag: '🇬🇭', venue: 'Lincoln Financial, Filadelfia', group: 'L', type: 'Grupos' },
-      { time: '17:00', local: 'CT', home: 'Panamá', away: 'Croacia', homeFlag: '🇵🇦', awayFlag: '🇭🇷', venue: 'Arrowhead Stadium, Kansas City', group: 'L', type: 'Grupos' },
+      { time: '12:00', local: 'CT', home: 'Portugal', away: 'Uzbekistán', homeFlag: '🇵🇹', awayFlag: '🇺🇿', venue: 'NRG Stadium, Houston', group: 'K', type: 'Grupos' },
+      { time: '16:00', local: 'ET', home: 'Inglaterra', away: 'Ghana', homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', awayFlag: '🇬🇭', venue: 'Gillette Stadium, Boston', group: 'L', type: 'Grupos' },
+      { time: '19:00', local: 'ET', home: 'Panamá', away: 'Croacia', homeFlag: '🇵🇦', awayFlag: '🇭🇷', venue: 'Gillette Stadium, Boston', group: 'L', type: 'Grupos' },
+      { time: '20:00', local: 'CDMX', home: 'Colombia', away: 'RD Congo', homeFlag: '🇨🇴', awayFlag: '🇨🇩', venue: 'Estadio Akron, Guadalajara', group: 'K', type: 'Grupos' },
     ]
   },
   // ===== JORNADA 3 — simultánea por grupo =====
   {
-    date: '24 Jun 2026', label: 'Día 14 — Definición Grupos A y B',
+    date: '24 Jun 2026', label: 'Día 14 — Definición Grupos A, B y C',
     matches: [
-      { time: '16:00', local: 'CDMX', home: 'México', away: 'Sudáfrica', homeFlag: '🇲🇽', awayFlag: '🇿🇦', venue: 'Estadio Azteca, Ciudad de México', group: 'A', type: 'Grupos' },
-      { time: '16:00', local: 'CDMX', home: 'Rep. de Corea', away: 'Rep. Checa', homeFlag: '🇰🇷', awayFlag: '🇨🇿', venue: 'Estadio BBVA, Monterrey', group: 'A', type: 'Grupos' },
-      { time: '20:00', local: 'ET', home: 'Canadá', away: 'Suiza', homeFlag: '🇨🇦', awayFlag: '🇨🇭', venue: 'BMO Field, Toronto', group: 'B', type: 'Grupos' },
-      { time: '20:00', local: 'ET', home: 'Bosnia y Herz.', away: 'Catar', homeFlag: '🇧🇦', awayFlag: '🇶🇦', venue: 'Gillette Stadium, Boston', group: 'B', type: 'Grupos' },
+      { time: '12:00', local: 'PT', home: 'Suiza', away: 'Canadá', homeFlag: '🇨🇭', awayFlag: '🇨🇦', venue: 'BC Place, Vancouver', group: 'B', type: 'Grupos' },
+      { time: '12:00', local: 'PT', home: 'Bosnia y Herz.', away: 'Catar', homeFlag: '🇧🇦', awayFlag: '🇶🇦', venue: 'Lumen Field, Seattle', group: 'B', type: 'Grupos' },
+      { time: '18:00', local: 'ET', home: 'Marruecos', away: 'Haití', homeFlag: '🇲🇦', awayFlag: '🇭🇹', venue: 'Mercedes-Benz Stadium, Atlanta', group: 'C', type: 'Grupos' },
+      { time: '18:00', local: 'ET', home: 'Escocia', away: 'Brasil', homeFlag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', awayFlag: '🇧🇷', venue: 'Hard Rock Stadium, Miami', group: 'C', type: 'Grupos' },
+      { time: '19:00', local: 'CDMX', home: 'Sudáfrica', away: 'Rep. de Corea', homeFlag: '🇿🇦', awayFlag: '🇰🇷', venue: 'Estadio BBVA, Monterrey', group: 'A', type: 'Grupos' },
+      { time: '19:00', local: 'CDMX', home: 'Rep. Checa', away: 'México', homeFlag: '🇨🇿', awayFlag: '🇲🇽', venue: 'Estadio Azteca, Ciudad de México', group: 'A', type: 'Grupos' },
     ]
   },
   {
-    date: '25 Jun 2026', label: 'Día 15 — Definición Grupos C y D',
+    date: '25 Jun 2026', label: 'Día 15 — Definición Grupos D, E y F',
     matches: [
-      { time: '15:00', local: 'ET', home: 'Brasil', away: 'Marruecos', homeFlag: '🇧🇷', awayFlag: '🇲🇦', venue: 'MetLife Stadium, Nueva Jersey', group: 'C', type: 'Grupos' },
-      { time: '15:00', local: 'CT', home: 'Escocia', away: 'Haití', homeFlag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', awayFlag: '🇭🇹', venue: 'AT&T Stadium, Dallas', group: 'C', type: 'Grupos' },
-      { time: '19:00', local: 'PT', home: 'Estados Unidos', away: 'Paraguay', homeFlag: '🇺🇸', awayFlag: '🇵🇾', venue: 'SoFi Stadium, Los Ángeles', group: 'D', type: 'Grupos' },
-      { time: '19:00', local: 'ET', home: 'Australia', away: 'Turquía', homeFlag: '🇦🇺', awayFlag: '🇹🇷', venue: 'Hard Rock Stadium, Miami', group: 'D', type: 'Grupos' },
+      { time: '16:00', local: 'ET', home: 'Curazao', away: 'Costa de Marfil', homeFlag: '🇨🇼', awayFlag: '🇨🇮', venue: 'Lincoln Financial, Filadelfia', group: 'E', type: 'Grupos' },
+      { time: '16:00', local: 'ET', home: 'Ecuador', away: 'Alemania', homeFlag: '🇪🇨', awayFlag: '🇩🇪', venue: 'MetLife Stadium, Nueva Jersey', group: 'E', type: 'Grupos' },
+      { time: '18:00', local: 'CT', home: 'Túnez', away: 'Países Bajos', homeFlag: '🇹🇳', awayFlag: '🇳🇱', venue: 'Arrowhead Stadium, Kansas City', group: 'F', type: 'Grupos' },
+      { time: '18:00', local: 'CT', home: 'Japón', away: 'Suecia', homeFlag: '🇯🇵', awayFlag: '🇸🇪', venue: 'AT&T Stadium, Dallas', group: 'F', type: 'Grupos' },
+      { time: '19:00', local: 'PT', home: 'Turquía', away: 'Estados Unidos', homeFlag: '🇹🇷', awayFlag: '🇺🇸', venue: 'SoFi Stadium, Los Ángeles', group: 'D', type: 'Grupos' },
+      { time: '19:00', local: 'PT', home: 'Paraguay', away: 'Australia', homeFlag: '🇵🇾', awayFlag: '🇦🇺', venue: "Levi's Stadium, Santa Clara", group: 'D', type: 'Grupos' },
     ]
   },
   {
-    date: '26 Jun 2026', label: 'Día 16 — Definición Grupos E y F',
+    date: '26 Jun 2026', label: 'Día 16 — Definición Grupos G, H e I',
     matches: [
-      { time: '15:00', local: 'ET', home: 'Alemania', away: 'Curazao', homeFlag: '🇩🇪', awayFlag: '🇨🇼', venue: 'NRG Stadium, Houston', group: 'E', type: 'Grupos' },
-      { time: '15:00', local: 'ET', home: 'Ecuador', away: 'Costa de Marfil', homeFlag: '🇪🇨', awayFlag: '🇨🇮', venue: 'Mercedes-Benz Stadium, Atlanta', group: 'E', type: 'Grupos' },
-      { time: '19:00', local: 'PT', home: 'Países Bajos', away: 'Japón', homeFlag: '🇳🇱', awayFlag: '🇯🇵', venue: 'Rose Bowl, Los Ángeles', group: 'F', type: 'Grupos' },
-      { time: '19:00', local: 'PT', home: 'Suecia', away: 'Túnez', homeFlag: '🇸🇪', awayFlag: '🇹🇳', venue: 'Lumen Field, Seattle', group: 'F', type: 'Grupos' },
+      { time: '15:00', local: 'ET', home: 'Noruega', away: 'Francia', homeFlag: '🇳🇴', awayFlag: '🇫🇷', venue: 'Gillette Stadium, Boston', group: 'I', type: 'Grupos' },
+      { time: '15:00', local: 'ET', home: 'Senegal', away: 'Irak', homeFlag: '🇸🇳', awayFlag: '🇮🇶', venue: 'BMO Field, Toronto', group: 'I', type: 'Grupos' },
+      { time: '19:00', local: 'CT', home: 'Cabo Verde', away: 'Arabia Saudí', homeFlag: '🇨🇻', awayFlag: '🇸🇦', venue: 'NRG Stadium, Houston', group: 'H', type: 'Grupos' },
+      { time: '18:00', local: 'CDMX', home: 'Uruguay', away: 'España', homeFlag: '🇺🇾', awayFlag: '🇪🇸', venue: 'Estadio Akron, Guadalajara', group: 'H', type: 'Grupos' },
+      { time: '20:00', local: 'PT', home: 'Nueva Zelanda', away: 'Bélgica', homeFlag: '🇳🇿', awayFlag: '🇧🇪', venue: 'BC Place, Vancouver', group: 'G', type: 'Grupos' },
+      { time: '20:00', local: 'PT', home: 'Egipto', away: 'Irán', homeFlag: '🇪🇬', awayFlag: '🇮🇷', venue: 'Lumen Field, Seattle', group: 'G', type: 'Grupos' },
     ]
   },
   {
-    date: '27 Jun 2026', label: 'Día 17 — Definición Grupos G y H',
+    date: '27 Jun 2026', label: 'Día 17 — Definición Grupos J, K y L',
     matches: [
-      { time: '15:00', local: 'ET', home: 'Bélgica', away: 'Egipto', homeFlag: '🇧🇪', awayFlag: '🇪🇬', venue: 'Lincoln Financial, Filadelfia', group: 'G', type: 'Grupos' },
-      { time: '15:00', local: 'PT', home: 'Irán', away: 'Nueva Zelanda', homeFlag: '🇮🇷', awayFlag: '🇳🇿', venue: "Levi's Stadium, Santa Clara", group: 'G', type: 'Grupos' },
-      { time: '19:00', local: 'CT', home: 'España', away: 'Cabo Verde', homeFlag: '🇪🇸', awayFlag: '🇨🇻', venue: 'Arrowhead Stadium, Kansas City', group: 'H', type: 'Grupos' },
-      { time: '19:00', local: 'CT', home: 'Uruguay', away: 'Arabia Saudí', homeFlag: '🇺🇾', awayFlag: '🇸🇦', venue: 'AT&T Stadium, Dallas', group: 'H', type: 'Grupos' },
-    ]
-  },
-  {
-    date: '28 Jun 2026', label: 'Día 18 — Definición Grupos I y J',
-    matches: [
-      { time: '15:00', local: 'ET', home: 'Francia', away: 'Senegal', homeFlag: '🇫🇷', awayFlag: '🇸🇳', venue: 'MetLife Stadium, Nueva Jersey', group: 'I', type: 'Grupos' },
-      { time: '15:00', local: 'PT', home: 'Noruega', away: 'Irak', homeFlag: '🇳🇴', awayFlag: '🇮🇶', venue: 'SoFi Stadium, Los Ángeles', group: 'I', type: 'Grupos' },
-      { time: '19:00', local: 'ET', home: 'Argentina', away: 'Argelia', homeFlag: '🇦🇷', awayFlag: '🇩🇿', venue: 'Hard Rock Stadium, Miami', group: 'J', type: 'Grupos' },
-      { time: '19:00', local: 'ET', home: 'Austria', away: 'Jordania', homeFlag: '🇦🇹', awayFlag: '🇯🇴', venue: 'NRG Stadium, Houston', group: 'J', type: 'Grupos' },
-    ]
-  },
-  {
-    date: '29 Jun 2026', label: 'Día 19 — Definición Grupos K y L',
-    matches: [
-      { time: '15:00', local: 'PT', home: 'Portugal', away: 'RD Congo', homeFlag: '🇵🇹', awayFlag: '🇨🇩', venue: 'Rose Bowl, Los Ángeles', group: 'K', type: 'Grupos' },
-      { time: '15:00', local: 'ET', home: 'Colombia', away: 'Uzbekistán', homeFlag: '🇨🇴', awayFlag: '🇺🇿', venue: 'Gillette Stadium, Boston', group: 'K', type: 'Grupos' },
-      { time: '19:00', local: 'ET', home: 'Inglaterra', away: 'Croacia', homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', awayFlag: '🇭🇷', venue: 'MetLife Stadium, Nueva Jersey', group: 'L', type: 'Grupos' },
-      { time: '19:00', local: 'CT', home: 'Ghana', away: 'Panamá', homeFlag: '🇬🇭', awayFlag: '🇵🇦', venue: 'AT&T Stadium, Dallas', group: 'L', type: 'Grupos' },
+      { time: '17:00', local: 'ET', home: 'Panamá', away: 'Inglaterra', homeFlag: '🇵🇦', awayFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', venue: 'MetLife Stadium, Nueva Jersey', group: 'L', type: 'Grupos' },
+      { time: '17:00', local: 'ET', home: 'Croacia', away: 'Ghana', homeFlag: '🇭🇷', awayFlag: '🇬🇭', venue: 'Lincoln Financial, Filadelfia', group: 'L', type: 'Grupos' },
+      { time: '19:30', local: 'ET', home: 'Colombia', away: 'Portugal', homeFlag: '🇨🇴', awayFlag: '🇵🇹', venue: 'Hard Rock Stadium, Miami', group: 'K', type: 'Grupos' },
+      { time: '19:30', local: 'ET', home: 'RD Congo', away: 'Uzbekistán', homeFlag: '🇨🇩', awayFlag: '🇺🇿', venue: 'Mercedes-Benz Stadium, Atlanta', group: 'K', type: 'Grupos' },
+      { time: '21:00', local: 'CT', home: 'Argelia', away: 'Austria', homeFlag: '🇩🇿', awayFlag: '🇦🇹', venue: 'Arrowhead Stadium, Kansas City', group: 'J', type: 'Grupos' },
+      { time: '21:00', local: 'CT', home: 'Jordania', away: 'Argentina', homeFlag: '🇯🇴', awayFlag: '🇦🇷', venue: 'AT&T Stadium, Dallas', group: 'J', type: 'Grupos' },
     ]
   },
   // ===== RONDA DE 32 =====
   {
-    date: '1 Jul 2026', label: 'Ronda de 32 — Día 1',
+    date: '28 Jun 2026', label: 'Ronda de 32 — Día 1',
     matches: [
-      { time: '13:00', local: 'ET', home: '1° Grupo A', away: '3° mejor (D/E/F)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'MetLife Stadium, Nueva Jersey', group: '', type: 'Ronda 32' },
-      { time: '17:00', local: 'ET', home: '1° Grupo C', away: '3° mejor (A/B/G)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Hard Rock Stadium, Miami', group: '', type: 'Ronda 32' },
-      { time: '21:00', local: 'CT', home: '1° Grupo B', away: '3° mejor (I/J/K/L)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'AT&T Stadium, Dallas', group: '', type: 'Ronda 32' },
+      { time: '12:00', local: 'PT', home: '2° Grupo A', away: '2° Grupo B', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'SoFi Stadium, Los Ángeles', group: '', type: 'Ronda 32' },
     ]
   },
   {
-    date: '2 Jul 2026', label: 'Ronda de 32 — Día 2',
+    date: '29 Jun 2026', label: 'Ronda de 32 — Día 2',
     matches: [
-      { time: '13:00', local: 'PT', home: '1° Grupo D', away: '2° Grupo C', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'SoFi Stadium, Los Ángeles', group: '', type: 'Ronda 32' },
-      { time: '17:00', local: 'ET', home: '1° Grupo F', away: '2° Grupo E', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Mercedes-Benz Stadium, Atlanta', group: '', type: 'Ronda 32' },
-      { time: '21:00', local: 'ET', home: '1° Grupo E', away: '2° Grupo D', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'NRG Stadium, Houston', group: '', type: 'Ronda 32' },
+      { time: '12:00', local: 'CT', home: '1° Grupo C', away: '2° Grupo F', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'NRG Stadium, Houston', group: '', type: 'Ronda 32' },
+      { time: '16:30', local: 'ET', home: '1° Grupo E', away: '3° mejor (A/B/C/D/F)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Gillette Stadium, Boston', group: '', type: 'Ronda 32' },
+      { time: '19:00', local: 'CDMX', home: '1° Grupo F', away: '2° Grupo C', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Estadio BBVA, Monterrey', group: '', type: 'Ronda 32' },
     ]
   },
   {
-    date: '3 Jul 2026', label: 'Ronda de 32 — Día 3',
+    date: '30 Jun 2026', label: 'Ronda de 32 — Día 3',
     matches: [
-      { time: '13:00', local: 'PT', home: '1° Grupo G', away: '2° Grupo H', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Rose Bowl, Los Ángeles', group: '', type: 'Ronda 32' },
-      { time: '17:00', local: 'ET', home: '1° Grupo I', away: '2° Grupo J', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Lincoln Financial, Filadelfia', group: '', type: 'Ronda 32' },
-      { time: '21:00', local: 'ET', home: '1° Grupo H', away: '2° Grupo G', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'BMO Field, Toronto', group: '', type: 'Ronda 32' },
+      { time: '12:00', local: 'CT', home: '2° Grupo E', away: '2° Grupo I', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'AT&T Stadium, Dallas', group: '', type: 'Ronda 32' },
+      { time: '17:00', local: 'ET', home: '1° Grupo I', away: '3° mejor (C/D/F/G/H)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'MetLife Stadium, Nueva Jersey', group: '', type: 'Ronda 32' },
+      { time: '19:00', local: 'CDMX', home: '1° Grupo A', away: '3° mejor (C/E/F/H/I)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Estadio Azteca, Ciudad de México', group: '', type: 'Ronda 32' },
     ]
   },
   {
-    date: '4 Jul 2026', label: 'Ronda de 32 — Día 4',
+    date: '1 Jul 2026', label: 'Ronda de 32 — Día 4',
     matches: [
-      { time: '13:00', local: 'ET', home: '1° Grupo J', away: '2° Grupo I', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'MetLife Stadium, Nueva Jersey', group: '', type: 'Ronda 32' },
-      { time: '17:00', local: 'CT', home: '1° Grupo K', away: '2° Grupo L', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'AT&T Stadium, Dallas', group: '', type: 'Ronda 32' },
-      { time: '21:00', local: 'PT', home: '1° Grupo L', away: '2° Grupo K', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'SoFi Stadium, Los Ángeles', group: '', type: 'Ronda 32' },
+      { time: '12:00', local: 'ET', home: '1° Grupo L', away: '3° mejor (E/H/I/J/K)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Mercedes-Benz Stadium, Atlanta', group: '', type: 'Ronda 32' },
+      { time: '13:00', local: 'PT', home: '1° Grupo G', away: '3° mejor (A/E/H/I/J)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Lumen Field, Seattle', group: '', type: 'Ronda 32' },
+      { time: '17:00', local: 'PT', home: '1° Grupo D', away: '3° mejor (B/E/F/I/J)', homeFlag: '🏳️', awayFlag: '🏳️', venue: "Levi's Stadium, Santa Clara", group: '', type: 'Ronda 32' },
     ]
   },
   {
-    date: '5 Jul 2026', label: 'Ronda de 32 — Día 5',
+    date: '2 Jul 2026', label: 'Ronda de 32 — Día 5',
     matches: [
-      { time: '13:00', local: 'ET', home: '2° Grupo A', away: '3° mejor (H/I/J)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Hard Rock Stadium, Miami', group: '', type: 'Ronda 32' },
-      { time: '17:00', local: 'ET', home: '2° Grupo B', away: '3° mejor (C/D/E/F)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'NRG Stadium, Houston', group: '', type: 'Ronda 32' },
-      { time: '21:00', local: 'ET', home: '2° Grupo F', away: '3° mejor (A/B/K/L)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Mercedes-Benz Stadium, Atlanta', group: '', type: 'Ronda 32' },
+      { time: '12:00', local: 'PT', home: '1° Grupo H', away: '2° Grupo J', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'SoFi Stadium, Los Ángeles', group: '', type: 'Ronda 32' },
+      { time: '19:00', local: 'ET', home: '2° Grupo K', away: '2° Grupo L', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'BMO Field, Toronto', group: '', type: 'Ronda 32' },
+      { time: '20:00', local: 'PT', home: '1° Grupo B', away: '3° mejor (E/F/G/I/J)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'BC Place, Vancouver', group: '', type: 'Ronda 32' },
+    ]
+  },
+  {
+    date: '3 Jul 2026', label: 'Ronda de 32 — Día 6',
+    matches: [
+      { time: '13:00', local: 'CT', home: '2° Grupo D', away: '2° Grupo G', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'AT&T Stadium, Dallas', group: '', type: 'Ronda 32' },
+      { time: '18:00', local: 'ET', home: '1° Grupo J', away: '2° Grupo H', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Hard Rock Stadium, Miami', group: '', type: 'Ronda 32' },
+      { time: '20:30', local: 'CT', home: '1° Grupo K', away: '3° mejor (D/E/I/J/L)', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Arrowhead Stadium, Kansas City', group: '', type: 'Ronda 32' },
     ]
   },
   // ===== OCTAVOS DE FINAL =====
   {
-    date: '8 Jul 2026', label: 'Octavos de Final — Día 1',
+    date: '4 Jul 2026', label: 'Octavos de Final — Día 1',
     matches: [
-      { time: '13:00', local: 'ET', home: 'Ganador R32-1', away: 'Ganador R32-2', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'MetLife Stadium, Nueva Jersey', group: '', type: 'Octavos' },
-      { time: '17:00', local: 'PT', home: 'Ganador R32-3', away: 'Ganador R32-4', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'SoFi Stadium, Los Ángeles', group: '', type: 'Octavos' },
-      { time: '21:00', local: 'CT', home: 'Ganador R32-5', away: 'Ganador R32-6', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'AT&T Stadium, Dallas', group: '', type: 'Octavos' },
+      { time: '12:00', local: 'CT', home: 'Ganador P73', away: 'Ganador P75', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'NRG Stadium, Houston', group: '', type: 'Octavos' },
+      { time: '17:00', local: 'ET', home: 'Ganador P74', away: 'Ganador P77', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Lincoln Financial, Filadelfia', group: '', type: 'Octavos' },
     ]
   },
   {
-    date: '9 Jul 2026', label: 'Octavos de Final — Día 2',
+    date: '5 Jul 2026', label: 'Octavos de Final — Día 2',
     matches: [
-      { time: '13:00', local: 'ET', home: 'Ganador R32-7', away: 'Ganador R32-8', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Hard Rock Stadium, Miami', group: '', type: 'Octavos' },
-      { time: '17:00', local: 'ET', home: 'Ganador R32-9', away: 'Ganador R32-10', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Mercedes-Benz Stadium, Atlanta', group: '', type: 'Octavos' },
-      { time: '21:00', local: 'ET', home: 'Ganador R32-11', away: 'Ganador R32-12', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'NRG Stadium, Houston', group: '', type: 'Octavos' },
+      { time: '16:00', local: 'ET', home: 'Ganador P76', away: 'Ganador P78', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'MetLife Stadium, Nueva Jersey', group: '', type: 'Octavos' },
+      { time: '18:00', local: 'CDMX', home: 'Ganador P79', away: 'Ganador P80', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Estadio Azteca, Ciudad de México', group: '', type: 'Octavos' },
     ]
   },
   {
-    date: '10 Jul 2026', label: 'Octavos de Final — Día 3',
+    date: '6 Jul 2026', label: 'Octavos de Final — Día 3',
     matches: [
-      { time: '13:00', local: 'PT', home: 'Ganador R32-13', away: 'Ganador R32-14', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Rose Bowl, Los Ángeles', group: '', type: 'Octavos' },
-      { time: '17:00', local: 'ET', home: 'Ganador R32-15', away: 'Ganador R32-16', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Lincoln Financial, Filadelfia', group: '', type: 'Octavos' },
+      { time: '14:00', local: 'CT', home: 'Ganador P83', away: 'Ganador P84', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'AT&T Stadium, Dallas', group: '', type: 'Octavos' },
+      { time: '17:00', local: 'PT', home: 'Ganador P81', away: 'Ganador P82', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Lumen Field, Seattle', group: '', type: 'Octavos' },
+    ]
+  },
+  {
+    date: '7 Jul 2026', label: 'Octavos de Final — Día 4',
+    matches: [
+      { time: '12:00', local: 'ET', home: 'Ganador P86', away: 'Ganador P88', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Mercedes-Benz Stadium, Atlanta', group: '', type: 'Octavos' },
+      { time: '13:00', local: 'PT', home: 'Ganador P85', away: 'Ganador P87', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'BC Place, Vancouver', group: '', type: 'Octavos' },
     ]
   },
   // ===== CUARTOS DE FINAL =====
   {
-    date: '12 Jul 2026', label: 'Cuartos de Final — Día 1',
+    date: '9 Jul 2026', label: 'Cuartos de Final — Día 1',
     matches: [
-      { time: '14:00', local: 'ET', home: 'Ganador OF1', away: 'Ganador OF2', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'MetLife Stadium, Nueva Jersey', group: '', type: 'Cuartos' },
-      { time: '18:00', local: 'PT', home: 'Ganador OF3', away: 'Ganador OF4', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'SoFi Stadium, Los Ángeles', group: '', type: 'Cuartos' },
+      { time: '16:00', local: 'ET', home: 'Ganador OF1', away: 'Ganador OF2', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Gillette Stadium, Boston', group: '', type: 'Cuartos' },
     ]
   },
   {
-    date: '13 Jul 2026', label: 'Cuartos de Final — Día 2',
+    date: '10 Jul 2026', label: 'Cuartos de Final — Día 2',
     matches: [
-      { time: '14:00', local: 'CT', home: 'Ganador OF5', away: 'Ganador OF6', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'AT&T Stadium, Dallas', group: '', type: 'Cuartos' },
-      { time: '18:00', local: 'ET', home: 'Ganador OF7', away: 'Ganador OF8', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Hard Rock Stadium, Miami', group: '', type: 'Cuartos' },
+      { time: '12:00', local: 'PT', home: 'Ganador OF3', away: 'Ganador OF4', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'SoFi Stadium, Los Ángeles', group: '', type: 'Cuartos' },
+    ]
+  },
+  {
+    date: '11 Jul 2026', label: 'Cuartos de Final — Día 3',
+    matches: [
+      { time: '17:00', local: 'ET', home: 'Ganador OF5', away: 'Ganador OF6', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Hard Rock Stadium, Miami', group: '', type: 'Cuartos' },
+      { time: '20:00', local: 'CT', home: 'Ganador OF7', away: 'Ganador OF8', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Arrowhead Stadium, Kansas City', group: '', type: 'Cuartos' },
     ]
   },
   // ===== SEMIFINALES =====
   {
-    date: '15 Jul 2026', label: 'Semifinal 1',
+    date: '14 Jul 2026', label: 'Semifinal 1',
     matches: [
-      { time: '17:00', local: 'ET', home: 'Ganador QF1', away: 'Ganador QF2', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'MetLife Stadium, Nueva Jersey', group: '', type: 'Semifinal' },
+      { time: '14:00', local: 'CT', home: 'Ganador QF1', away: 'Ganador QF2', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'AT&T Stadium, Dallas', group: '', type: 'Semifinal' },
     ]
   },
   {
-    date: '16 Jul 2026', label: 'Semifinal 2',
+    date: '15 Jul 2026', label: 'Semifinal 2',
     matches: [
-      { time: '17:00', local: 'PT', home: 'Ganador QF3', away: 'Ganador QF4', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'SoFi Stadium, Los Ángeles', group: '', type: 'Semifinal' },
+      { time: '15:00', local: 'ET', home: 'Ganador QF3', away: 'Ganador QF4', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Mercedes-Benz Stadium, Atlanta', group: '', type: 'Semifinal' },
     ]
   },
   // ===== TERCER PUESTO Y FINAL =====
   {
     date: '18 Jul 2026', label: 'Tercer Puesto',
     matches: [
-      { time: '16:00', local: 'ET', home: 'Perdedor SF1', away: 'Perdedor SF2', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Hard Rock Stadium, Miami', group: '', type: 'Tercer puesto' },
+      { time: '17:00', local: 'ET', home: 'Perdedor SF1', away: 'Perdedor SF2', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'Hard Rock Stadium, Miami', group: '', type: 'Tercer puesto' },
     ]
   },
   {
     date: '19 Jul 2026', label: '🏆 Gran Final',
     matches: [
-      { time: '16:00', local: 'ET', home: 'Ganador SF1', away: 'Ganador SF2', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'MetLife Stadium, East Rutherford', group: '', type: 'FINAL' },
+      { time: '15:00', local: 'ET', home: 'Ganador SF1', away: 'Ganador SF2', homeFlag: '🏳️', awayFlag: '🏳️', venue: 'MetLife Stadium, East Rutherford', group: '', type: 'FINAL' },
     ]
   },
 ];
@@ -437,6 +444,7 @@ function MatchRow({ match, tweaks, tzOffset }) {
   const r = tweaks.roundedCards ? 10 : 0;
   const typeColor = getTypeColor(match.type);
   const adjustedTime = adjustTime(match.time, tzOffset);
+  const played = Boolean(match.score);
 
   return (
     <div style={{
@@ -450,10 +458,10 @@ function MatchRow({ match, tweaks, tzOffset }) {
       cursor: 'default',
     }} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
 
-      {/* Time */}
+      {/* Time / Final */}
       <div style={{ flexShrink: 0, minWidth: 60, textAlign: 'center' }}>
-        <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 26, color: dark ? '#fff' : '#111', lineHeight: 1 }}>{adjustedTime}</div>
-        <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, color: dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)', textTransform: 'uppercase', letterSpacing: 1, marginTop: 3 }}>{TIMEZONE_OPTIONS.find(t => t.offset === tzOffset)?.label.split(' ')[0] || 'ET'}</div>
+        <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 26, color: played ? '#1DB954' : (dark ? '#fff' : '#111'), lineHeight: 1 }}>{played ? 'FIN' : adjustedTime}</div>
+        <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, color: dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)', textTransform: 'uppercase', letterSpacing: 1, marginTop: 3 }}>{played ? 'Final' : (TIMEZONE_OPTIONS.find(t => t.offset === tzOffset)?.label.split(' ')[0] || 'ET')}</div>
       </div>
 
       {/* Divider */}
@@ -464,11 +472,15 @@ function MatchRow({ match, tweaks, tzOffset }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <TeamFlag name={match.home} emoji={match.homeFlag} />
           <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 20, color: dark ? '#fff' : '#111', textTransform: 'uppercase', lineHeight: 1.2 }}>{match.home}</span>
-          <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 400, color: dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)' }}>vs</span>
+          {played ? (
+            <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 22, padding: '0 8px', borderRadius: tweaks.roundedCards ? 6 : 2, background: dark ? 'rgba(29,185,84,0.15)' : 'rgba(29,185,84,0.12)', color: '#1DB954', letterSpacing: 1 }}>{match.score}</span>
+          ) : (
+            <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 400, color: dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)' }}>vs</span>
+          )}
           <TeamFlag name={match.away} emoji={match.awayFlag} />
           <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 20, color: dark ? '#fff' : '#111', textTransform: 'uppercase', lineHeight: 1.2 }}>{match.away}</span>
         </div>
-        <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 12, color: dark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{match.venue}</div>
+        <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 12, color: dark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{match.venue}{match.note ? ` · ${match.note}` : ''}</div>
       </div>
 
       {/* Badges */}
